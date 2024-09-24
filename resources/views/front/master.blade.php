@@ -439,7 +439,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="product-left-thumbnail.html" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Muffets & Tuffets Whole Wheat Bread 400 g
                                     </h6>
