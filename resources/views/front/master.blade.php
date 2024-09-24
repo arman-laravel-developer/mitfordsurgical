@@ -234,10 +234,13 @@
             </a>
         </li>
 
+
         <li class="mobile-category">
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                <span class=" navbar-toggler-icon-2">
                 <i data-feather="list" style="color: white"></i>
                 <span>Category</span>
+            </span>
             </a>
         </li>
 
