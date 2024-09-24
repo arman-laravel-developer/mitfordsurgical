@@ -135,13 +135,13 @@
                                             <ul class="cart-list">
                                                 <li class="product-box-contain">
                                                     <div class="drop-cart">
-                                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view" class="drop-image">
                                                             <img src="{{asset('/')}}front/assets/images/vegetable/product/1.png"
                                                                  class="blur-up lazyload" alt="">
                                                         </a>
 
                                                         <div class="drop-contain">
-                                                            <a href="product-left-thumbnail.html">
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                                                 <h5>Fantasy Crunchy Choco Chip Cookies</h5>
                                                             </a>
                                                             <h6><span>1 x</span> $80.58</h6>
@@ -154,13 +154,13 @@
 
                                                 <li class="product-box-contain">
                                                     <div class="drop-cart">
-                                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view" class="drop-image">
                                                             <img src="{{asset('/')}}front/assets/images/vegetable/product/2.png"
                                                                  class="blur-up lazyload" alt="">
                                                         </a>
 
                                                         <div class="drop-contain">
-                                                            <a href="product-left-thumbnail.html">
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                                                 <h5>Peanut Butter Bite Premium Butter Cookies 600 g
                                                                 </h5>
                                                             </a>
@@ -474,7 +474,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -499,7 +499,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fresh Bread and Pastry Flour 200 g
                                     </h6>
@@ -534,7 +534,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -559,7 +559,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Peanut Butter Bite Premium Butter Cookies 600 g
                                     </h6>
@@ -594,7 +594,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -619,7 +619,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         SnackAmor Combo Pack of Jowar Stick and Jowar Chips
                                     </h6>
@@ -654,7 +654,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -679,7 +679,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Yumitos Chilli Sprinkled Potato Chips 100 g
                                     </h6>
@@ -714,7 +714,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -739,7 +739,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fantasy Crunchy Choco Chip Cookies
                                     </h6>
@@ -774,7 +774,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -799,7 +799,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fresh Bread and Pastry Flour 200 g
                                     </h6>
@@ -834,7 +834,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/8.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -859,7 +859,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Milky Silicone Heart Chocolate Mould ( Pack of 1 )
                                     </h6>
@@ -894,7 +894,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/9.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -919,7 +919,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">chocolate-chip-cookies 250 g</h6>
                                 </a>
 
@@ -952,7 +952,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/10.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -977,7 +977,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Cupcake Holder for Birthday and Wedding Party 100 g
                                     </h6>
@@ -1012,7 +1012,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1037,7 +1037,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Yumitos Chilli Sprinkled Potato Chips 100 g
                                     </h6>
@@ -1072,7 +1072,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1097,7 +1097,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fantasy Crunchy Choco Chip Cookies
                                     </h6>
@@ -1140,7 +1140,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/1.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1165,7 +1165,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Muffets & Tuffets Whole Wheat Bread 400 g
                                     </h6>
@@ -1200,7 +1200,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1225,7 +1225,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fresh Bread and Pastry Flour 200 g
                                     </h6>
@@ -1260,7 +1260,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1285,7 +1285,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Peanut Butter Bite Premium Butter Cookies 600 g
                                     </h6>
@@ -1321,7 +1321,7 @@
 
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1346,7 +1346,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         SnackAmor Combo Pack of Jowar Stick and Jowar Chips
                                     </h6>
@@ -1381,7 +1381,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1406,7 +1406,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Yumitos Chilli Sprinkled Potato Chips 100 g
                                     </h6>
@@ -1441,7 +1441,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1466,7 +1466,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fantasy Crunchy Choco Chip Cookies
                                     </h6>
@@ -1501,7 +1501,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1526,7 +1526,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fresh Bread and Pastry Flour 200 g
                                     </h6>
@@ -1561,7 +1561,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/8.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1586,7 +1586,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Milky Silicone Heart Chocolate Mould ( Pack of 1 )
                                     </h6>
@@ -1621,7 +1621,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/9.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1646,7 +1646,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">chocolate-chip-cookies 250 g</h6>
                                 </a>
 
@@ -1679,7 +1679,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/10.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1704,7 +1704,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Cupcake Holder for Birthday and Wedding Party 100 g
                                     </h6>
@@ -1739,7 +1739,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1764,7 +1764,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Yumitos Chilli Sprinkled Potato Chips 100 g
                                     </h6>
@@ -1799,7 +1799,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
@@ -1824,7 +1824,7 @@
                                 </ul>
                             </div>
                             <div class="product-detail position-relative">
-                                <a href="product-left-thumbnail.html">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
                                     <h6 class="name">
                                         Fantasy Crunchy Choco Chip Cookies
                                     </h6>
