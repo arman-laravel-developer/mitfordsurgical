@@ -229,35 +229,35 @@
     <ul>
         <li class="active">
             <a href="index.html">
-                <i class="iconly-Home icli"></i>
+                <i data-feather="home" style="color: white"></i>
                 <span>Home</span>
             </a>
         </li>
 
         <li class="mobile-category">
             <a href="javascript:void(0)">
-                <i class="iconly-Category icli js-link"></i>
+                <i data-feather="list" style="color: white"></i>
                 <span>Category</span>
             </a>
         </li>
 
         <li>
             <a href="search.html" class="search-box">
-                <i class="iconly-Search icli"></i>
+                <i data-feather="search" style="color: white"></i>
                 <span>Search</span>
             </a>
         </li>
 
         <li>
             <a href="wishlist.html" class="notifi-wishlist">
-                <i class="iconly-Heart icli"></i>
+                <i data-feather="heart" style="color: white"></i>
                 <span>My Wish</span>
             </a>
         </li>
 
         <li>
             <a href="cart.html">
-                <i class="iconly-Bag-2 icli fly-cate"></i>
+                <i data-feather="shopping-cart" style="color: white"></i>
                 <span>Cart</span>
             </a>
         </li>
