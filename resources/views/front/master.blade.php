@@ -414,7 +414,7 @@
                     <div>
                         <div class="product-box product-white-bg wow fadeIn">
                             <div class="product-image">
-                                <a href="product-left-thumbnail.html">
+                                <a href="product-left-thumbnail.html" data-bs-toggle="modal" data-bs-target="#view">
                                     <img src="{{asset('/')}}front/assets/images/cake/product/1.png"
                                          class="img-fluid blur-up lazyload" alt="">
                                 </a>
