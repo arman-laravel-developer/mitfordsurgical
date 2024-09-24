@@ -272,7 +272,7 @@
             <div class="sidebar-col">
                 <div class="category-menu">
                     <a href="index.html" class="web-logo nav-logo">
-                        <img src="{{asset('/')}}front/assets/images/logo/5.png" class="img-fluid blur-up lazyload" alt="">
+                        <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%" class="img-fluid blur-up lazyload" alt="">
                     </a>
                     <ul>
                         <li>
