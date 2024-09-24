@@ -37,16 +37,16 @@
 
 <body class="theme-color-4 bg-gradient-color">
 
-<!-- Loader Start -->
-<div class="fullpage-loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-<!-- Loader End -->
+{{--<!-- Loader Start -->--}}
+{{--<div class="fullpage-loader">--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--</div>--}}
+{{--<!-- Loader End -->--}}
 
 <!-- Header Start -->
 <header class="pb-0 fixed-header">
