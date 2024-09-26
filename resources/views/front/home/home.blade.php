@@ -10,8 +10,7 @@
         <p>A virtual assistant collects the products from your list</p>
     </div>
 
-    <div
-        class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
+    <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
         <div>
             <div class="product-box product-white-bg wow fadeIn">
                 <div class="product-image">
@@ -736,8 +735,7 @@
         <p>A virtual assistant collects the products from your list</p>
     </div>
 
-    <div
-        class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
+    <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
         <div>
             <div class="product-box product-white-bg wow fadeIn">
                 <div class="product-image">
