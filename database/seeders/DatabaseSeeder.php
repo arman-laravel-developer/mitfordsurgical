@@ -26,5 +26,11 @@ class DatabaseSeeder extends Seeder
              'website_status' => 1,
              'login_status' => 1
         ]);
+
+        $this->call(CountrySeeder::class);
+        $this->call(DivisionSeeder::class);
+        $this->call(DistrictSeeder::class);
+        $this->call(UpazilaSeeder::class);
+        $this->call(UnionSeeder::class);
     }
 }
