@@ -16,16 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Super Admin',
-             'email' => 'admin@gmail.com',
-             'password' => bcrypt(12345678),
-             'mobile' => 0,
-             'user_type' => 1,
-             'access_label' => 0,
-             'website_status' => 1,
-             'login_status' => 1
-        ]);
+//        \App\Models\User::factory()->create([
+//            'name' => 'Super Admin',
+//             'email' => 'admin@gmail.com',
+//             'password' => bcrypt(12345678),
+//             'mobile' => 0,
+//             'user_type' => 1,
+//             'access_label' => 0,
+//             'website_status' => 1,
+//             'login_status' => 1
+//        ]);
 
         $this->call(CountrySeeder::class);
         $this->call(DivisionSeeder::class);
