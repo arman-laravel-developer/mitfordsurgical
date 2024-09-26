@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
-use App\Models\News;
+use App\Models\District;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('*', function ($view) {
+            $view->with('districts', District::orderBy('name', 'asc')->get());
+        });
     }
 }
