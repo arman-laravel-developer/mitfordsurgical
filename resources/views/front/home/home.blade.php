@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mitfordsurgical | Home page</title>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="{{asset('/')}}assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('/')}}assets/css/style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for search icon -->
 </head>
 <body>
@@ -233,13 +233,13 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="assets/img/1.jpeg" class="d-block w-100"  alt="Slide 1">
+                <img src="{{asset('/')}}assets/img/1.jpeg" class="d-block w-100"  alt="Slide 1">
             </div>
             <div class="carousel-item">
-                <img src="assets/img/4.jpg" class="d-block w-100" alt="Slide 2">
+                <img src="{{asset('/')}}assets/img/4.jpg" class="d-block w-100" alt="Slide 2">
             </div>
             <div class="carousel-item">
-                <img src="assets/img/3.jpg" class="d-block w-100" alt="Slide 3">
+                <img src="{{asset('/')}}assets/img/3.jpg" class="d-block w-100" alt="Slide 3">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -254,6 +254,6 @@
 </div>
 
 <!-- Bootstrap JavaScript -->
-<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('/')}}assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

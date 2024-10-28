@@ -1,0 +1,99 @@
+.header {
+    background-color: #f7941e;
+    padding: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    font-size: 30px;
+    margin: 0 5%;
+}
+.logo a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+.search-bar {
+    width: 40%;
+}
+.search-bar input {
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: none;
+    width: 100%;
+}
+.language-links {
+    margin: 0 3%;
+}
+.lang-text-en {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.lang-text-bn {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 0 11px;
+}
+.login-text {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: bold;
+}
+.offer-btn {
+    background-color: #ff5722;
+    color: #fff;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+}
+.category-list {
+    background-color: #f1f1f1;
+}
+.category-list a {
+    display: block;
+    margin: 5px 0;
+    color: #333;
+}
+
+.category-list-scroll {
+    background-color: #f1f1f1;
+    max-height: 427px; /* Adjust the height as needed */
+    overflow-y: auto; /* Makes the list scrollable */
+}
+
+.accordion-body a {
+    text-decoration: none;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .logo {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .search-bar, .language-links {
+        width: 100%;
+        margin: 1% 0;
+    }
+    .category-list {
+        width: 100%;
+        padding: 10px;
+    }
+}
+@media (max-width: 576px) {
+    .offer-btn {
+        width: 33%;
+        margin: 5px 0;
+    }
+    .carousel-inner img {
+        height: 200px;
+        object-fit: cover;
+    }
+}
