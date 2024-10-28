@@ -1,1458 +1,259 @@
-@extends('front.master')
-@section('title')
-    {{env('APP_NAME')}} | Home Page
-@endsection
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitfordsurgical | Home page</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for search icon -->
+</head>
+<body>
 
-
-@section('body')
-    <div class="title d-block">
-        <h2 class="text-theme font-sm">Food Cupboard</h2>
-        <p>A virtual assistant collects the products from your list</p>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <a href="#" class="logo-text">Mitfordsurgical</a>
     </div>
+    <div class="search-bar">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for Products">
+            <span class="input-group-text bg-white border-0 text-gray"><i class="fas fa-search"></i></span>
+        </div>
+    </div>
+    <div class="language-links">
+        <a href="#" class="lang-text-en">EN</a> <a href="#" class="lang-text-bn">বাং</a>
+        <a href="#" class="login-text">Login</a> | <a href="#" class="login-text">Register</a>
+    </div>
+</div>
 
-    <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/1.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
+<!-- Offers Section -->
 
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Muffets & Tuffets Whole Wheat Bread 400 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+<!-- Content Layout -->
+<div class="d-flex">
+    <!-- Sidebar Category List -->
+    <div class="category-list">
+        <div class="d-flex justify-content-start p-2">
+            <button class="offer-btn">OFFER</button>
+            <button class="offer-btn">OFFER</button>
+            <button class="offer-btn">OFFER</button>
+        </div>
+        <div class="accordion category-list-scroll" id="categoryAccordion" style="--bs-accordion-bg: none; --bs-accordion-border-color: none;">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        Emergency & Anesthesia
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory 1</a><br>
+                        <a href="#">Subcategory 2</a><br>
+                        <a href="#">Subcategory 3</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fresh Bread and Pastry Flour 200 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Peanut Butter Bite Premium Butter Cookies 600 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            SnackAmor Combo Pack of Jowar Stick and Jowar Chips
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Yumitos Chilli Sprinkled Potato Chips 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fantasy Crunchy Choco Chip Cookies
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fresh Bread and Pastry Flour 200 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/8.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Milky Silicone Heart Chocolate Mould ( Pack of 1 )
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/9.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">chocolate-chip-cookies 250 g</h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/10.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Cupcake Holder for Birthday and Wedding Party 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Yumitos Chilli Sprinkled Potato Chips 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
+                    </div>
                 </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fantasy Crunchy Choco Chip Cookies
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Surgical Equipment
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                    <div class="accordion-body">
+                        <a href="#">Subcategory A</a><br>
+                        <a href="#">Subcategory B</a><br>
+                        <a href="#">Subcategory C</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="title d-block">
-        <h2 class="text-theme font-sm">Food Cupboard</h2>
-        <p>A virtual assistant collects the products from your list</p>
+    <!-- Carousel Slider -->
+    <div id="carouselExampleIndicators" class="carousel slide w-100" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/img/1.jpeg" class="d-block w-100"  alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/img/4.jpg" class="d-block w-100" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/img/3.jpg" class="d-block w-100" alt="Slide 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-
-    <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/1.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Muffets & Tuffets Whole Wheat Bread 400 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fresh Bread and Pastry Flour 200 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Peanut Butter Bite Premium Butter Cookies 600 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            SnackAmor Combo Pack of Jowar Stick and Jowar Chips
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Yumitos Chilli Sprinkled Potato Chips 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fantasy Crunchy Choco Chip Cookies
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fresh Bread and Pastry Flour 200 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/8.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Milky Silicone Heart Chocolate Mould ( Pack of 1 )
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/9.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">chocolate-chip-cookies 250 g</h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/10.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Cupcake Holder for Birthday and Wedding Party 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Yumitos Chilli Sprinkled Potato Chips 100 g
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="product-box product-white-bg wow fadeIn" data-wow-delay="0.1s">
-                <div class="product-image">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
-                             class="img-fluid blur-up lazyload" alt="">
-                    </a>
-                    <ul class="product-option">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                <i data-feather="eye"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                            <a href="compare.html">
-                                <i data-feather="refresh-cw"></i>
-                            </a>
-                        </li>
-
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                            <a href="wishlist.html" class="notifi-wishlist">
-                                <i data-feather="heart"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="product-detail position-relative">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <h6 class="name">
-                            Fantasy Crunchy Choco Chip Cookies
-                        </h6>
-                    </a>
-
-                    <h6 class="sold weight text-content fw-normal">1 KG</h6>
-
-                    <h6 class="price theme-color">$ 80.00</h6>
-
-                    <div class="add-to-cart-btn-2 addtocart_btn">
-                        <button class="btn addcart-button btn buy-button"><i
-                                class="fa-solid fa-plus"></i></button>
-                        <div class="cart_qty qty-box-2 qty-box-3">
-                            <div class="input-group">
-                                <button type="button" class="qty-left-minus" data-type="minus"
-                                        data-field="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input class="form-control input-number qty-input" type="text"
-                                       name="quantity" value="0">
-                                <button type="button" class="qty-right-plus" data-type="plus"
-                                        data-field="">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
