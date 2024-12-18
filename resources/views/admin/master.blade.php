@@ -793,34 +793,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-
-@include('sweetalert::alert')
-@include('flash-toastr::message')
-@php
-    $excludedRoutes = ['order.show', 'report.category-wise-stock']; // Array of route names
-@endphp
-
-@if(!in_array(Route::currentRouteName(), $excludedRoutes))
-    <script>
-        $(document).ready(function() {
-            $('.table').DataTable({
-                responsive: true,
-                pageLength: 10, // Sets the initial number of records per page
-                lengthMenu: [5, 10, 25, 50], // Options for number of records per page
-                ordering: true, // Enable ordering (sorting) of columns
-                searching: true, // Enable searching functionality
-                autoWidth: false, // Disable auto width for columns
-                language: {
-                    search: "_INPUT_", // Customize the search input field text
-                    searchPlaceholder: "Search....." // Placeholder text for the search input
-                }
-            });
-        });
-    </script>
-@endif
-
-
-
 <style>
     /* Customize toastr text size */
     #toast-container > .toast {
@@ -855,6 +827,32 @@
     toastr.warning("{{ session('warning') }}");
     @endif
 </script>
+
+
+@include('sweetalert::alert')
+@include('flash-toastr::message')
+@php
+    $excludedRoutes = ['order.show', 'report.category-wise-stock']; // Array of route names
+@endphp
+
+@if(!in_array(Route::currentRouteName(), $excludedRoutes))
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10, // Sets the initial number of records per page
+                lengthMenu: [5, 10, 25, 50], // Options for number of records per page
+                ordering: true, // Enable ordering (sorting) of columns
+                searching: true, // Enable searching functionality
+                autoWidth: false, // Disable auto width for columns
+                language: {
+                    search: "_INPUT_", // Customize the search input field text
+                    searchPlaceholder: "Search....." // Placeholder text for the search input
+                }
+            });
+        });
+    </script>
+@endif
 
 
 

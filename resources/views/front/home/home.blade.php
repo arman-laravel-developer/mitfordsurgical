@@ -1,1 +1,9 @@
-<h1>Welcome to laravel base</h1>
+@extends('front.master')
+
+@section('title')
+
+@endsection
+
+@section('body')
+
+@endsection

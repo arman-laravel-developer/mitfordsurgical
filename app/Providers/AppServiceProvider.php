@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\District;
 use App\Models\GeneralSetting;
 use App\Models\GoogleAnalytic;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('menuCategories', Category::where('status', 1)->where('parent_id', 0)->latest()->get());
             $view->with('googleAnalytic', GoogleAnalytic::latest()->first());
             $view->with('generalSettingView', GeneralSetting::latest()->first());
+            $view->with('districts', District::orderBy('name', 'asc')->get());
         });
     }
 }
