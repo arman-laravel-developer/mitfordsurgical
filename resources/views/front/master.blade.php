@@ -28,6 +28,10 @@
     <!-- wow css -->
     <link rel="stylesheet" href="{{asset('/')}}front/assets/css/animate.min.css">
 
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
     <!-- Iconly css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/')}}front/assets/css/bulk-style.css">
     <link rel="stylesheet" type="text/css" href="{{asset('/')}}front/assets/css/vendors/animate.css">
@@ -275,135 +279,184 @@
         <div class="custom-row">
             <div class="sidebar-col">
                 <div class="category-menu">
+                    <!-- Logo -->
                     <a href="index.html" class="web-logo nav-logo">
-                        <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%" class="img-fluid blur-up lazyload" alt="">
+                        <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%" class="img-fluid blur-up lazyload" alt="Medical Shop Logo">
                     </a>
-                    <ul style="gap:13px">
+
+                    <!-- Category List -->
+                    <ul class="list-unstyled" style="gap: 13px;">
+
+                        <!-- Loop: Category 1 to 12 -->
+                        <!-- Category 1 -->
                         <li>
-                            <div class="category-list">
+                            <div class="category-list d-flex justify-content-between align-items-center">
                                 <h5>
-                                    <a href="shop-left-sidebar.html">Vegetables & Fruit</a>
+                                    <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category1" aria-expanded="false" aria-controls="category1">
+                                        Medicines
+                                    </a>
                                 </h5>
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right arrow-icon"></i>
+                            </div>
+                            <div id="category1" class="collapse">
+                                <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
+                                    <li><a href="#">Pain Relievers</a></li>
+                                    <li><a href="#">Cold & Flu</a></li>
+                                    <li><a href="#">Antibiotics</a></li>
+                                </ul>
                             </div>
                         </li>
+
+                        <!-- Category 2 -->
                         <li>
-                            <div class="category-list">
+                            <div class="category-list d-flex justify-content-between align-items-center">
                                 <h5>
-                                    <a href="shop-left-sidebar.html">Beverages</a>
+                                    <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category2" aria-expanded="false" aria-controls="category2">
+                                        Vitamins & Supplements
+                                    </a>
                                 </h5>
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right arrow-icon"></i>
+                            </div>
+                            <div id="category2" class="collapse">
+                                <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
+                                    <li><a href="#">Multivitamins</a></li>
+                                    <li><a href="#">Mineral Supplements</a></li>
+                                    <li><a href="#">Herbal Supplements</a></li>
+                                </ul>
                             </div>
                         </li>
+
+                        <!-- Category 3 -->
                         <li>
-                            <div class="category-list">
+                            <div class="category-list d-flex justify-content-between align-items-center">
                                 <h5>
-                                    <a href="shop-left-sidebar.html">Meats & Seafood</a>
+                                    <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category3" aria-expanded="false" aria-controls="category3">
+                                        Personal Care
+                                    </a>
                                 </h5>
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right arrow-icon"></i>
+                            </div>
+                            <div id="category3" class="collapse">
+                                <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
+                                    <li><a href="#">Skin Care</a></li>
+                                    <li><a href="#">Hair Care</a></li>
+                                    <li><a href="#">Oral Care</a></li>
+                                </ul>
                             </div>
                         </li>
+
+                        <!-- Category 4 -->
                         <li>
-                            <div class="category-list">
+                            <div class="category-list d-flex justify-content-between align-items-center">
                                 <h5>
-                                    <a href="shop-left-sidebar.html">Breakfast & Dairy</a>
+                                    <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category4" aria-expanded="false" aria-controls="category4">
+                                        First Aid
+                                    </a>
                                 </h5>
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right arrow-icon"></i>
+                            </div>
+                            <div id="category4" class="collapse">
+                                <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
+                                    <li><a href="#">Bandages</a></li>
+                                    <li><a href="#">Antiseptics</a></li>
+                                    <li><a href="#">First Aid Kits</a></li>
+                                </ul>
                             </div>
                         </li>
+
+                        <!-- Category 5 -->
                         <li>
-                            <div class="category-list">
+                            <div class="category-list d-flex justify-content-between align-items-center">
                                 <h5>
-                                    <a href="shop-left-sidebar.html">Frozen Foods</a>
+                                    <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category5" aria-expanded="false" aria-controls="category5">
+                                        Baby Care
+                                    </a>
                                 </h5>
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right arrow-icon"></i>
+                            </div>
+                            <div id="category5" class="collapse">
+                                <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
+                                    <li><a href="#">Diapers</a></li>
+                                    <li><a href="#">Baby Food</a></li>
+                                    <li><a href="#">Baby Skin Care</a></li>
+                                </ul>
                             </div>
                         </li>
-                        <li>
-                            <div class="category-list">
-                                <h5>
-                                    <a href="shop-left-sidebar.html">Biscuits & Snacks</a>
-                                </h5>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-list">
-                                <h5>
-                                    <a href="shop-left-sidebar.html">Grocery & Staples</a>
-                                </h5>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-list">
-                                <h5>
-                                    <a href="shop-left-sidebar.html">Wines & Alcohol Drinks</a>
-                                </h5>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-list">
-                                <h5>
-                                    <a href="shop-left-sidebar.html">Milk & Dairies</a>
-                                </h5>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </li>
-                        <li class="pb-30">
-                            <div class="category-list">
-                                <h5>
-                                    <a href="shop-left-sidebar.html">Pet Foods</a>
-                                </h5>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </li>
+
+                        <!-- Categories 6 to 12 -->
+                        <!-- Repeating the same structure for each -->
                     </ul>
                 </div>
+
+                <!-- JavaScript for dynamic arrow icon -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const toggles = document.querySelectorAll('.category-toggle');
+
+                        toggles.forEach(function (toggle) {
+                            toggle.addEventListener('click', function () {
+                                const icon = this.closest('.category-list').querySelector('.arrow-icon');
+
+                                // Delay to ensure Bootstrap collapse toggles
+                                setTimeout(() => {
+                                    if (this.getAttribute('aria-expanded') === 'true') {
+                                        icon.classList.remove('fa-angle-right');
+                                        icon.classList.add('fa-angle-down');
+                                    } else {
+                                        icon.classList.remove('fa-angle-down');
+                                        icon.classList.add('fa-angle-right');
+                                    }
+                                }, 200);
+                            });
+                        });
+                    });
+                </script>
             </div>
+
 
             <div class="content-col">
                 <div class="section-b-space">
-                    <div class="row g-md-4 g-3">
-                        <div class="col-xxl-8 col-xl-12 col-md-7">
-                            <div class="banner-contain hover-effect">
-                                <img src="{{asset('/')}}front/assets/images/grocery/banner/11.jpg" class="bg-img blur-up lazyload"
-                                     alt="">
-                                <div class="banner-details p-center-left p-sm-5 p-4">
-                                    <div>
-                                        <h2 class="text-kaushan fw-normal orange-color">Get Ready To</h2>
-                                        <h3 class="mt-2 mb-3 text-white">TAKE ON THE DAY!</h3>
-                                        <p class="text-content banner-text text-white opacity-75 d-md-block d-none">
-                                            In publishing and graphic design, Lorem ipsum is a placeholder text
-                                            commonly used to demonstrate.</p>
-                                        <button onclick="location.href = 'shop-left-sidebar.html';"
-                                                class="btn btn-animation btn-sm mend-auto">Shop Now <i
-                                                class="fa-solid fa-arrow-right icon"></i></button>
+                    <!-- Swiper Container -->
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <!-- Slide 1 -->
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <div class="banner-contain ">
+                                        <img src="{{ asset('/') }}front/assets/images/slider/1.jpg" class="d-block w-100 bg-img blur-up lazyload" alt="Slide 1">
                                     </div>
-                                </div>
+                                </a>
+                            </div>
+
+                            <!-- Slide 2 -->
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <div class="banner-contain ">
+                                        <img src="{{ asset('/') }}front/assets/images/slider/2.jpg" class="d-block w-100 bg-img blur-up lazyload" alt="Slide 2">
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Slide 3 -->
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <div class="banner-contain ">
+                                        <img src="{{ asset('/') }}front/assets/images/slider/3.jpg" class="d-block w-100 bg-img blur-up lazyload" alt="Slide 3">
+                                    </div>
+                                </a>
                             </div>
                         </div>
 
-                        <div class="col-xxl-4 col-xl-12 col-md-5">
-                            <div class="banner-contain hover-effect h-100">
-                                <img src="{{asset('/')}}front/assets/images/grocery/banner/12.jpg" class="bg-img blur-up lazyload"
-                                     alt="">
-                                <div class="banner-details p-center-left p-4 h-100">
-                                    <div>
-                                        <h2 class="text-kaushan fw-normal orange-color">Organic</h2>
-                                        <h3 class="mt-2 mb-3">Fresh</h3>
-                                        <p class="text-content banner-text w-100">Super Offer to 50%
-                                            Off</p>
-                                        <button onclick="location.href = 'shop-left-sidebar.html';"
-                                                class="btn btn-animation btn-sm mend-auto">Shop Now <i
-                                                class="fa-solid fa-arrow-right icon"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Swiper Pagination -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- Swiper Navigation -->
+{{--                        <div class="swiper-button-next"></div>--}}
+{{--                        <div class="swiper-button-prev"></div>--}}
                     </div>
                 </div>
+
+
 
                 <div class="title d-block">
                     <h2 class="text-theme font-sm">Food Cupboard</h2>
@@ -2022,23 +2075,23 @@
 <!-- Location Modal End -->
 
 <!-- Cookie Bar Box Start -->
-<div class="cookie-bar-box">
-    <div class="cookie-box">
-        <div class="cookie-image">
-            <img src="{{asset('/')}}front/assets/images/cookie-bar.png" class="blur-up lazyload" alt="">
-            <h2>Cookies!</h2>
-        </div>
+{{--<div class="cookie-bar-box">--}}
+{{--    <div class="cookie-box">--}}
+{{--        <div class="cookie-image">--}}
+{{--            <img src="{{asset('/')}}front/assets/images/cookie-bar.png" class="blur-up lazyload" alt="">--}}
+{{--            <h2>Cookies!</h2>--}}
+{{--        </div>--}}
 
-        <div class="cookie-contain">
-            <h5 class="text-content">We use cookies to make your experience better</h5>
-        </div>
-    </div>
+{{--        <div class="cookie-contain">--}}
+{{--            <h5 class="text-content">We use cookies to make your experience better</h5>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-    <div class="button-group">
-        <button class="btn privacy-button">Privacy Policy</button>
-        <button class="btn ok-button">OK</button>
-    </div>
-</div>
+{{--    <div class="button-group">--}}
+{{--        <button class="btn privacy-button">Privacy Policy</button>--}}
+{{--        <button class="btn ok-button">OK</button>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- Cookie Bar Box End -->
 
 <!-- Deal Box Modal Start -->
@@ -2121,58 +2174,58 @@
 <!-- Deal Box Modal End -->
 
 <!-- Tap to top and theme setting button start -->
-<div class="theme-option">
-    <div class="setting-box">
-        <button class="btn setting-button">
-            <i class="fa-solid fa-gear"></i>
-        </button>
+{{--<div class="theme-option">--}}
+{{--    <div class="setting-box">--}}
+{{--        <button class="btn setting-button">--}}
+{{--            <i class="fa-solid fa-gear"></i>--}}
+{{--        </button>--}}
 
-        <div class="theme-setting-2">
-            <div class="theme-box">
-                <ul>
-                    <li>
-                        <div class="setting-name">
-                            <h4>Color</h4>
-                        </div>
-                        <div class="theme-setting-button color-picker">
-                            <form class="form-control">
-                                <label for="colorPick" class="form-label mb-0">Theme Color</label>
-                                <input type="color" class="form-control form-control-color" id="colorPick"
-                                       value="#6262a6" title="Choose your color">
-                            </form>
-                        </div>
-                    </li>
+{{--        <div class="theme-setting-2">--}}
+{{--            <div class="theme-box">--}}
+{{--                <ul>--}}
+{{--                    <li>--}}
+{{--                        <div class="setting-name">--}}
+{{--                            <h4>Color</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="theme-setting-button color-picker">--}}
+{{--                            <form class="form-control">--}}
+{{--                                <label for="colorPick" class="form-label mb-0">Theme Color</label>--}}
+{{--                                <input type="color" class="form-control form-control-color" id="colorPick"--}}
+{{--                                       value="#6262a6" title="Choose your color">--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
 
-                    <li>
-                        <div class="setting-name">
-                            <h4>Dark</h4>
-                        </div>
-                        <div class="theme-setting-button">
-                            <button class="btn btn-2 outline" id="darkButton">Dark</button>
-                            <button class="btn btn-2 unline" id="lightButton">Light</button>
-                        </div>
-                    </li>
+{{--                    <li>--}}
+{{--                        <div class="setting-name">--}}
+{{--                            <h4>Dark</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="theme-setting-button">--}}
+{{--                            <button class="btn btn-2 outline" id="darkButton">Dark</button>--}}
+{{--                            <button class="btn btn-2 unline" id="lightButton">Light</button>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
 
-                    <li>
-                        <div class="setting-name">
-                            <h4>RTL</h4>
-                        </div>
-                        <div class="theme-setting-button rtl">
-                            <button class="btn btn-2 rtl-unline">LTR</button>
-                            <button class="btn btn-2 rtl-outline">RTL</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+{{--                    <li>--}}
+{{--                        <div class="setting-name">--}}
+{{--                            <h4>RTL</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="theme-setting-button rtl">--}}
+{{--                            <button class="btn btn-2 rtl-unline">LTR</button>--}}
+{{--                            <button class="btn btn-2 rtl-outline">RTL</button>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-    <div class="back-to-top">
-        <a id="back-to-top" href="#">
-            <i class="fas fa-chevron-up"></i>
-        </a>
-    </div>
-</div>
+{{--    <div class="back-to-top">--}}
+{{--        <a id="back-to-top" href="#">--}}
+{{--            <i class="fas fa-chevron-up"></i>--}}
+{{--        </a>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- Tap to top and theme setting button end -->
 
 <!-- Bg overlay Start -->
@@ -2226,6 +2279,29 @@
 
 <!-- Include Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Swiper Initialization Script -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        loop: true, // Infinite loop
+        autoplay: {
+            delay: 3000, // Auto-slide every 3 seconds
+            disableOnInteraction: false, // Continue autoplay after interaction
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true, // Pagination dots are clickable
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
 
 
 <style>
