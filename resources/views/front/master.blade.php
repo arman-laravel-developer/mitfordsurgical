@@ -278,7 +278,7 @@
                     <a href="index.html" class="web-logo nav-logo">
                         <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%" class="img-fluid blur-up lazyload" alt="">
                     </a>
-                    <ul>
+                    <ul style="gap:13px">
                         <li>
                             <div class="category-list">
                                 <h5>
