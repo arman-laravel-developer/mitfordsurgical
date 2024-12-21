@@ -6,24 +6,53 @@
 @endsection
 
 @section('body')
-    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">404</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+    <div class="content-col">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section pt-0">
+            <div class="container-fluid-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-contain">
+                            <h2>404 Page</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">404</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
 
-    <div class="error-content text-center" style="background-image: url({{asset('/')}}front/assets/images/backgrounds/error-bg.jpg)">
-        <div class="container">
-            <h1 class="error-title">Error 404</h1><!-- End .error-title -->
-            <p>We are sorry, the page you've requested is not available.</p>
-            <a href="{{route('home')}}" class="btn btn-outline-primary-2 btn-minwidth-lg">
-                <span>BACK TO HOMEPAGE</span>
-                <i class="icon-long-arrow-right"></i>
-            </a>
-        </div><!-- End .container -->
-    </div><!-- End .error-content text-center -->
+        <!-- 404 Section Start -->
+        <section class="section-404 section-lg-space">
+            <div class="container-fluid-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="image-404">
+                            <img src="{{asset('/')}}front/assets/images/inner-page/404.png" class="img-fluid blur-up lazyload" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="contain-404">
+                            <h3 class="text-content">The page you are looking for could not be found. The link to this
+                                address may be outdated or we may have moved the since you last bookmarked it.</h3>
+                            <button onclick="location.href = '{{route('home')}}';"
+                                    class="btn btn-md text-white theme-bg-color mt-4 mx-auto">Back To Home Screen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 404 Section End -->
+    </div>
 @endsection
 

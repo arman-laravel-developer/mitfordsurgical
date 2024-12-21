@@ -1,7 +1,7 @@
 <div class="sidebar-col">
     <div class="category-menu">
         <!-- Logo -->
-        <a href="index.html" class="web-logo nav-logo">
+        <a href="{{route('home')}}" class="web-logo nav-logo">
             <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%" class="img-fluid blur-up lazyload" alt="Medical Shop Logo">
         </a>
 

@@ -175,14 +175,14 @@
 <body class="theme-color-4 bg-gradient-color">
 
 <!-- Loader Start -->
-<div class="fullpage-loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
+{{--<div class="fullpage-loader">--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--    <span></span>--}}
+{{--</div>--}}
 <!-- Loader End -->
 
 <!-- Header Start -->
@@ -267,60 +267,6 @@
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
                                         </button>
-
-{{--                                        <div class="onhover-div">--}}
-{{--                                            <ul class="cart-list">--}}
-{{--                                                <li class="product-box-contain">--}}
-{{--                                                    <div class="drop-cart">--}}
-{{--                                                        <a href="product-left-thumbnail.html" class="drop-image">--}}
-{{--                                                            <img src="{{asset('/')}}front/assets/images/vegetable/product/1.png"--}}
-{{--                                                                 class="blur-up lazyload" alt="">--}}
-{{--                                                        </a>--}}
-
-{{--                                                        <div class="drop-contain">--}}
-{{--                                                            <a href="product-left-thumbnail.html">--}}
-{{--                                                                <h5>Fantasy Crunchy Choco Chip Cookies</h5>--}}
-{{--                                                            </a>--}}
-{{--                                                            <h6><span>1 x</span> $80.58</h6>--}}
-{{--                                                            <button class="close-button close_button">--}}
-{{--                                                                <i class="fa-solid fa-xmark"></i>--}}
-{{--                                                            </button>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </li>--}}
-
-{{--                                                <li class="product-box-contain">--}}
-{{--                                                    <div class="drop-cart">--}}
-{{--                                                        <a href="product-left-thumbnail.html" class="drop-image">--}}
-{{--                                                            <img src="{{asset('/')}}front/assets/images/vegetable/product/2.png"--}}
-{{--                                                                 class="blur-up lazyload" alt="">--}}
-{{--                                                        </a>--}}
-
-{{--                                                        <div class="drop-contain">--}}
-{{--                                                            <a href="product-left-thumbnail.html">--}}
-{{--                                                                <h5>Peanut Butter Bite Premium Butter Cookies 600 g--}}
-{{--                                                                </h5>--}}
-{{--                                                            </a>--}}
-{{--                                                            <h6><span>1 x</span> $25.68</h6>--}}
-{{--                                                            <button class="close-button close_button">--}}
-{{--                                                                <i class="fa-solid fa-xmark"></i>--}}
-{{--                                                            </button>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </li>--}}
-{{--                                            </ul>--}}
-
-{{--                                            <div class="price-box">--}}
-{{--                                                <h5>Total :</h5>--}}
-{{--                                                <h4 class="theme-color fw-bold">$106.58</h4>--}}
-{{--                                            </div>--}}
-
-{{--                                            <div class="button-group">--}}
-{{--                                                <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>--}}
-{{--                                                <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color--}}
-{{--                                                    text-white">Checkout</a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
                                     </div>
                                 </li>
                                 <li class="right-side onhover-dropdown">
@@ -362,51 +308,7 @@
 <!-- Header End -->
 
 <!-- mobile fix menu start -->
-<div class="mobile-menu d-md-none d-block mobile-cart">
-    <ul>
-        <li class="active">
-            <a href="index.html">
-                <i data-feather="home" style="color: white"></i>
-                <span>Home</span>
-            </a>
-        </li>
-
-
-        <li class="mobile-category">
-            <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
-                <span class=" navbar-toggler-icon-2">
-                <i data-feather="list" style="color: white"></i>
-                <span>Category</span>
-            </span>
-            </a>
-        </li>
-
-        <li>
-            <a href="search.html" class="search-box">
-                <i data-feather="search" style="color: white"></i>
-                <span>Search</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="wishlist.html" class="notifi-wishlist">
-                <i data-feather="heart" style="color: white"></i>
-                <span>My Wish</span>
-            </a>
-        </li>
-
-        <li style="position: relative;">
-            <a href="javascript:void(0)" onclick="openCart()" style="position: relative;">
-                <i data-feather="shopping-cart" style="color: white;"></i>
-                <span>Cart</span>
-                <!-- Badge -->
-                <span class="badge rounded-pill bg-danger position-absolute top-0 translate-middle" style="left: 90%!important;">
-            5
-        </span>
-            </a>
-        </li>
-    </ul>
-</div>
+@include('front.inc.mobile-fix-menu')
 <!-- mobile fix menu end -->
 
 <!-- Product Section Start -->
@@ -429,11 +331,11 @@
         <div class="container-fluid">
             <div class="main-footer" style="padding-top: 2%;">
                 <div class="row g-md-4 g-3">
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-lg-4 col-sm-6">
                         <div class="footer-logo">
                             <div class="theme-logo">
-                                <a href="index.html">
-                                    <img src="{{asset('/')}}front/assets/images/logo/5.png" class="blur-up lazyload" alt="" style="width: 100%">
+                                <a href="{{route('home')}}">
+                                    <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%;" class="blur-up lazyload" alt="">
                                 </a>
                             </div>
 
@@ -441,11 +343,21 @@
                                 <p>We are a friendly bar serving a variety of cocktails, wines and beers. Our bar is a
                                     perfect place for a couple.</p>
 
+                                <ul class="address">
+                                    <li>
+                                        <i data-feather="home"></i>
+                                        <a href="javascript:void(0)">1418 Riverwood Drive, CA 96052, US</a>
+                                    </li>
+                                    <li>
+                                        <i data-feather="mail"></i>
+                                        <a href="javascript:void(0)">support@fastkart.com</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xl-3 col-lg-2 col-sm-3">
+                    <div class="col-xl-3 col-lg-3 col-sm-3">
                         <div class="footer-title">
                             <h4>Useful Links</h4>
                         </div>
@@ -459,16 +371,19 @@
                                     <a href="shop-left-sidebar.html" class="text-content">Products</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html" class="text-content">About Us</a>
+                                    <a href="contact-us.html" class="text-content">Terms & Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Contact Us</a>
+                                    <a href="contact-us.html" class="text-content">Privacy policies</a>
+                                </li>
+                                <li>
+                                    <a href="contact-us.html" class="text-content">Return and refund policies</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="col-xl-3 col-lg-2 col-sm-3">
+                    <div class="col-xl-2 col-sm-3">
                         <div class="footer-title">
                             <h4>Help Center</h4>
                         </div>
@@ -480,6 +395,15 @@
                                 </li>
                                 <li>
                                     <a href="order-tracking.html" class="text-content">Track Order</a>
+                                </li>
+                                <li>
+                                    <a href="order-tracking.html" class="text-content">Become a vendor</a>
+                                </li>
+                                <li>
+                                    <a href="about-us.html" class="text-content">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="contact-us.html" class="text-content">Contact Us</a>
                                 </li>
                                 <li>
                                     <a href="faq.html" class="text-content">FAQ</a>
@@ -514,6 +438,18 @@
                                         </div>
                                     </div>
                                 </li>
+
+                                <li class="social-app mb-0">
+                                    <h5 class="mb-2 text-content">Become a Vendor :</h5>
+                                    <ul>
+                                        <li class="mb-0">
+                                            <a href="" class="btn btn-md bg-primary text-white">Register</a>
+                                        </li>
+                                        <li class="mb-0">
+                                            <a href="" class="btn btn-md bg-danger text-white">Login</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -522,7 +458,7 @@
 
             <div class="sub-footer section-small-space">
                 <div class="reserve">
-                    <h6 class="text-content">©2022 Fastkart All rights reserved</h6>
+                    <h6 class="text-content">©{{date('Y')}} {{$generalSettingView->site_name}} All rights reserved</h6>
                 </div>
 
                 <div class="payment">
@@ -562,107 +498,7 @@
 <!-- Footer Section End -->
 
 <!-- Quick View Modal Box Start -->
-<div class="modal fade theme-modal view-modal" id="view" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
-        <div class="modal-content">
-            <div class="modal-header p-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row g-sm-4 g-2">
-                    <div class="col-lg-6">
-                        <div class="slider-image">
-                            <img src="{{asset('/')}}front/assets/images/product/category/1.jpg" class="img-fluid blur-up lazyload"
-                                 alt="">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="right-sidebar-modal">
-                            <h4 class="title-name">Peanut Butter Bite Premium Butter Cookies 600 g</h4>
-                            <h4 class="price">$36.99</h4>
-                            <div class="product-rating">
-                                <ul class="rating">
-                                    <li>
-                                        <i data-feather="star" class="fill"></i>
-                                    </li>
-                                    <li>
-                                        <i data-feather="star" class="fill"></i>
-                                    </li>
-                                    <li>
-                                        <i data-feather="star" class="fill"></i>
-                                    </li>
-                                    <li>
-                                        <i data-feather="star" class="fill"></i>
-                                    </li>
-                                    <li>
-                                        <i data-feather="star"></i>
-                                    </li>
-                                </ul>
-                                <span class="ms-2">8 Reviews</span>
-                                <span class="ms-2 text-danger">6 sold in last 16 hours</span>
-                            </div>
-
-                            <div class="product-detail">
-                                <h4>Product Details :</h4>
-                                <p>Candy canes sugar plum tart cotton candy chupa chups sugar plum chocolate I love.
-                                    Caramels marshmallow icing dessert candy canes I love soufflé I love toffee.
-                                    Marshmallow pie sweet sweet roll sesame snaps tiramisu jelly bear claw. Bonbon
-                                    muffin I love carrot cake sugar plum dessert bonbon.</p>
-                            </div>
-
-                            <ul class="brand-list">
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Brand Name:</h5>
-                                        <h6>Black Forest</h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Product Code:</h5>
-                                        <h6>W0690034</h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Product Type:</h5>
-                                        <h6>White Cream Cake</h6>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <div class="select-size">
-                                <h4>Cake Size :</h4>
-                                <select class="form-select select-form-size">
-                                    <option selected>Select Size</option>
-                                    <option value="1.2">1/2 KG</option>
-                                    <option value="0">1 KG</option>
-                                    <option value="1.5">1/5 KG</option>
-                                    <option value="red">Red Roses</option>
-                                    <option value="pink">With Pink Roses</option>
-                                </select>
-                            </div>
-
-                            <div class="modal-button">
-                                <button onclick="location.href = 'cart.html';"
-                                        class="btn btn-md add-cart-button icon">Add
-                                    To Cart</button>
-                                <button onclick="location.href = 'product-left.html';"
-                                        class="btn theme-bg-color view-button icon text-white fw-bold btn-md">
-                                    View More Details</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('front.inc.product-view')
 <!-- Quick View Modal Box End -->
 
 <!-- Location Modal Start -->
@@ -890,7 +726,7 @@
             </div>
             <button class="remove-item" onclick="removeItem('item-1')">&times;</button>
         </div>
-        <div class="cart-item" id="item-1">
+        <div class="cart-item" id="item-2">
             <div>
                 <p class="mb-0 fw-bold">Harpic Liquid Toilet Cleaner</p>
                 <span class="text-muted">৳ 263 </span>
@@ -907,7 +743,7 @@
     </div>
 
     <div class="cart-footer p-3 border-top">
-        <button class="btn btn-danger w-100 fw-bold">Place Order <span>৳ 5,577</span></button>
+        <a href="{{route('checkout')}}" class="btn bg-danger text-white w-100 fw-bold">Place Order <span>৳ 5,577</span></a>
     </div>
 </div>
 
@@ -934,6 +770,9 @@
 
 <!-- Lazyload Js -->
 <script src="{{asset('/')}}front/assets/js/lazysizes.min.js"></script>
+
+<!-- Delivery Option js -->
+<script src="{{asset('/')}}front/assets/js/delivery-option.js"></script>
 
 <!-- Slick js-->
 <script src="{{asset('/')}}front/assets/js/slick/slick.js"></script>

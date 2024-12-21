@@ -171,8 +171,7 @@
 
 
         <div class="title d-block">
-            <h2 class="text-theme font-sm">Food Cupboard</h2>
-            <p>A virtual assistant collects the products from your list</p>
+            <h2 class="text-theme font-sm text-center">Feature Products</h2>
         </div>
 
         <div
@@ -897,8 +896,7 @@
         </div>
 
         <div class="title d-block">
-            <h2 class="text-theme font-sm">Food Cupboard</h2>
-            <p>A virtual assistant collects the products from your list</p>
+            <h2 class="text-theme font-sm text-center">All Products</h2>
         </div>
 
         <div

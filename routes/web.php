@@ -6,6 +6,7 @@ use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\CheckoutController;
 use App\Models\RoleRoute;
 
 function getRoleName($routeName)
@@ -47,10 +48,11 @@ Route::post('/save-password', [CustomerController::class, 'savePassword'])->name
 
 Route::post('/contact-form', [ContactFormController::class, 'submit'])->name('contact-form.submit');
 
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
 Route::middleware('customer.logout')->group(function () {
     Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
     Route::post('/customer-logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
-
 
     Route::post('/profile-update', [CustomerDashboardController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/store-active-tab', [CustomerDashboardController::class, 'storeActiveTab'])->name('store.active.tab');
