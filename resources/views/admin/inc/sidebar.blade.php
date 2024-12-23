@@ -79,6 +79,40 @@
             </div>
         </li>
     @endif
+    @if ($userType === 1 || !empty(array_filter(['product.add', 'product.manage', 'category.manage','brand.add', 'color.add', 'size.add'], fn($route) => in_array($route, $roleRoutes))))
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarCategory" aria-expanded="false" aria-controls="sidebarEmail"
+               class="side-nav-link">
+                <i class="uil-list-ul"></i>
+                <span> Products </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarCategory">
+                <ul class="side-nav-second-level">
+                    @if ($userType === 1 || in_array('product.add', $roleRoutes))
+                        <li>
+                            <a href="{{route('product.add')}}">Add Product</a>
+                        </li>
+                    @endif
+                    @if ($userType === 1 || in_array('product.manage', $roleRoutes))
+                        <li>
+                            <a href="{{route('product.manage')}}">Products</a>
+                        </li>
+                    @endif
+                    @if ($userType === 1 || in_array('category.manage', $roleRoutes))
+                        <li>
+                            <a href="{{route('category.manage')}}">Category</a>
+                        </li>
+                    @endif
+                    @if ($userType === 1 || in_array('brand.add', $roleRoutes))
+                        <li>
+                            <a href="{{route('brand.add')}}">Brand</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+    @endif
     @if ($userType === 1 || in_array('dashboard.customer', $roleRoutes))
     <li class="side-nav-item">
         <a href="{{route('dashboard.customer')}}" class="side-nav-link">

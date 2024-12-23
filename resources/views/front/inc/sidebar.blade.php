@@ -10,99 +10,29 @@
 
             <!-- Loop: Category 1 to 12 -->
             <!-- Category 1 -->
+            @foreach($menuCategories as $menuCategory)
             <li>
                 <div class="category-list d-flex justify-content-between align-items-center">
                     <h5>
-                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category1" aria-expanded="false" aria-controls="category1">
-                            Medicines
+                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category{{$menuCategory->id}}" aria-expanded="false" aria-controls="category{{$menuCategory->id}}">
+                            {{$menuCategory->category_name}}
                         </a>
                     </h5>
+                    @if(count($menuCategory->subCategories) > 0)
                     <i class="fa-solid fa-angle-right arrow-icon"></i>
+                    @endif
                 </div>
-                <div id="category1" class="collapse">
+                @if(count($menuCategory->subCategories) > 0)
+                <div id="category{{$menuCategory->id}}" class="collapse">
                     <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
-                        <li><a href="#">Pain Relievers</a></li>
-                        <li><a href="#">Cold & Flu</a></li>
-                        <li><a href="#">Antibiotics</a></li>
+                        @foreach($menuCategory->subCategories as $subCategory)
+                        <li><a href="#">{{$subCategory->category_name}}</a></li>
+                        @endforeach
                     </ul>
                 </div>
+                @endif
             </li>
-
-            <!-- Category 2 -->
-            <li>
-                <div class="category-list d-flex justify-content-between align-items-center">
-                    <h5>
-                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category2" aria-expanded="false" aria-controls="category2">
-                            Vitamins & Supplements
-                        </a>
-                    </h5>
-                    <i class="fa-solid fa-angle-right arrow-icon"></i>
-                </div>
-                <div id="category2" class="collapse">
-                    <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
-                        <li><a href="#">Multivitamins</a></li>
-                        <li><a href="#">Mineral Supplements</a></li>
-                        <li><a href="#">Herbal Supplements</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Category 3 -->
-            <li>
-                <div class="category-list d-flex justify-content-between align-items-center">
-                    <h5>
-                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category3" aria-expanded="false" aria-controls="category3">
-                            Personal Care
-                        </a>
-                    </h5>
-                    <i class="fa-solid fa-angle-right arrow-icon"></i>
-                </div>
-                <div id="category3" class="collapse">
-                    <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
-                        <li><a href="#">Skin Care</a></li>
-                        <li><a href="#">Hair Care</a></li>
-                        <li><a href="#">Oral Care</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Category 4 -->
-            <li>
-                <div class="category-list d-flex justify-content-between align-items-center">
-                    <h5>
-                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category4" aria-expanded="false" aria-controls="category4">
-                            First Aid
-                        </a>
-                    </h5>
-                    <i class="fa-solid fa-angle-right arrow-icon"></i>
-                </div>
-                <div id="category4" class="collapse">
-                    <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
-                        <li><a href="#">Bandages</a></li>
-                        <li><a href="#">Antiseptics</a></li>
-                        <li><a href="#">First Aid Kits</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Category 5 -->
-            <li>
-                <div class="category-list d-flex justify-content-between align-items-center">
-                    <h5>
-                        <a href="#" class="category-toggle" data-bs-toggle="collapse" data-bs-target="#category5" aria-expanded="false" aria-controls="category5">
-                            Baby Care
-                        </a>
-                    </h5>
-                    <i class="fa-solid fa-angle-right arrow-icon"></i>
-                </div>
-                <div id="category5" class="collapse">
-                    <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
-                        <li><a href="#">Diapers</a></li>
-                        <li><a href="#">Baby Food</a></li>
-                        <li><a href="#">Baby Skin Care</a></li>
-                    </ul>
-                </div>
-            </li>
+            @endforeach
 
             <!-- Categories 6 to 12 -->
             <!-- Repeating the same structure for each -->

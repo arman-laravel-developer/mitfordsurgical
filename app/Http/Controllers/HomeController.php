@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Privacy;
+use App\Models\Slider;
 use App\Models\Union;
 use App\Models\Upazila;
 use Illuminate\Http\Request;
@@ -17,9 +18,11 @@ use Cart;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return view('front.home.home');
+        $sliders = Slider::where('status',1)->latest()->take(5)->get();
+        $homeCategories = Category::where('status',1)->where('display_status',1)->latest()->take(10)->get();
+        return view('front.home.home', compact('sliders', 'homeCategories'));
     }
     public function aboutUs()
     {

@@ -67,8 +67,7 @@ class CategoryController extends Controller
             $category->featured = 2;
         }
         $category->save();
-        Alert::success('Category Added Successfully', '');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Category Added Successfully');
     }
 
     public function manage()

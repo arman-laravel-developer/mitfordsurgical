@@ -103,6 +103,22 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
             Route::post('/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
         });
+        Route::prefix('brand')->group(function () {
+            Route::get('/add', [BrandController::class, 'index'])->name('brand.add');
+            Route::post('/new', [BrandController::class, 'create'])->name('brand.new');
+            Route::get('/manage', [BrandController::class, 'manage'])->name('brand.manage');
+            Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+            Route::post('/update/{id}', [BrandController::class, 'update'])->name('brand.update');
+            Route::post('/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+        });
+        Route::prefix('product')->group(function () {
+            Route::get('/add', [ProductController::class, 'index'])->name('product.add');
+            Route::post('/new', [ProductController::class, 'create'])->name('product.new');
+            Route::get('/manage', [ProductController::class, 'manage'])->name('product.manage');
+            Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+            Route::post('/update/{id}', [ProductController::class, 'update'])->name('product.update');
+            Route::post('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+        });
         Route::prefix('privacy')->group(function () {
             Route::get('/add', [PrivacyController::class, 'index'])->name('privacy.add');
             Route::post('/new', [PrivacyController::class, 'create'])->name('privacy.new');

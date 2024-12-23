@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $view->with('menuCategories', Category::where('status', 1)->where('parent_id', 0)->latest()->get());
+            $view->with('menuCategories', Category::where('status', 1)->where('parent_id', 0)->orderBy('id', 'asc')->get());
             $view->with('googleAnalytic', GoogleAnalytic::latest()->first());
             $view->with('generalSettingView', GeneralSetting::latest()->first());
             $view->with('districts', District::orderBy('name', 'asc')->get());
