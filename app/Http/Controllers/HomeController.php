@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Privacy;
+use App\Models\ReturnAndRefund;
 use App\Models\Slider;
 use App\Models\Union;
 use App\Models\Upazila;
@@ -45,6 +46,11 @@ class HomeController extends Controller
     {
         $condition = Privacy::latest()->first();
         return view('front.privacy.conditions', compact('condition'));
+    }
+    public function returnPage()
+    {
+        $return = ReturnAndRefund::latest()->first();
+        return view('front.privacy.return', compact('return'));
     }
 
 }

@@ -5,110 +5,196 @@
 @endsection
 
 @section('body')
-    <div class="page-header text-center" style="background-image: url('{{asset('/')}}front/assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Contact us</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Contact us </li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+    <div class="content-col">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-contain">
+                            <h2>Contact Us</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{route('home')}}">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Contact Us</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
 
-    <div class="page-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="contact-box text-center">
-                        <h3>Office</h3>
+        <!-- Contact Box Section Start -->
+        <section class="contact-box-section">
+            <div class="container">
+                <div class="row g-lg-5 g-3">
+                    <div class="col-lg-6">
+                        <div class="left-sidebar-box">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="contact-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/contact-us.png"
+                                             class="img-fluid blur-up lazyloaded" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="contact-title">
+                                        <h3>Get In Touch</h3>
+                                    </div>
 
-                        <address>{{$generalSettingView->address}}</address>
-                    </div><!-- End .contact-box -->
-                </div><!-- End .col-md-4 -->
+                                    <div class="contact-detail">
+                                        <div class="row g-4">
+                                            <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                                <div class="contact-detail-box">
+                                                    <div class="contact-icon">
+                                                        <i class="fa-solid fa-phone"></i>
+                                                    </div>
+                                                    <div class="contact-detail-title">
+                                                        <h4>Phone</h4>
+                                                    </div>
 
-                <div class="col-md-4">
-                    <div class="contact-box text-center">
-                        <h3>Start a Conversation</h3>
+                                                    <div class="contact-detail-contain">
+                                                        <p>(+1) 618 190 496</p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                        <div><a href="mailto:{{$generalSettingView->email}}"><span >{{$generalSettingView->email}}</span></a></div>
-                        <div><a href="tel:{{$generalSettingView->mobile}}">{{$generalSettingView->mobile}}</a></div>
-                    </div><!-- End .contact-box -->
-                </div><!-- End .col-md-4 -->
+                                            <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                                <div class="contact-detail-box">
+                                                    <div class="contact-icon">
+                                                        <i class="fa-solid fa-envelope"></i>
+                                                    </div>
+                                                    <div class="contact-detail-title">
+                                                        <h4>Email</h4>
+                                                    </div>
 
-                <div class="col-md-4">
-                    <div class="contact-box text-center">
-                        <h3>Social</h3>
+                                                    <div class="contact-detail-contain">
+                                                        <p>geweto9420@chokxus.com</p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                        <div class="social-icons social-icons-color justify-content-center">
-                            <a href="{{$generalSettingView->facebook_url}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                            <a href="{{$generalSettingView->twitter_url}}" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                            <a href="{{$generalSettingView->instagram_url}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                            <a href="{{$generalSettingView->youtube_url}}" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                            <a href="{{$generalSettingView->pinterest_url}}" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                        </div><!-- End .soial-icons -->
-                    </div><!-- End .contact-box -->
-                </div><!-- End .col-md-4 -->
-            </div><!-- End .row -->
+                                            <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                                <div class="contact-detail-box">
+                                                    <div class="contact-icon">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                    </div>
+                                                    <div class="contact-detail-title">
+                                                        <h4>London Office</h4>
+                                                    </div>
 
-            <hr class="mt-3 mb-5 mt-md-1">
-            <div class="touch-container row justify-content-center">
-                <div class="col-md-9 col-lg-7">
-                    <div class="text-center">
-                        <h2 class="title mb-1">Get In Touch</h2><!-- End .title mb-2 -->
-                        <p class="lead text-primary">
-                            We collaborate with ambitious brands and people; we’d love to build something great together.
-                        </p><!-- End .lead text-primary -->
-                        <p class="mb-3">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-                    </div><!-- End .text-center -->
+                                                    <div class="contact-detail-contain">
+                                                        <p>Cruce Casa de Postas 29</p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                    <form action="{{route('contact-form.submit')}}" class="contact-form mb-2" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="cname" class="sr-only">Name</label>
-                                <input type="text" class="form-control" id="cname" name="name" placeholder="Name *" required>
-                            </div><!-- End .col-sm-4 -->
+                                            <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                                <div class="contact-detail-box">
+                                                    <div class="contact-icon">
+                                                        <i class="fa-solid fa-building"></i>
+                                                    </div>
+                                                    <div class="contact-detail-title">
+                                                        <h4>Bournemouth Office</h4>
+                                                    </div>
 
-                            <div class="col-sm-4">
-                                <label for="cemail" class="sr-only">Email</label>
-                                <input type="email" class="form-control" id="cemail" name="email" placeholder="Email *" required>
-                            </div><!-- End .col-sm-4 -->
+                                                    <div class="contact-detail-contain">
+                                                        <p>Visitación de la Encina 22</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                            <div class="col-sm-4">
-                                <label for="cphone" class="sr-only">Phone</label>
-                                <input type="tel" class="form-control" id="cphone" name="phone" placeholder="Phone *" required>
-                            </div><!-- End .col-sm-4 -->
-                        </div><!-- End .row -->
+                    <div class="col-lg-6">
+                        <div class="right-sidebar-box">
+                            <div class="row">
+                                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                    <div class="mb-md-4 mb-3 custom-form">
+                                        <label for="exampleFormControlInput" class="form-label">First Name</label>
+                                        <div class="custom-input">
+                                            <input type="text" class="form-control" id="exampleFormControlInput"
+                                                   placeholder="Enter First Name">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <label for="csubject" class="sr-only">Subject</label>
-                        <input type="text" class="form-control" id="csubject" name="subject" placeholder="Subject *" required>
+                                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                    <div class="mb-md-4 mb-3 custom-form">
+                                        <label for="exampleFormControlInput2" class="form-label">Email Address</label>
+                                        <div class="custom-input">
+                                            <input type="email" class="form-control" id="exampleFormControlInput2"
+                                                   placeholder="Enter Email Address">
+                                            <i class="fa-solid fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <label for="cmessage" class="sr-only">Message</label>
-                        <textarea class="form-control" cols="30" rows="4" id="cmessage" name="message" required placeholder="Message *"></textarea>
+                                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                    <div class="mb-md-4 mb-3 custom-form">
+                                        <label for="exampleFormControlInput3" class="form-label">Phone Number</label>
+                                        <div class="custom-input">
+                                            <input type="tel" class="form-control" id="exampleFormControlInput3"
+                                                   placeholder="Enter Your Phone Number" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value =
+                                            this.value.slice(0, this.maxLength);">
+                                            <i class="fa-solid fa-mobile-screen-button"></i>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
-                                <span>SUBMIT</span>
-                                <i class="icon-long-arrow-right"></i>
-                            </button>
-                        </div><!-- End .text-center -->
-                    </form><!-- End .contact-form -->
-                </div><!-- End .col-md-9 col-lg-7 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-        <div id="map" class="mb-5">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d542.8797616416426!2d90.37106565645105!3d23.74576881248106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755bfc0765c4903%3A0xe316f296a7b6a6e1!2sApcom%20e-Shop!5e0!3m2!1sen!2sbd!4v1724925939404!5m2!1sen!2sbd"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy"
-            ></iframe>
-        </div><!-- End #map -->
-    </div><!-- End .page-content -->
+
+                                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                    <div class="mb-md-4 mb-3 custom-form">
+                                        <label for="exampleFormControlInput1" class="form-label">Subject</label>
+                                        <div class="custom-input">
+                                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                                                   placeholder="Enter Subject">
+                                            <i class="fa-solid fa-heading"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mb-md-4 mb-3 custom-form">
+                                        <label for="exampleFormControlTextarea" class="form-label">Message</label>
+                                        <div class="custom-textarea">
+                                        <textarea class="form-control" id="exampleFormControlTextarea"
+                                                  placeholder="Enter Your Message" rows="6"></textarea>
+                                            <i class="fa-solid fa-message"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-animation btn-md fw-bold ms-auto">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Box Section End -->
+
+        <!-- Map Section Start -->
+        <section class="map-section">
+            <div class="container-fluid p-0">
+                <div class="map-box">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5696.801627759493!2d90.37127900000002!3d23.745961!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755bfc0765c4903%3A0xe316f296a7b6a6e1!2sApcom%20e-Shop!5e1!3m2!1sen!2sbd!4v1734937168067!5m2!1sen!2sbd"
+                        style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+        <!-- Map Section End -->
+    </div>
 @endsection

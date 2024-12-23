@@ -371,13 +371,13 @@
                                     <a href="shop-left-sidebar.html" class="text-content">Products</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Terms & Conditions</a>
+                                    <a href="{{route('condition.page')}}" class="text-content">Terms & Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Privacy policies</a>
+                                    <a href="{{route('privacy.page')}}" class="text-content">Privacy policies</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Return and refund policies</a>
+                                    <a href="{{route('return.page')}}" class="text-content">Return and refund policies</a>
                                 </li>
                             </ul>
                         </div>
@@ -403,7 +403,7 @@
                                     <a href="about-us.html" class="text-content">About Us</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Contact Us</a>
+                                    <a href="{{route('contact.us')}}" class="text-content">Contact Us</a>
                                 </li>
                                 <li>
                                     <a href="faq.html" class="text-content">FAQ</a>
