@@ -25,30 +25,37 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary"><i class="mdi mdi-archive font-16"></i></button>
-                        <button type="button" class="btn btn-secondary"><i class="mdi mdi-alert-octagon font-16"></i></button>
-                        <button type="button" class="btn btn-secondary"><i class="mdi mdi-delete-variant font-16"></i></button>
-                    </div>
-                    <ul class="email-list mt-3">
-                        @foreach($contactForms as $contactForm)
-                        <li class="@if($contactForm->read_status == 2) unread @endif">
-                            <div class="email-sender-info">
-                                <div class="checkbox-wrapper-mail">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="mail1">
-                                        <label class="form-check-label" for="mail1"></label>
+                    <form action="{{ route('contactForm.delete') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-danger"><i class="mdi mdi-delete-variant font-16"></i> Delete Selected</button>
+                        </div>
+                        <ul class="email-list mt-3">
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="selectAll">
+                                <label class="form-check-label" for="selectAll">Select All</label>
+                            </div>
+                            @foreach($contactForms as $contactForm)
+                                <li class="@if($contactForm->read_status == 2) unread @endif">
+                                    <div class="email-sender-info">
+                                        <div class="checkbox-wrapper-mail">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="contact_form_ids[]" value="{{$contactForm->id}}" id="mail1">
+                                                <label class="form-check-label" for="mail1"></label>
+                                            </div>
+                                        </div>
+                                        <a href="{{route('contactForm.detail', ['id' => $contactForm->id])}}" class="email-title">{{$contactForm->name}}</a>
                                     </div>
-                                </div>
-                                <a href="{{route('contactForm.detail', ['id' => $contactForm->id])}}" class="email-title">{{$contactForm->name}}</a>
-                            </div>
-                            <div class="email-content">
-                                <a href="{{route('contactForm.detail', ['id' => $contactForm->id])}}" class="email-subject">{{$contactForm->subject}}</a>
-                                <div class="float-end">{{$contactForm->created_at->format('Y-m-d h:m:i A')}}</div>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
+                                    <div class="email-content">
+                                        <a href="{{route('contactForm.detail', ['id' => $contactForm->id])}}" class="email-subject">{{$contactForm->subject}}</a>
+                                        <div class="float-end">{{$contactForm->created_at->format('Y-m-d h:m:i A')}}</div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </form>
                     <div class="row">
                         <div class="col-7 mt-1">
                             Showing {{ $contactForms->firstItem() }} - {{ $contactForms->lastItem() }} of {{ $contactForms->total() }}
@@ -76,4 +83,11 @@
 
         </div> <!-- end Col -->
     </div><!-- End row -->
+
+    <script>
+        document.getElementById('selectAll').addEventListener('change', function (e) {
+            const checkboxes = document.querySelectorAll('input[name="contact_form_ids[]"]');
+            checkboxes.forEach(checkbox => checkbox.checked = e.target.checked);
+        });
+    </script>
 @endsection

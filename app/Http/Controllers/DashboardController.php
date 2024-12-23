@@ -107,5 +107,14 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
+    public function delete(Request $request)
+    {
+        // Delete the selected property queries
+        ContactForm::whereIn('id', $request->contact_form_ids)->delete();
+
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'Selected queries deleted successfully!');
+    }
+
 
 }

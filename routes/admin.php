@@ -55,6 +55,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         })->name('clear-cache');
 
         Route::get('/contact-form-queries', [DashboardController::class, 'contactFormShow'])->name('dashboard.contact-form');
+        Route::delete('/contact-form-delete', [DashboardController::class, 'delete'])->name('contactForm.delete');
         Route::get('/contact-form-detail/{id}', [DashboardController::class, 'contactFormDetail'])->name('contactForm.detail');
         Route::post('/contact-form-replay/{id}', [DashboardController::class, 'contactFormReplay'])->name('contactForm.replay');
         Route::get('/customer-manage', [DashboardController::class, 'customer'])->name('dashboard.customer');
