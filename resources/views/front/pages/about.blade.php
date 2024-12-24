@@ -5,115 +5,398 @@
 @endsection
 
 @section('body')
-    <div class="page-header text-center" style="background-image: url('{{asset('/')}}front/assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">About us</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">About us</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+    <div class="content-col">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-contain" style="padding: 0;">
+                            <h2>About Us</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{route('home')}}">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">About Us</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
 
-    <div class="page-content pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="about-text text-center mt-3">
-                        <h2 class="title text-center mb-2">Who We Are</h2><!-- End .title text-center mb-2 -->
-                        <p>{!! $about->who_we_are !!}</p>
-{{--                        <img src="{{asset('/')}}front/assets/images/about/about-2/signature.png" alt="signature" class="mx-auto mb-5">--}}
+        <!-- Fresh Vegetable Section Start -->
+        <section class="fresh-vegetable-section section-lg-space">
+            <div class="container">
+                <div class="row gx-xl-5 gy-xl-0 g-3 ratio_148_1">
+                    <div class="col-xl-6 col-12">
+                        <div class="row g-sm-4 g-2">
+                            <div class="col-6">
+                                <div class="fresh-image-2">
+                                    <div>
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/about-us/1.jpg"
+                                             class="bg-img blur-up lazyload" alt="">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <img src="{{asset($about->image)}}" alt="image" class="mx-auto mb-6 mt-3">
-                    </div><!-- End .about-text -->
-                </div><!-- End .col-lg-10 offset-1 -->
-            </div><!-- End .row -->
-{{--            <div class="row justify-content-center">--}}
-{{--                <div class="col-lg-4 col-sm-6">--}}
-{{--                    <div class="icon-box icon-box-sm text-center">--}}
-{{--                                <span class="icon-box-icon">--}}
-{{--                                    <i class="icon-puzzle-piece"></i>--}}
-{{--                                </span>--}}
-{{--                        <div class="icon-box-content">--}}
-{{--                            <h3 class="icon-box-title">Design Quality</h3><!-- End .icon-box-title -->--}}
-{{--                            <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero <br>eu augue.</p>--}}
-{{--                        </div><!-- End .icon-box-content -->--}}
-{{--                    </div><!-- End .icon-box -->--}}
-{{--                </div><!-- End .col-lg-4 col-sm-6 -->--}}
+                            <div class="col-6">
+                                <div class="fresh-image">
+                                    <div>
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/about-us/2.jpg"
+                                             class="bg-img blur-up lazyload" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-{{--                <div class="col-lg-4 col-sm-6">--}}
-{{--                    <div class="icon-box icon-box-sm text-center">--}}
-{{--                                <span class="icon-box-icon">--}}
-{{--                                    <i class="icon-life-ring"></i>--}}
-{{--                                </span>--}}
-{{--                        <div class="icon-box-content">--}}
-{{--                            <h3 class="icon-box-title">Professional Support</h3><!-- End .icon-box-title -->--}}
-{{--                            <p>Praesent dapibus, neque id cursus faucibus, <br>tortor neque egestas augue, eu vulputate <br>magna eros eu erat. </p>--}}
-{{--                        </div><!-- End .icon-box-content -->--}}
-{{--                    </div><!-- End .icon-box -->--}}
-{{--                </div><!-- End .col-lg-4 col-sm-6 -->--}}
+                    <div class="col-xl-6 col-12">
+                        <div class="fresh-contain p-center-left">
+                            <div>
+                                <div class="review-title">
+                                    <h4>About Us</h4>
+                                    <h2>We make Organic Food In Market</h2>
+                                </div>
 
-{{--                <div class="col-lg-4 col-sm-6">--}}
-{{--                    <div class="icon-box icon-box-sm text-center">--}}
-{{--                                <span class="icon-box-icon">--}}
-{{--                                    <i class="icon-heart-o"></i>--}}
-{{--                                </span>--}}
-{{--                        <div class="icon-box-content">--}}
-{{--                            <h3 class="icon-box-title">Made With Love</h3><!-- End .icon-box-title -->--}}
-{{--                            <p>Pellentesque a diam sit amet mi ullamcorper <br>vehicula. Nullam quis massa sit amet <br>nibh viverra malesuada.</p>--}}
-{{--                        </div><!-- End .icon-box-content -->--}}
-{{--                    </div><!-- End .icon-box -->--}}
-{{--                </div><!-- End .col-lg-4 col-sm-6 -->--}}
-{{--            </div><!-- End .row -->--}}
-        </div><!-- End .container -->
+                                <div class="delivery-list">
+                                    <p class="text-content">Just a few seconds to measure your body temperature. Up to 5
+                                        users! The battery lasts up to 2 years. There are many variations of passages of
+                                        Lorem Ipsum available.We started in 2019 and haven't stopped smashing it since. A
+                                        global brand that doesn't sleep, we are 24/7 and always bringing something new with
+                                        over 100 new products dropping on the monthly, bringing you the latest looks for
+                                        less.</p>
 
-        <div class="mb-2"></div><!-- End .mb-2 -->
+                                    <ul class="delivery-box">
+                                        <li>
+                                            <div class="delivery-box">
+                                                <div class="delivery-icon">
+                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" class="blur-up lazyload" alt="">
+                                                </div>
 
-{{--        <div class="bg-image pt-7 pb-5 pt-md-12 pb-md-9" style="background-image: url({{asset('/')}}front/assets/images/backgrounds/bg-4.jpg)">--}}
-{{--            <div class="container">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-6 col-md-3">--}}
-{{--                        <div class="count-container text-center">--}}
-{{--                            <div class="count-wrapper text-white">--}}
-{{--                                <span class="count" data-from="0" data-to="40" data-speed="3000" data-refresh-interval="50">0</span>k+--}}
-{{--                            </div><!-- End .count-wrapper -->--}}
-{{--                            <h3 class="count-title text-white">Happy Customer</h3><!-- End .count-title -->--}}
-{{--                        </div><!-- End .count-container -->--}}
-{{--                    </div><!-- End .col-6 col-md-3 -->--}}
+                                                <div class="delivery-detail">
+                                                    <h5 class="text">Free delivery for all orders</h5>
+                                                </div>
+                                            </div>
+                                        </li>
 
-{{--                    <div class="col-6 col-md-3">--}}
-{{--                        <div class="count-container text-center">--}}
-{{--                            <div class="count-wrapper text-white">--}}
-{{--                                <span class="count" data-from="0" data-to="20" data-speed="3000" data-refresh-interval="50">0</span>+--}}
-{{--                            </div><!-- End .count-wrapper -->--}}
-{{--                            <h3 class="count-title text-white">Years in Business</h3><!-- End .count-title -->--}}
-{{--                        </div><!-- End .count-container -->--}}
-{{--                    </div><!-- End .col-6 col-md-3 -->--}}
+                                        <li>
+                                            <div class="delivery-box">
+                                                <div class="delivery-icon">
+                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" class="blur-up lazyload" alt="">
+                                                </div>
 
-{{--                    <div class="col-6 col-md-3">--}}
-{{--                        <div class="count-container text-center">--}}
-{{--                            <div class="count-wrapper text-white">--}}
-{{--                                <span class="count" data-from="0" data-to="95" data-speed="3000" data-refresh-interval="50">0</span>%--}}
-{{--                            </div><!-- End .count-wrapper -->--}}
-{{--                            <h3 class="count-title text-white">Return Clients</h3><!-- End .count-title -->--}}
-{{--                        </div><!-- End .count-container -->--}}
-{{--                    </div><!-- End .col-6 col-md-3 -->--}}
+                                                <div class="delivery-detail">
+                                                    <h5 class="text">Only fresh foods</h5>
+                                                </div>
+                                            </div>
+                                        </li>
 
-{{--                    <div class="col-6 col-md-3">--}}
-{{--                        <div class="count-container text-center">--}}
-{{--                            <div class="count-wrapper text-white">--}}
-{{--                                <span class="count" data-from="0" data-to="15" data-speed="3000" data-refresh-interval="50">0</span>--}}
-{{--                            </div><!-- End .count-wrapper -->--}}
-{{--                            <h3 class="count-title text-white">Awards Won</h3><!-- End .count-title -->--}}
-{{--                        </div><!-- End .count-container -->--}}
-{{--                    </div><!-- End .col-6 col-md-3 -->--}}
-{{--                </div><!-- End .row -->--}}
-{{--            </div><!-- End .container -->--}}
-{{--        </div><!-- End .bg-image pt-8 pb-8 -->--}}
+                                        <li>
+                                            <div class="delivery-box">
+                                                <div class="delivery-icon">
+                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" class="blur-up lazyload" alt="">
+                                                </div>
 
-    </div><!-- End .page-content -->
+                                                <div class="delivery-detail">
+                                                    <h5 class="text">Free delivery for all orders</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="delivery-box">
+                                                <div class="delivery-icon">
+                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" class="blur-up lazyload" alt="">
+                                                </div>
+
+                                                <div class="delivery-detail">
+                                                    <h5 class="text">Only fresh foods</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Fresh Vegetable Section End -->
+
+        <!-- Client Section Start -->
+        <section class="client-section section-lg-space">
+            <div class="container-fluid-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="about-us-title text-center">
+                            <h4>What We Do</h4>
+                            <h2 class="center">We are Trusted by Clients</h2>
+                        </div>
+
+                        <div class="slider-3_1 product-wrapper">
+                            <div>
+                                <div class="clint-contain">
+                                    <div class="client-icon">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/work.svg" class="blur-up lazyload" alt="">
+                                    </div>
+                                    <h2>10</h2>
+                                    <h4>Business Years</h4>
+                                    <p>A coffee shop is a small business that sells coffee, pastries, and other morning
+                                        goods. There are many different types of coffee shops around the world.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="clint-contain">
+                                    <div class="client-icon">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/buy.svg" class="blur-up lazyload" alt="">
+                                    </div>
+                                    <h2>80 K+</h2>
+                                    <h4>Products Sales</h4>
+                                    <p>Some coffee shops have a seating area, while some just have a spot to order and then
+                                        go somewhere else to sit down. The coffee shop that I am going to.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="clint-contain">
+                                    <div class="client-icon">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/user.svg" class="blur-up lazyload" alt="">
+                                    </div>
+                                    <h2>90%</h2>
+                                    <h4>Happy Customers</h4>
+                                    <p>My goal for this coffee shop is to be able to get a coffee and get on with my day.
+                                        It's a Thursday morning and I am rushing between meetings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Client Section End -->
+
+        <!-- Team Section Start -->
+        <section class="team-section section-lg-space">
+            <div class="container-fluid-lg">
+                <div class="about-us-title text-center">
+                    <h4 class="text-content">Our Creative Team</h4>
+                    <h2 class="center">{{$generalSettingView->site_name}} team member</h2>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-user product-wrapper">
+                            <div>
+                                <div class="team-box">
+                                    <div class="team-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/user/1.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+
+                                    <div class="team-name">
+                                        <h3>Anna Baranov</h3>
+                                        <h5>Marketing</h5>
+                                        <p>cheeseburger airedale mozzarella the big cheese fondue.</p>
+                                        <ul class="team-media">
+                                            <li>
+                                                <a href="https://www.facebook.com/" class="fb-bg">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://in.pinterest.com/" class="pint-bg">
+                                                    <i class="fa-brands fa-pinterest-p"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://twitter.com/" class="twitter-bg">
+                                                    <i class="fa-brands fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://www.instagram.com/" class="insta-bg">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="team-box">
+                                    <div class="team-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/user/2.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+
+                                    <div class="team-name">
+                                        <h3>Anna Baranov</h3>
+                                        <h5>Marketing</h5>
+                                        <p>cheese on toast mozzarella bavarian bergkase smelly cheese cheesy feet.</p>
+                                        <ul class="team-media">
+                                            <li>
+                                                <a href="https://www.facebook.com/" class="fb-bg">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://in.pinterest.com/" class="pint-bg">
+                                                    <i class="fa-brands fa-pinterest-p"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://twitter.com/" class="twitter-bg">
+                                                    <i class="fa-brands fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://www.instagram.com/" class="insta-bg">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="team-box">
+                                    <div class="team-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/user/3.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+
+                                    <div class="team-name">
+                                        <h3>Anna Baranov</h3>
+                                        <h5>Marketing</h5>
+                                        <p>camembert de normandie. Bocconcini rubber cheese fromage frais port-salut.</p>
+                                        <ul class="team-media">
+                                            <li>
+                                                <a href="https://www.facebook.com/" class="fb-bg">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://in.pinterest.com/" class="pint-bg">
+                                                    <i class="fa-brands fa-pinterest-p"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://twitter.com/" class="twitter-bg">
+                                                    <i class="fa-brands fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://www.instagram.com/" class="insta-bg">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="team-box">
+                                    <div class="team-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/user/4.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+
+                                    <div class="team-name">
+                                        <h3>Anna Baranov</h3>
+                                        <h5>Marketing</h5>
+                                        <p>Fondue stinking bishop goat. Macaroni cheese croque monsieur cottage cheese.</p>
+                                        <ul class="team-media">
+                                            <li>
+                                                <a href="https://www.facebook.com/" class="fb-bg">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://in.pinterest.com/" class="pint-bg">
+                                                    <i class="fa-brands fa-pinterest-p"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://twitter.com/" class="twitter-bg">
+                                                    <i class="fa-brands fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://www.instagram.com/" class="insta-bg">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="team-box">
+                                    <div class="team-image">
+                                        <img src="{{asset('/')}}front/assets/images/inner-page/user/1.jpg" class="img-fluid blur-up lazyload"
+                                             alt="">
+                                    </div>
+
+                                    <div class="team-name">
+                                        <h3>Anna Baranov</h3>
+                                        <h5>Marketing</h5>
+                                        <p>squirty cheese cheddar macaroni cheese airedale cheese triangles.</p>
+                                        <ul class="team-media">
+                                            <li>
+                                                <a href="https://www.facebook.com/" class="fb-bg">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://in.pinterest.com/" class="pint-bg">
+                                                    <i class="fa-brands fa-pinterest-p"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://twitter.com/" class="twitter-bg">
+                                                    <i class="fa-brands fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="https://www.instagram.com/" class="insta-bg">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Team Section End -->
+    </div>
 @endsection

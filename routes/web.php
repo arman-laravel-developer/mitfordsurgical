@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CategoryProductsController;
 use App\Models\RoleRoute;
 
 function getRoleName($routeName)
@@ -36,8 +37,13 @@ Route::get('/return', [HomeController::class, 'returnPage'])->name('return.page'
 Route::get('/conditions', [HomeController::class, 'condition'])->name('condition.page');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
+
+Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
+
+Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');
+Route::get('/customer-login', [CustomerController::class, 'login'])->name('customer.login');
 Route::post('/customer-store', [CustomerController::class, 'store'])->name('customer.store');
-Route::post('/customer-login', [CustomerController::class, 'loginCheck'])->name('customer.login');
+Route::post('/customer-login-check', [CustomerController::class, 'loginCheck'])->name('customer.login-check');
 
 Route::get('/forget-password', [CustomerController::class, 'forget'])->name('forget.password')->middleware('customer.login');
 Route::post('/forget-password-send-otp', [CustomerController::class, 'sendCode'])->name('forget.password-send-code')->middleware('customer.login');

@@ -19,8 +19,7 @@ class CustomerLogoutMiddleware
     {
         if (!Session::get('customer_id'))
         {
-            flash()->error('Access denied!', 'Please login first');
-            return redirect()->route('home');
+            return redirect()->route('customer.login')->with('error', 'Please login first');
         }
         else
         {

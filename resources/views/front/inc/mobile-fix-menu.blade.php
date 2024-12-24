@@ -31,7 +31,7 @@
             </a>
         </li>
 
-        <li style="position: relative;">
+        <li style="position: relative;" class="mobile-cart">
             <a href="javascript:void(0)" onclick="openCart()" style="position: relative;">
                 <i data-feather="shopping-cart" style="color: white;"></i>
                 <span>Cart</span>

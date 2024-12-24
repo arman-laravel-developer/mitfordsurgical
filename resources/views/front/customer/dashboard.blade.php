@@ -5,286 +5,2216 @@
 @endsection
 
 @section('body')
-    <style>
-        .profile-container {
-            display: flex;
-            align-items: center;
-            padding: 3%;
-            margin-bottom: 2%;
-            background-color: #cc9966;
-        }
-
-        .profile-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-        .profile-info h3, .profile-info p {
-            margin: 0;
-        }
-
-        .dashboard-container {
-            max-width: 1200px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: 100%;
-        }
-        .dashboard-header h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-        .dashboard-stats {
-            display: flex;
-            justify-content: space-between;
-            text-align: center;
-        }
-        .stat-box {
-            width: 30%;
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .stat-box h2 {
-            font-size: 2em;
-            margin: 0;
-        }
-        .stat-box p {
-            font-size: 1.2em;
-            margin: 10px 0 0;
-        }
-    </style>
-    <link href="{{asset('/')}}admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <div class="page-header text-center" style="background-image: url('{{asset('/')}}front/assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">My Account<span>Shop</span></h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">My Account</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-
-    <div class="page-content">
-        <div class="dashboard">
+    <div class="content-col">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section pt-0">
             <div class="container">
                 <div class="row">
-                    <aside class="col-md-4 col-lg-3">
-                        <div class="profile-container">
-                            @if($customer->profile_img == null)
-                            <img src="{{asset('/')}}front/assets/images/man.png" alt="Profile Image" class="profile-image">
-                            @else
-                            <img src="{{asset($customer->profile_img)}}" alt="Profile Image" class="profile-image">
-                            @endif
-                            <div class="profile-info">
-                                <h3>{{$customer->name}}</h3>
-                                <p style="color: black">{{$customer->mobile}}</p>
+                    <div class="col-12">
+                        <div class="breadcrumb-contain">
+                            <h2>User Dashboard</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">User Dashboard</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
+
+        <!-- User Dashboard Section Start -->
+        <section class="user-dashboard-section section-b-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-3 col-lg-4">
+                        <div class="dashboard-left-sidebar">
+                            <div class="close-button d-flex d-lg-none">
+                                <button class="close-sidebar">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <div class="profile-box">
+                                <div class="cover-image">
+                                    <img src="{{asset('/')}}front/assets/images/inner-page/cover-img.jpg" class="img-fluid blur-up lazyload"
+                                         alt="">
+                                </div>
+
+                                <div class="profile-contain">
+                                    <div class="profile-image">
+                                        <div class="position-relative">
+                                            <img src="{{asset('/')}}front/assets/images/inner-page/user/1.jpg"
+                                                 class="blur-up lazyload update_img" alt="">
+                                            <div class="cover-icon">
+                                                <i class="fa-solid fa-pen">
+                                                    <input type="file" onchange="readURL(this,0)">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-name">
+                                        <h3>Vicki E. Pope</h3>
+                                        <h6 class="text-content">vicki.pope@gmail.com</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-dashboard-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-dashboard" type="button"><i data-feather="home"></i>
+                                        DashBoard</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-order-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-order" type="button"><i
+                                            data-feather="shopping-bag"></i>Order</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-wishlist-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-wishlist" type="button"><i data-feather="heart"></i>
+                                        Wishlist</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-card-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-card" type="button" role="tab"><i
+                                            data-feather="credit-card"></i> Saved Card</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-address-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-address" type="button" role="tab"><i
+                                            data-feather="map-pin"></i>Address</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-profile" type="button" role="tab"><i data-feather="user"></i>
+                                        Profile</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-download-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-download" type="button" role="tab"><i
+                                            data-feather="download"></i>Download</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-security-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-security" type="button" role="tab"><i
+                                            data-feather="shield"></i>
+                                        Privacy</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-9 col-lg-8">
+                        <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">Show
+                            Menu</button>
+                        <div class="dashboard-right-sidebar">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel">
+                                    <div class="dashboard-home">
+                                        <div class="title">
+                                            <h2>My Dashboard</h2>
+                                            <span class="title-leaf">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                        </div>
+
+                                        <div class="dashboard-user-name">
+                                            <h6 class="text-content">Hello, <b class="text-title">Vicki E. Pope</b></h6>
+                                            <p class="text-content">From your My Account Dashboard you have the ability to
+                                                view a snapshot of your recent account activity and update your account
+                                                information. Select a link below to view or edit information.</p>
+                                        </div>
+
+                                        <div class="total-box">
+                                            <div class="row g-sm-4 g-3">
+                                                <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
+                                                    <div class="total-contain">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/order.svg"
+                                                             class="img-1 blur-up lazyload" alt="">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/order.svg" class="blur-up lazyload"
+                                                             alt="">
+                                                        <div class="total-detail">
+                                                            <h5>Total Order</h5>
+                                                            <h3>3658</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
+                                                    <div class="total-contain">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg"
+                                                             class="img-1 blur-up lazyload" alt="">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg" class="blur-up lazyload"
+                                                             alt="">
+                                                        <div class="total-detail">
+                                                            <h5>Total Pending Order</h5>
+                                                            <h3>254</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
+                                                    <div class="total-contain">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg"
+                                                             class="img-1 blur-up lazyload" alt="">
+                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg"
+                                                             class="blur-up lazyload" alt="">
+                                                        <div class="total-detail">
+                                                            <h5>Total Wishlist</h5>
+                                                            <h3>32158</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="dashboard-title">
+                                            <h3>Account Information</h3>
+                                        </div>
+
+                                        <div class="row g-4">
+                                            <div class="col-xxl-6">
+                                                <div class="dashboard-content-title">
+                                                    <h4>Contact Information <a href="javascript:void(0)"
+                                                                               data-bs-toggle="modal" data-bs-target="#editProfile">Edit</a>
+                                                    </h4>
+                                                </div>
+                                                <div class="dashboard-detail">
+                                                    <h6 class="text-content">MARK JECNO</h6>
+                                                    <h6 class="text-content">vicki.pope@gmail.com</h6>
+                                                    <a href="javascript:void(0)">Change Password</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-6">
+                                                <div class="dashboard-content-title">
+                                                    <h4>Newsletters <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                                       data-bs-target="#editProfile">Edit</a></h4>
+                                                </div>
+                                                <div class="dashboard-detail">
+                                                    <h6 class="text-content">You are currently not subscribed to any
+                                                        newsletter</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="dashboard-content-title">
+                                                    <h4>Address Book <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                                        data-bs-target="#editProfile">Edit</a></h4>
+                                                </div>
+
+                                                <div class="row g-4">
+                                                    <div class="col-xxl-6">
+                                                        <div class="dashboard-detail">
+                                                            <h6 class="text-content">Default Billing Address</h6>
+                                                            <h6 class="text-content">You have not set a default billing
+                                                                address.</h6>
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                               data-bs-target="#editProfile">Edit Address</a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xxl-6">
+                                                        <div class="dashboard-detail">
+                                                            <h6 class="text-content">Default Shipping Address</h6>
+                                                            <h6 class="text-content">You have not set a default shipping
+                                                                address.</h6>
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                               data-bs-target="#editProfile">Edit Address</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-wishlist" role="tabpanel">
+                                    <div class="dashboard-wishlist">
+                                        <div class="title">
+                                            <h2>My Wishlist History</h2>
+                                            <span class="title-leaf title-leaf-gray">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                        </div>
+                                        <div class="row g-sm-4 g-3">
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Vegetable</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Cheesy feet
+                                                                cheesy grin brie. Mascarpone cheese and wine hard cheese the
+                                                                big cheese everyone loves smelly cheese macaroni cheese
+                                                                croque monsieur.</p>
+                                                            <h6 class="unit mt-1">250 ml</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$08.02</span>
+                                                                <del>$15.15</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Vegetable</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Peanut Butter Bite Premium Butter Cookies
+                                                                    600 g</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Feta taleggio
+                                                                croque monsieur swiss manchego cheesecake dolcelatte
+                                                                jarlsberg. Hard cheese danish fontina boursin melted cheese
+                                                                fondue.</p>
+                                                            <h6 class="unit mt-1">350 G</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$04.33</span>
+                                                                <del>$10.36</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Snacks</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">SnackAmor Combo Pack of Jowar Stick and
+                                                                    Jowar Chips</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Lancashire
+                                                                hard cheese parmesan. Danish fontina mozzarella cream cheese
+                                                                smelly cheese cheese and wine cheesecake dolcelatte stilton.
+                                                                Cream cheese parmesan who moved my cheese when the cheese
+                                                                comes out everybody's happy cream cheese red leicester
+                                                                ricotta edam.</p>
+                                                            <h6 class="unit mt-1">570 G</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$12.52</span>
+                                                                <del>$13.62</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Snacks</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Yumitos Chilli Sprinkled Potato Chips 100 g
+                                                                </h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Cheddar
+                                                                cheddar pecorino hard cheese hard cheese cheese and biscuits
+                                                                bocconcini babybel. Cow goat paneer cream cheese fromage
+                                                                cottage cheese cauliflower cheese jarlsberg.</p>
+                                                            <h6 class="unit mt-1">100 G</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$10.25</span>
+                                                                <del>$12.36</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Vegetable</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Fantasy Crunchy Choco Chip Cookies</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Bavarian
+                                                                bergkase smelly cheese swiss cut the cheese lancashire who
+                                                                moved my cheese manchego melted cheese. Red leicester paneer
+                                                                cow when the cheese comes out everybody's happy croque
+                                                                monsieur goat melted cheese port-salut.</p>
+                                                            <h6 class="unit mt-1">550 G</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$14.25</span>
+                                                                <del>$16.57</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Vegetable</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Melted cheese
+                                                                babybel chalk and cheese. Port-salut port-salut cream cheese
+                                                                when the cheese comes out everybody's happy cream cheese
+                                                                hard cheese cream cheese red leicester.</p>
+                                                            <h6 class="unit mt-1">1 Kg</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$12.68</span>
+                                                                <del>$14.69</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                                <div class="product-box-3 theme-bg-white h-100">
+                                                    <div class="product-header">
+                                                        <div class="product-image">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
+                                                                     class="img-fluid blur-up lazyload" alt="">
+                                                            </a>
+
+                                                            <div class="product-header-top">
+                                                                <button class="btn wishlist-button close_button">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-footer">
+                                                        <div class="product-detail">
+                                                            <span class="span-name">Vegetable</span>
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                            </a>
+                                                            <p class="text-content mt-1 mb-2 product-content">Squirty cheese
+                                                                cottage cheese cheese strings. Red leicester paneer danish
+                                                                fontina queso lancashire when the cheese comes out
+                                                                everybody's happy cottage cheese paneer.</p>
+                                                            <h6 class="unit mt-1">250 ml</h6>
+                                                            <h5 class="price">
+                                                                <span class="theme-color">$08.02</span>
+                                                                <del>$15.15</del>
+                                                            </h5>
+                                                            <div class="add-to-cart-box mt-2">
+                                                                <button class="btn btn-add-cart addcart-button"
+                                                                        tabindex="0">Add
+                                                                    <span class="add-icon">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                                </button>
+                                                                <div class="cart_qty qty-box">
+                                                                    <div class="input-group">
+                                                                        <button type="button" class="qty-left-minus"
+                                                                                data-type="minus" data-field="">
+                                                                            <i class="fa fa-minus"></i>
+                                                                        </button>
+                                                                        <input class="form-control input-number qty-input"
+                                                                               type="text" name="quantity" value="0">
+                                                                        <button type="button" class="qty-right-plus"
+                                                                                data-type="plus" data-field="">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-order" role="tabpanel">
+                                    <div class="dashboard-order">
+                                        <div class="title">
+                                            <h2>My Orders History</h2>
+                                            <span class="title-leaf title-leaf-gray">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                        </div>
+
+                                        <div class="order-contain">
+                                            <div class="order-box dashboard-bg-box">
+                                                <div class="order-container">
+                                                    <div class="order-icon">
+                                                        <i data-feather="box"></i>
+                                                    </div>
+
+                                                    <div class="order-detail">
+                                                        <h4>Delivers <span>Pending</span></h4>
+                                                        <h6 class="text-content">Gouda parmesan caerphilly mozzarella
+                                                            cottage cheese cauliflower cheese taleggio gouda.</h6>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product-order-detail">
+                                                    <a href="product-left-thumbnail.html" class="order-image">
+                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/1.png"
+                                                             class="blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="order-wrap">
+                                                        <a href="product-left-thumbnail.html">
+                                                            <h3>Fantasy Crunchy Choco Chip Cookies</h3>
+                                                        </a>
+                                                        <p class="text-content">Cheddar dolcelatte gouda. Macaroni cheese
+                                                            cheese strings feta halloumi cottage cheese jarlsberg cheese
+                                                            triangles say cheese.</p>
+                                                        <ul class="product-size">
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Price : </h6>
+                                                                    <h5>$20.68</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Rate : </h6>
+                                                                    <div class="product-rating ms-2">
+                                                                        <ul class="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Sold By : </h6>
+                                                                    <h5>Fresho</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Quantity : </h6>
+                                                                    <h5>250 G</h5>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="order-box dashboard-bg-box">
+                                                <div class="order-container">
+                                                    <div class="order-icon">
+                                                        <i data-feather="box"></i>
+                                                    </div>
+
+                                                    <div class="order-detail">
+                                                        <h4>Delivered <span class="success-bg">Success</span></h4>
+                                                        <h6 class="text-content">Cheese on toast cheesy grin cheesy grin
+                                                            cottage cheese caerphilly everyone loves cottage cheese the big
+                                                            cheese.</h6>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product-order-detail">
+                                                    <a href="product-left-thumbnail.html" class="order-image">
+                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/2.png" alt=""
+                                                             class="blur-up lazyload">
+                                                    </a>
+
+                                                    <div class="order-wrap">
+                                                        <a href="product-left-thumbnail.html">
+                                                            <h3>Cold Brew Coffee Instant Coffee 50 g</h3>
+                                                        </a>
+                                                        <p class="text-content">Pecorino paneer port-salut when the cheese
+                                                            comes out everybody's happy red leicester mascarpone blue
+                                                            castello cauliflower cheese.</p>
+                                                        <ul class="product-size">
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Price : </h6>
+                                                                    <h5>$20.68</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Rate : </h6>
+                                                                    <div class="product-rating ms-2">
+                                                                        <ul class="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Sold By : </h6>
+                                                                    <h5>Fresho</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Quantity : </h6>
+                                                                    <h5>250 G</h5>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="order-box dashboard-bg-box">
+                                                <div class="order-container">
+                                                    <div class="order-icon">
+                                                        <i data-feather="box"></i>
+                                                    </div>
+
+                                                    <div class="order-detail">
+                                                        <h4>Delivere <span>Pending</span></h4>
+                                                        <h6 class="text-content">Cheesy grin boursin cheesy grin cheesecake
+                                                            blue castello cream cheese lancashire melted cheese.</h6>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product-order-detail">
+                                                    <a href="product-left-thumbnail.html" class="order-image">
+                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/3.png" alt=""
+                                                             class="blur-up lazyload">
+                                                    </a>
+
+                                                    <div class="order-wrap">
+                                                        <a href="product-left-thumbnail.html">
+                                                            <h3>Peanut Butter Bite Premium Butter Cookies 600 g</h3>
+                                                        </a>
+                                                        <p class="text-content">Cow bavarian bergkase mascarpone paneer
+                                                            squirty cheese fromage frais cheese slices when the cheese comes
+                                                            out everybody's happy.</p>
+                                                        <ul class="product-size">
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Price : </h6>
+                                                                    <h5>$20.68</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Rate : </h6>
+                                                                    <div class="product-rating ms-2">
+                                                                        <ul class="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Sold By : </h6>
+                                                                    <h5>Fresho</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Quantity : </h6>
+                                                                    <h5>250 G</h5>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="order-box dashboard-bg-box">
+                                                <div class="order-container">
+                                                    <div class="order-icon">
+                                                        <i data-feather="box"></i>
+                                                    </div>
+
+                                                    <div class="order-detail">
+                                                        <h4>Delivered <span class="success-bg">Success</span></h4>
+                                                        <h6 class="text-content">Caerphilly port-salut parmesan pecorino
+                                                            croque monsieur dolcelatte melted cheese cheese and wine.</h6>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product-order-detail">
+                                                    <a href="product-left-thumbnail.html" class="order-image">
+                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/4.png"
+                                                             class="blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="order-wrap">
+                                                        <a href="product-left-thumbnail.html">
+                                                            <h3>SnackAmor Combo Pack of Jowar Stick and Jowar Chips</h3>
+                                                        </a>
+                                                        <p class="text-content">The big cheese cream cheese pepper jack
+                                                            cheese slices danish fontina everyone loves cheese on toast
+                                                            bavarian bergkase.</p>
+                                                        <ul class="product-size">
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Price : </h6>
+                                                                    <h5>$20.68</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Rate : </h6>
+                                                                    <div class="product-rating ms-2">
+                                                                        <ul class="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" class="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Sold By : </h6>
+                                                                    <h5>Fresho</h5>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Quantity : </h6>
+                                                                    <h5>250 G</h5>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-address" role="tabpanel">
+                                    <div class="dashboard-address">
+                                        <div class="title title-flex">
+                                            <div>
+                                                <h2>My Address Book</h2>
+                                                <span class="title-leaf">
+                                                <svg class="icon-width bg-gray">
+                                                    <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                                </svg>
+                                            </span>
+                                            </div>
+
+                                            <button class="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
+                                                    data-bs-toggle="modal" data-bs-target="#add-address"><i data-feather="plus"
+                                                                                                            class="me-2"></i> Add New Address</button>
+                                        </div>
+
+                                        <div class="row g-sm-4 g-3">
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                                <div class="address-box">
+                                                    <div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jack"
+                                                                   id="flexRadioDefault2" checked>
+                                                        </div>
+
+                                                        <div class="label">
+                                                            <label>Home</label>
+                                                        </div>
+
+                                                        <div class="table-responsive address-table">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td colspan="2">Jack Jennas</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Address :</td>
+                                                                    <td>
+                                                                        <p>8424 James Lane South San Francisco, CA 94080
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Pin Code :</td>
+                                                                    <td>+380</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Phone :</td>
+                                                                    <td>+ 812-710-3798</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group">
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
+                                                            Edit</button>
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
+                                                            Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                                <div class="address-box">
+                                                    <div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jack"
+                                                                   id="flexRadioDefault3">
+                                                        </div>
+
+                                                        <div class="label">
+                                                            <label>Office</label>
+                                                        </div>
+
+                                                        <div class="table-responsive address-table">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td colspan="2">Terry S. Sutton</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Address :</td>
+                                                                    <td>
+                                                                        <p>2280 Rose Avenue Kenner, LA 70062</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Pin Code :</td>
+                                                                    <td>+25</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Phone :</td>
+                                                                    <td>+ 504-228-0969</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group">
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
+                                                            Edit</button>
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
+                                                            Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                                <div class="address-box">
+                                                    <div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jack"
+                                                                   id="flexRadioDefault4">
+                                                        </div>
+
+                                                        <div class="label">
+                                                            <label>Neighbour</label>
+                                                        </div>
+
+                                                        <div class="table-responsive address-table">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td colspan="2">Juan M. McKeon</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Address :</td>
+                                                                    <td>
+                                                                        <p>1703 Carson Street Lexington, KY 40593</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Pin Code :</td>
+                                                                    <td>+78</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Phone :</td>
+                                                                    <td>+ 859-257-0509</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group">
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
+                                                            Edit</button>
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
+                                                            Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                                <div class="address-box">
+                                                    <div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jack"
+                                                                   id="flexRadioDefault5">
+                                                        </div>
+
+                                                        <div class="label">
+                                                            <label>Home 2</label>
+                                                        </div>
+
+                                                        <div class="table-responsive address-table">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td colspan="2">Gary M. Bailey</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Address :</td>
+                                                                    <td>
+                                                                        <p>2135 Burning Memory Lane Philadelphia, PA
+                                                                            19135</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Pin Code :</td>
+                                                                    <td>+26</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Phone :</td>
+                                                                    <td>+ 215-335-9916</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group">
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
+                                                            Edit</button>
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
+                                                            Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                                <div class="address-box">
+                                                    <div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jack"
+                                                                   id="flexRadioDefault1">
+                                                        </div>
+
+                                                        <div class="label">
+                                                            <label>Home 2</label>
+                                                        </div>
+
+                                                        <div class="table-responsive address-table">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td colspan="2">Gary M. Bailey</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Address :</td>
+                                                                    <td>
+                                                                        <p>2135 Burning Memory Lane Philadelphia, PA
+                                                                            19135</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Pin Code :</td>
+                                                                    <td>+26</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Phone :</td>
+                                                                    <td>+ 215-335-9916</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group">
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
+                                                            Edit</button>
+                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
+                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
+                                                            Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-card" role="tabpanel">
+                                    <div class="dashboard-card">
+                                        <div class="title title-flex">
+                                            <div>
+                                                <h2>My Card Details</h2>
+                                                <span class="title-leaf">
+                                                <svg class="icon-width bg-gray">
+                                                    <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                                </svg>
+                                            </span>
+                                            </div>
+
+                                            <button class="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
+                                                    data-bs-toggle="modal" data-bs-target="#editCard"><i data-feather="plus"
+                                                                                                         class="me-2"></i> Add New Card</button>
+                                        </div>
+
+                                        <div class="row g-4">
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
+                                                <div class="payment-card-detail">
+                                                    <div class="card-details">
+                                                        <div class="card-number">
+                                                            <h4>XXXX - XXXX - XXXX - 2548</h4>
+                                                        </div>
+
+                                                        <div class="valid-detail">
+                                                            <div class="title">
+                                                                <span>valid</span>
+                                                                <span>thru</span>
+                                                            </div>
+                                                            <div class="date">
+                                                                <h3>08/05</h3>
+                                                            </div>
+                                                            <div class="primary">
+                                                                <span class="badge bg-pill badge-light">primary</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="name-detail">
+                                                            <div class="name">
+                                                                <h5>Audrey Carol</h5>
+                                                            </div>
+                                                            <div class="card-img">
+                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/1.jpg"
+                                                                     class="img-fluid blur-up lazyloaded" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="edit-card">
+                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                           data-bs-target="#removeProfile"><i
+                                                                class="far fa-minus-square"></i> delete</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="edit-card-mobile">
+                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
+                                                        delete</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
+                                                <div class="payment-card-detail">
+                                                    <div class="card-details card-visa">
+                                                        <div class="card-number">
+                                                            <h4>XXXX - XXXX - XXXX - 1536</h4>
+                                                        </div>
+
+                                                        <div class="valid-detail">
+                                                            <div class="title">
+                                                                <span>valid</span>
+                                                                <span>thru</span>
+                                                            </div>
+                                                            <div class="date">
+                                                                <h3>12/23</h3>
+                                                            </div>
+                                                            <div class="primary">
+                                                                <span class="badge bg-pill badge-light">primary</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="name-detail">
+                                                            <div class="name">
+                                                                <h5>Leah Heather</h5>
+                                                            </div>
+                                                            <div class="card-img">
+                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/2.jpg"
+                                                                     class="img-fluid blur-up lazyloaded" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="edit-card">
+                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                           data-bs-target="#removeProfile"><i
+                                                                class="far fa-minus-square"></i> delete</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="edit-card-mobile">
+                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
+                                                        delete</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
+                                                <div class="payment-card-detail">
+                                                    <div class="card-details debit-card">
+                                                        <div class="card-number">
+                                                            <h4>XXXX - XXXX - XXXX - 1366</h4>
+                                                        </div>
+
+                                                        <div class="valid-detail">
+                                                            <div class="title">
+                                                                <span>valid</span>
+                                                                <span>thru</span>
+                                                            </div>
+                                                            <div class="date">
+                                                                <h3>05/21</h3>
+                                                            </div>
+                                                            <div class="primary">
+                                                                <span class="badge bg-pill badge-light">primary</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="name-detail">
+                                                            <div class="name">
+                                                                <h5>mark jecno</h5>
+                                                            </div>
+                                                            <div class="card-img">
+                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/3.jpg"
+                                                                     class="img-fluid blur-up lazyloaded" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="edit-card">
+                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                           data-bs-target="#removeProfile"><i
+                                                                class="far fa-minus-square"></i> delete</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="edit-card-mobile">
+                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
+                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
+                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
+                                                        delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+                                    <div class="dashboard-profile">
+                                        <div class="title">
+                                            <h2>My Profile</h2>
+                                            <span class="title-leaf">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                        </div>
+
+                                        <div class="profile-detail dashboard-bg-box">
+                                            <div class="dashboard-title">
+                                                <h3>Profile Name</h3>
+                                            </div>
+                                            <div class="profile-name-detail">
+                                                <div class="d-sm-flex align-items-center d-block">
+                                                    <h3>Vicki E. Pope</h3>
+                                                    <div class="product-rating profile-rating">
+                                                        <ul class="rating">
+                                                            <li>
+                                                                <i data-feather="star" class="fill"></i>
+                                                            </li>
+                                                            <li>
+                                                                <i data-feather="star" class="fill"></i>
+                                                            </li>
+                                                            <li>
+                                                                <i data-feather="star" class="fill"></i>
+                                                            </li>
+                                                            <li>
+                                                                <i data-feather="star"></i>
+                                                            </li>
+                                                            <li>
+                                                                <i data-feather="star"></i>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                   data-bs-target="#editProfile">Edit</a>
+                                            </div>
+
+                                            <div class="location-profile">
+                                                <ul>
+                                                    <li>
+                                                        <div class="location-box">
+                                                            <i data-feather="map-pin"></i>
+                                                            <h6>Downers Grove, IL</h6>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="location-box">
+                                                            <i data-feather="mail"></i>
+                                                            <h6>vicki.pope@gmail.com</h6>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="location-box">
+                                                            <i data-feather="check-square"></i>
+                                                            <h6>Licensed for 2 years</h6>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="profile-description">
+                                                <p>Residences can be classified by and how they are connected to
+                                                    neighbouring residences and land. Different types of housing tenure can
+                                                    be used for the same physical type.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="profile-about dashboard-bg-box">
+                                            <div class="row">
+                                                <div class="col-xxl-7">
+                                                    <div class="dashboard-title mb-3">
+                                                        <h3>Profile About</h3>
+                                                    </div>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>Gender :</td>
+                                                                <td>Female</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Birthday :</td>
+                                                                <td>21/05/1997</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Phone Number :</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)"> +91 846 - 547 -
+                                                                        210</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Address :</td>
+                                                                <td>549 Sulphur Springs Road, Downers, IL</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="dashboard-title mb-3">
+                                                        <h3>Login Details</h3>
+                                                    </div>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>Email :</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)">vicki.pope@gmail.com
+                                                                        <span data-bs-toggle="modal"
+                                                                              data-bs-target="#editProfile">Edit</span></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Password :</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)">●●●●●●
+                                                                        <span data-bs-toggle="modal"
+                                                                              data-bs-target="#editProfile">Edit</span></a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-5">
+                                                    <div class="profile-image">
+                                                        <img src="{{asset('/')}}front/assets/images/inner-page/dashboard-profile.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-download" role="tabpanel">
+                                    <div class="dashboard-download">
+                                        <div class="title">
+                                            <h2>My Download</h2>
+                                            <span class="title-leaf">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                        </div>
+
+                                        <div class="download-detail dashboard-bg-box">
+                                            <form>
+                                                <div class="input-group download-form">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Search your download">
+                                                    <button class="btn theme-bg-color text-light" type="button"
+                                                            id="button-addon2">Search</button>
+                                                </div>
+                                            </form>
+
+                                            <div class="select-filter-box">
+                                                <select class="form-select">
+                                                    <option selected="">All marketplaces</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+
+
+                                                <ul class="nav nav-pills filter-box" id="pills-tab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link active" id="pills-data-tab"
+                                                                data-bs-toggle="pill" data-bs-target="#pills-data"
+                                                                type="button">Data Purchased</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="pills-title-tab" data-bs-toggle="pill"
+                                                                data-bs-target="#pills-title" type="button">Title</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill"
+                                                                data-bs-target="#pills-rating" type="button">My Rating</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="pills-recent-tab" data-bs-toggle="pill"
+                                                                data-bs-target="#pills-recent" type="button">Recent
+                                                            Updates</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-data" role="tabpanel">
+                                                    <div class="download-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
+                                                                        and
+                                                                        Flexible. OS 2.0</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Boho - React JS Admin Dashboard Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-title">
+                                                    <div class="download-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
+                                                                        and
+                                                                        Flexible. OS 2.0</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Boho - React JS Admin Dashboard Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-rating">
+                                                    <div class="download-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
+                                                                        and
+                                                                        Flexible. OS 2.0</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Boho - React JS Admin Dashboard Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-recent">
+                                                    <div class="download-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
+                                                                        and
+                                                                        Flexible. OS 2.0</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>
+                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
+                                                                             class="img-fluid" alt="">
+                                                                    </td>
+                                                                    <td>Boho - React JS Admin Dashboard Template</td>
+                                                                    <td>
+                                                                        <div class="dropdown download-dropdown">
+                                                                            <button class="btn dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown">Download</button>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">All files
+                                                                                        & documentation</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (PDF)</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a class="dropdown-item"
+                                                                                       href="#">License
+                                                                                        certificate & purchase code
+                                                                                        (text)</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-security" role="tabpanel">
+                                    <div class="dashboard-privacy">
+                                        <div class="dashboard-bg-box">
+                                            <div class="dashboard-title mb-4">
+                                                <h3>Privacy</h3>
+                                            </div>
+
+                                            <div class="privacy-box">
+                                                <div class="d-flex align-items-start">
+                                                    <h6>Allows others to see my profile</h6>
+                                                    <div class="form-check form-switch switch-radio ms-auto">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                               id="redio">
+                                                        <label class="form-check-label" for="redio"></label>
+                                                    </div>
+                                                </div>
+
+                                                <p class="text-content">all peoples will be able to see my profile</p>
+                                            </div>
+
+                                            <div class="privacy-box">
+                                                <div class="d-flex align-items-start">
+                                                    <h6>who has save this profile only that people see my profile</h6>
+                                                    <div class="form-check form-switch switch-radio ms-auto">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                               id="redio2">
+                                                        <label class="form-check-label" for="redio2"></label>
+                                                    </div>
+                                                </div>
+
+                                                <p class="text-content">all peoples will not be able to see my profile</p>
+                                            </div>
+
+                                            <button class="btn theme-bg-color btn-md fw-bold mt-4 text-white">Save
+                                                Changes</button>
+                                        </div>
+
+                                        <div class="dashboard-bg-box mt-4">
+                                            <div class="dashboard-title mb-4">
+                                                <h3>Account settings</h3>
+                                            </div>
+
+                                            <div class="privacy-box">
+                                                <div class="d-flex align-items-start">
+                                                    <h6>Deleting Your Account Will Permanently</h6>
+                                                    <div class="form-check form-switch switch-radio ms-auto">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                               id="redio3">
+                                                        <label class="form-check-label" for="redio3"></label>
+                                                    </div>
+                                                </div>
+                                                <p class="text-content">Once your account is deleted, you will be logged out
+                                                    and will be unable to log in back.</p>
+                                            </div>
+
+                                            <div class="privacy-box">
+                                                <div class="d-flex align-items-start">
+                                                    <h6>Deleting Your Account Will Temporary</h6>
+                                                    <div class="form-check form-switch switch-radio ms-auto">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                               id="redio4">
+                                                        <label class="form-check-label" for="redio4"></label>
+                                                    </div>
+                                                </div>
+
+                                                <p class="text-content">Once your account is deleted, you will be logged out
+                                                    and you will be create new account</p>
+                                            </div>
+
+                                            <button class="btn theme-bg-color btn-md fw-bold mt-4 text-white">Delete My
+                                                Account</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Sign Out</a>
-
-                                <form action="{{route('customer.logout')}}" method="POST" id="logoutForm" enctype="multipart/form-data">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </aside><!-- End .col-lg-3 -->
-
-                    <div class="col-md-8 col-lg-9">
-                        <div class="tab-content">
-                            <div class="tab-pane fade show {{ session('active_tab', '#tab-dashboard') == '#tab-dashboard' ? 'active' : '' }}" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-                                <div class="dashboard-container">
-                                    <div class="dashboard-stats">
-                                        <div class="stat-box">
-                                            <h2>৳ {{number_format($totalSpend)}}</h2>
-                                            <p>Total Spend</p>
-                                        </div>
-                                        <div class="stat-box">
-                                            <h2>{{$totalOrders}}</h2>
-                                            <p>Total Orders</p>
-                                        </div>
-                                        <div class="stat-box">
-                                            <h2>{{$totalDeliveredOrders}}</h2>
-                                            <p>Total Delivered Received</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- .End .tab-pane -->
-
-                            <div class="tab-pane fade {{ session('active_tab') == '#tab-orders' ? 'active' : '' }}" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-                                @if(count($customerOrders) > 0)
-                                    <table class="table table-striped dt-responsive nowrap w-100 text-center">
-                                        <thead>
-                                        <tr>
-                                            <th data-orderable="false">S.N</th>
-                                            <th data-orderable="true">Order Code</th>
-                                            <th data-orderable="true">Total qty</th>
-                                            <th data-orderable="true">Amount</th>
-                                            <th data-orderable="true">Order Status</th>
-                                            <th data-orderable="true">Payment Method</th>
-                                            <th data-orderable="true">Payment Status</th>
-                                            <th data-orderable="false" class="action" data-priority="1">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($customerOrders as $order)
-                                            <tr style="font-size: 90%">
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{$order->order_code}}</td>
-                                                <td>{{$order->total_qty}}</td>
-                                                <td>&#2547;{{number_format($order->grand_total + $order->shipping_cost)}}</td>
-                                                <td>{{$order->order_status}}</td>
-                                                <td>{{$order->payment_method}}</td>
-                                                <td>{{$order->payment_status}}</td>
-                                                <td>
-                                                    <a href="" class="action-icon">
-                                                        <i class="mdi mdi-eye text-success" style="font-size: 2rem"></i>
-                                                    </a>
-                                                    <a href="" class="action-icon" onclick="event.preventDefault(); document.getElementById('invoiceDownload{{$order->id}}').submit();">
-                                                        <i class="mdi mdi-download text-primary" style="font-size: 2rem;"></i>
-                                                    </a>
-                                                    <form action="{{route('invoice.download', ['id' => $order->id])}}" method="POST" id="invoiceDownload{{$order->id}}">
-                                                        @csrf
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-
-                                    <div class="d-flex justify-content-center mt-3">
-                                        {{ $customerOrders->links('vendor.pagination.custom') }}
-                                    </div>
-                                @else
-                                    <p>No order has been made yet.</p>
-                                    <a href="{{route('all.products')}}" class="btn btn-outline-primary-2">
-                                        <span>GO SHOP</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </a>
-                                @endif
-                            </div><!-- .End .tab-pane -->
-
-                            <div class="tab-pane fade {{ session('active_tab') == '#tab-account' ? 'active' : '' }}" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h4>Profile Information</h4>
-                                        <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <label>Name *</label>
-                                            <input type="text" class="form-control mb-2" required="" name="name" value="{{$customer->name}}">
-
-                                            <label>Email address *</label>
-                                            <input type="email" class="form-control mb-2" name="email" required="" value="{{$customer->email}}">
-
-                                            <label>Mobile *</label>
-                                            <input type="text" class="form-control mb-2" name="mobile" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{$customer->mobile}}">
-
-                                            <label>Address *</label>
-                                            <textarea type="text" class="form-control mb-2" name="address" oninput="validateEnglishInput(this)">{{$customer->address}}</textarea>
-                                            <small id="error-message" style="color: red; display: none;">Please type in English only.</small>
-
-                                            <script>
-                                                function validateEnglishInput(input) {
-                                                    const englishPattern = /^[a-zA-Z0-9\s,.-]*$/;
-                                                    const errorMessage = document.getElementById('error-message');
-
-                                                    if (!englishPattern.test(input.value)) {
-                                                        errorMessage.style.display = 'block';
-                                                        input.value = input.value.replace(/[^a-zA-Z0-9\s,.-]/g, ''); // remove non-English characters
-                                                    } else {
-                                                        errorMessage.style.display = 'none';
-                                                    }
-                                                }
-                                            </script>
-
-                                            <label>Profile Image *</label>
-                                            <input type="file" class="form-control mb-2" name="profile_img">
-
-                                            <button type="submit" class="btn btn-outline-primary-2">
-                                                <span>SAVE CHANGES</span>
-                                                <i class="icon-long-arrow-right"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h4>Change password</h4>
-                                        <form action="{{route('password.update')}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <label>Current password (leave blank to leave unchanged)</label>
-                                            <input type="password" name="old_password" class="form-control mb-2 @error('old_password') is-invalid @enderror">
-                                            @error('old_password')
-                                            <div class="alert alert-danger mb-2">{{ $message }}</div>
-                                            @enderror
-
-                                            <label>New password (leave blank to leave unchanged)</label>
-                                            <input type="password" name="password" class="form-control mb-2 @error('old_password') is-invalid @enderror">
-                                            @error('password_confirmation')
-                                            <div class="alert alert-danger mb-2">{{ $message }}</div>
-                                            @enderror
-
-                                            <label>Confirm new password</label>
-                                            <input type="password" name="password_confirmation" class="form-control mb-2 @error('old_password') is-invalid @enderror">
-                                            @error('password_confirmation')
-                                            <div class="alert alert-danger mb-2">{{ $message }}</div>
-                                            @enderror
-                                            <button type="submit" class="btn btn-outline-primary-2">
-                                                <span>SAVE CHANGES</span>
-                                                <i class="icon-long-arrow-right"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div><!-- .End .tab-pane -->
-                        </div>
-                    </div><!-- End .col-lg-9 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </div><!-- End .dashboard -->
-    </div><!-- End .page-content -->
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Set the active tab from session or default to dashboard if none
-            var activeTab = '{{ session('active_tab', '#tab-dashboard') }}'; // Default to dashboard tab
-            $('.nav-link[href="' + activeTab + '"]').addClass('active');
-            $('.tab-pane' + activeTab).addClass('show active');
-
-            // Listen for tab click event and save it to session
-            $('.nav-link').on('click', function () {
-                var tabId = $(this).attr('href');
-                $.ajax({
-                    url: "{{ route('store.active.tab') }}",
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        active_tab: tabId
-                    },
-                    success: function (response) {
-                        console.log('Active tab saved to session.');
-                    }
-                });
-            });
-        });
-    </script>
-
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- User Dashboard Section End -->
+    </div>
 @endsection

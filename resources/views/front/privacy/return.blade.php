@@ -5,6 +5,17 @@
 @endsection
 
 @section('body')
+    <style>
+        .page-content {
+            margin-top: 15%;
+        }
+
+        @media (max-width: 768px) {
+            .page-content {
+                margin-top: 30%;
+            }
+        }
+    </style>
     <div class="content-col">
         <div class="page-content">
             <div class="container">

@@ -8,7 +8,7 @@
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
     <link rel="icon" href="{{asset('/')}}front/assets/images/favicon/6.png" type="image/x-icon">
-    <title>On-demand last-mile delivery</title>
+    <title>@yield('title')</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com/">
@@ -187,6 +187,100 @@
 
 <!-- Header Start -->
 <header class="pb-0 fixed-header">
+    <div class="header-top">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-3 d-xxl-block d-none">
+                    <div class="top-left-header">
+                        <i class="iconly-Location icli text-white"></i>
+                        <span class="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                    </div>
+                </div>
+
+                <div class="col-xxl-6 col-lg-9 d-lg-block d-none">
+                    <div class="header-offer">
+                        <div class="notification-slider">
+                            <div>
+                                <div class="timer-notification">
+                                    <h6><strong class="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                        every single day on Weekends.<strong class="ms-1">New Coupon Code: Fast024
+                                        </strong>
+
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="shop-left-sidebar.html" class="text-white">Buy Now
+                                            !</a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <ul class="about-list right-nav-about">
+                        <li class="right-nav-list">
+                            <div class="dropdown theme-form-select">
+                                <button class="btn dropdown-toggle" type="button" id="select-language"
+                                        data-bs-toggle="dropdown">
+                                    <img src="{{asset('/')}}front/assets/images/country/united-states.png"
+                                         class="img-fluid blur-up lazyload" alt="">
+                                    <span>English</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)" id="english">
+                                            <img src="{{asset('/')}}front/assets/images/country/united-kingdom.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                            <span>English</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)" id="france">
+                                            <img src="{{asset('/')}}front/assets/images/country/germany.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                            <span>Germany</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)" id="chinese">
+                                            <img src="{{asset('/')}}front/assets/images/country/turkish.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                            <span>Turki</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="right-nav-list">
+                            <div class="dropdown theme-form-select">
+                                <button class="btn dropdown-toggle" type="button" id="select-dollar"
+                                        data-bs-toggle="dropdown">
+                                    <span>USD</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end sm-dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" id="aud" href="javascript:void(0)">AUD</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" id="eur" href="javascript:void(0)">EUR</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" id="cny" href="javascript:void(0)">CNY</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="top-nav top-header">
         <div class="container-fluid-xs">
             <div class="row">
@@ -282,18 +376,32 @@
 
                                     <div class="onhover-div onhover-div-login">
                                         <ul class="user-box-name">
-                                            <li class="product-box-contain">
-                                                <i></i>
-                                                <a href="login.html">Log In</a>
-                                            </li>
+                                            @if(Session::get('customer_id'))
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{{route('customer.dashboard')}}">Dashboard</a>
+                                                </li>
 
-                                            <li class="product-box-contain">
-                                                <a href="sign-up.html">Register</a>
-                                            </li>
+                                                <li class="product-box-contain">
+                                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+                                                    <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            @else
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{{route('customer.login')}}">Log In</a>
+                                                </li>
 
-                                            <li class="product-box-contain">
-                                                <a href="forgot.html">Forgot Password</a>
-                                            </li>
+                                                <li class="product-box-contain">
+                                                    <a href="{{route('customer.register')}}">Register</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="forgot.html">Forgot Password</a>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </li>
@@ -346,11 +454,13 @@
                                 <ul class="address">
                                     <li>
                                         <i data-feather="home"></i>
-                                        <a href="javascript:void(0)">1418 Riverwood Drive, CA 96052, US</a>
+                                        <a href="javascript:void(0)">
+                                            {{$generalSettingView->address}}
+                                        </a>
                                     </li>
                                     <li>
                                         <i data-feather="mail"></i>
-                                        <a href="javascript:void(0)">support@fastkart.com</a>
+                                        <a href="mailto:{{$generalSettingView->email}}">{{$generalSettingView->email}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -391,7 +501,7 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="user-dashboard.html" class="text-content">Your Account</a>
+                                    <a href="{{route('customer.dashboard')}}" class="text-content">Your Account</a>
                                 </li>
                                 <li>
                                     <a href="order-tracking.html" class="text-content">Track Order</a>
@@ -400,7 +510,7 @@
                                     <a href="order-tracking.html" class="text-content">Become a vendor</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html" class="text-content">About Us</a>
+                                    <a href="{{route('about.us')}}" class="text-content">About Us</a>
                                 </li>
                                 <li>
                                     <a href="{{route('contact.us')}}" class="text-content">Contact Us</a>
@@ -424,7 +534,7 @@
                                         <i data-feather="phone"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Hotline 24/7 :</h6>
-                                            <h5>+91 888 104 2340</h5>
+                                            <h5><a href="tel:{{$generalSettingView->mobile}}">{{$generalSettingView->mobile}}</a></h5>
                                         </div>
                                     </div>
                                 </li>
@@ -434,7 +544,7 @@
                                         <i data-feather="mail"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Email Address :</h6>
-                                            <h5>fastkart@hotmail.com</h5>
+                                            <h5><a href="mailto:{{$generalSettingView->email}}">{{$generalSettingView->email}}</a></h5>
                                         </div>
                                     </div>
                                 </li>
@@ -462,30 +572,30 @@
                 </div>
 
                 <div class="payment">
-                    <img src="{{asset('/')}}front/assets/images/payment/1.png" class="blur-up lazyload" alt="">
+                    <img src="{{asset($generalSettingView->payment_method_image)}}" class="blur-up lazyload" alt="">
                 </div>
 
                 <div class="social-link">
                     <h6 class="text-content">Stay connected :</h6>
                     <ul>
                         <li>
-                            <a href="https://www.facebook.com/" target="_blank">
+                            <a href="{{$generalSettingView->facebook_url}}" target="_blank">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/" target="_blank">
+                            <a href="{{$generalSettingView->twitter_url}}" target="_blank">
                                 <i class="fa-brands fa-twitter"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/" target="_blank">
+                            <a href="{{$generalSettingView->instagram_url}}" target="_blank">
                                 <i class="fa-brands fa-instagram"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://in.pinterest.com/" target="_blank">
-                                <i class="fa-brands fa-pinterest-p"></i>
+                            <a href="{{$generalSettingView->youtube_url}}" target="_blank">
+                                <i class="fa-brands fa-youtube"></i>
                             </a>
                         </li>
                     </ul>
@@ -705,6 +815,8 @@
 </div>
 <!-- Shopping Bag Section End -->
 
+
+
 <!-- Hidden Slide-in Cart -->
 <div id="cart-container" class="cart-container shadow">
     <div class="cart-header d-flex justify-content-between align-items-center p-3 bg-light">
@@ -795,6 +907,8 @@
 <!-- script js -->
 <script src="{{asset('/')}}front/assets/js/script.js"></script>
 
+<script src="{{asset('/')}}front/assets/js/fly-cart.js"></script>
+
 <!-- theme setting js -->
 <script src="{{asset('/')}}front/assets/js/theme-setting.js"></script>
 
@@ -826,6 +940,7 @@
         },
     });
 </script>
+@include('flash-toastr::message')
 
 <!-- Feather Icons Script -->
 <script src="https://unpkg.com/feather-icons"></script>

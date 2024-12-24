@@ -11,17 +11,25 @@ use Mail;
 
 class CustomerController extends Controller
 {
+    public function register()
+    {
+        return view('front.customer.register');
+    }
+    public function login()
+    {
+        return view('front.customer.login');
+    }
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
-            'password' => 'required|min:6',
-            'email' => 'required|unique:customers',
-            'mobile' => 'required|unique:customers'
+            'password' => 'required|confirmed|min:6',
+            'mobile' => 'required|unique:customers|regex:/^(\+88)?01[3-9]\d{8}$/',
+            'policy' => 'accepted',
         ]);
+
         $customer = new Customer();
         $customer->name = $request->name;
-        $customer->email = $request->email;
         $customer->mobile = $request->mobile;
         $customer->password = bcrypt($request->password);
         $customer->agree_to_policy = $request->policy;
@@ -30,14 +38,14 @@ class CustomerController extends Controller
         Session::put('customer_id', $customer->id);
         Session::put('customer_name', $request->name);
 
-        flash()->success('Registration complete', 'You have been logged in successfull');
+        flash()->success('Registration complete', 'You have been logged in successfully');
         return redirect()->route('customer.dashboard');
     }
 
     public function loginCheck(Request $request)
     {
         // Attempt to find the customer by email or mobile
-        $customer = Customer::where('email', $request->email)->orWhere('mobile', $request->email)->first();
+        $customer = Customer::where('email', $request->mobile)->orWhere('mobile', $request->mobile)->first();
 //        dd($customer);
         if ($customer) {
             // Check if the provided password matches the stored hashed password

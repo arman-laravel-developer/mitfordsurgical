@@ -3,9 +3,9 @@
 ==========================**/
  $('.btn-cart').on('click', function () {
      if ($(window).width() > 768) {
-         var cart = $('.button-item');
+         var cart = $('.cart-container');
      } else {
-         var cart = $('.mobile-cart ul li a .icli.fly-cate');
+         var cart = $('.cart-container');
      }
      var imgtodrag = $(this).parents('.product-box-4, .deal-box').find(".product-image img, .category-image img").eq(0);
      if (imgtodrag) {
@@ -19,7 +19,7 @@
                  'position': 'absolute',
                  'height': '130px',
                  'width': '130px',
-                 'z-index': '100'
+                 'z-index': '1060'
              })
              .appendTo($('body'))
              .animate({
@@ -28,10 +28,12 @@
                  'width': 75,
                  'height': 75
              }, 1000, 'easeInOutExpo');
+         openCart()
 
          imgclone.animate({
              'width': 0,
-             'height': 0
+             'height': 0,
+             'z-index': 1060
          }, function () {
              $(this).detach()
          });

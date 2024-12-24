@@ -20,10 +20,8 @@ class CustomerDashboardController extends Controller
     {
         Session::forget('customer_id');
         Session::forget('customer_name');
-        Session::forget('active_tab');
 
-        flash()->success('Logged out', 'You have been logged out successfully');
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'You have been logged out successfully');
     }
 
     public function getImageUrl($request)

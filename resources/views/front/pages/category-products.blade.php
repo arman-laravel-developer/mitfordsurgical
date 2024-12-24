@@ -1,69 +1,41 @@
 @extends('front.master')
 
 @section('title')
-    Home | {{$generalSettingView->site_name}}
+    {{$generalSettingView->site_name}} - Category products
 @endsection
 
 @section('body')
     <div class="content-col">
-        <div class="section-b-space" style="padding-bottom: 0px">
-            <!-- Swiper Container -->
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    @foreach($sliders as $slider)
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide">
-                        <a href="">
-                            <div class="banner-contain ">
-                                <img src="{{ asset($slider->image) }}" class="d-block w-100 bg-img blur-up lazyload" alt="Slide 1">
-                            </div>
-                        </a>
-                    </div>
-                    @endforeach
-                </div>
-
-                <!-- Swiper Pagination -->
-                <div class="swiper-pagination"></div>
-
-                <!-- Swiper Navigation -->
-                {{--                        <div class="swiper-button-next"></div>--}}
-                {{--                        <div class="swiper-button-prev"></div>--}}
-            </div>
-        </div>
-        <!-- Category Section Start -->
-        <section class="section-b-space">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section pt-2">
             <div class="container">
-                <div class="title">
-                    <h2>Popular Categories</h2>
-                </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="category-slider arrow-slider">
-                            @foreach($homeCategories as $homeCategory)
-                            <div>
-                                <div class="shop-category-box border-0 wow fadeIn">
-                                    <a href="shop-left-sidebar.html" class="circle-1">
-                                        <img src="{{asset($homeCategory->image)}}" class="img-fluid blur-up lazyload"
-                                             alt="">
-                                    </a>
-                                    <div class="category-name">
-                                        <h6>{{$homeCategory->category_name}}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
+                        <div class="breadcrumb-contain">
+                            <h2>{{$category->category_name}}</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{route('home')}}">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    @if($category->parentCategory)
+                                        <li class="breadcrumb-item">
+                                            <a href="{{route('category.product', ['id' => $category->parentCategory->id,'slug' => $category->parentCategory->slug])}}">{{$category->parentCategory->category_name}}</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{$category->category_name}}</li>
+                                    @else
+                                        <li class="breadcrumb-item active" aria-current="page">{{$category->category_name}}</li>
+                                    @endif
+                                </ol>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Category Section End -->
-
         <div class="container">
-            <div class="title d-block">
-                <h2 class="text-theme font-sm text-center">All Products</h2>
-            </div>
-
             <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
                 <div class="product-box-4 wow fadeInUp">
                     <div class="product-image">
@@ -880,5 +852,6 @@
                 </div>
             </div>
         </div>
+        <!-- Breadcrumb Section End -->
     </div>
 @endsection
