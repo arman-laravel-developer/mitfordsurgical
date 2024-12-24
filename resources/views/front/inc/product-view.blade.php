@@ -71,7 +71,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            
+
 
                             <div class="modal-button">
                                 <button onclick="location.href = 'cart.html';"
