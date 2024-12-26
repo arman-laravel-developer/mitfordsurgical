@@ -202,7 +202,7 @@
                         <div class="notification-slider">
                             <div>
                                 <div class="timer-notification">
-                                    <h6><strong class="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                    <h6><strong class="me-1">Welcome to {{$generalSettingView->site_name}}!</strong>Wrap new offers/gift
                                         every single day on Weekends.<strong class="ms-1">New Coupon Code: Fast024
                                         </strong>
 
@@ -213,7 +213,7 @@
                             <div>
                                 <div class="timer-notification">
                                     <h6>Something you love is now on sale!
-                                        <a href="shop-left-sidebar.html" class="text-white">Buy Now
+                                        <a href="javascript:void(0)" class="text-white">Buy Now
                                             !</a>
                                     </h6>
                                 </div>
@@ -399,7 +399,7 @@
                                                 </li>
 
                                                 <li class="product-box-contain">
-                                                    <a href="forgot.html">Forgot Password</a>
+                                                    <a href="{{route('forget.password')}}">Forgot Password</a>
                                                 </li>
                                             @endif
                                         </ul>

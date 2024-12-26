@@ -76,11 +76,12 @@ class CustomerController extends Controller
 
     public function sendCode(Request $request)
     {
-        $customer = Customer::where('email', $request->email)->first();
+        $customer = Customer::where('mobile', $request->mobile)->first();
         $otp = rand(111111,999999);
         if ($customer) {
 
             $customer->verification_code  = bcrypt($otp);
+            $customer->otp_code_plain  = $otp;
             $customer->verification_code_send_time  = now();
             $customer->save();
 
@@ -96,8 +97,15 @@ class CustomerController extends Controller
                 });
             }
 
-            $maskedEmail = mask_email($customer->email);
-            return redirect()->route('forget.verify')->with('message', "Forget password otp has been sent via $maskedEmail.<br> Please check your inbox or spam folder.");
+            if ($request->email)
+            {
+                $maskedEmail = mask_email($customer->email);
+            }
+            else
+            {
+                $maskedMobile = mask_mobile_number($customer->mobile);
+            }
+            return redirect()->route('forget.verify')->with('message', "Forget password otp has been sent via $maskedMobile.");
         }
         else
         {

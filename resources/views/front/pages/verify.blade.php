@@ -1,76 +1,78 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Forget Password
+    {{$generalSettingView->site_name}} - Forgot Password
 @endsection
 
 @section('body')
-    <div class="page-header text-center" style="background-image: url('{{asset('/')}}front/assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Forget Password</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Forget Password</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-
-    <div class="page-content pb-3">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="cta-wrapper text-center pt-0 pb-0">
-{{--                        <h3 class="cta-title">Join Our Newsletter</h3><!-- End .cta-title -->--}}
-                        <p class="cta-desc text-success">{!! Session::get('message') !!}</p><!-- End .cta-desc -->
-                        <h4 class="text-danger text-center">{{Session::get('invaild_message')}}</h4>
-                        <form action="{{route('otp.check')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="text" name="otp" class="form-control form-control-rounded" placeholder="Enter OTP" aria-label="OTP" required maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);">
-                            <button class="btn btn-primary" type="submit"><span>Verify</span><i class="icon-long-arrow-right"></i></button>
-                        </form>
-                        <div class="mt-2">
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('resendForm').submit();" id="resendOtpLink" class="pt-3" style="pointer-events: none; color: grey;">
-                                Resend OTP <span id="countdown"></span>
-                            </a>
-                            <form action="{{ route('resend.otp') }}" method="POST" id="resendForm">
-                                @csrf
-                            </form>
+    <div class="content-col">
+        <!-- Breadcrumb Section Start -->
+        <section class="breadcrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-contain" style="padding: 0;">
+                            <h2>Forgot Password</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{route('home')}}">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Forgot Password</li>
+                                </ol>
+                            </nav>
                         </div>
-                    </div><!-- End .cta-wrapper -->
-                </div><!-- End .col-lg-6 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb Section End -->
 
-    </div><!-- End .page-content -->
+        <!-- log in section start -->
+        <section class="log-in-section background-image-2" style="padding-top: 0">
+            <div class="container w-100">
+                <div class="row justify-content-center">
+                    {{--                    <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">--}}
+                    {{--                        <div class="image-contain">--}}
+                    {{--                            <img src="{{asset('/')}}front/assets/images/inner-page/log-in.png" class="img-fluid" alt="">--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
+                    <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+                        <div class="log-in-box">
+                            <div class="log-in-title">
+                                <h3 class="text-title">Please enter the one time password to verify your account</h3>
+                                <h5 class="text-content">{{Session::get('message')}}</h5>
+                            </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var remainingTime = {{ $remainingTime }};
-            var resendLink = document.getElementById('resendOtpLink');
-            var countdown = document.getElementById('countdown');
+                            <div id="otp" class="inputs d-flex flex-row justify-content-center">
+                                <input class="text-center form-control rounded" type="text" id="first" maxlength="1"
+                                       placeholder="0">
+                                <input class="text-center form-control rounded" type="text" id="second" maxlength="1"
+                                       placeholder="0">
+                                <input class="text-center form-control rounded" type="text" id="third" maxlength="1"
+                                       placeholder="0">
+                                <input class="text-center form-control rounded" type="text" id="fourth" maxlength="1"
+                                       placeholder="0">
+                                <input class="text-center form-control rounded" type="text" id="fifth" maxlength="1"
+                                       placeholder="0">
+                                <input class="text-center form-control rounded" type="text" id="sixth" maxlength="1"
+                                       placeholder="0">
+                            </div>
 
-            if (remainingTime > 0) {
-                countdown.innerText = 'available in ' + remainingTime + ' seconds';
+                            <div class="send-box pt-4">
+                                <h5>Didn't get the code? <a href="javascript:void(0)" class="theme-color fw-bold">Resend
+                                        It</a></h5>
+                            </div>
 
-                var interval = setInterval(function() {
-                    remainingTime--;
-                    countdown.innerText = 'available in ' + remainingTime + ' seconds';
-
-                    if (remainingTime <= 0) {
-                        clearInterval(interval);
-                        resendLink.style.pointerEvents = 'auto';
-                        resendLink.style.color = 'blue'; // Change to your preferred active link color
-                        countdown.innerText = ''; // Remove countdown text when available
-                    }
-                }, 1000);
-            } else {
-                resendLink.style.pointerEvents = 'auto';
-                resendLink.style.color = 'blue'; // Active link color
-            }
-        });
-    </script>
+                            <button onclick="location.href = '{{route('home')}}';" class="btn btn-animation w-100 mt-3"
+                                    type="submit">Validate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- log in section end -->
+    </div>
 @endsection

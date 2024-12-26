@@ -87,6 +87,25 @@ if (!function_exists('mask_email')) {
     }
 }
 
+if (!function_exists('mask_mobile_number')) {
+    function mask_mobile_number($mobile_number) {
+        // Remove any non-digit characters
+        $clean_number = preg_replace('/\D/', '', $mobile_number);
+
+        // Check if the cleaned number has at least 4 digits
+        $length = strlen($clean_number);
+        if ($length >= 4) {
+            // Mask all but the last 4 digits
+            $masked_number = str_repeat('*', $length - 4) . substr($clean_number, -4);
+            return $masked_number;
+        } else {
+            // Return the original input if it has less than 4 digits
+            return $mobile_number;
+        }
+    }
+}
+
+
 if (!function_exists('updateEnv'))
 {
     function updateEnv(array $data)
