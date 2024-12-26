@@ -16,7 +16,7 @@
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
-                                        <a href="index.html">
+                                        <a href="{{route('home')}}">
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
@@ -31,7 +31,7 @@
         <!-- Breadcrumb Section End -->
 
         <!-- User Dashboard Section Start -->
-        <section class="user-dashboard-section section-b-space">
+        <section class="user-dashboard-section" style="padding-top: 0;">
             <div class="container">
                 <div class="row">
                     <div class="col-xxl-3 col-lg-4">
@@ -50,64 +50,60 @@
                                 <div class="profile-contain">
                                     <div class="profile-image">
                                         <div class="position-relative">
-                                            <img src="{{asset('/')}}front/assets/images/inner-page/user/1.jpg"
-                                                 class="blur-up lazyload update_img" alt="">
-                                            <div class="cover-icon">
-                                                <i class="fa-solid fa-pen">
-                                                    <input type="file" onchange="readURL(this,0)">
-                                                </i>
-                                            </div>
+                                            @if($customer->profile_img)
+                                                <img src="{{ asset($customer->profile_img) }}" class="blur-up lazyload update_img" alt="">
+                                            @else
+                                                <img src="{{ asset('/') }}front/assets/images/profile.jpg" class="blur-up lazyload update_img" alt="">
+                                            @endif
+
+                                            <form action="{{ route('profile.image-update') }}" method="POST" id="profileForm" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="cover-icon">
+                                                    <i class="fa-solid fa-pen">
+                                                        <input type="file" name="profile_img" onchange="readURL(this, 0); document.getElementById('profileForm').submit();">
+                                                    </i>
+                                                </div>
+
+                                                <!-- Display Validation Error Message for profile_img -->
+                                                @error('profile_img')
+                                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                                @enderror
+                                            </form>
                                         </div>
                                     </div>
 
                                     <div class="profile-name">
-                                        <h3>Vicki E. Pope</h3>
-                                        <h6 class="text-content">vicki.pope@gmail.com</h6>
+                                        <h3>{{$customer->name}}</h3>
+                                        <h6 class="text-content">{{$customer->mobile}}</h6>
                                     </div>
                                 </div>
                             </div>
 
                             <ul class="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-dashboard-tab" data-bs-toggle="pill"
+                                    <button class="nav-link {{ session('active_tab', '#pills-dashboard') == '#pills-dashboard' ? 'active' : '' }}" id="pills-dashboard-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-dashboard" type="button"><i data-feather="home"></i>
                                         DashBoard</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-order-tab" data-bs-toggle="pill"
+                                    <button class="nav-link {{ session('active_tab') == '#pills-order' ? 'active' : '' }}" id="pills-order-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-order" type="button"><i
                                             data-feather="shopping-bag"></i>Order</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-wishlist-tab" data-bs-toggle="pill"
+                                    <button class="nav-link {{ session('active_tab') == '#pills-wishlist' ? 'active' : '' }}" id="pills-wishlist-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-wishlist" type="button"><i data-feather="heart"></i>
                                         Wishlist</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-card-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-card" type="button" role="tab"><i
-                                            data-feather="credit-card"></i> Saved Card</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-address-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-address" type="button" role="tab"><i
-                                            data-feather="map-pin"></i>Address</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                    <button class="nav-link {{ session('active_tab') == '#pills-profile' ? 'active' : '' }}" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"><i data-feather="user"></i>
                                         Profile</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-download-tab" data-bs-toggle="pill"
+                                    <button class="nav-link {{ session('active_tab') == '#pills-download' ? 'active' : '' }}" id="pills-download-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-download" type="button" role="tab"><i
                                             data-feather="download"></i>Download</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-security-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-security" type="button" role="tab"><i
-                                            data-feather="shield"></i>
-                                        Privacy</button>
                                 </li>
                             </ul>
                         </div>
@@ -118,31 +114,25 @@
                             Menu</button>
                         <div class="dashboard-right-sidebar">
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel">
+                                <div class="tab-pane fade show {{ session('active_tab', '#pills-dashboard') == '#pills-dashboard' ? 'active' : '' }}" id="pills-dashboard" role="tabpanel">
                                     <div class="dashboard-home">
                                         <div class="title">
                                             <h2>My Dashboard</h2>
                                             <span class="title-leaf">
-                                            <svg class="icon-width bg-gray">
-                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                            </svg>
                                         </span>
                                         </div>
 
                                         <div class="dashboard-user-name">
-                                            <h6 class="text-content">Hello, <b class="text-title">Vicki E. Pope</b></h6>
-                                            <p class="text-content">From your My Account Dashboard you have the ability to
-                                                view a snapshot of your recent account activity and update your account
-                                                information. Select a link below to view or edit information.</p>
+                                            <h6 class="text-content">Hello, <b class="text-title">{{$customer->name}}</b></h6>
                                         </div>
 
                                         <div class="total-box">
                                             <div class="row g-sm-4 g-3">
                                                 <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
                                                     <div class="total-contain">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/order.svg"
+                                                        <img src="{{ asset('/') }}front/assets/svg/pending.svg"
                                                              class="img-1 blur-up lazyload" alt="">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/order.svg" class="blur-up lazyload"
+                                                        <img src="{{ asset('/') }}front/assets/svg/pending.svg" class="blur-up lazyload"
                                                              alt="">
                                                         <div class="total-detail">
                                                             <h5>Total Order</h5>
@@ -153,9 +143,9 @@
 
                                                 <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
                                                     <div class="total-contain">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg"
+                                                        <img src="{{ asset('/') }}front/assets/svg/order.svg"
                                                              class="img-1 blur-up lazyload" alt="">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg" class="blur-up lazyload"
+                                                        <img src="{{ asset('/') }}front/assets/svg/order.svg" class="blur-up lazyload"
                                                              alt="">
                                                         <div class="total-detail">
                                                             <h5>Total Pending Order</h5>
@@ -166,72 +156,13 @@
 
                                                 <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
                                                     <div class="total-contain">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg"
+                                                        <img src="{{ asset('/') }}front/assets/svg/wishlist.svg"
                                                              class="img-1 blur-up lazyload" alt="">
-                                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg"
+                                                        <img src="{{ asset('/') }}front/assets/svg/wishlist.svg"
                                                              class="blur-up lazyload" alt="">
                                                         <div class="total-detail">
                                                             <h5>Total Wishlist</h5>
                                                             <h3>32158</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="dashboard-title">
-                                            <h3>Account Information</h3>
-                                        </div>
-
-                                        <div class="row g-4">
-                                            <div class="col-xxl-6">
-                                                <div class="dashboard-content-title">
-                                                    <h4>Contact Information <a href="javascript:void(0)"
-                                                                               data-bs-toggle="modal" data-bs-target="#editProfile">Edit</a>
-                                                    </h4>
-                                                </div>
-                                                <div class="dashboard-detail">
-                                                    <h6 class="text-content">MARK JECNO</h6>
-                                                    <h6 class="text-content">vicki.pope@gmail.com</h6>
-                                                    <a href="javascript:void(0)">Change Password</a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-6">
-                                                <div class="dashboard-content-title">
-                                                    <h4>Newsletters <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                       data-bs-target="#editProfile">Edit</a></h4>
-                                                </div>
-                                                <div class="dashboard-detail">
-                                                    <h6 class="text-content">You are currently not subscribed to any
-                                                        newsletter</h6>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="dashboard-content-title">
-                                                    <h4>Address Book <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                        data-bs-target="#editProfile">Edit</a></h4>
-                                                </div>
-
-                                                <div class="row g-4">
-                                                    <div class="col-xxl-6">
-                                                        <div class="dashboard-detail">
-                                                            <h6 class="text-content">Default Billing Address</h6>
-                                                            <h6 class="text-content">You have not set a default billing
-                                                                address.</h6>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                               data-bs-target="#editProfile">Edit Address</a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xxl-6">
-                                                        <div class="dashboard-detail">
-                                                            <h6 class="text-content">Default Shipping Address</h6>
-                                                            <h6 class="text-content">You have not set a default shipping
-                                                                address.</h6>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                               data-bs-target="#editProfile">Edit Address</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -245,9 +176,6 @@
                                         <div class="title">
                                             <h2>My Wishlist History</h2>
                                             <span class="title-leaf title-leaf-gray">
-                                            <svg class="icon-width bg-gray">
-                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                            </svg>
                                         </span>
                                         </div>
                                         <div class="row g-sm-4 g-3">
@@ -678,9 +606,6 @@
                                         <div class="title">
                                             <h2>My Orders History</h2>
                                             <span class="title-leaf title-leaf-gray">
-                                            <svg class="icon-width bg-gray">
-                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                            </svg>
                                         </span>
                                         </div>
 
@@ -997,594 +922,161 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="pills-address" role="tabpanel">
-                                    <div class="dashboard-address">
-                                        <div class="title title-flex">
-                                            <div>
-                                                <h2>My Address Book</h2>
-                                                <span class="title-leaf">
-                                                <svg class="icon-width bg-gray">
-                                                    <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                                </svg>
-                                            </span>
-                                            </div>
-
-                                            <button class="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
-                                                    data-bs-toggle="modal" data-bs-target="#add-address"><i data-feather="plus"
-                                                                                                            class="me-2"></i> Add New Address</button>
-                                        </div>
-
-                                        <div class="row g-sm-4 g-3">
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                                <div class="address-box">
-                                                    <div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jack"
-                                                                   id="flexRadioDefault2" checked>
-                                                        </div>
-
-                                                        <div class="label">
-                                                            <label>Home</label>
-                                                        </div>
-
-                                                        <div class="table-responsive address-table">
-                                                            <table class="table">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td colspan="2">Jack Jennas</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Address :</td>
-                                                                    <td>
-                                                                        <p>8424 James Lane South San Francisco, CA 94080
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Pin Code :</td>
-                                                                    <td>+380</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Phone :</td>
-                                                                    <td>+ 812-710-3798</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="button-group">
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
-                                                            Edit</button>
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
-                                                            Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                                <div class="address-box">
-                                                    <div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jack"
-                                                                   id="flexRadioDefault3">
-                                                        </div>
-
-                                                        <div class="label">
-                                                            <label>Office</label>
-                                                        </div>
-
-                                                        <div class="table-responsive address-table">
-                                                            <table class="table">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td colspan="2">Terry S. Sutton</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Address :</td>
-                                                                    <td>
-                                                                        <p>2280 Rose Avenue Kenner, LA 70062</p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Pin Code :</td>
-                                                                    <td>+25</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Phone :</td>
-                                                                    <td>+ 504-228-0969</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="button-group">
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
-                                                            Edit</button>
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
-                                                            Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                                <div class="address-box">
-                                                    <div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jack"
-                                                                   id="flexRadioDefault4">
-                                                        </div>
-
-                                                        <div class="label">
-                                                            <label>Neighbour</label>
-                                                        </div>
-
-                                                        <div class="table-responsive address-table">
-                                                            <table class="table">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td colspan="2">Juan M. McKeon</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Address :</td>
-                                                                    <td>
-                                                                        <p>1703 Carson Street Lexington, KY 40593</p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Pin Code :</td>
-                                                                    <td>+78</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Phone :</td>
-                                                                    <td>+ 859-257-0509</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="button-group">
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
-                                                            Edit</button>
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
-                                                            Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                                <div class="address-box">
-                                                    <div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jack"
-                                                                   id="flexRadioDefault5">
-                                                        </div>
-
-                                                        <div class="label">
-                                                            <label>Home 2</label>
-                                                        </div>
-
-                                                        <div class="table-responsive address-table">
-                                                            <table class="table">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td colspan="2">Gary M. Bailey</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Address :</td>
-                                                                    <td>
-                                                                        <p>2135 Burning Memory Lane Philadelphia, PA
-                                                                            19135</p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Pin Code :</td>
-                                                                    <td>+26</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Phone :</td>
-                                                                    <td>+ 215-335-9916</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="button-group">
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
-                                                            Edit</button>
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
-                                                            Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                                <div class="address-box">
-                                                    <div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="jack"
-                                                                   id="flexRadioDefault1">
-                                                        </div>
-
-                                                        <div class="label">
-                                                            <label>Home 2</label>
-                                                        </div>
-
-                                                        <div class="table-responsive address-table">
-                                                            <table class="table">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td colspan="2">Gary M. Bailey</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Address :</td>
-                                                                    <td>
-                                                                        <p>2135 Burning Memory Lane Philadelphia, PA
-                                                                            19135</p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Pin Code :</td>
-                                                                    <td>+26</td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>Phone :</td>
-                                                                    <td>+ 215-335-9916</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="button-group">
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#editProfile"><i data-feather="edit"></i>
-                                                            Edit</button>
-                                                        <button class="btn btn-sm add-button w-100" data-bs-toggle="modal"
-                                                                data-bs-target="#removeProfile"><i data-feather="trash-2"></i>
-                                                            Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="pills-card" role="tabpanel">
-                                    <div class="dashboard-card">
-                                        <div class="title title-flex">
-                                            <div>
-                                                <h2>My Card Details</h2>
-                                                <span class="title-leaf">
-                                                <svg class="icon-width bg-gray">
-                                                    <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                                </svg>
-                                            </span>
-                                            </div>
-
-                                            <button class="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
-                                                    data-bs-toggle="modal" data-bs-target="#editCard"><i data-feather="plus"
-                                                                                                         class="me-2"></i> Add New Card</button>
-                                        </div>
-
-                                        <div class="row g-4">
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
-                                                <div class="payment-card-detail">
-                                                    <div class="card-details">
-                                                        <div class="card-number">
-                                                            <h4>XXXX - XXXX - XXXX - 2548</h4>
-                                                        </div>
-
-                                                        <div class="valid-detail">
-                                                            <div class="title">
-                                                                <span>valid</span>
-                                                                <span>thru</span>
-                                                            </div>
-                                                            <div class="date">
-                                                                <h3>08/05</h3>
-                                                            </div>
-                                                            <div class="primary">
-                                                                <span class="badge bg-pill badge-light">primary</span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="name-detail">
-                                                            <div class="name">
-                                                                <h5>Audrey Carol</h5>
-                                                            </div>
-                                                            <div class="card-img">
-                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/1.jpg"
-                                                                     class="img-fluid blur-up lazyloaded" alt="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="edit-card">
-                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                           data-bs-target="#removeProfile"><i
-                                                                class="far fa-minus-square"></i> delete</a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="edit-card-mobile">
-                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                        delete</a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
-                                                <div class="payment-card-detail">
-                                                    <div class="card-details card-visa">
-                                                        <div class="card-number">
-                                                            <h4>XXXX - XXXX - XXXX - 1536</h4>
-                                                        </div>
-
-                                                        <div class="valid-detail">
-                                                            <div class="title">
-                                                                <span>valid</span>
-                                                                <span>thru</span>
-                                                            </div>
-                                                            <div class="date">
-                                                                <h3>12/23</h3>
-                                                            </div>
-                                                            <div class="primary">
-                                                                <span class="badge bg-pill badge-light">primary</span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="name-detail">
-                                                            <div class="name">
-                                                                <h5>Leah Heather</h5>
-                                                            </div>
-                                                            <div class="card-img">
-                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/2.jpg"
-                                                                     class="img-fluid blur-up lazyloaded" alt="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="edit-card">
-                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                           data-bs-target="#removeProfile"><i
-                                                                class="far fa-minus-square"></i> delete</a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="edit-card-mobile">
-                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                        delete</a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-4 col-xl-6 col-lg-12 col-sm-6">
-                                                <div class="payment-card-detail">
-                                                    <div class="card-details debit-card">
-                                                        <div class="card-number">
-                                                            <h4>XXXX - XXXX - XXXX - 1366</h4>
-                                                        </div>
-
-                                                        <div class="valid-detail">
-                                                            <div class="title">
-                                                                <span>valid</span>
-                                                                <span>thru</span>
-                                                            </div>
-                                                            <div class="date">
-                                                                <h3>05/21</h3>
-                                                            </div>
-                                                            <div class="primary">
-                                                                <span class="badge bg-pill badge-light">primary</span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="name-detail">
-                                                            <div class="name">
-                                                                <h5>mark jecno</h5>
-                                                            </div>
-                                                            <div class="card-img">
-                                                                <img src="{{asset('/')}}front/assets/images/payment-icon/3.jpg"
-                                                                     class="img-fluid blur-up lazyloaded" alt="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="edit-card">
-                                                        <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                           href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                           data-bs-target="#removeProfile"><i
-                                                                class="far fa-minus-square"></i> delete</a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="edit-card-mobile">
-                                                    <a data-bs-toggle="modal" data-bs-target="#editCard"
-                                                       href="javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                    <a href="javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                        delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="tab-pane fade" id="pills-profile" role="tabpanel">
                                     <div class="dashboard-profile">
                                         <div class="title">
                                             <h2>My Profile</h2>
                                             <span class="title-leaf">
-                                            <svg class="icon-width bg-gray">
-                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                            </svg>
                                         </span>
                                         </div>
+                                        <div class="profile-about dashboard-bg-box">
+                                            <div class="row">
+                                                <div class="col-xxl-7">
+                                                    <div class="row">
+                                                        <div class="col-8 col-md-10 col-xl-10">
+                                                            <div class="dashboard-title mb-3">
+                                                                <h3>Profile Details</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 col-md-2 col-xl-2">
+                                                            <button type="button" class="btn btn-sm bg-danger text-white" id="editButton" >Edit</button>
+                                                        </div>
+                                                    </div>
 
-                                        <div class="profile-detail dashboard-bg-box">
-                                            <div class="dashboard-title">
-                                                <h3>Profile Name</h3>
+                                                    <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data" id="profileForm">
+                                                        @csrf
+                                                        <div class="form-group mb-3">
+                                                            <label for="name">Name</label>
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                id="name"
+                                                                name="name"
+                                                                value="{{$customer->name}}"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="email">Email</label>
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                id="email"
+                                                                name="email"
+                                                                value="{{$customer->email}}"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="mobile">Phone Number</label>
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                id="mobile"
+                                                                name="mobile"
+                                                                value="{{$customer->mobile}}"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="address">Address</label>
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                id="address"
+                                                                name="address"
+                                                                value="{{$customer->address}}"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="form-group text-end mb-3">
+                                                            <!-- Submit Button (hidden by default) -->
+                                                            <button type="submit" class="btn btn-primary bg-primary text-white" id="submitButton" style="display: none;">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                    <script>
+                                                        document.getElementById('editButton').addEventListener('click', function () {
+                                                            const editButton = this;
+                                                            const submitButton = document.getElementById('submitButton');
+                                                            const inputs = document.querySelectorAll('form input:not([id="email"]):not([id="mobile"])'); // Exclude email and mobile
+                                                            const form = document.getElementById('profileForm');
+
+                                                            if (editButton.textContent === 'Edit') {
+                                                                // Enable editable inputs and change "Edit" to "Discard"
+                                                                inputs.forEach(input => input.removeAttribute('readonly'));
+                                                                submitButton.style.display = 'inline-block';
+                                                                editButton.textContent = 'Discard';
+                                                            } else {
+                                                                // Reset form, make inputs readonly, and change "Discard" to "Edit"
+                                                                form.reset(); // Reset form values to initial values
+                                                                inputs.forEach(input => input.setAttribute('readonly', 'readonly'));
+                                                                submitButton.style.display = 'none';
+                                                                editButton.textContent = 'Edit';
+                                                            }
+                                                        });
+                                                    </script>
+                                                </div>
                                             </div>
-                                            <div class="profile-name-detail">
-                                                <div class="d-sm-flex align-items-center d-block">
-                                                    <h3>Vicki E. Pope</h3>
-                                                    <div class="product-rating profile-rating">
-                                                        <ul class="rating">
+                                        </div>
+                                        <div class="profile-about dashboard-bg-box">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="dashboard-title mb-3">
+                                                        <h3>Change Password</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <form action="{{route('password.update')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row g-2">
+                                                    <div class="col-12">
+                                                        <div class="payment-method">
+                                                            <div
+                                                                class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                                <input type="password" class="form-control @error('old_password') is-invalid @enderror"
+                                                                       id="password" name="old_password"
+                                                                       placeholder="Enter Current Password">
+                                                                <label for="password">Current Password</label>
+                                                                @error('old_password')
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xxl-4">
+                                                        <div
+                                                            class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                                                   id="new_password" name="password" placeholder="Enter New Password">
+                                                            <label for="new_password">New Password</label>
+                                                            @error('password')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xxl-4">
+                                                        <div
+                                                            class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                                   id="password_confirmation" name="password_confirmation" placeholder="Enter Password Confirmation">
+                                                            <label for="password_confirmation">Password Confirmation</label>
+                                                            @error('password_confirmation')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="button-group mt-0">
+                                                        <ul>
                                                             <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star"></i>
+                                                                <button class="btn btn-animation" type="submit">Update</button>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
-
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                   data-bs-target="#editProfile">Edit</a>
-                                            </div>
-
-                                            <div class="location-profile">
-                                                <ul>
-                                                    <li>
-                                                        <div class="location-box">
-                                                            <i data-feather="map-pin"></i>
-                                                            <h6>Downers Grove, IL</h6>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="location-box">
-                                                            <i data-feather="mail"></i>
-                                                            <h6>vicki.pope@gmail.com</h6>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="location-box">
-                                                            <i data-feather="check-square"></i>
-                                                            <h6>Licensed for 2 years</h6>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="profile-description">
-                                                <p>Residences can be classified by and how they are connected to
-                                                    neighbouring residences and land. Different types of housing tenure can
-                                                    be used for the same physical type.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="profile-about dashboard-bg-box">
-                                            <div class="row">
-                                                <div class="col-xxl-7">
-                                                    <div class="dashboard-title mb-3">
-                                                        <h3>Profile About</h3>
-                                                    </div>
-
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>Gender :</td>
-                                                                <td>Female</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Birthday :</td>
-                                                                <td>21/05/1997</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Phone Number :</td>
-                                                                <td>
-                                                                    <a href="javascript:void(0)"> +91 846 - 547 -
-                                                                        210</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Address :</td>
-                                                                <td>549 Sulphur Springs Road, Downers, IL</td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
-                                                    <div class="dashboard-title mb-3">
-                                                        <h3>Login Details</h3>
-                                                    </div>
-
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>Email :</td>
-                                                                <td>
-                                                                    <a href="javascript:void(0)">vicki.pope@gmail.com
-                                                                        <span data-bs-toggle="modal"
-                                                                              data-bs-target="#editProfile">Edit</span></a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Password :</td>
-                                                                <td>
-                                                                    <a href="javascript:void(0)">●●●●●●
-                                                                        <span data-bs-toggle="modal"
-                                                                              data-bs-target="#editProfile">Edit</span></a>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xxl-5">
-                                                    <div class="profile-image">
-                                                        <img src="{{asset('/')}}front/assets/images/inner-page/dashboard-profile.png"
-                                                             class="img-fluid blur-up lazyload" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -1594,52 +1086,10 @@
                                         <div class="title">
                                             <h2>My Download</h2>
                                             <span class="title-leaf">
-                                            <svg class="icon-width bg-gray">
-                                                <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
-                                            </svg>
                                         </span>
                                         </div>
 
                                         <div class="download-detail dashboard-bg-box">
-                                            <form>
-                                                <div class="input-group download-form">
-                                                    <input type="text" class="form-control"
-                                                           placeholder="Search your download">
-                                                    <button class="btn theme-bg-color text-light" type="button"
-                                                            id="button-addon2">Search</button>
-                                                </div>
-                                            </form>
-
-                                            <div class="select-filter-box">
-                                                <select class="form-select">
-                                                    <option selected="">All marketplaces</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-
-
-                                                <ul class="nav nav-pills filter-box" id="pills-tab" role="tablist">
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="pills-data-tab"
-                                                                data-bs-toggle="pill" data-bs-target="#pills-data"
-                                                                type="button">Data Purchased</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="pills-title-tab" data-bs-toggle="pill"
-                                                                data-bs-target="#pills-title" type="button">Title</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill"
-                                                                data-bs-target="#pills-rating" type="button">My Rating</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="pills-recent-tab" data-bs-toggle="pill"
-                                                                data-bs-target="#pills-recent" type="button">Recent
-                                                            Updates</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
 
                                             <div class="tab-content" id="pills-tabContent">
                                                 <div class="tab-pane fade show active" id="pills-data" role="tabpanel">
@@ -2134,81 +1584,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="tab-pane fade" id="pills-security" role="tabpanel">
-                                    <div class="dashboard-privacy">
-                                        <div class="dashboard-bg-box">
-                                            <div class="dashboard-title mb-4">
-                                                <h3>Privacy</h3>
-                                            </div>
-
-                                            <div class="privacy-box">
-                                                <div class="d-flex align-items-start">
-                                                    <h6>Allows others to see my profile</h6>
-                                                    <div class="form-check form-switch switch-radio ms-auto">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                               id="redio">
-                                                        <label class="form-check-label" for="redio"></label>
-                                                    </div>
-                                                </div>
-
-                                                <p class="text-content">all peoples will be able to see my profile</p>
-                                            </div>
-
-                                            <div class="privacy-box">
-                                                <div class="d-flex align-items-start">
-                                                    <h6>who has save this profile only that people see my profile</h6>
-                                                    <div class="form-check form-switch switch-radio ms-auto">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                               id="redio2">
-                                                        <label class="form-check-label" for="redio2"></label>
-                                                    </div>
-                                                </div>
-
-                                                <p class="text-content">all peoples will not be able to see my profile</p>
-                                            </div>
-
-                                            <button class="btn theme-bg-color btn-md fw-bold mt-4 text-white">Save
-                                                Changes</button>
-                                        </div>
-
-                                        <div class="dashboard-bg-box mt-4">
-                                            <div class="dashboard-title mb-4">
-                                                <h3>Account settings</h3>
-                                            </div>
-
-                                            <div class="privacy-box">
-                                                <div class="d-flex align-items-start">
-                                                    <h6>Deleting Your Account Will Permanently</h6>
-                                                    <div class="form-check form-switch switch-radio ms-auto">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                               id="redio3">
-                                                        <label class="form-check-label" for="redio3"></label>
-                                                    </div>
-                                                </div>
-                                                <p class="text-content">Once your account is deleted, you will be logged out
-                                                    and will be unable to log in back.</p>
-                                            </div>
-
-                                            <div class="privacy-box">
-                                                <div class="d-flex align-items-start">
-                                                    <h6>Deleting Your Account Will Temporary</h6>
-                                                    <div class="form-check form-switch switch-radio ms-auto">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                               id="redio4">
-                                                        <label class="form-check-label" for="redio4"></label>
-                                                    </div>
-                                                </div>
-
-                                                <p class="text-content">Once your account is deleted, you will be logged out
-                                                    and you will be create new account</p>
-                                            </div>
-
-                                            <button class="btn theme-bg-color btn-md fw-bold mt-4 text-white">Delete My
-                                                Account</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -2217,4 +1592,29 @@
         </section>
         <!-- User Dashboard Section End -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the active tab from session or default to dashboard if none
+            var activeTab = '{{ session('active_tab', '#pills-dashboard') }}'; // Default to dashboard tab
+            $('.nav-link[href="' + activeTab + '"]').addClass('active');
+            $('.tab-pane' + activeTab).addClass('show active');
+
+            // Listen for tab click event and save it to session
+            $('.nav-link').on('click', function () {
+                var tabId = $(this).attr('data-bs-target');
+                $.ajax({
+                    url: "{{ route('store.active.tab') }}",
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        active_tab: tabId
+                    },
+                    success: function (response) {
+                        console.log('Active tab saved to session.');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -62,6 +62,7 @@ Route::middleware('customer.logout')->group(function () {
     Route::post('/customer-logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
 
     Route::post('/profile-update', [CustomerDashboardController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/profile-image-update', [CustomerDashboardController::class, 'profileImageUpdate'])->name('profile.image-update');
     Route::post('/store-active-tab', [CustomerDashboardController::class, 'storeActiveTab'])->name('store.active.tab');
 
     Route::post('/password-update', [CustomerDashboardController::class, 'passwordUpdate'])->name('password.update');

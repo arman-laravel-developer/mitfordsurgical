@@ -338,13 +338,13 @@
                                     </div>
                                 </li>
                                 <li class="right-side">
-                                    <a href="contact-us.html" class="delivery-login-box">
+                                    <a href="{{route('contact.us')}}" class="delivery-login-box">
                                         <div class="delivery-icon">
                                             <i data-feather="phone-call"></i>
                                         </div>
                                         <div class="delivery-detail">
                                             <h6>24/7 Delivery</h6>
-                                            <h5>+91 888 104 2340</h5>
+                                            <h5>{{$generalSettingView->mobile}}</h5>
                                         </div>
                                     </a>
                                 </li>
@@ -475,7 +475,7 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="index.html" class="text-content">Home</a>
+                                    <a href="{{route('home')}}" class="text-content">Home</a>
                                 </li>
                                 <li>
                                     <a href="shop-left-sidebar.html" class="text-content">Products</a>

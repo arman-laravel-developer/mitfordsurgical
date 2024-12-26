@@ -42,7 +42,7 @@
                             @foreach($homeCategories as $homeCategory)
                             <div>
                                 <div class="shop-category-box border-0 wow fadeIn">
-                                    <a href="shop-left-sidebar.html" class="circle-1">
+                                    <a href="{{ route('category.product', ['id' => $homeCategory->id, 'slug' => $homeCategory->slug]) }}" class="circle-1">
                                         <img src="{{asset($homeCategory->image)}}" class="img-fluid blur-up lazyload"
                                              alt="">
                                     </a>
