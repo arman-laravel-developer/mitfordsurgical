@@ -10,7 +10,7 @@ class GoogleAnalyticController extends Controller
     public function index()
     {
         $googleSetup = GoogleAnalytic::latest()->first();
-        return view('admin.setup-configaration.index', compact('googleSetup'));
+        return view('admin.setup-configuration.index', compact('googleSetup'));
     }
 
     public function update(Request $request)

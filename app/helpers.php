@@ -1,4 +1,5 @@
 <?php
+use App\Models\Translation;
 
 
 if (!function_exists('convert_number')) {
@@ -128,6 +129,43 @@ if (!function_exists('updateEnv'))
 
             file_put_contents($path, $env);
         }
+    }
+}
+
+function translate($key, $lang = null)
+{
+    if($lang == null){
+        $lang = App::getLocale();
+    }
+
+    $lang_key = preg_replace('/[^A-Za-z0-9\_]/', '', str_replace(' ', '_', strtolower($key)));
+
+    $translations_default = Cache::rememberForever('translations-'.env('DEFAULT_LANGUAGE', 'en'), function () {
+        return Translation::where('lang', env('DEFAULT_LANGUAGE', 'en'))->pluck('lang_value', 'lang_key')->toArray();
+    });
+
+    if(!isset($translations_default[$lang_key])){
+        $translation_def = new Translation;
+        $translation_def->lang = env('DEFAULT_LANGUAGE', 'en');
+        $translation_def->lang_key = $lang_key;
+        $translation_def->lang_value = $key;
+        $translation_def->save();
+        Cache::forget('translations-'.env('DEFAULT_LANGUAGE', 'en'));
+    }
+
+    $translation_locale = Cache::rememberForever('translations-'.$lang, function () use ($lang) {
+        return Translation::where('lang', $lang)->pluck('lang_value', 'lang_key')->toArray();
+    });
+
+    //Check for session lang
+    if(isset($translation_locale[$lang_key])){
+        return $translation_locale[$lang_key];
+    }
+    elseif(isset($translations_default[$lang_key])){
+        return $translations_default[$lang_key];
+    }
+    else{
+        return $key;
     }
 }
 

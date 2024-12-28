@@ -11,6 +11,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReturnAndRefundController;
+use App\Http\Controllers\LanguageController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -127,6 +128,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
             Route::post('/update', [PrivacyController::class, 'update'])->name('privacy.update');
             Route::post('/delete/{id}', [PrivacyController::class, 'delete'])->name('privacy.delete');
+        });
+        Route::prefix('language')->group(function () {
+            Route::get('/add', [LanguageController::class, 'index'])->name('language.add');
+            Route::post('/new', [LanguageController::class, 'create'])->name('language.new');
+            Route::get('/manage', [LanguageController::class, 'manage'])->name('language.manage');
+            Route::get('/edit/{id}', [LanguageController::class, 'edit'])->name('language.edit');
+            Route::get('/show/{id}', [LanguageController::class, 'show'])->name('language.show');
+            Route::post('/key-value-store/{id}', [LanguageController::class, 'key_value_store'])->name('language.key_value_store');
+            Route::post('/update', [LanguageController::class, 'update'])->name('language.update');
+            Route::post('/delete/{id}', [LanguageController::class, 'delete'])->name('language.delete');
         });
 
         Route::prefix('return-and-refund')->group(function () {

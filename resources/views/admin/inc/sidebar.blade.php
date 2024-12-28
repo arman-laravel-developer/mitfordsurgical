@@ -157,7 +157,7 @@
         <a data-bs-toggle="collapse" href="#sidebarSetup" aria-expanded="false" aria-controls="sidebarSetup"
            class="side-nav-link">
             <i class="uil-wrench"></i>
-            <span> Setup & Configarations </span>
+            <span> Setup & Configurations </span>
             <span class="menu-arrow"></span>
         </a>
         <div class="collapse" id="sidebarSetup">
@@ -170,6 +170,11 @@
                     @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
                 <li>
                     <a href="{{route('about-us.add')}}">About us</a>
+                </li>
+                    @endif
+                    @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
+                <li>
+                    <a href="{{route('language.manage')}}">Language</a>
                 </li>
                     @endif
                     @if ($userType == 1 || in_array('setting.add', $roleRoutes))

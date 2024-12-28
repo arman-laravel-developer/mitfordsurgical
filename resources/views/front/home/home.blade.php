@@ -34,7 +34,7 @@
         <section class="section-b-space">
             <div class="container">
                 <div class="title">
-                    <h2>Popular Categories</h2>
+                    <h2>{{translate('Popular Categories')}}</h2>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -61,7 +61,7 @@
 
         <div class="container">
             <div class="title d-block">
-                <h2 class="text-theme font-sm text-center">All Products</h2>
+                <h2 class="text-theme font-sm text-center">{{translate('All Products')}}</h2>
             </div>
 
             <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
