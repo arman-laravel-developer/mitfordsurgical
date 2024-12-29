@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - My Account
+{{$generalSettingView->site_name}} - {{translate('My Account')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain">
-                            <h2>User Dashboard</h2>
+                            <h2>{{translate('User Dashboard')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">User Dashboard</li>
+                                    <li class="breadcrumb-item active">{{translate('User Dashboard')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -83,41 +83,40 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab', '#pills-dashboard') == '#pills-dashboard' ? 'active' : '' }}" id="pills-dashboard-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-dashboard" type="button"><i data-feather="home"></i>
-                                        DashBoard</button>
+                                        {{translate('DashBoard')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab') == '#pills-order' ? 'active' : '' }}" id="pills-order-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-order" type="button"><i
-                                            data-feather="shopping-bag"></i>Order</button>
+                                            data-feather="shopping-bag"></i>{{translate('Order')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab') == '#pills-wishlist' ? 'active' : '' }}" id="pills-wishlist-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-wishlist" type="button"><i data-feather="heart"></i>
-                                        Wishlist</button>
+                                        {{translate('Wishlist')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab') == '#pills-profile' ? 'active' : '' }}" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"><i data-feather="user"></i>
-                                        Profile</button>
+                                        {{translate('Profile')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab') == '#pills-download' ? 'active' : '' }}" id="pills-download-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-download" type="button" role="tab"><i
-                                            data-feather="download"></i>Download</button>
+                                            data-feather="download"></i>{{translate('Download')}}</button>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-xxl-9 col-lg-8">
-                        <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">Show
-                            Menu</button>
+                        <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">{{translate('Show Menu')}}</button>
                         <div class="dashboard-right-sidebar">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show {{ session('active_tab', '#pills-dashboard') == '#pills-dashboard' ? 'active' : '' }}" id="pills-dashboard" role="tabpanel">
                                     <div class="dashboard-home">
                                         <div class="title">
-                                            <h2>My Dashboard</h2>
+                                            <h2>{{translate('My Dashboard')}}</h2>
                                             <span class="title-leaf">
                                         </span>
                                         </div>
@@ -135,7 +134,7 @@
                                                         <img src="{{ asset('/') }}front/assets/svg/pending.svg" class="blur-up lazyload"
                                                              alt="">
                                                         <div class="total-detail">
-                                                            <h5>Total Order</h5>
+                                                            <h5>{{translate('Total Order')}}</h5>
                                                             <h3>3658</h3>
                                                         </div>
                                                     </div>
@@ -148,7 +147,7 @@
                                                         <img src="{{ asset('/') }}front/assets/svg/order.svg" class="blur-up lazyload"
                                                              alt="">
                                                         <div class="total-detail">
-                                                            <h5>Total Pending Order</h5>
+                                                            <h5>{{translate('Total Pending Order')}}</h5>
                                                             <h3>254</h3>
                                                         </div>
                                                     </div>
@@ -161,7 +160,7 @@
                                                         <img src="{{ asset('/') }}front/assets/svg/wishlist.svg"
                                                              class="blur-up lazyload" alt="">
                                                         <div class="total-detail">
-                                                            <h5>Total Wishlist</h5>
+                                                            <h5>{{translate('Total Wishlist')}}</h5>
                                                             <h3>32158</h3>
                                                         </div>
                                                     </div>
@@ -174,7 +173,7 @@
                                 <div class="tab-pane fade" id="pills-wishlist" role="tabpanel">
                                     <div class="dashboard-wishlist">
                                         <div class="title">
-                                            <h2>My Wishlist History</h2>
+                                            <h2>{{translate('My Wishlist History')}}</h2>
                                             <span class="title-leaf title-leaf-gray">
                                         </span>
                                         </div>
@@ -604,7 +603,7 @@
                                 <div class="tab-pane fade" id="pills-order" role="tabpanel">
                                     <div class="dashboard-order">
                                         <div class="title">
-                                            <h2>My Orders History</h2>
+                                            <h2>{{translate('My Orders History')}}</h2>
                                             <span class="title-leaf title-leaf-gray">
                                         </span>
                                         </div>
@@ -925,7 +924,7 @@
                                 <div class="tab-pane fade" id="pills-profile" role="tabpanel">
                                     <div class="dashboard-profile">
                                         <div class="title">
-                                            <h2>My Profile</h2>
+                                            <h2>{{translate('My Profile')}}</h2>
                                             <span class="title-leaf">
                                         </span>
                                         </div>
@@ -935,18 +934,18 @@
                                                     <div class="row">
                                                         <div class="col-8 col-md-10 col-xl-10">
                                                             <div class="dashboard-title mb-3">
-                                                                <h3>Profile Details</h3>
+                                                                <h3>{{translate('Profile Details')}}</h3>
                                                             </div>
                                                         </div>
                                                         <div class="col-2 col-md-2 col-xl-2">
-                                                            <button type="button" class="btn btn-sm bg-danger text-white" id="editButton" >Edit</button>
+                                                            <button type="button" class="btn btn-sm bg-danger text-white" id="editButton" >{{translate('Edit')}}</button>
                                                         </div>
                                                     </div>
 
                                                     <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data" id="profileForm">
                                                         @csrf
                                                         <div class="form-group mb-3">
-                                                            <label for="name">Name</label>
+                                                            <label for="name">{{translate('Name')}}</label>
                                                             <input
                                                                 type="text"
                                                                 class="form-control"
@@ -956,7 +955,7 @@
                                                                 readonly>
                                                         </div>
                                                         <div class="form-group mb-3">
-                                                            <label for="email">Email</label>
+                                                            <label for="email">{{translate('Email')}}</label>
                                                             <input
                                                                 type="text"
                                                                 class="form-control"
@@ -966,7 +965,7 @@
                                                                 readonly>
                                                         </div>
                                                         <div class="form-group mb-3">
-                                                            <label for="mobile">Phone Number</label>
+                                                            <label for="mobile">{{translate('Phone Number')}}</label>
                                                             <input
                                                                 type="text"
                                                                 class="form-control"
@@ -976,7 +975,7 @@
                                                                 readonly>
                                                         </div>
                                                         <div class="form-group mb-3">
-                                                            <label for="address">Address</label>
+                                                            <label for="address">{{translate('Address')}}</label>
                                                             <input
                                                                 type="text"
                                                                 class="form-control"
@@ -988,7 +987,7 @@
                                                         <div class="form-group text-end mb-3">
                                                             <!-- Submit Button (hidden by default) -->
                                                             <button type="submit" class="btn btn-primary bg-primary text-white" id="submitButton" style="display: none;">
-                                                                Update
+                                                                {{translate('Update')}}
                                                             </button>
                                                         </div>
                                                     </form>
@@ -1021,7 +1020,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="dashboard-title mb-3">
-                                                        <h3>Change Password</h3>
+                                                        <h3>{{translate('Change Password')}}</h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1035,8 +1034,8 @@
                                                                 class="form-floating mb-lg-3 mb-2 theme-form-floating">
                                                                 <input type="password" class="form-control @error('old_password') is-invalid @enderror"
                                                                        id="password" name="old_password"
-                                                                       placeholder="Enter Current Password">
-                                                                <label for="password">Current Password</label>
+                                                                       placeholder="{{translate('Enter Current Password')}}">
+                                                                <label for="password">{{translate('Current Password')}}</label>
                                                                 @error('old_password')
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                                 @enderror
@@ -1048,8 +1047,8 @@
                                                         <div
                                                             class="form-floating mb-lg-3 mb-2 theme-form-floating">
                                                             <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                                                   id="new_password" name="password" placeholder="Enter New Password">
-                                                            <label for="new_password">New Password</label>
+                                                                   id="new_password" name="password" placeholder="{{translate('Enter New Password')}}">
+                                                            <label for="new_password">{{translate('New Password')}}</label>
                                                             @error('password')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -1060,8 +1059,8 @@
                                                         <div
                                                             class="form-floating mb-lg-3 mb-2 theme-form-floating">
                                                             <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                                   id="password_confirmation" name="password_confirmation" placeholder="Enter Password Confirmation">
-                                                            <label for="password_confirmation">Password Confirmation</label>
+                                                                   id="password_confirmation" name="password_confirmation" placeholder="{{translate('Enter Password Confirmation')}}">
+                                                            <label for="password_confirmation">{{translate('Password Confirmation')}}</label>
                                                             @error('password_confirmation')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -1071,7 +1070,7 @@
                                                     <div class="button-group mt-0">
                                                         <ul>
                                                             <li>
-                                                                <button class="btn btn-animation" type="submit">Update</button>
+                                                                <button class="btn btn-animation" type="submit">{{translate('Update')}}</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -1084,7 +1083,7 @@
                                 <div class="tab-pane fade" id="pills-download" role="tabpanel">
                                     <div class="dashboard-download">
                                         <div class="title">
-                                            <h2>My Download</h2>
+                                            <h2>{{translate('My Download')}}</h2>
                                             <span class="title-leaf">
                                         </span>
                                         </div>

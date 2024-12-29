@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Contact us
+{{$generalSettingView->site_name}} - {{translate('Login')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 0;">
-                            <h2>Login</h2>
+                            <h2>{{translate('Login')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Login</li>
+                                    <li class="breadcrumb-item active">{{translate('Login')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -42,8 +42,8 @@
                     <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                         <div class="log-in-box">
                             <div class="log-in-title">
-                                <h3>Welcome To {{$generalSettingView->site_name}}</h3>
-                                <h4>Log In Your Account</h4>
+                                <h3>{{translate('Welcome To')}} {{$generalSettingView->site_name}}</h3>
+                                <h4>{{translate('Log In Your Account')}}</h4>
                             </div>
 
                             <div class="input-box">
@@ -51,16 +51,16 @@
                                     @csrf
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating log-in-form">
-                                            <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Mobile Number">
-                                            <label for="mobile">Mobile Number</label>
+                                            <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="{{translate('Mobile Number')}}">
+                                            <label for="mobile">{{translate('Mobile Number')}}</label>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating log-in-form">
                                             <input type="password" class="form-control" name="password" id="password"
-                                                   placeholder="Password">
-                                            <label for="password">Password</label>
+                                                   placeholder="{{translate('Password')}}">
+                                            <label for="password">{{translate('Password')}}</label>
                                         </div>
                                     </div>
 
@@ -69,15 +69,15 @@
                                             <div class="form-check ps-0 m-0 remember-box">
                                                 <input class="checkbox_animated check-box" type="checkbox"
                                                        id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">Remember me</label>
+                                                <label class="form-check-label" for="flexCheckDefault">{{translate('Remember me')}}</label>
                                             </div>
-                                            <a href="forgot.html" class="forgot-password">Forgot Password?</a>
+                                            <a href="forgot.html" class="forgot-password">{{translate('Forgot Password')}}?</a>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <button class="btn btn-animation w-100 justify-content-center" type="submit">Log
-                                            In</button>
+                                        <button class="btn btn-animation w-100 justify-content-center" type="submit">
+                                            {{translate('Log In')}}</button>
                                     </div>
                                 </form>
                             </div>
@@ -87,8 +87,8 @@
                             </div>
 
                             <div class="sign-up-box">
-                                <h4>Don't have an account?</h4>
-                                <a href="{{route('customer.register')}}">Sign Up</a>
+                                <h4>{{translate("Don't have an account")}}?</h4>
+                                <a href="{{route('customer.register')}}">{{translate('Sign Up')}}</a>
                             </div>
                         </div>
                     </div>
