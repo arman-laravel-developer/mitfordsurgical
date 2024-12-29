@@ -73,8 +73,8 @@
 
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating">
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="{{translate('Mobile Number')}}">
-                                            <label for="password">{{translate('Mobile Number')}}</label>
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="{{translate('Password')}}">
+                                            <label for="password">{{translate('Password')}}</label>
                                             @error('password')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
