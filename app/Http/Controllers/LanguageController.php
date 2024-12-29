@@ -26,6 +26,11 @@ class LanguageController extends Controller
 
         // Store the locale in the session for persistence
         $request->session()->put('locale', $locale);
+        $data = [
+            'DEFAULT_LANGUAGE' => $locale,
+        ];
+
+        updateEnv($data);
 
         // Optionally flash a success message
         $language = Language::where('code', $locale)->first();

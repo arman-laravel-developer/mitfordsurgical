@@ -18,10 +18,22 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($locale = Session::get('locale')) {
-            app()->setLocale($locale); // Set the locale for the app
+        // Check header request and determine localizaton
+        if($request->hasHeader('App-Language')){
+            $locale = $request->header('App-Language');
+        }
+        elseif(env('DEFAULT_LANGUAGE') != null){
+            $locale = env('DEFAULT_LANGUAGE');
+        }
+        else{
+            $locale = 'en';
         }
 
+
+        // set laravel localization
+        App::setLocale($locale);
+
+        // continue request
         return $next($request);
     }
 }
