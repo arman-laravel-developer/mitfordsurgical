@@ -1,5 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+@php
+    $language = \App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first();
+@endphp
+
+@if ($language->rtl == 1)
+    <html dir="rtl" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    @else
+        <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        @endif
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -222,41 +231,63 @@
                     </div>
                 </div>
 
+                @php
+                    if(Session::has('locale')){
+                        $locale = Session::get('locale', Config::get('app.locale'));
+                    }
+                    else{
+                        $locale = env('DEFAULT_LANGUAGE');
+                    }
+                @endphp
                 <div class="col-lg-3">
                     <ul class="about-list right-nav-about">
                         <li class="right-nav-list">
                             <div class="dropdown theme-form-select">
                                 <button class="btn dropdown-toggle" type="button" id="select-language"
                                         data-bs-toggle="dropdown">
-                                    <img src="{{asset('/')}}front/assets/images/country/united-states.png"
+                                    <img src="{{ asset('admin/assets/images/flags/'.$locale.'.png') }}"
                                          class="img-fluid blur-up lazyload" alt="">
-                                    <span>English</span>
+                                    <span>{{ ucfirst($locale) }}</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="english">
-                                            <img src="{{asset('/')}}front/assets/images/country/united-kingdom.png"
-                                                 class="img-fluid blur-up lazyload" alt="">
-                                            <span>English</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="france">
-                                            <img src="{{asset('/')}}front/assets/images/country/germany.png"
-                                                 class="img-fluid blur-up lazyload" alt="">
-                                            <span>Germany</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="chinese">
-                                            <img src="{{asset('/')}}front/assets/images/country/turkish.png"
-                                                 class="img-fluid blur-up lazyload" alt="">
-                                            <span>Turki</span>
-                                        </a>
-                                    </li>
+                                    @foreach (\App\Models\Language::all() as $language)
+                                        <li>
+                                            <a href="javascript:void(0)"
+                                               data-locale="{{ $language->code }}"
+                                               class="dropdown-item @if($locale == $language->code) active @endif"
+                                               onclick="changeLanguage('{{ $language->code }}')">
+                                                <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" class="mr-2">
+                                                <span class="language">{{ $language->name }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </li>
+
+                        <script>
+                            function changeLanguage(locale) {
+                                fetch("{{ route('language.change') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                    },
+                                    body: JSON.stringify({ locale })
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            location.reload(); // Reload the page to apply the language change
+                                        } else {
+                                            alert('Failed to change language');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        alert('An error occurred');
+                                    });
+                            }
+                        </script>
                         <li class="right-nav-list">
                             <div class="dropdown theme-form-select">
                                 <button class="btn dropdown-toggle" type="button" id="select-dollar"

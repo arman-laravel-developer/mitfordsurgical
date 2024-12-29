@@ -25,9 +25,10 @@
                         <thead>
                         <tr>
                             <th>S.N</th>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Flutter App Lang Code</th>
+                            <th>{{translate('Name')}}</th>
+                            <th>{{translate('Code')}}</th>
+                            <th>{{translate('Flutter App Lang Code')}}</th>
+                            <th >{{translate('RTL')}}</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -38,6 +39,12 @@
                                 <td>{{ $language->name }}</td>
                                 <td>{{ $language->code }}</td>
                                 <td>{{ $language->app_lang_code }}</td>
+                                <td>
+                                    <input type="checkbox" id="switch{{$language->id}}_featured" data-switch="none"
+                                           {{ $language->rtl == 1 ? 'checked' : '' }}
+                                           onchange="updateRTL({{$language->id}}, this.checked ? 1 : 0)">
+                                    <label for="switch{{$language->id}}_featured" data-on-label="on" data-off-label="off"></label>
+                                </td>
                                 <td class="text-right">
                                     <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('language.show', ['id' => $language->id])}}" title="{{ translate('Translation') }}">
                                         <i class="fa fa-language"></i>
@@ -72,6 +79,30 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div>
+
+    <script>
+        function updateRTL(languageId, rtl) {
+            $.ajax({
+                url: '{{ route("language.updateRTL") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    language_id: languageId,
+                    rtl: rtl
+                },
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.success);
+                    } else if (response.error) {
+                        toastr.error(response.error);
+                    }
+                },
+                error: function(xhr) {
+                    alert('An error occurred while updating the product status.');
+                }
+            });
+        }
+    </script>
 
 @endsection
 

@@ -153,15 +153,18 @@
         </li>
     @endif
     @if ($userType == 1 || !empty(array_filter(['google-analytic.add','about-us.add','setting.add','setting.smtp','shipping-cost.manage'], fn($route) => in_array($route, $roleRoutes))))
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarSetup" aria-expanded="false" aria-controls="sidebarSetup"
+        @php
+            $isActive = in_array(Route::currentRouteName(), ['language.edit', 'language.show', 'language.key_value_store']);
+        @endphp
+    <li class="side-nav-item {{ $isActive ? 'menuitem-active' : '' }}">
+        <a data-bs-toggle="collapse" href="#sidebarSetup" aria-expanded="{{ $isActive ? 'true' : 'false' }}" aria-controls="sidebarSetup"
            class="side-nav-link">
             <i class="uil-wrench"></i>
             <span> Setup & Configurations </span>
             <span class="menu-arrow"></span>
         </a>
-        <div class="collapse" id="sidebarSetup">
-            <ul class="side-nav-second-level">
+        <div class="collapse {{ $isActive ? 'show' : '' }}" id="sidebarSetup">
+        <ul class="side-nav-second-level">
                 @if ($userType == 1 || in_array('google-analytic.add', $roleRoutes))
                 <li>
                     <a href="{{route('google-analytic.add')}}">Google Analytics</a>
@@ -173,7 +176,7 @@
                 </li>
                     @endif
                     @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
-                <li>
+                <li class="{{ $isActive ? 'active' : '' }}">
                     <a href="{{route('language.manage')}}">Language</a>
                 </li>
                     @endif

@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoryProductsController;
+use App\Http\Controllers\LanguageController;
 use App\Models\RoleRoute;
 
 function getRoleName($routeName)
@@ -37,6 +38,8 @@ Route::get('/return', [HomeController::class, 'returnPage'])->name('return.page'
 Route::get('/conditions', [HomeController::class, 'condition'])->name('condition.page');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
+
+Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
 
