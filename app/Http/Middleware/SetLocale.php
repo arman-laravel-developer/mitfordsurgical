@@ -22,11 +22,16 @@ class SetLocale
         if($request->hasHeader('App-Language')){
             $locale = $request->header('App-Language');
         }
+        elseif(Session::get('locale'))
+        {
+            $locale = Session::get('locale');
+        }
         elseif(env('DEFAULT_LANGUAGE') != null){
             $locale = env('DEFAULT_LANGUAGE');
         }
-        else{
-            $locale = 'en';
+        else
+        {
+            $locale = config('app.fallback_locale');
         }
 
 

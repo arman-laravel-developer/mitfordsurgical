@@ -331,7 +331,7 @@
                                         <span class="location-arrow">
                                             <i data-feather="map-pin"></i>
                                         </span>
-                                    <span class="locat-name">Your Location</span>
+                                    <span class="locat-name">{{translate('Your Location')}}</span>
                                     <i class="fa-solid fa-angle-down"></i>
                                 </button>
                             </div>
@@ -374,7 +374,7 @@
                                             <i data-feather="phone-call"></i>
                                         </div>
                                         <div class="delivery-detail">
-                                            <h6>24/7 Delivery</h6>
+                                            <h6>{{translate('24/7 Delivery')}}</h6>
                                             <h5>{{$generalSettingView->mobile}}</h5>
                                         </div>
                                     </a>
@@ -389,7 +389,7 @@
                                         <button type="button" class="btn p-0 position-relative header-wishlist" onclick="openCart()">
                                             <i data-feather="shopping-cart"></i>
                                             <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                    <span class="visually-hidden">unread messages</span>
+                                                    <span class="visually-hidden">{{translate('unread messages')}}</span>
                                                 </span>
                                         </button>
                                     </div>
@@ -400,8 +400,8 @@
                                             <i data-feather="user"></i>
                                         </div>
                                         <div class="delivery-detail">
-                                            <h6>Hello,</h6>
-                                            <h5>My Account</h5>
+                                            <h6>{{translate('Hello')}},</h6>
+                                            <h5>{{translate('My Account')}}</h5>
                                         </div>
                                     </div>
 
@@ -410,7 +410,7 @@
                                             @if(Session::get('customer_id'))
                                                 <li class="product-box-contain">
                                                     <i></i>
-                                                    <a href="{{route('customer.dashboard')}}">Dashboard</a>
+                                                    <a href="{{route('customer.dashboard')}}">{{translate('Dashboard')}}</a>
                                                 </li>
 
                                                 <li class="product-box-contain">
@@ -422,15 +422,15 @@
                                             @else
                                                 <li class="product-box-contain">
                                                     <i></i>
-                                                    <a href="{{route('customer.login')}}">Log In</a>
+                                                    <a href="{{route('customer.login')}}">{{translate('Log In')}}</a>
                                                 </li>
 
                                                 <li class="product-box-contain">
-                                                    <a href="{{route('customer.register')}}">Register</a>
+                                                    <a href="{{route('customer.register')}}">{{translate('Register')}}</a>
                                                 </li>
 
                                                 <li class="product-box-contain">
-                                                    <a href="{{route('forget.password')}}">Forgot Password</a>
+                                                    <a href="{{route('forget.password')}}">{{translate('Forgot Password')}}</a>
                                                 </li>
                                             @endif
                                         </ul>
@@ -500,25 +500,25 @@
 
                     <div class="col-xl-3 col-lg-3 col-sm-3">
                         <div class="footer-title">
-                            <h4>Useful Links</h4>
+                            <h4>{{translate('Useful Links')}}</h4>
                         </div>
 
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="{{route('home')}}" class="text-content">Home</a>
+                                    <a href="{{route('home')}}" class="text-content">{{translate('Home')}}</a>
                                 </li>
                                 <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Products</a>
+                                    <a href="shop-left-sidebar.html" class="text-content">{{translate('Products')}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('condition.page')}}" class="text-content">Terms & Conditions</a>
+                                    <a href="{{route('condition.page')}}" class="text-content">{{translate('Terms & Conditions')}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('privacy.page')}}" class="text-content">Privacy policies</a>
+                                    <a href="{{route('privacy.page')}}" class="text-content">{{translate('Privacy policies')}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('return.page')}}" class="text-content">Return and refund policies</a>
+                                    <a href="{{route('return.page')}}" class="text-content">{{translate('Return and refund policies')}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -526,28 +526,28 @@
 
                     <div class="col-xl-2 col-sm-3">
                         <div class="footer-title">
-                            <h4>Help Center</h4>
+                            <h4>{{translate('Help Center')}}</h4>
                         </div>
 
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="{{route('customer.dashboard')}}" class="text-content">Your Account</a>
+                                    <a href="{{route('customer.dashboard')}}" class="text-content">{{translate('Your Account')}}</a>
                                 </li>
                                 <li>
-                                    <a href="order-tracking.html" class="text-content">Track Order</a>
+                                    <a href="order-tracking.html" class="text-content">{{translate('Track Order')}}</a>
                                 </li>
                                 <li>
-                                    <a href="order-tracking.html" class="text-content">Become a vendor</a>
+                                    <a href="order-tracking.html" class="text-content">{{translate('Become a vendor')}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('about.us')}}" class="text-content">About Us</a>
+                                    <a href="{{route('about.us')}}" class="text-content">{{translate('About Us')}}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('contact.us')}}" class="text-content">Contact Us</a>
+                                    <a href="{{route('contact.us')}}" class="text-content">{{translate('Contact Us')}}</a>
                                 </li>
                                 <li>
-                                    <a href="faq.html" class="text-content">FAQ</a>
+                                    <a href="faq.html" class="text-content">{{translate('FAQ')}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -555,7 +555,7 @@
 
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="footer-title">
-                            <h4>Contact Us</h4>
+                            <h4>{{translate('Contact Us')}}</h4>
                         </div>
 
                         <div class="footer-contact">
@@ -564,7 +564,7 @@
                                     <div class="footer-number">
                                         <i data-feather="phone"></i>
                                         <div class="contact-number">
-                                            <h6 class="text-content">Hotline 24/7 :</h6>
+                                            <h6 class="text-content">{{translate('Hotline 24/7')}} :</h6>
                                             <h5><a href="tel:{{$generalSettingView->mobile}}">{{$generalSettingView->mobile}}</a></h5>
                                         </div>
                                     </div>
@@ -574,20 +574,20 @@
                                     <div class="footer-number">
                                         <i data-feather="mail"></i>
                                         <div class="contact-number">
-                                            <h6 class="text-content">Email Address :</h6>
+                                            <h6 class="text-content">{{translate('Email Address')}} :</h6>
                                             <h5><a href="mailto:{{$generalSettingView->email}}">{{$generalSettingView->email}}</a></h5>
                                         </div>
                                     </div>
                                 </li>
 
                                 <li class="social-app mb-0">
-                                    <h5 class="mb-2 text-content">Become a Vendor :</h5>
+                                    <h5 class="mb-2 text-content">{{translate('Become a Vendor')}} :</h5>
                                     <ul>
                                         <li class="mb-0">
-                                            <a href="" class="btn btn-md bg-primary text-white">Register</a>
+                                            <a href="" class="btn btn-md bg-primary text-white">{{translate('Register')}}</a>
                                         </li>
                                         <li class="mb-0">
-                                            <a href="" class="btn btn-md bg-danger text-white">Login</a>
+                                            <a href="" class="btn btn-md bg-danger text-white">{{translate('Login')}}</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -599,7 +599,7 @@
 
             <div class="sub-footer section-small-space">
                 <div class="reserve">
-                    <h6 class="text-content">©{{date('Y')}} {{$generalSettingView->site_name}} All rights reserved</h6>
+                    <h6 class="text-content">©{{date('Y')}} {{$generalSettingView->site_name}} {{translate('All rights reserved')}}</h6>
                 </div>
 
                 <div class="payment">
@@ -607,7 +607,7 @@
                 </div>
 
                 <div class="social-link">
-                    <h6 class="text-content">Stay connected :</h6>
+                    <h6 class="text-content">{{translate('Stay connected')}} :</h6>
                     <ul>
                         <li>
                             <a href="{{$generalSettingView->facebook_url}}" target="_blank">

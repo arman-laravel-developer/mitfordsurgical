@@ -30,12 +30,18 @@
                             <tbody>
                             @foreach ($lang_keys as $key => $translation)
                                 <tr>
-                                    <td>{{ $loop->iteration  }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td class="key">{{ $translation->lang_value }}</td>
                                     <td>
-                                        <input type="text" class="form-control value" style="width:100%" name="values[{{ $translation->lang_key }}]" @if (($traslate_lang = \App\Models\Translation::where('lang', $language->code)->where('lang_key', $translation->lang_key)->latest()->first()) != null)
-                                        value="{{ $traslate_lang->lang_value }}"
-                                            @endif>
+                                        <input type="text" class="form-control value" style="width:100%" name="values[{{ $translation->lang_key }}]"
+                                               @php
+                                                   // Retrieve the translated value for the selected language
+                                                   $traslate_lang = \App\Models\Translation::where('lang', $language->code)->where('lang_key', $translation->lang_key)->latest()->first();
+
+                                                   // Retrieve the default translation value (fallback)
+                                                   $default_translation = \App\Models\Translation::where('lang', 'en')->where('lang_key', $translation->lang_key)->first(); // Assuming 'en' is the default language code
+                                               @endphp
+                                               value="{{ $traslate_lang ? $traslate_lang->lang_value : ($default_translation ? $default_translation->lang_value : '') }}">
                                     </td>
                                 </tr>
                             @endforeach

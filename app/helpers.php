@@ -135,7 +135,7 @@ if (!function_exists('updateEnv'))
 function translate($key, $params = [], $lang = null)
 {
     if ($lang == null) {
-        $lang = App::getLocale();
+        $lang = Session::get('locale');
     }
 
     $lang_key = preg_replace('/[^A-Za-z0-9\_]/', '', str_replace(' ', '_', strtolower($key)));
