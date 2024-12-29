@@ -414,7 +414,7 @@
                                                 </li>
 
                                                 <li class="product-box-contain">
-                                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+                                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">{{translate('Logout')}}</a>
                                                     <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">
                                                         @csrf
                                                     </form>
