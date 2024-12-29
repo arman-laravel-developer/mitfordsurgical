@@ -840,7 +840,7 @@
         <i data-feather="shopping-bag" class="text-warning" style="width: 37%; height: 16%;"></i>
     </div>
     <div class="shopping-items bg-light text-center px-3 py-2">
-        <span class="d-block fw-bold text-warning" style="font-size: 85%;">8 ITEMS</span>
+        <span class="d-block fw-bold text-warning" style="font-size: 85%;">8 {{translate('ITEMS')}}</span>
         <span class="d-block fw-bold text-secondary" style="font-size: 83%;">৳ 5,577</span>
     </div>
 </div>
@@ -851,8 +851,8 @@
 <!-- Hidden Slide-in Cart -->
 <div id="cart-container" class="cart-container shadow">
     <div class="cart-header d-flex justify-content-between align-items-center p-3 bg-light">
-        <h5 class="fw-bold mb-0">8 ITEMS</h5>
-        <button class="btn btn-close" onclick="closeCart()">Close</button>
+        <h5 class="fw-bold mb-0">8 {{translate('ITEMS')}}</h5>
+        <button class="btn btn-close" onclick="closeCart()">{{translate('Close')}}</button>
     </div>
 
     <div class="cart-body p-3">
@@ -886,7 +886,7 @@
     </div>
 
     <div class="cart-footer p-3 border-top">
-        <a href="{{route('checkout')}}" class="btn bg-danger text-white w-100 fw-bold">Place Order <span>৳ 5,577</span></a>
+        <a href="{{route('checkout')}}" class="btn bg-danger text-white w-100 fw-bold">{{translate('Place Order')}} <span>৳ 5,577</span></a>
     </div>
 </div>
 
