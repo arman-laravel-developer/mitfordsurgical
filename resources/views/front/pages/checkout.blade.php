@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    Checkout | {{$generalSettingView->site_name}}
+{{translate('Checkout')}} | {{$generalSettingView->site_name}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain p-0">
-                            <h2>Checkout</h2>
+                            <h2>{{translate('Checkout')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Checkout</li>
+                                    <li class="breadcrumb-item active">{{translate('Checkout')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -45,7 +45,7 @@
                                             </div>
                                             <div class="checkout-box">
                                                 <div class="checkout-title">
-                                                    <h4>Delivery Address</h4>
+                                                    <h4>{{translate('Delivery Address')}}</h4>
                                                 </div>
 
                                                 <div class="checkout-detail">
@@ -55,20 +55,20 @@
                                                                 <div class="row">
                                                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                                                         <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput" class="form-label">Full Name<sup class="text-danger">*</sup></label>
+                                                                            <label for="exampleFormControlInput" class="form-label">{{translate('Full Name')}}<sup class="text-danger">*</sup></label>
                                                                             <div class="custom-input">
                                                                                 <input type="text" class="form-control" id="exampleFormControlInput"
-                                                                                       placeholder="Enter Full Name">
+                                                                                       placeholder="{{translate('Enter Full Name')}}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                                                         <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput3" class="form-label">Phone Number<sup class="text-danger">*</sup></label>
+                                                                            <label for="exampleFormControlInput3" class="form-label">{{translate('Phone Number')}}<sup class="text-danger">*</sup></label>
                                                                             <div class="custom-input">
                                                                                 <input type="tel" class="form-control" id="exampleFormControlInput3"
-                                                                                       placeholder="Enter Your Phone Number"
+                                                                                       placeholder="{{translate('Enter Your Phone Number')}}"
                                                                                        maxlength="11"
                                                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);">
                                                                             </div>
@@ -77,10 +77,10 @@
 
                                                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                                                         <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput1" class="form-label">Details Address<sup class="text-danger">*</sup> </label>
+                                                                            <label for="exampleFormControlInput1" class="form-label">{{translate('Details Address')}}<sup class="text-danger">*</sup> </label>
                                                                             <div class="custom-input">
                                                                                 <input type="text" class="form-control" id="exampleFormControlInput1"
-                                                                                       placeholder="Enter Details Address">
+                                                                                       placeholder="{{translate('Enter Details Address')}}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="checkout-box">
                                                 <div class="checkout-title">
-                                                    <h4>Delivery Option</h4>
+                                                    <h4>{{translate('Delivery Option')}}</h4>
                                                 </div>
 
                                                 <div class="checkout-detail">
@@ -140,7 +140,7 @@
                                             </div>
                                             <div class="checkout-box">
                                                 <div class="checkout-title">
-                                                    <h4>Payment Option</h4>
+                                                    <h4>{{translate('Payment Option')}}</h4>
                                                 </div>
 
                                                 <style>
@@ -188,7 +188,7 @@
                                             </div>
                                             <div class="checkout-box">
                                                 <div class="checkout-title">
-                                                    <h4>Delivery Note</h4>
+                                                    <h4>{{translate('Delivery Note')}}</h4>
                                                 </div>
 
                                                 <div class="checkout-detail">
@@ -199,7 +199,7 @@
                                                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                                                         <div class="custom-form">
                                                                             <div class="custom-input">
-                                                                                <input type="text" class="form-control" placeholder="Enter Delivery Note">
+                                                                                <input type="text" class="form-control" placeholder="{{translate('Enter Delivery Note')}}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -217,7 +217,7 @@
                                         <div class="delivery-address-box d-flex align-items-center">
                                             <input type="checkbox" id="agree_policy" name="agree_policy" class="form-check-input me-2">
                                             <label for="agree_policy" class="form-check-label mb-0">
-                                                I have read and agree to the <a href="#" class="text-primary">terms and conditions</a>.
+                                                {{translate('I have read and agree to the')}} <a href="#" class="text-primary">{{translate('terms and conditions')}}</a>.
                                             </label>
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@
                         <div class="right-side-summery-box">
                             <div class="summery-box-2">
                                 <div class="summery-header">
-                                    <h3>Order Summery</h3>
+                                    <h3>{{translate('Order Summery')}}</h3>
                                 </div>
 
                                 <ul class="summery-contain">
@@ -279,33 +279,33 @@
 
                                 <ul class="summery-total">
                                     <li>
-                                        <h4>Subtotal</h4>
+                                        <h4>{{translate('Subtotal')}}</h4>
                                         <h4 class="price">$111.81</h4>
                                     </li>
 
                                     <li>
-                                        <h4>Shipping</h4>
+                                        <h4>{{translate('Shipping')}}</h4>
                                         <h4 class="price">$8.90</h4>
                                     </li>
 
                                     <li>
-                                        <h4>Tax</h4>
+                                        <h4>{{translate('Tax')}}</h4>
                                         <h4 class="price">$29.498</h4>
                                     </li>
 
                                     <li>
-                                        <h4>Coupon/Code</h4>
+                                        <h4>{{translate('Coupon/Code')}}</h4>
                                         <h4 class="price">$-23.10</h4>
                                     </li>
 
                                     <li class="list-total">
-                                        <h4>Total (USD)</h4>
+                                        <h4>{{translate('Total (BDT)')}}</h4>
                                         <h4 class="price">$19.28</h4>
                                     </li>
                                 </ul>
                             </div>
 
-                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
+                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">{{translate('Place Order')}}</button>
                         </div>
                     </div>
                 </div>

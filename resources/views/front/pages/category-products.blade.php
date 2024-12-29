@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    {{$generalSettingView->site_name}} - Category products
+    {{$generalSettingView->site_name}} - {{translate('Category products')}}
 @endsection
 
 @section('body')

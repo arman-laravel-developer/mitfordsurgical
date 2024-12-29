@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Privacy Policies
+{{$generalSettingView->site_name}} - {{translate('Privacy Policies')}}
 @endsection
 
 @section('body')
@@ -24,7 +24,7 @@
                         <hr style="border: solid dodgerblue 1px">
                     </div>
                     <div class="col-md-4">
-                        <p class="text-center" style="font-size: 2em; color: dodgerblue">Privacy Policies</p>
+                        <p class="text-center" style="font-size: 2em; color: dodgerblue">{{translate('Privacy Policies')}}</p>
                     </div>
                     <div class="col-md-4">
                         <hr style="border: solid dodgerblue 1px">

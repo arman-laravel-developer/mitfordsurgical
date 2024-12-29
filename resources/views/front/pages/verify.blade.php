@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    {{$generalSettingView->site_name}} - Forgot Password
+    {{$generalSettingView->site_name}} - {{translate('Forgot Password')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 0;">
-                            <h2>Forgot Password</h2>
+                            <h2>{{translate('Forgot Password')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Forgot Password</li>
+                                    <li class="breadcrumb-item active">{{translate('Forgot Password')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                         <div class="log-in-box">
                             <div class="log-in-title">
-                                <h3 class="text-title">Please enter the one time password to verify your account</h3>
+                                <h3 class="text-title">{{translate('Please enter the one time password to verify your account')}}</h3>
                                 <h5 class="text-content">{{Session::get('message')}}</h5>
                             </div>
 
@@ -62,12 +62,11 @@
                             </div>
 
                             <div class="send-box pt-4">
-                                <h5>Didn't get the code? <a href="javascript:void(0)" class="theme-color fw-bold">Resend
-                                        It</a></h5>
+                                <h5>{{translate("Didn't get the code?")}} <a href="javascript:void(0)" class="theme-color fw-bold">{{translate('Resend It')}}</a></h5>
                             </div>
 
                             <button onclick="location.href = '{{route('home')}}';" class="btn btn-animation w-100 mt-3"
-                                    type="submit">Validate</button>
+                                    type="submit">{{translate('Validate')}}</button>
                         </div>
                     </div>
                 </div>

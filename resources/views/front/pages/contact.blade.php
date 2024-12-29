@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Contact us
+{{$generalSettingView->site_name}} - {{translate('Contact us')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 0;">
-                            <h2>Contact Us</h2>
+                            <h2>{{translate('Contact us')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Contact Us</li>
+                                    <li class="breadcrumb-item active">{{translate('Contact us')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="contact-title">
-                                        <h3>Get In Touch</h3>
+                                        <h3>{{translate('Get In Touch')}}</h3>
                                     </div>
 
                                     <div class="contact-detail">
@@ -56,7 +56,7 @@
                                                         <i class="fa-solid fa-phone"></i>
                                                     </div>
                                                     <div class="contact-detail-title">
-                                                        <h4>Phone</h4>
+                                                        <h4>{{translate('Phone')}}</h4>
                                                     </div>
 
                                                     <div class="contact-detail-contain">
@@ -71,7 +71,7 @@
                                                         <i class="fa-solid fa-envelope"></i>
                                                     </div>
                                                     <div class="contact-detail-title">
-                                                        <h4>Email</h4>
+                                                        <h4>{{translate('Email')}}</h4>
                                                     </div>
 
                                                     <div class="contact-detail-contain">
@@ -86,7 +86,7 @@
                                                         <i class="fa-solid fa-location-dot"></i>
                                                     </div>
                                                     <div class="contact-detail-title">
-                                                        <h4>Office</h4>
+                                                        <h4>{{translate('Office')}}</h4>
                                                     </div>
 
                                                     <div class="contact-detail-contain">
@@ -108,10 +108,10 @@
                                 <div class="row">
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                         <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput" class="form-label">Name</label>
+                                            <label for="exampleFormControlInput" class="form-label">{{translate('Name')}}</label>
                                             <div class="custom-input">
                                                 <input type="text" name="name" class="form-control" id="exampleFormControlInput"
-                                                       placeholder="Enter Name">
+                                                       placeholder="{{translate('Enter Name')}}">
                                                 <i class="fa-solid fa-user"></i>
                                             </div>
                                         </div>
@@ -119,10 +119,10 @@
 
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                         <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput2" class="form-label">Email Address</label>
+                                            <label for="exampleFormControlInput2" class="form-label">{{translate('Email Address')}}</label>
                                             <div class="custom-input">
                                                 <input type="email" name="email" class="form-control" id="exampleFormControlInput2"
-                                                       placeholder="Enter Email Address">
+                                                       placeholder="{{translate('Enter Email Address')}}">
                                                 <i class="fa-solid fa-envelope"></i>
                                             </div>
                                         </div>
@@ -130,10 +130,10 @@
 
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                         <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput3" class="form-label">Phone Number</label>
+                                            <label for="exampleFormControlInput3" class="form-label">{{translate('Phone Number')}}</label>
                                             <div class="custom-input">
                                                 <input type="tel" name="phone" class="form-control" id="exampleFormControlInput3"
-                                                       placeholder="Enter Your Phone Number" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value =
+                                                       placeholder="{{translate('Enter Your Phone Number')}}" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value =
                                             this.value.slice(0, this.maxLength);">
                                                 <i class="fa-solid fa-mobile-screen-button"></i>
                                             </div>
@@ -143,10 +143,10 @@
 
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                         <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput1" class="form-label">Subject</label>
+                                            <label for="exampleFormControlInput1" class="form-label">{{translate('Subject')}}</label>
                                             <div class="custom-input">
                                                 <input type="text" class="form-control" name="subject" id="exampleFormControlInput1"
-                                                       placeholder="Enter Subject">
+                                                       placeholder="{{translate('Enter Subject')}}">
                                                 <i class="fa-solid fa-heading"></i>
                                             </div>
                                         </div>
@@ -154,16 +154,16 @@
 
                                     <div class="col-12">
                                         <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlTextarea" class="form-label">Message</label>
+                                            <label for="exampleFormControlTextarea" class="form-label">{{translate('Message')}}</label>
                                             <div class="custom-textarea">
                                         <textarea class="form-control" name="message" id="exampleFormControlTextarea"
-                                                  placeholder="Enter Your Message" rows="6"></textarea>
+                                                  placeholder="{{translate('Enter Your Message')}}" rows="6"></textarea>
                                                 <i class="fa-solid fa-message"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-animation btn-md fw-bold ms-auto" type="submit">Send Message</button>
+                                <button class="btn btn-animation btn-md fw-bold ms-auto" type="submit">{{translate('Send Message')}}</button>
                             </div>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - About Us
+{{$generalSettingView->site_name}} - {{translate('About Us')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 0;">
-                            <h2>About Us</h2>
+                            <h2>{{translate('About Us')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">About Us</li>
+                                    <li class="breadcrumb-item active">{{translate('About Us')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="fresh-contain p-center-left">
                             <div>
                                 <div class="review-title">
-                                    <h4>About Us</h4>
+                                    <h4>{{translate('About Us')}}</h4>
                                     <h2>We make Organic Food In Market</h2>
                                 </div>
 
@@ -136,7 +136,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="about-us-title text-center">
-                            <h4>What We Do</h4>
+                            <h4>{{translate('What We Do')}}</h4>
                             <h2 class="center">We are Trusted by Clients</h2>
                         </div>
 
@@ -187,8 +187,8 @@
         <section class="team-section section-lg-space">
             <div class="container-fluid-lg">
                 <div class="about-us-title text-center">
-                    <h4 class="text-content">Our Creative Team</h4>
-                    <h2 class="center">{{$generalSettingView->site_name}} team member</h2>
+                    <h4 class="text-content">{{translate('Our Creative Team')}}</h4>
+                    <h2 class="center">{{$generalSettingView->site_name}} {{translate('team member')}}</h2>
                 </div>
                 <div class="row">
                     <div class="col-12">

@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Return And Refund Policies
+{{$generalSettingView->site_name}} - {{translate('Return And Refund Policies')}}
 @endsection
 
 @section('body')
@@ -24,7 +24,7 @@
                         <hr style="border: solid dodgerblue 1px">
                     </div>
                     <div class="col-md-6">
-                        <p class="text-center" style="font-size: 2em; color: dodgerblue">Return And Refund Policies</p>
+                        <p class="text-center" style="font-size: 2em; color: dodgerblue">{{translate('Return And Refund Policies')}}</p>
                     </div>
                     <div class="col-md-3">
                         <hr style="border: solid dodgerblue 1px">
