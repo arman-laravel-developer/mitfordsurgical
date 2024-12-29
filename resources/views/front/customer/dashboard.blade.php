@@ -962,7 +962,10 @@
                                                                 id="email"
                                                                 name="email"
                                                                 value="{{$customer->email}}"
-                                                                readonly>
+                                                                @if($customer->email != null)
+                                                                readonly
+                                                                @endif
+                                                            >
                                                         </div>
                                                         <div class="form-group mb-3">
                                                             <label for="mobile">{{translate('Phone Number')}}</label>
