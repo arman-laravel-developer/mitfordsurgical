@@ -338,7 +338,7 @@
 
                             <div class="search-box">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="I'm searching for...">
+                                    <input type="search" class="form-control" placeholder="{{translate("I'm searching for")}}...">
                                     <button class="btn bg-theme" type="button" id="button-addon2">
                                         <i data-feather="search"></i>
                                     </button>
@@ -352,7 +352,7 @@
                                         <span class="input-group-text">
                                             <i data-feather="search" class="font-light"></i>
                                         </span>
-                                    <input type="text" class="form-control search-type" placeholder="Search here..">
+                                    <input type="text" class="form-control search-type" placeholder="{{translate('Search here')}}..">
                                     <span class="input-group-text close-search">
                                             <i data-feather="x" class="font-light"></i>
                                         </span>
