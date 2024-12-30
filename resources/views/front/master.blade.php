@@ -196,115 +196,115 @@
 
 <!-- Header Start -->
 <header class="pb-0 fixed-header">
-    <div class="header-top">
-        <div class="container-fluid-lg">
-            <div class="row">
-                <div class="col-xxl-9 col-lg-9 d-lg-block d-none">
-                    <div class="header-offer">
-                        <div class="notification-slider">
-                            <div>
-                                <div class="timer-notification">
-                                    <h6><strong class="me-1">Welcome to {{$generalSettingView->site_name}}!</strong>Wrap new offers/gift
-                                        every single day on Weekends.<strong class="ms-1">New Coupon Code: Fast024
-                                        </strong>
+{{--    <div class="header-top">--}}
+{{--        <div class="container-fluid-lg">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-xxl-9 col-lg-9 d-lg-block d-none">--}}
+{{--                    <div class="header-offer">--}}
+{{--                        <div class="notification-slider">--}}
+{{--                            <div>--}}
+{{--                                <div class="timer-notification">--}}
+{{--                                    <h6><strong class="me-1">Welcome to {{$generalSettingView->site_name}}!</strong>Wrap new offers/gift--}}
+{{--                                        every single day on Weekends.<strong class="ms-1">New Coupon Code: Fast024--}}
+{{--                                        </strong>--}}
 
-                                    </h6>
-                                </div>
-                            </div>
+{{--                                    </h6>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div>
-                                <div class="timer-notification">
-                                    <h6>Something you love is now on sale!
-                                        <a href="javascript:void(0)" class="text-white">Buy Now
-                                            !</a>
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                            <div>--}}
+{{--                                <div class="timer-notification">--}}
+{{--                                    <h6>Something you love is now on sale!--}}
+{{--                                        <a href="javascript:void(0)" class="text-white">Buy Now--}}
+{{--                                            !</a>--}}
+{{--                                    </h6>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                @php
-                    if(Session::has('locale')){
-                        $locale = Session::get('locale', Config::get('app.locale'));
-                    }
-                    else{
-                        $locale = env('DEFAULT_LANGUAGE');
-                    }
-                @endphp
-                <div class="col-lg-3 col-xxl-3">
-                    <ul class="about-list right-nav-about">
-                        <li class="right-nav-list">
-                            <div class="dropdown theme-form-select">
-                                <button class="btn dropdown-toggle" type="button" id="select-language"
-                                        data-bs-toggle="dropdown">
-                                    <img src="{{ asset('admin/assets/images/flags/'.$locale.'.png') }}"
-                                         class="img-fluid blur-up lazyload" alt="">
-                                    <span>{{ ucfirst($locale) }}</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    @foreach (\App\Models\Language::all() as $language)
-                                        <li>
-                                            <a href="javascript:void(0)"
-                                               data-locale="{{ $language->code }}"
-                                               class="dropdown-item @if($locale == $language->code) active @endif"
-                                               onclick="changeLanguage('{{ $language->code }}')">
-                                                <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" class="mr-2">
-                                                <span class="language">{{ $language->name }}</span>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </li>
+{{--                @php--}}
+{{--                    if(Session::has('locale')){--}}
+{{--                        $locale = Session::get('locale', Config::get('app.locale'));--}}
+{{--                    }--}}
+{{--                    else{--}}
+{{--                        $locale = env('DEFAULT_LANGUAGE');--}}
+{{--                    }--}}
+{{--                @endphp--}}
+{{--                <div class="col-lg-3 col-xxl-3">--}}
+{{--                    <ul class="about-list right-nav-about">--}}
+{{--                        <li class="right-nav-list">--}}
+{{--                            <div class="dropdown theme-form-select">--}}
+{{--                                <button class="btn dropdown-toggle" type="button" id="select-language"--}}
+{{--                                        data-bs-toggle="dropdown">--}}
+{{--                                    <img src="{{ asset('admin/assets/images/flags/'.$locale.'.png') }}"--}}
+{{--                                         class="img-fluid blur-up lazyload" alt="">--}}
+{{--                                    <span>{{ ucfirst($locale) }}</span>--}}
+{{--                                </button>--}}
+{{--                                <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                    @foreach (\App\Models\Language::all() as $language)--}}
+{{--                                        <li>--}}
+{{--                                            <a href="javascript:void(0)"--}}
+{{--                                               data-locale="{{ $language->code }}"--}}
+{{--                                               class="dropdown-item @if($locale == $language->code) active @endif"--}}
+{{--                                               onclick="changeLanguage('{{ $language->code }}')">--}}
+{{--                                                <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" class="mr-2">--}}
+{{--                                                <span class="language">{{ $language->name }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                    @endforeach--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
 
-                        <script>
-                            function changeLanguage(locale) {
-                                fetch("{{ route('language.change') }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({ locale })
-                                })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            location.reload(); // Reload the page to apply the language change
-                                        } else {
-                                            alert('Failed to change language');
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                        alert('An error occurred');
-                                    });
-                            }
-                        </script>
-                        <li class="right-nav-list">
-                            <div class="dropdown theme-form-select">
-                                <button class="btn dropdown-toggle" type="button" id="select-dollar"
-                                        data-bs-toggle="dropdown">
-                                    <span>USD</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end sm-dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" id="aud" href="javascript:void(0)">AUD</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" id="eur" href="javascript:void(0)">EUR</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" id="cny" href="javascript:void(0)">CNY</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--                        <script>--}}
+{{--                            function changeLanguage(locale) {--}}
+{{--                                fetch("{{ route('language.change') }}", {--}}
+{{--                                    method: "POST",--}}
+{{--                                    headers: {--}}
+{{--                                        "Content-Type": "application/json",--}}
+{{--                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"--}}
+{{--                                    },--}}
+{{--                                    body: JSON.stringify({ locale })--}}
+{{--                                })--}}
+{{--                                    .then(response => {--}}
+{{--                                        if (response.ok) {--}}
+{{--                                            location.reload(); // Reload the page to apply the language change--}}
+{{--                                        } else {--}}
+{{--                                            alert('Failed to change language');--}}
+{{--                                        }--}}
+{{--                                    })--}}
+{{--                                    .catch(error => {--}}
+{{--                                        console.error('Error:', error);--}}
+{{--                                        alert('An error occurred');--}}
+{{--                                    });--}}
+{{--                            }--}}
+{{--                        </script>--}}
+{{--                        <li class="right-nav-list">--}}
+{{--                            <div class="dropdown theme-form-select">--}}
+{{--                                <button class="btn dropdown-toggle" type="button" id="select-dollar"--}}
+{{--                                        data-bs-toggle="dropdown">--}}
+{{--                                    <span>USD</span>--}}
+{{--                                </button>--}}
+{{--                                <ul class="dropdown-menu dropdown-menu-end sm-dropdown-menu">--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item" id="aud" href="javascript:void(0)">AUD</a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item" id="eur" href="javascript:void(0)">EUR</a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item" id="cny" href="javascript:void(0)">CNY</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="top-nav top-header">
         <div class="container-fluid-xs">
             <div class="row">
@@ -318,16 +318,16 @@
                         </button>
 
                         <div class="middle-box">
-                            <div class="location-box">
-                                <button class="btn location-button" data-bs-toggle="modal"
-                                        data-bs-target="#locationModal">
-                                        <span class="location-arrow">
-                                            <i data-feather="map-pin"></i>
-                                        </span>
-                                    <span class="locat-name">{{translate('Your Location')}}</span>
-                                    <i class="fa-solid fa-angle-down"></i>
-                                </button>
-                            </div>
+{{--                            <div class="location-box">--}}
+{{--                                <button class="btn location-button" data-bs-toggle="modal"--}}
+{{--                                        data-bs-target="#locationModal">--}}
+{{--                                        <span class="location-arrow">--}}
+{{--                                            <i data-feather="map-pin"></i>--}}
+{{--                                        </span>--}}
+{{--                                    <span class="locat-name">{{translate('Your Location')}}</span>--}}
+{{--                                    <i class="fa-solid fa-angle-down"></i>--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
 
                             <div class="search-box">
                                 <div class="input-group">
@@ -362,73 +362,114 @@
                                     </div>
                                 </li>
                                 <li class="right-side">
-                                    <a href="{{route('contact.us')}}" class="delivery-login-box">
-                                        <div class="delivery-icon">
-                                            <i data-feather="phone-call"></i>
-                                        </div>
-                                        <div class="delivery-detail">
-                                            <h6>{{translate('24/7 Delivery')}}</h6>
-                                            <h5>{{$generalSettingView->mobile}}</h5>
-                                        </div>
+                                    <a href="javascript:void(0)"
+                                       class="delivery-login-box @if(Session::get('locale', 'en') == 'en') text-primary @endif"
+                                       style="cursor: pointer;"
+                                       onclick="changeLanguage('en')">
+                                        <strong>EN</strong>
                                     </a>
                                 </li>
                                 <li class="right-side">
-                                    <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
-                                        <i data-feather="heart"></i>
+                                    <a href="javascript:void(0)"
+                                       class="delivery-login-box @if(Session::get('locale', 'bd') == 'bd') text-primary @endif"
+                                       style="cursor: pointer;"
+                                       onclick="changeLanguage('bd')">
+                                        <strong>বাং</strong>
                                     </a>
                                 </li>
-                                <li class="right-side">
-                                    <div class="onhover-dropdown header-badge">
-                                        <button type="button" class="btn p-0 position-relative header-wishlist" onclick="openCart()">
-                                            <i data-feather="shopping-cart"></i>
-                                            <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                    <span class="visually-hidden">{{translate('unread messages')}}</span>
-                                                </span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li class="right-side onhover-dropdown">
-                                    <div class="delivery-login-box">
-                                        <div class="delivery-icon">
-                                            <i data-feather="user"></i>
-                                        </div>
-                                        <div class="delivery-detail">
-                                            <h6>{{translate('Hello')}},</h6>
-                                            <h5>{{translate('My Account')}}</h5>
-                                        </div>
-                                    </div>
+                                <script>
+                                    function changeLanguage(locale) {
+                                        fetch("{{ route('language.change') }}", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                            },
+                                            body: JSON.stringify({ locale })
+                                        })
+                                            .then(response => {
+                                                if (response.ok) {
+                                                    location.reload(); // Reload the page to apply the language change
+                                                } else {
+                                                    alert('Failed to change language');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                                alert('An error occurred');
+                                            });
+                                    }
+                                </script>
+                            @if(Session::get('customer_id'))
+                                    <li class="right-side">
+                                        <a href="{{ route('customer.dashboard') }}" class="delivery-login-box @if(Route::is('customer.dashboard')) text-primary @endif" style="cursor: pointer;">
+                                            <strong>Dashboard</strong>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="right-side">
+                                        <a href="{{route('customer.login')}}" class="delivery-login-box @if(Route::is('customer.login')) text-primary @endif" style="cursor: pointer;">
+                                            <strong>Login</strong>
+                                        </a>
+                                    </li>
+                                    <li class="right-side">
+                                        <a href="{{route('customer.register')}}" class="delivery-login-box @if(Route::is('customer.register')) text-primary @endif" style="cursor: pointer;">
+                                            <strong>Register</strong>
+                                        </a>
+                                    </li>
+                                @endif
+{{--                                <li class="right-side">--}}
+{{--                                    <div class="onhover-dropdown header-badge">--}}
+{{--                                        <button type="button" class="btn p-0 position-relative header-wishlist" onclick="openCart()">--}}
+{{--                                            <i data-feather="shopping-cart"></i>--}}
+{{--                                            <span class="position-absolute top-0 start-100 translate-middle badge">2--}}
+{{--                                                    <span class="visually-hidden">{{translate('unread messages')}}</span>--}}
+{{--                                                </span>--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                                <li class="right-side onhover-dropdown">--}}
+{{--                                    <div class="delivery-login-box">--}}
+{{--                                        <div class="delivery-icon">--}}
+{{--                                            <i data-feather="user"></i>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="delivery-detail">--}}
+{{--                                            <h6>{{translate('Hello')}},</h6>--}}
+{{--                                            <h5>{{translate('My Account')}}</h5>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="onhover-div onhover-div-login">
-                                        <ul class="user-box-name">
-                                            @if(Session::get('customer_id'))
-                                                <li class="product-box-contain">
-                                                    <i></i>
-                                                    <a href="{{route('customer.dashboard')}}">{{translate('Dashboard')}}</a>
-                                                </li>
+{{--                                    <div class="onhover-div onhover-div-login">--}}
+{{--                                        <ul class="user-box-name">--}}
+{{--                                            @if(Session::get('customer_id'))--}}
+{{--                                                <li class="product-box-contain">--}}
+{{--                                                    <i></i>--}}
+{{--                                                    <a href="{{route('customer.dashboard')}}">{{translate('Dashboard')}}</a>--}}
+{{--                                                </li>--}}
 
-                                                <li class="product-box-contain">
-                                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">{{translate('Logout')}}</a>
-                                                    <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">
-                                                        @csrf
-                                                    </form>
-                                                </li>
-                                            @else
-                                                <li class="product-box-contain">
-                                                    <i></i>
-                                                    <a href="{{route('customer.login')}}">{{translate('Log In')}}</a>
-                                                </li>
+{{--                                                <li class="product-box-contain">--}}
+{{--                                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">{{translate('Logout')}}</a>--}}
+{{--                                                    <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">--}}
+{{--                                                        @csrf--}}
+{{--                                                    </form>--}}
+{{--                                                </li>--}}
+{{--                                            @else--}}
+{{--                                                <li class="product-box-contain">--}}
+{{--                                                    <i></i>--}}
+{{--                                                    <a href="{{route('customer.login')}}">{{translate('Log In')}}</a>--}}
+{{--                                                </li>--}}
 
-                                                <li class="product-box-contain">
-                                                    <a href="{{route('customer.register')}}">{{translate('Register')}}</a>
-                                                </li>
+{{--                                                <li class="product-box-contain">--}}
+{{--                                                    <a href="{{route('customer.register')}}">{{translate('Register')}}</a>--}}
+{{--                                                </li>--}}
 
-                                                <li class="product-box-contain">
-                                                    <a href="{{route('forget.password')}}">{{translate('Forgot Password')}}</a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </li>
+{{--                                                <li class="product-box-contain">--}}
+{{--                                                    <a href="{{route('forget.password')}}">{{translate('Forgot Password')}}</a>--}}
+{{--                                                </li>--}}
+{{--                                            @endif--}}
+{{--                                        </ul>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
                             </ul>
                         </div>
                     </div>
