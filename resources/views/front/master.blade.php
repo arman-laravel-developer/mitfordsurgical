@@ -403,18 +403,18 @@
                             @if(Session::get('customer_id'))
                                     <li class="right-side">
                                         <a href="{{ route('customer.dashboard') }}" class="delivery-login-box @if(Route::is('customer.dashboard')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>Dashboard</strong>
+                                            <strong>{{translate('Dashboard')}}</strong>
                                         </a>
                                     </li>
                                 @else
                                     <li class="right-side">
                                         <a href="{{route('customer.login')}}" class="delivery-login-box @if(Route::is('customer.login')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>Login</strong>
+                                            <strong>{{translate('Login')}}</strong>
                                         </a>
                                     </li>
                                     <li class="right-side">
                                         <a href="{{route('customer.register')}}" class="delivery-login-box @if(Route::is('customer.register')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>Register</strong>
+                                            <strong>{{translate('Register')}}</strong>
                                         </a>
                                     </li>
                                 @endif

@@ -52,7 +52,7 @@
                                     <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{route('language.edit', ['id' => $language->id])}}" title="{{ translate('Edit') }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    @if($language->code != 'en')
+                                    @if($language->code != 'en' && $language->code != 'bd')
                                         <a href="javascript:void(0)" onclick="confirmDelete({{$language->id}});" class="btn btn-soft-danger btn-icon btn-circle btn-sm confirm-delete" title="{{ translate('Delete') }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
