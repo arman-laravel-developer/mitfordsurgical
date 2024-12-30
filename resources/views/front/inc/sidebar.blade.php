@@ -16,7 +16,7 @@
                                data-bs-target="#category{{$menuCategory->id}}"
                                aria-expanded="{{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) ? 'true' : 'false' }}"
                                aria-controls="category{{$menuCategory->id}}">
-                                {{$menuCategory->category_name}}
+                                {{$menuCategory->getTranslation('category_name')}}
                             </a>
                         </h5>
                         @if(count($menuCategory->subCategories) > 0)
@@ -31,7 +31,7 @@
                                     <li>
                                         <a href="{{ route('category.product', ['id' => $subCategory->id, 'slug' => $subCategory->slug]) }}"
                                            class="{{ request()->is('category-products/'.$subCategory->id.'-'.$subCategory->slug) ? 'active' : '' }}">
-                                            {{$subCategory->category_name}}
+                                            {{$subCategory->getTranslation('category_name')}}
                                         </a>
                                     </li>
                                 @endforeach

@@ -89,8 +89,61 @@
             </button>
 
 
+            <style>
+                @media (max-width: 768px) { /* Adjust breakpoint as needed */
+                    .dropdown-lang {
+                        margin-top: 20% !important;
+                    }
+                }
+            </style>
+
+            @php
+                $locale = env('DEFAULT_LANGUAGE');
+            @endphp
 
             <ul class="list-unstyled topbar-menu float-end mb-0">
+                <li class="dropdown dropdown-lang" style="margin-top: 6%;">
+                    <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="{{ asset('admin/assets/images/flags/'.$locale.'.png') }}" alt="user-image" class="me-0 me-sm-1" height="12">
+                        <span class="align-middle d-none d-lg-inline-block">{{ ucfirst($locale) }}</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+
+                    @foreach (\App\Models\Language::all() as $language)
+                        <!-- item-->
+                            <a href="javascript:void(0)"
+                               data-locale="{{ $language->code }}"
+                               class="dropdown-item @if($locale == $language->code) active @endif"
+                               onclick="changeAdminLanguage('{{ $language->code }}')">
+                                <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" height="12" class="mr-2">
+                                <span class="language">{{ $language->name }}</span>
+                            </a>
+                    @endforeach
+                    </div>
+                    <script>
+                        function changeAdminLanguage(locale) {
+                            fetch("{{ route('language.change-admin') }}", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({ locale })
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        location.reload(); // Reload the page to apply the language change
+                                    } else {
+                                        alert('Failed to change language');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('An error occurred');
+                                });
+                        }
+                    </script>
+                </li>
                 <li class="notification-list d-none d-md-inline-block">
                     <a class="nav-link" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
                         <i class="ri-settings-3-line noti-icon"></i>
@@ -106,6 +159,9 @@
                         <i class="ri-fullscreen-line noti-icon"></i>
                     </a>
                 </li>
+
+
+
 
 
                 <li class="dropdown notification-list">

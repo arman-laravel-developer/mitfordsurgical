@@ -137,6 +137,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/show/{id}', [LanguageController::class, 'show'])->name('language.show');
             Route::post('/key-value-store', [LanguageController::class, 'key_value_store'])->name('language.key_value_store');
             Route::post('/updateRTL', [LanguageController::class, 'updateRTL'])->name('language.updateRTL');
+            Route::post('/language-change-admin', [LanguageController::class, 'changeLanguageAdmin'])->name('language.change-admin');
             Route::post('/update', [LanguageController::class, 'update'])->name('language.update');
             Route::post('/delete/{id}', [LanguageController::class, 'delete'])->name('language.delete');
         });

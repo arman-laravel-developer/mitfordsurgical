@@ -51,7 +51,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{route('category.edit', ['id' => $category->id])}}" class="btn btn-success btn-sm" title="Edit">
+                                <a href="{{route('category.edit', ['id' => $category->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" class="btn btn-success btn-sm" title="Edit">
                                     <i class="ri-edit-box-fill"></i>
                                 </a>
                                 <button type="button" onclick="confirmDelete({{$category->id}});" class="btn btn-danger btn-sm" title="Delete">

@@ -34,6 +34,37 @@ class LanguageController extends Controller
         return response()->json(['message' => 'Language changed successfully']);
     }
 
+    public function changeLanguageAdmin(Request $request)
+    {
+        // Validate the locale input
+        $request->validate([
+            'locale' => 'required|string|exists:languages,code', // Check if 'languages' table has the code
+        ]);
+
+        $locale = $request->locale;
+
+        // Set the application locale for the current request
+        app()->setLocale($locale);
+
+        // Update the config dynamically at runtime
+        config(['app.locale' => $locale]);
+
+        // Store the locale in the session for persistence
+        $request->session()->put('locale', $locale);
+
+        $data = [
+            'DEFAULT_LANGUAGE' => $locale,
+        ];
+
+        updateEnv($data);
+
+        // Optionally flash a success message
+        $language = Language::where('code', $locale)->first();
+        session()->flash('success', 'Language changed to ' . $language->name);
+
+        return response()->json(['message' => 'Language changed successfully']);
+    }
+
 
     public function index()
     {

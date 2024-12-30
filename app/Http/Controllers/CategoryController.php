@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryTranslation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -76,61 +77,74 @@ class CategoryController extends Controller
         return view('admin.category.manage', compact('categories'));
     }
 
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        $lang = $request->lang;
         $category = Category::find($id);
         $categories = Category::where('parent_id', 0)->get();
-        return view('admin.category.edit', compact('category', 'categories'));
+        return view('admin.category.edit', compact('category', 'categories', 'lang'));
     }
 
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->parent_id = $request->parent_id;
-        $category->category_name = $request->category_name;
-        $category->slug = Str::slug($request->category_name);
-        $category->description = $request->description;
-        if ($request->file('image'))
+        if ($request->lang == 'en')
         {
-            if (file_exists($category->image))
+            $category = Category::find($id);
+            $category->parent_id = $request->parent_id;
+            $category->category_name = $request->category_name;
+            $category->slug = Str::slug($request->category_name);
+            $category->description = $request->description;
+            if ($request->file('image'))
             {
-                unlink($category->image);
-            }
+                if (file_exists($category->image))
+                {
+                    unlink($category->image);
+                }
 
-            $imageUrl = $this->getImageUrl($request);
+                $imageUrl = $this->getImageUrl($request);
+            }
+            else
+            {
+                $imageUrl = $category->image;
+            }
+            $category->image = $imageUrl;
+            if ($request->display_status == 1)
+            {
+                $category->display_status = $request->display_status;
+            }
+            else
+            {
+                $category->display_status = 2;
+            }
+            if ($request->status == 1)
+            {
+                $category->status = $request->status;
+            }
+            else
+            {
+                $category->status = 2;
+            }
+            if ($request->featured == 1)
+            {
+                $category->featured = $request->featured;
+            }
+            else
+            {
+                $category->featured = 2;
+            }
+            $category->save();
+            $category_translation = CategoryTranslation::firstOrNew(['lang' => $request->lang, 'category_id' => $category->id]);
+            $category_translation->category_name = $request->category_name;
+            $category_translation->save();
         }
         else
         {
-            $imageUrl = $category->image;
+            $category = Category::find($id);
+            $category_translation = CategoryTranslation::firstOrNew(['lang' => $request->lang, 'category_id' => $category->id]);
+            $category_translation->category_name = $request->category_name;
+            $category_translation->save();
         }
-        $category->image = $imageUrl;
-        if ($request->display_status == 1)
-        {
-            $category->display_status = $request->display_status;
-        }
-        else
-        {
-            $category->display_status = 2;
-        }
-        if ($request->status == 1)
-        {
-            $category->status = $request->status;
-        }
-        else
-        {
-            $category->status = 2;
-        }
-        if ($request->featured == 1)
-        {
-            $category->featured = $request->featured;
-        }
-        else
-        {
-            $category->featured = 2;
-        }
-        $category->save();
-        Alert::success('Category update successfully', '');
-        return redirect()->route('category.manage');
+        return redirect()->route('category.manage')->with('success', 'Category update successfully');
     }
 
     public function delete($id)

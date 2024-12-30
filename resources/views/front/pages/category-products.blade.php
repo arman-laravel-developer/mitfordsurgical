@@ -7,12 +7,12 @@
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
-        <section class="breadcrumb-section pt-2">
+        <section class="breadcrumb-section pt-2" >
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain">
-                            <h2>{{$category->category_name}}</h2>
+                            <h2>{{$category->getTranslation('category_name')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -22,11 +22,11 @@
                                     </li>
                                     @if($category->parentCategory)
                                         <li class="breadcrumb-item">
-                                            <a href="{{route('category.product', ['id' => $category->parentCategory->id,'slug' => $category->parentCategory->slug])}}">{{$category->parentCategory->category_name}}</a>
+                                            <a href="{{route('category.product', ['id' => $category->parentCategory->id,'slug' => $category->parentCategory->slug])}}">{{$category->parentCategory->getTranslation('category_name')}}</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{$category->category_name}}</li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{$category->getTranslation('category_name')}}</li>
                                     @else
-                                        <li class="breadcrumb-item active" aria-current="page">{{$category->category_name}}</li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{$category->getTranslation('category_name')}}</li>
                                     @endif
                                 </ol>
                             </nav>
