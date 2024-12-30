@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <div class="breadcrumb-contain">
+                        <div class="breadcrumb-contain" style="padding: 0!important;">
                             <h2>{{$category->getTranslation('category_name')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
