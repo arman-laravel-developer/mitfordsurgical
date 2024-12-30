@@ -49,10 +49,15 @@
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-2 col-form-label">Under Category</label>
                                     <div class="col-10">
-                                        <select name="parent_id" id="parent_id" @if($lang != 'en') readonly @endif class="form-control @error('parent_id') is-invalid @enderror">
+                                        <select name="parent_id" id="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
                                             <option value="0">Main Category</option>
-                                            @foreach($categories as $categorya)
-                                                <option value="{{$categorya->id}}"  @if($categorya->id == $category->parent_id) selected @endif>{{$categorya->category_name}}</option>
+                                        @foreach($categories as $categorya)
+                                            @if($categorya->id != $category->id) <!-- Exclude the current category -->
+                                                <option value="{{ $categorya->id }}"
+                                                    {{ isset($category->parent_id) && $categorya->id == $category->parent_id ? 'selected' : '' }}>
+                                                    {{ $categorya->category_name }}
+                                                </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('parent_id')
