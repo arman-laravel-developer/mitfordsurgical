@@ -113,12 +113,12 @@
                             <a href="{{route('brand.add')}}">Brand</a>
                         </li>
                     @endif
-                    @if ($userType === 1 || in_array('color.add', $roleRoutes))
+                    @if ($userType == 1 || in_array('color.add', $roleRoutes))
                         <li>
                             <a href="{{route('color.add')}}">Color</a>
                         </li>
                     @endif
-                    @if ($userType === 1 || in_array('size.add', $roleRoutes))
+                    @if ($userType == 1 || in_array('size.add', $roleRoutes))
                         <li>
                             <a href="{{route('size.add')}}">Size</a>
                         </li>
