@@ -13,6 +13,8 @@ use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReturnAndRefundController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\ColorController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -113,6 +115,22 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
             Route::post('/update/{id}', [BrandController::class, 'update'])->name('brand.update');
             Route::post('/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+        });
+        Route::prefix('color')->group(function () {
+            Route::get('/add', [ColorController::class, 'index'])->name('color.add');
+            Route::post('/new', [ColorController::class, 'create'])->name('color.new');
+            Route::get('/manage', [ColorController::class, 'manage'])->name('color.manage');
+            Route::get('/edit/{id}', [ColorController::class, 'edit'])->name('color.edit');
+            Route::post('/update', [ColorController::class, 'update'])->name('color.update');
+            Route::post('/delete/{id}', [ColorController::class, 'delete'])->name('color.delete');
+        });
+        Route::prefix('size')->group(function () {
+            Route::get('/add', [SizeController::class, 'index'])->name('size.add');
+            Route::post('/new', [SizeController::class, 'create'])->name('size.new');
+            Route::get('/manage', [SizeController::class, 'manage'])->name('size.manage');
+            Route::get('/edit/{id}', [SizeController::class, 'edit'])->name('size.edit');
+            Route::post('/update', [SizeController::class, 'update'])->name('size.update');
+            Route::post('/delete/{id}', [SizeController::class, 'delete'])->name('size.delete');
         });
         Route::prefix('product')->group(function () {
             Route::get('/add', [ProductController::class, 'index'])->name('product.add');
