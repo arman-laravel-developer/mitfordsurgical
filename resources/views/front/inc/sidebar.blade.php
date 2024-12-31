@@ -20,7 +20,7 @@
                             </a>
                         </h5>
                         @if(count($menuCategory->subCategories) > 0)
-                            <i class="fa-solid {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) || collect($menuCategory->subCategories)->pluck('id')->contains(request()->route('id')) ? 'fa-angle-down' : 'fa-angle-right' }} arrow-icon"></i>
+                            <i style="cursor: pointer;" class="fa-solid {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) || collect($menuCategory->subCategories)->pluck('id')->contains(request()->route('id')) ? 'fa-angle-down' : 'fa-angle-right' }} arrow-icon"></i>
                         @endif
                     </div>
                     @if(count($menuCategory->subCategories) > 0)
@@ -39,7 +39,29 @@
                         </div>
                     @endif
                 </li>
-        @endforeach
+            @endforeach
         </ul>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.arrow-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                // Find the nearest sibling `.collapse` element within the same `li`
+                const parentLi = this.closest('li');
+                const submenu = parentLi.querySelector('.collapse');
+
+                if (submenu) {
+                    // Toggle the 'show' class on the submenu
+                    submenu.classList.toggle('show');
+
+                    // Change the arrow icon based on the submenu's visibility
+                    const isExpanded = submenu.classList.contains('show');
+                    this.classList.toggle('fa-angle-down', isExpanded);
+                    this.classList.toggle('fa-angle-right', !isExpanded);
+                }
+            });
+        });
+    });
+</script>

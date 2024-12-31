@@ -80,14 +80,18 @@
         </li>
     @endif
     @if ($userType == 1 || !empty(array_filter(['product.add', 'product.manage', 'category.manage','brand.add', 'color.add', 'size.add'], fn($route) => in_array($route, $roleRoutes))))
-        <li class="side-nav-item">
+        @php
+            $isProActive = in_array(Route::currentRouteName(), ['category.add', 'brand.edit', 'category.edit']);
+            $isCatActive = in_array(Route::currentRouteName(), ['category.add', 'category.edit']);
+        @endphp
+        <li class="side-nav-item {{$isProActive ? 'menuitem-active' : ''}}">
             <a data-bs-toggle="collapse" href="#sidebarCategory" aria-expanded="false" aria-controls="sidebarEmail"
                class="side-nav-link">
                 <i class="uil-list-ul"></i>
                 <span> Products </span>
                 <span class="menu-arrow"></span>
             </a>
-            <div class="collapse" id="sidebarCategory">
+            <div class="collapse {{$isProActive ? 'show' : ''}}" id="sidebarCategory">
                 <ul class="side-nav-second-level">
                     @if ($userType == 1 || in_array('product.add', $roleRoutes))
                         <li>
@@ -100,12 +104,12 @@
                         </li>
                     @endif
                     @if ($userType == 1 || in_array('category.manage', $roleRoutes))
-                        <li>
+                        <li class="{{$isCatActive ? 'active' : ''}}">
                             <a href="{{route('category.manage')}}">Category</a>
                         </li>
                     @endif
                     @if ($userType == 1 || in_array('brand.add', $roleRoutes))
-                        <li>
+                        <li class="{{Route::is('brand.edit') ? 'active' : ''}}">
                             <a href="{{route('brand.add')}}">Brand</a>
                         </li>
                     @endif
@@ -130,22 +134,25 @@
     </li>
     @endif
     @if ($userType == 1 || !empty(array_filter(['privacy.add', 'return.manage'], fn($route) => in_array($route, $roleRoutes))))
-        <li class="side-nav-item">
+        @php
+            $isPActive = in_array(Route::currentRouteName(), ['privacy.add', 'return.add']);
+        @endphp
+        <li class="side-nav-item {{ $isPActive ? 'menuitem-active' : '' }}">
             <a data-bs-toggle="collapse" href="#sidebarPrivacy" aria-expanded="false" aria-controls="sidebarPrivacy" class="side-nav-link">
                 <i class="uil-lock"></i>
                 <span> Privacy & Policy </span>
                 <span class="menu-arrow"></span>
             </a>
-            <div class="collapse" id="sidebarPrivacy">
+            <div class="collapse {{ $isPActive ? 'show' : '' }}" id="sidebarPrivacy">
                 <ul class="side-nav-second-level">
                     @if ($userType == 1 || in_array('privacy.add', $roleRoutes))
-                        <li>
-                            <a href="{{ route('privacy.add') }}">Manage Privacy</a>
+                        <li class="{{Route::is('privacy.add') ? 'active' : ''}}">
+                            <a href="{{ route('privacy.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Manage Privacy</a>
                         </li>
                     @endif
                     @if ($userType == 1 || in_array('return.add', $roleRoutes))
-                        <li>
-                            <a href="{{ route('return.add') }}">Manage Return</a>
+                        <li class="{{Route::is('return.add') ? 'active' : ''}}">
+                            <a href="{{ route('return.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Manage Return</a>
                         </li>
                     @endif
                 </ul>

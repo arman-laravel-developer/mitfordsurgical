@@ -1051,7 +1051,7 @@
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
-        "positionClass": "toast-top-right",
+        "positionClass": "toast-bottom-left",
         "showDuration": "300",
         "hideDuration": "1000",
         "timeOut": "5000",

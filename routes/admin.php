@@ -12,6 +12,7 @@ use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReturnAndRefundController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\BrandController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {

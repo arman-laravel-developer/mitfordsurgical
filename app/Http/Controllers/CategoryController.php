@@ -87,9 +87,9 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $category = Category::find($id);
         if ($request->lang == 'en')
         {
-            $category = Category::find($id);
             $category->parent_id = $request->parent_id;
             $category->category_name = $request->category_name;
             $category->slug = Str::slug($request->category_name);
@@ -139,7 +139,6 @@ class CategoryController extends Controller
         }
         else
         {
-            $category = Category::find($id);
             $category_translation = CategoryTranslation::firstOrNew(['lang' => $request->lang, 'category_id' => $category->id]);
             $category_translation->category_name = $request->category_name;
             $category_translation->save();

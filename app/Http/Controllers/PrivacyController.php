@@ -3,32 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Privacy;
+use App\Models\PrivacyTranslation;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PrivacyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $lang = $request->lang;
         $privacy = Privacy::where('status', 1)->first();
-        return view('admin.privacy.edit', compact('privacy'));
+        return view('admin.privacy.edit', compact('privacy', 'lang'));
     }
 
     public function update(Request $request)
     {
         $privacy = Privacy::latest()->first();
-        if ($privacy)
+        if ($request->lang == 'en')
         {
-            $privacy->privacy = $request->privacy;
-            $privacy->condition = $request->condition;
-            $privacy->save();
+            if ($privacy)
+            {
+                $privacy->privacy = $request->privacy;
+                $privacy->condition = $request->condition;
+                $privacy->save();
+
+                $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+                $privacy_translation->privacy = $request->privacy;
+                $privacy_translation->condition = $request->condition;
+                $privacy_translation->save();
+            }
+            else
+            {
+                $privacy = new Privacy();
+                $privacy->privacy = $request->privacy;
+                $privacy->condition = $request->condition;
+                $privacy->save();
+
+                $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+                $privacy_translation->privacy = $request->privacy;
+                $privacy_translation->condition = $request->condition;
+                $privacy_translation->save();
+            }
         }
         else
         {
-            $privacy = new Privacy();
-            $privacy->privacy = $request->privacy;
-            $privacy->condition = $request->condition;
-            $privacy->save();
+            $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+            $privacy_translation->privacy = $request->privacy;
+            $privacy_translation->condition = $request->condition;
+            $privacy_translation->save();
         }
         return redirect()->back()->with('success', 'Privacy update successfully');
     }

@@ -27,18 +27,29 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
+                    <ul class="nav nav-tabs nav-fill border-primary mb-3">
+                        @foreach (\App\Models\Language::all() as $key => $language)
+                            <li class="nav-item">
+                                <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-soft-dark border-light border-left-0 @endif py-3" href="{{ route('return.add', ['id'=>optional($return)->id, 'lang'=> $language->code] ) }}">
+                                    <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" height="11" class="mr-1">
+                                    <span>{{$language->name}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="basic-form-preview">
                             <form action="{{route('return.update')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" value="{{$lang}}" name="lang">
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-2 col-form-label">Return And Refund</label>
                                     <div class="col-10">
-                                        <textarea type="text" id="summernote" name="return" class="form-control @error('return') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter return and refund">{{optional($return)->return}}</textarea>
+                                        <textarea type="text" id="summernote" name="return" class="form-control @error('return') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter return and refund">{{optional($return)->getTranslation('return', request()->lang)}}</textarea>
                                         @error('return')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

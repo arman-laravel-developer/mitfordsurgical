@@ -7,12 +7,12 @@
 @section('body')
     <style>
         .page-content {
-            margin-top: 15%;
+            margin-top: 10%;
         }
 
         @media (max-width: 768px) {
             .page-content {
-                margin-top: 30%;
+                margin-top: 20%;
             }
         }
     </style>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="accordion accordion-rounded">
-                    <p>{!! $return->return !!}</p>
+                    <p>{!! $return->getTranslation('return') !!}</p>
                 </div><!-- End .accordion -->
             </div><!-- End .container -->
         </div><!-- End .page-content -->
