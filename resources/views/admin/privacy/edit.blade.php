@@ -34,7 +34,7 @@
                     <ul class="nav nav-tabs nav-fill border-primary mb-3">
                         @foreach (\App\Models\Language::all() as $key => $language)
                             <li class="nav-item">
-                                <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-soft-dark border-light border-left-0 @endif py-3" href="{{ route('privacy.add', ['id'=>$privacy->id, 'lang'=> $language->code] ) }}">
+                                <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-soft-dark border-light border-left-0 @endif py-3" href="{{ route('privacy.add', ['lang'=> $language->code] ) }}">
                                     <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" height="11" class="mr-1">
                                     <span>{{$language->name}}</span>
                                 </a>
