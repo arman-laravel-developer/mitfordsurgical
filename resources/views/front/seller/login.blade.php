@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 0;">
-                            <h2>{{translate('Login')}}</h2>
+                            <h2>{{translate('Seller Login')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">{{translate('Login')}}</li>
+                                    <li class="breadcrumb-item active">{{translate('Seller Login')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -43,11 +43,11 @@
                         <div class="log-in-box">
                             <div class="log-in-title">
                                 <h3>{{translate('Welcome To')}} {{$generalSettingView->site_name}}</h3>
-                                <h4>{{translate('Log In Your Account')}}</h4>
+                                <h4>{{translate('LogIn Your Account')}}</h4>
                             </div>
 
                             <div class="input-box">
-                                <form class="row g-4" action="{{route('customer.login-check')}}" method="POST" enctype="multipart/form-data">
+                                <form class="row g-4" action="{{route('seller.login-check')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating log-in-form">
@@ -71,7 +71,7 @@
                                                        id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">{{translate('Remember me')}}</label>
                                             </div>
-                                            <a href="{{route('forget.password')}}" class="forgot-password">{{translate('Forgot Password')}}?</a>
+                                            <a href="forgot.html" class="forgot-password">{{translate('Forgot Password')}}?</a>
                                         </div>
                                     </div>
 
@@ -88,7 +88,7 @@
 
                             <div class="sign-up-box">
                                 <h4>{{translate("Don't have an account")}}?</h4>
-                                <a href="{{route('customer.register')}}">{{translate('Sign Up')}}</a>
+                                <a href="{{route('seller.register')}}">{{translate('Sign Up')}}</a>
                             </div>
                         </div>
                     </div>

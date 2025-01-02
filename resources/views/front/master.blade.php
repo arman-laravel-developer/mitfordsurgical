@@ -400,23 +400,75 @@
                                             });
                                     }
                                 </script>
-                            @if(Session::get('customer_id'))
-                                    <li class="right-side">
-                                        <a href="{{ route('customer.dashboard') }}" class="delivery-login-box @if(Route::is('customer.dashboard')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>{{translate('Dashboard')}}</strong>
-                                        </a>
+                                @if(Session::get('seller_id'))
+                                    <li class="right-side onhover-dropdown">
+                                        <div class="delivery-login-box">
+                                            <div class="delivery-icon">
+                                                <i data-feather="user"></i>
+                                            </div>
+                                            <div class="delivery-detail">
+                                                <h6>Hello,</h6>
+                                                <h5>My Account</h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{{route('seller.dashboard')}}">{{translate('Dashboard')}}</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="javascript:void(0)" onclick="document.getElementById('logoutFormSeller').submit();">{{translate('Logout')}}</a>
+                                                    <form action="{{route('seller.logout')}}" method="POST" id="logoutFormSeller">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </li>
                                 @else
-                                    <li class="right-side">
-                                        <a href="{{route('customer.login')}}" class="delivery-login-box @if(Route::is('customer.login')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>{{translate('Login')}}</strong>
-                                        </a>
-                                    </li>
-                                    <li class="right-side">
-                                        <a href="{{route('customer.register')}}" class="delivery-login-box @if(Route::is('customer.register')) text-primary @endif" style="cursor: pointer;">
-                                            <strong>{{translate('Register')}}</strong>
-                                        </a>
-                                    </li>
+                                    @if(Session::get('customer_id'))
+                                        <li class="right-side onhover-dropdown">
+                                            <div class="delivery-login-box">
+                                                <div class="delivery-icon">
+                                                    <i data-feather="user"></i>
+                                                </div>
+                                                <div class="delivery-detail">
+                                                    <h6>Hello,</h6>
+                                                    <h5>My Account</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="onhover-div onhover-div-login">
+                                                <ul class="user-box-name">
+                                                    <li class="product-box-contain">
+                                                        <i></i>
+                                                        <a href="{{route('customer.dashboard')}}">{{translate('Dashboard')}}</a>
+                                                    </li>
+
+                                                    <li class="product-box-contain">
+                                                        <a href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit();">{{translate('Logout')}}</a>
+                                                        <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">
+                                                            @csrf
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    @else
+                                        <li class="right-side">
+                                            <a href="{{route('customer.login')}}" class="delivery-login-box @if(Route::is('customer.login')) text-primary @endif" style="cursor: pointer;">
+                                                <strong>{{translate('Login')}}</strong>
+                                            </a>
+                                        </li>
+                                        <li class="right-side">
+                                            <a href="{{route('customer.register')}}" class="delivery-login-box @if(Route::is('customer.register')) text-primary @endif" style="cursor: pointer;">
+                                                <strong>{{translate('Register')}}</strong>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endif
 {{--                                <li class="right-side">--}}
 {{--                                    <div class="onhover-dropdown header-badge">--}}
@@ -566,7 +618,11 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="{{route('customer.dashboard')}}" class="text-content">{{translate('Your Account')}}</a>
+                                    @if(Session::get('seller_id'))
+                                    <a href="{{route('seller.dashboard')}}" class="text-content">{{translate('Your Account')}}</a>
+                                    @else
+                                        <a href="{{route('customer.dashboard')}}" class="text-content">{{translate('Your Account')}}</a>
+                                    @endif
                                 </li>
                                 <li>
                                     <a href="order-tracking.html" class="text-content">{{translate('Track Order')}}</a>
@@ -617,12 +673,20 @@
                                 <li class="social-app mb-0">
                                     <h5 class="mb-2 text-content">{{translate('Become a Vendor')}} :</h5>
                                     <ul>
+                                        @if(Session::get('seller_id'))
                                         <li class="mb-0">
-                                            <a href="" class="btn btn-md bg-primary text-white">{{translate('Register')}}</a>
+                                            <a href="" class="btn btn-md bg-primary text-white">{{translate('Dashboard')}}</a>
                                         </li>
+                                        @else
                                         <li class="mb-0">
-                                            <a href="" class="btn btn-md bg-danger text-white">{{translate('Login')}}</a>
+                                            <a href="{{route('seller.register')}}" class="btn btn-md bg-primary text-white">{{translate('Register')}}</a>
                                         </li>
+                                            @if(!Session::get('customer_id'))
+                                                <li class="mb-0">
+                                                    <a href="{{route('seller.login')}}" class="btn btn-md bg-danger text-white">{{translate('Login')}}</a>
+                                                </li>
+                                            @endif
+                                        @endif
                                     </ul>
                                 </li>
                             </ul>

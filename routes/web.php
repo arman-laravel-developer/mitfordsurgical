@@ -9,6 +9,8 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoryProductsController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\SellerDashboardController;
 use App\Models\RoleRoute;
 
 function getRoleName($routeName)
@@ -42,20 +44,21 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.u
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
+Route::middleware('customer.login')->group(function () {
+    Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');
+    Route::get('/customer-login', [CustomerController::class, 'login'])->name('customer.login');
+    Route::post('/customer-store', [CustomerController::class, 'store'])->name('customer.store');
+    Route::post('/customer-login-check', [CustomerController::class, 'loginCheck'])->name('customer.login-check');
 
-Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');
-Route::get('/customer-login', [CustomerController::class, 'login'])->name('customer.login');
-Route::post('/customer-store', [CustomerController::class, 'store'])->name('customer.store');
-Route::post('/customer-login-check', [CustomerController::class, 'loginCheck'])->name('customer.login-check');
+    Route::get('/forget-password', [CustomerController::class, 'forget'])->name('forget.password');
+    Route::post('/forget-password-send-otp', [CustomerController::class, 'sendCode'])->name('forget.password-send-code');
+    Route::get('/forget-password-verify', [CustomerController::class, 'verify'])->name('forget.verify');
+    Route::post('/resend-otp', [CustomerController::class, 'resendOtp'])->name('resend.otp');
+    Route::post('/otp-check', [CustomerController::class, 'otpCheck'])->name('otp.check');
+    Route::get('/set-password', [CustomerController::class, 'setPassword'])->name('set.password');
+    Route::post('/save-password', [CustomerController::class, 'savePassword'])->name('save.password');
 
-Route::get('/forget-password', [CustomerController::class, 'forget'])->name('forget.password')->middleware('customer.login');
-Route::post('/forget-password-send-otp', [CustomerController::class, 'sendCode'])->name('forget.password-send-code')->middleware('customer.login');
-Route::get('/forget-password-verify', [CustomerController::class, 'verify'])->name('forget.verify')->middleware('customer.login');
-Route::post('/resend-otp', [CustomerController::class, 'resendOtp'])->name('resend.otp')->middleware('customer.login');
-Route::post('/otp-check', [CustomerController::class, 'otpCheck'])->name('otp.check')->middleware('customer.login');
-Route::get('/set-password', [CustomerController::class, 'setPassword'])->name('set.password')->middleware('customer.login');
-Route::post('/save-password', [CustomerController::class, 'savePassword'])->name('save.password')->middleware('customer.login');
-
+});
 Route::post('/contact-form', [ContactFormController::class, 'submit'])->name('contact-form.submit');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
@@ -71,6 +74,23 @@ Route::middleware('customer.logout')->group(function () {
     Route::post('/password-update', [CustomerDashboardController::class, 'passwordUpdate'])->name('password.update');
 
 });
+
+
+//seller login-registraion
+
+Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.login']], function() {
+    Route::get('/register', [SellerController::class, 'register'])->name('seller.register');
+    Route::get('/login', [SellerController::class, 'login'])->name('seller.login');
+    Route::post('/store', [SellerController::class, 'store'])->name('seller.store');
+    Route::post('/login-check', [SellerController::class, 'loginCheck'])->name('seller.login-check');
+});
+
+Route::get('/seller/verify', [SellerController::class, 'verify'])->name('seller.verify')->middleware('seller.logout');
+
+Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.verified']], function() {
+    Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
+});
+Route::post('/seller/logout', [SellerDashboardController::class, 'logout'])->name('seller.logout')->middleware('seller.logout');
 
 
 Route::get('/error', function () {

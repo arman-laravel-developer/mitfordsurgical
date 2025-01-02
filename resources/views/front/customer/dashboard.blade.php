@@ -105,6 +105,13 @@
                                             data-bs-target="#pills-download" type="button" role="tab"><i
                                             data-feather="download"></i>{{translate('Download')}}</button>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" onclick="document.getElementById('logoutForm').submit();">
+                                        <i data-feather="log-out"></i>{{translate('Logout')}}</button>
+                                    <form action="{{route('customer.logout')}}" method="POST" id="logoutForm">
+                                        @csrf
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>

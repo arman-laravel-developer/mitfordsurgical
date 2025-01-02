@@ -4,6 +4,9 @@ namespace App\Http;
 
 use App\Http\Middleware\CustomerLoginMiddleware;
 use App\Http\Middleware\CustomerLogoutMiddleware;
+use App\Http\Middleware\SellerLoginMiddleware;
+use App\Http\Middleware\SellerLogoutMiddleware;
+use App\Http\Middleware\SellerVerifiedMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -69,6 +72,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roles' => \App\Http\Middleware\CheckRoleMiddleware::class,
         'customer.login' => CustomerLoginMiddleware::class,
-        'customer.logout' => CustomerLogoutMiddleware::class
+        'customer.logout' => CustomerLogoutMiddleware::class,
+        'seller.login' => SellerLoginMiddleware::class,
+        'seller.logout' => SellerLogoutMiddleware::class,
+        'seller.verified' => SellerVerifiedMiddleware::class
     ];
 }
