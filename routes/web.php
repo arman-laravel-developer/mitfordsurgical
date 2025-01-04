@@ -85,9 +85,11 @@ Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.login']], function
     Route::post('/login-check', [SellerController::class, 'loginCheck'])->name('seller.login-check');
 });
 
-Route::get('/seller/verify', [SellerController::class, 'verify'])->name('seller.verify')->middleware('seller.logout');
 
-Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.verified']], function() {
+Route::get('/seller/verify', [SellerController::class, 'verify'])->name('seller.verify')->middleware('seller.logout');
+Route::post('/verify-form-store', [SellerController::class, 'verify_form_store'])->name('verify.form.store');
+
+Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.verified', 'seller.unbanned']], function() {
     Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
 });
 Route::post('/seller/logout', [SellerDashboardController::class, 'logout'])->name('seller.logout')->middleware('seller.logout');

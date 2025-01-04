@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('bank_acc_no')->nullable();
             $table->string('bank_routing_no')->nullable();
             $table->tinyInteger('bank_payment_status')->default(2);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

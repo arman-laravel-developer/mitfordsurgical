@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Session;
 
-class SellerVerifiedMiddleware
+class SellerUnbannedMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,9 +19,11 @@ class SellerVerifiedMiddleware
     public function handle(Request $request, Closure $next)
     {
         $seller = Seller::find(Session::get('seller_id'));
-        if ($seller->is_verified != 1)
+        if ($seller->status != 1)
         {
-            return redirect()->route('seller.verify')->with('error', 'Please verify first');
+            Session::forget('seller_id');
+            Session::forget('seller_name');
+            return redirect()->route('home')->with('error', 'Your account is banned. Please contact admin.');
         }
         else
         {

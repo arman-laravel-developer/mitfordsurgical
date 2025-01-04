@@ -15,6 +15,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\SellerController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -147,6 +148,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
             Route::post('/update', [PrivacyController::class, 'update'])->name('privacy.update');
             Route::post('/delete/{id}', [PrivacyController::class, 'delete'])->name('privacy.delete');
+        });
+        Route::prefix('seller')->group(function () {
+            Route::get('/pending', [SellerController::class, 'pending'])->name('seller.pending');
+            Route::get('/approved', [SellerController::class, 'approved'])->name('seller.approved');
+            Route::get('/detail/{id}', [SellerController::class, 'detail'])->name('seller.detail');
+            Route::get('/ban', [SellerController::class, 'ban'])->name('seller.ban');
+            Route::post('/ban-submit/{id}', [SellerController::class, 'changeStatus'])->name('seller.status-change');
+            Route::post('/approval/{id}', [SellerController::class, 'approval'])->name('seller.approval');
         });
         Route::prefix('language')->group(function () {
             Route::get('/add', [LanguageController::class, 'index'])->name('language.add');

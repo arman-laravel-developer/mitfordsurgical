@@ -135,6 +135,34 @@
         </a>
     </li>
     @endif
+    @if ($userType == 1 || !empty(array_filter(['seller.pending', 'seller.approved', 'seller.ban'], fn($route) => in_array($route, $roleRoutes))))
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarSellers" aria-expanded="false" aria-controls="sidebarSellers" class="side-nav-link">
+                <i class="uil-user-square"></i>
+                <span> Sellers </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarSellers">
+                <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('seller.pending', $roleRoutes))
+                        <li>
+                            <a href="{{ route('seller.pending') }}">Seller Pending</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('seller.approved', $roleRoutes))
+                        <li>
+                            <a href="{{ route('seller.approved') }}">Seller Approved</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('seller.ban', $roleRoutes))
+                        <li>
+                            <a href="{{ route('seller.ban') }}">Seller Ban</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+    @endif
     @if ($userType == 1 || in_array('dashboard.contact-form', $roleRoutes))
     <li class="side-nav-item">
         <a href="{{route('dashboard.contact-form')}}" class="side-nav-link">

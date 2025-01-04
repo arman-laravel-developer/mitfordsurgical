@@ -21,6 +21,10 @@ class CustomerLoginMiddleware
         {
             return redirect()->route('customer.dashboard');
         }
+        elseif (Session::get('seller_id'))
+        {
+            return redirect()->route('seller.dashboard');
+        }
         else
         {
             return $next($request);
