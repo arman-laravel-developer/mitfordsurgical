@@ -234,7 +234,7 @@ class SellerController extends Controller
         } else {
             $seller->is_verified = 2;
             $seller->verification_status = 2;
-            $seller->varification_info = null;
+            $seller->verification_info = null;
             $message = 'Seller rejected successfully!';
         }
         $seller->save();
