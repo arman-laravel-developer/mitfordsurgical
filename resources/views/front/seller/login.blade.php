@@ -56,11 +56,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
-                                        <div class="form-floating theme-form-floating log-in-form">
-                                            <input type="password" class="form-control" name="password" id="password"
-                                                   placeholder="{{translate('Password')}}">
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating theme-form-floating position-relative">
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="{{translate('Password')}}">
                                             <label for="password">{{translate('Password')}}</label>
+                                            <button type="button" id="togglePassword" class="btn btn-outline-secondary position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 

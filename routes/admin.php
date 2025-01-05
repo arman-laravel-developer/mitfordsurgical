@@ -16,6 +16,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\ProductController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -70,6 +71,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/backup', [GeneralSettingController::class, 'backup'])->name('setting.backup');
         Route::get('/smtp', [GeneralSettingController::class, 'smtp'])->name('setting.smtp');
         Route::post('/smtp-update', [GeneralSettingController::class, 'smtpUpdate'])->name('setting.smtp-update');
+
+        Route::post('/update-status', [ProductController::class, 'updateStatus'])->name('product.updateStatus');
+        Route::post('/update-featured', [ProductController::class, 'updateFeatured'])->name('product.updateFeatured');
+        Route::post('/update-stock', [ProductController::class, 'updateStock'])->name('product.updateStock');
 
     });
 

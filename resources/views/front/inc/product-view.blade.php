@@ -43,43 +43,33 @@
 
                             <div class="product-detail">
                                 <h4>Product Details :</h4>
-                                <p>Candy canes sugar plum tart cotton candy chupa chups sugar plum chocolate I love.
-                                    Caramels marshmallow icing dessert candy canes I love soufflé I love toffee.
-                                    Marshmallow pie sweet sweet roll sesame snaps tiramisu jelly bear claw. Bonbon
-                                    muffin I love carrot cake sugar plum dessert bonbon.</p>
+                                <p></p>
                             </div>
-
-                            <ul class="brand-list">
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Brand Name:</h5>
-                                        <h6>Black Forest</h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Product Code:</h5>
-                                        <h6>W0690034</h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="brand-box">
-                                        <h5>Product Type:</h5>
-                                        <h6>White Cream Cake</h6>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="select-size">
+                                <h4>Color :</h4>
+                                <select class="form-select select-form-size">
+                                    <option selected>Select Color</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Green">Green</option>
+                                </select>
+                            </div>
+                            <div class="select-size">
+                                <h4>Size :</h4>
+                                <select class="form-select select-form-size">
+                                    <option selected>Select Size</option>
+                                    <option value="1.2">1/2 KG</option>
+                                    <option value="0">1 KG</option>
+                                    <option value="1.5">1/5 KG</option>
+                                    <option value="red">Red Roses</option>
+                                    <option value="pink">With Pink Roses</option>
+                                </select>
+                            </div>
 
 
                             <div class="modal-button">
                                 <button onclick="location.href = 'cart.html';"
                                         class="btn btn-md add-cart-button icon">Add
                                     To Cart</button>
-                                <button onclick="location.href = 'product-left.html';"
-                                        class="btn theme-bg-color view-button icon text-white fw-bold btn-md">
-                                    View More Details</button>
                             </div>
                         </div>
                     </div>

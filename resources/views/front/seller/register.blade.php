@@ -118,19 +118,25 @@
                                                 </div>
 
                                                 <div class="col-12 mb-3">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="{{translate('Password')}}" required>
-                                                        <label for="password">{{translate('Password')}}<sup class="text-danger">*</sup></label>
+                                                    <div class="form-floating theme-form-floating position-relative">
+                                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="{{translate('Password')}}">
+                                                        <label for="password">{{translate('Password')}}</label>
+                                                        <button type="button" id="togglePassword" class="btn btn-outline-secondary position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
                                                         @error('password')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12 mb-3">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="{{translate('Password Confirmation')}}" required>
-                                                        <label for="password_confirmation">{{translate('Password Confirmation')}}<sup class="text-danger">*</sup></label>
+                                                <div class="col-12">
+                                                    <div class="form-floating theme-form-floating position-relative">
+                                                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="{{translate('Password Confirmation')}}">
+                                                        <label for="password_confirmation">{{translate('Password Confirmation')}}</label>
+                                                        <button type="button" id="togglePasswordConfirmation" class="btn btn-outline-secondary position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
                                                         @error('password_confirmation')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror

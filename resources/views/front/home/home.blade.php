@@ -61,6 +61,69 @@
 
         <div class="container">
             <div class="title d-block">
+                <h2 class="text-theme font-sm text-center">{{translate('Featured Products')}}</h2>
+            </div>
+
+            <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
+                @foreach($products as $product)
+                <div class="product-box-4 wow fadeInUp" data-wow-delay="0.05s">
+                    <div class="product-image">
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view"
+                           data-name="{{$product->getTranslation('name')}}"
+                           data-price="{{$product->sell_price}}"
+                           data-image="{{asset($product->thumbnail_img)}}"
+                           data-description="{{$product->getTranslation('description')}}">
+                            <img src="{{asset($product->thumbnail_img)}}" class="img-fluid" alt="">
+                        </a>
+
+                        <ul class="option">
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Quick View">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view"
+                                   data-name="{{$product->getTranslation('name')}}"
+                                   data-price="{{$product->sell_price}}"
+                                   data-image="{{asset($product->thumbnail_img)}}"
+                                   data-description="{{$product->getTranslation('description')}}">
+                                    <i data-feather="eye"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="product-detail">
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view"
+                           data-name="{{$product->getTranslation('name')}}"
+                           data-price="{{$product->sell_price}}"
+                           data-image="{{asset($product->thumbnail_img)}}"
+                           data-description="{{$product->getTranslation('description')}}">
+                            <h5 class="name">{{$product->name}}</h5>
+                        </a>
+{{--                        <h5 class="price theme-color">$70.21<del>$65.25</del></h5>--}}
+                        <h5 class="price theme-color">&#2547;{{$product->sell_price}}</h5>
+                        <div class="price-qty">
+                            <div class="counter-number">
+                                <div class="counter">
+                                    <div class="qty-left-minus" data-type="minus" data-field="">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </div>
+                                    <input class="form-control input-number qty-input" type="text"
+                                           name="quantity" value="0">
+                                    <div class="qty-right-plus" data-type="plus" data-field="">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="buy-button buy-button-2 btn btn-cart">
+                                <i class="fa fa-cart-plus icli text-white m-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="container">
+            <div class="title d-block">
                 <h2 class="text-theme font-sm text-center">{{translate('All Products')}}</h2>
             </div>
 
@@ -881,4 +944,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var viewModal = document.getElementById('view');
+            var productModalName = viewModal.querySelector('.title-name');
+            var productModalPrice = viewModal.querySelector('.price');
+            var productModalImage = viewModal.querySelector('.slider-image img');
+            var productModalDescription = viewModal.querySelector('.product-detail p');
+
+            document.querySelectorAll('a[data-bs-target="#view"]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var productName = button.getAttribute('data-name');
+                    var productPrice = button.getAttribute('data-price');
+                    var productImage = button.getAttribute('data-image');
+                    var productDescription = button.getAttribute('data-description');
+
+                    // Remove inline styles from the description
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = productDescription;
+                    tempDiv.querySelectorAll('[style]').forEach(function (element) {
+                        element.removeAttribute('style');
+                    });
+
+                    // Populate modal content
+                    productModalName.textContent = productName;
+                    productModalPrice.textContent = `৳${productPrice}`;
+                    productModalImage.src = productImage;
+                    productModalDescription.innerHTML = tempDiv.innerHTML; // Use sanitized content
+                });
+            });
+        });
+    </script>
+
 @endsection
