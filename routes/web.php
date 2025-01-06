@@ -41,6 +41,8 @@ Route::get('/conditions', [HomeController::class, 'condition'])->name('condition
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
 
+Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
+
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');

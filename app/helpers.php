@@ -75,6 +75,27 @@ if (!function_exists('static_asset')) {
     }
 }
 
+if (!function_exists('discounted_price')) {
+    function discounted_price($product)
+    {
+        $newPrice = $product->sell_price;
+        $currentDate = date('Y-m-d'); // Get the current date
+        $discountStartDate = $product->start_date; // Assuming this field exists in the product model
+        $discountEndDate = $product->end_date; // Assuming this field exists in the product model
+
+        // Check if the current date is within the discount period
+        if ($product->discount > 0 && $currentDate >= $discountStartDate && $currentDate <= $discountEndDate) {
+            if ($product->discount_type == 2) {
+                $newPrice = $product->sell_price - ($product->sell_price * ($product->discount / 100));
+            } else {
+                $newPrice = $product->sell_price - $product->discount;
+            }
+        }
+
+        return $newPrice;
+    }
+}
+
 if (!function_exists('mask_email')) {
     function mask_email($email) {
         $parts = explode("@", $email);

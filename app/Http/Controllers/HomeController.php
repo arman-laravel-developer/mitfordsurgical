@@ -22,11 +22,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::where('status', 1)->latest()->take(10)->get();
+        $featuredProducts = Product::where('status', 1)->where('is_featured', 1)->latest()->take(10)->get();
+        $products = Product::where('status', 1)->latest()->get();
         $sliders = Slider::where('status',1)->latest()->take(5)->get();
         $homeCategories = Category::where('status',1)->where('display_status',1)->latest()->take(10)->get();
-        return view('front.home.home', compact('sliders', 'homeCategories', 'products'));
+        return view('front.home.home', compact('sliders', 'homeCategories', 'products', 'featuredProducts'));
     }
+
+    public function detail($id)
+    {
+        $product = Product::find($id);
+        $relatedProducts = Product::where('status', 1)->where('category_id', $product->category_id)->take(24)->latest()->get();
+        return view('front.pages.show', compact('product', 'relatedProducts'));
+    }
+
     public function aboutUs()
     {
         $about = AboutUs::latest()->first();
