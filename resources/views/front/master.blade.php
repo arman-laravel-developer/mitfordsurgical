@@ -16,7 +16,7 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{{asset('/')}}front/assets/images/favicon/6.png" type="image/x-icon">
+    <link rel="icon" href="{{asset($generalSettingView->favicon)}}" type="image/x-icon">
     <title>@yield('title')</title>
 
     <!-- Google font -->
