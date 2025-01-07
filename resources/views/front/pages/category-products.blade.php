@@ -50,7 +50,7 @@
                         <a href="{{route('product.detail', ['id' => $category_product->id, 'slug' => $category_product->slug])}}">
                             <h5 class="name">{{$category_product->getTranslation('name')}}</h5>
                         </a>
-                        <h5 class="price theme-color">&#2547;{{discounted_price($category_product)}}@if($category_product->discount > 0) <del>&#2547;{{number_format($category_product->sell_price,2)}}</del> @endif</h5>
+                        <h5 class="price theme-color">&#2547;{{discounted_price($category_product)}}@if(discounted_active($category_product)) <del>&#2547;{{number_format($category_product->sell_price,2)}}</del> @endif</h5>
                         <div class="price-qty">
                             <div class="counter-number">
                                 <div class="counter">

@@ -95,6 +95,17 @@ if (!function_exists('discounted_price')) {
         return $newPrice;
     }
 }
+if (!function_exists('discounted_active')) {
+    function discounted_active($product)
+    {
+        $currentDate = \Carbon\Carbon::now();
+        $startDate = \Carbon\Carbon::parse($product->start_date);
+        $endDate = \Carbon\Carbon::parse($product->end_date);
+
+        return $product->discount > 0 && $currentDate->between($startDate, $endDate);
+    }
+}
+
 
 if (!function_exists('mask_email')) {
     function mask_email($email) {

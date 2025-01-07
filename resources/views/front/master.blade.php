@@ -1051,6 +1051,10 @@
 <!-- Include Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+<!-- Zoom Js -->
+<script src="{{asset('/')}}front/assets/js/jquery.elevatezoom.js"></script>
+<script src="{{asset('/')}}front/assets/js/zoom-filter.js"></script>
+
 
 <!-- Swiper JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

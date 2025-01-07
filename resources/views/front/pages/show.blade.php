@@ -41,13 +41,13 @@
                                         <div class="col-12">
                                             <div class="product-main no-arrow">
                                                 @foreach($product->otherImages as $otherImage)
-                                                <div>
-                                                    <div class="slider-image">
-                                                        <img src="{{ asset($otherImage->gellery_image) }}" id="img-1"
-                                                             data-zoom-image="{{ asset($otherImage->gellery_image) }}" class="
+                                                    <div>
+                                                        <div class="slider-image">
+                                                            <img src="{{ asset($otherImage->gellery_image) }}" id="img-1"
+                                                                 data-zoom-image="{{ asset($otherImage->gellery_image) }}" class="
                                                         img-fluid image_zoom_cls-{{$otherImage->id}} blur-up lazyload" alt="">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -55,12 +55,12 @@
                                         <div class="col-12">
                                             <div class="left-slider-image left-slider no-arrow slick-top">
                                                 @foreach($product->otherImages as $otherImage)
-                                                <div>
-                                                    <div class="sidebar-image">
-                                                        <img src="{{ asset($otherImage->gellery_image) }}"
-                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    <div>
+                                                        <div class="sidebar-image">
+                                                            <img src="{{ asset($otherImage->gellery_image) }}"
+                                                                 class="img-fluid blur-up lazyload" alt="">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -68,11 +68,12 @@
                                 </div>
                             </div>
 
+
                             <div class="col-xl-6 wow fadeInUp">
                                 <div class="right-box-contain">
                                     <h2 class="name">{{$product->getTranslation('name')}}</h2>
                                     <div class="price-rating">
-                                        <h3 class="theme-color price">&#2547; {{$product->sell_price}}</h3>
+                                        <h5 class="price theme-color">&#2547;{{discounted_price($product)}}@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
 {{--                                        <h3 class="theme-color price">$49.50 <del class="text-content">$58.46</del> <span--}}
 {{--                                                class="offer theme-color">(8% off)</span></h3>--}}
 {{--                                        <div class="product-rating custom-rate">--}}
