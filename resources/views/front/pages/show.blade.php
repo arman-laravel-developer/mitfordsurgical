@@ -235,7 +235,7 @@
 
                                 <div class="tab-pane fade" id="care" role="tabpanel">
                                     <div class="information-box" style="text-align: center;">
-                                        <a href="javascript:void(0)" download class="btn btn-danger" style="display: inline-block; margin: 20px auto; background-color: red; color: white">
+                                        <a href="{{ asset($product->pdf) }}" download class="btn btn-danger" style="display: inline-block; margin: 20px auto; background-color: red; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
                                             Download Now
                                         </a>
                                     </div>

@@ -57,6 +57,15 @@ class ProductController extends Controller
 
         return $imagePath;
     }
+    public function getPdfUrl($request)
+    {
+        $image = $request->file('pdf');
+        $imageName = time() . '-' . 'product-pdf' . '.' . $image->getClientOriginalExtension();
+        $directory = 'product-pdfs/';
+        $image->move($directory,$imageName);
+        $imagePath = $directory.$imageName;
+        return $imagePath;
+    }
 
     public function getMetaImageUrl($request)
     {
@@ -188,6 +197,10 @@ class ProductController extends Controller
         if ($request->file('thumbnail_img'))
         {
             $product->thumbnail_img = $this->getImageUrl($request);
+        }
+        if ($request->file('pdf'))
+        {
+            $product->pdf = $this->getPdfUrl($request);
         }
 
         if ($request->file('meta_image'))
@@ -423,6 +436,20 @@ class ProductController extends Controller
                 $thumbnailImgUrl = $product->thumbnail_img;
             }
             $product->thumbnail_img = $thumbnailImgUrl;
+
+            if ($request->file('pdf'))
+            {
+                if (file_exists($product->pdf))
+                {
+                    unlink($product->pdf);
+                }
+                $pdfUrl = $this->getPdfUrl($request);
+            }
+            else
+            {
+                $pdfUrl = $product->pdf;
+            }
+            $product->pdf = $pdfUrl;
 
             if ($request->file('meta_image'))
             {

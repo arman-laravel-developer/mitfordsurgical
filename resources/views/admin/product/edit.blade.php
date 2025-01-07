@@ -185,6 +185,29 @@
                         </div>
                         <div class="card">
                             <div class="card-header" style="margin-bottom: -4%;">
+                                <h4>Product PDF</h4>
+                            </div>
+                            <hr/>
+                            <div class="card-body" style="margin-top: -2%">
+                                <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label">PDF <br>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input type="file" class="form-control @error('pdf') is-invalid @enderror" name="pdf" accept=".pdf" required />
+                                        @if($product->pdf)
+                                            <iframe src="{{ asset($product->pdf) }}" height="300px" width="100%" frameborder="0"></iframe>
+                                        @else
+                                            <p>No PDF available for this product.</p>
+                                        @endif
+                                        @error('pdf')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" style="margin-bottom: -4%;">
                                 <h4>Product Variation</h4>
                             </div>
                             <hr/>
