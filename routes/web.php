@@ -46,6 +46,7 @@ Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->na
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
+
 Route::middleware('customer.login')->group(function () {
     Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');
     Route::get('/customer-login', [CustomerController::class, 'login'])->name('customer.login');

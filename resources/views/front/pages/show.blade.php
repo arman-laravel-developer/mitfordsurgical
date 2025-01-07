@@ -75,26 +75,26 @@
                                         <h3 class="theme-color price">&#2547; {{$product->sell_price}}</h3>
 {{--                                        <h3 class="theme-color price">$49.50 <del class="text-content">$58.46</del> <span--}}
 {{--                                                class="offer theme-color">(8% off)</span></h3>--}}
-                                        <div class="product-rating custom-rate">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star"></i>
-                                                </li>
-                                            </ul>
-                                            <span class="review">23 Customer Review</span>
-                                        </div>
+{{--                                        <div class="product-rating custom-rate">--}}
+{{--                                            <ul class="rating">--}}
+{{--                                                <li>--}}
+{{--                                                    <i data-feather="star" class="fill"></i>--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <i data-feather="star" class="fill"></i>--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <i data-feather="star" class="fill"></i>--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <i data-feather="star" class="fill"></i>--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <i data-feather="star"></i>--}}
+{{--                                                </li>--}}
+{{--                                            </ul>--}}
+{{--                                            <span class="review">23 Customer Review</span>--}}
+{{--                                        </div>--}}
                                     </div>
 
                                     <div class="product-package">

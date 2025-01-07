@@ -11,6 +11,7 @@ class Product extends Model
     use HasFactory;
     protected $with = ['product_translations'];
 
+
     public function getTranslation($field = '', $lang = false)
     {
         $lang = $lang ?: (Session::get('locale') ?: env('DEFAULT_LANGUAGE'));
