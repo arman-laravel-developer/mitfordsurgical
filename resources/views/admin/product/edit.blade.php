@@ -335,6 +335,32 @@
                         </div>
                         <div class="card">
                             <div class="card-header" style="margin-bottom: -4%;">
+                                <h4>Product Short Description</h4>
+                            </div>
+                            <hr/>
+                            <div class="card-body" style="margin-top: -2%">
+                                <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label">Active Short Description</label>
+                                    <div class="col-md-9">
+                                        <input type="checkbox" name="is_short_description" value="1" {{$product->is_short_description == 1 ? 'checked' : ''}} style="margin-top: 5%;margin-left: 1%">
+                                        @error('short_description')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3 col-form-label">Short Description</label>
+                                    <div class="col-md-9">
+                                        <textarea type="text" name="short_description" id="shot_summernote" class="form-control @error('short_description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Short Description">{{$product->getTranslation('short_description', request()->lang)}}</textarea>
+                                        @error('short_description')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" style="margin-bottom: -4%;">
                                 <h4>Seo Meta Tag</h4>
                             </div>
                             <hr/>

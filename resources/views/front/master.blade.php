@@ -178,6 +178,8 @@
             cursor: pointer;
             font-size: 18px;
         }
+
+
     </style>
 </head>
 
@@ -1051,9 +1053,24 @@
 <!-- Include Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<!-- Zoom Js -->
-<script src="{{asset('/')}}front/assets/js/jquery.elevatezoom.js"></script>
-<script src="{{asset('/')}}front/assets/js/zoom-filter.js"></script>
+<script>
+    // Function to check if the device is mobile
+    function isMobile() {
+        return window.innerWidth <= 768; // Adjust the width as per your requirement
+    }
+
+    // Execute the scripts only if it's not a mobile device
+    if (!isMobile()) {
+        var script1 = document.createElement('script');
+        script1.src = "{{asset('/')}}front/assets/js/jquery.elevatezoom.js";
+        document.head.appendChild(script1);
+
+        var script2 = document.createElement('script');
+        script2.src = "{{asset('/')}}front/assets/js/zoom-filter.js";
+        document.head.appendChild(script2);
+    }
+</script>
+
 
 
 <!-- Swiper JS -->
