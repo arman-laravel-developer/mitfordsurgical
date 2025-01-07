@@ -214,11 +214,11 @@
                                                 </div>
                                             </div>
                                             @if($relatedProduct->minimum_purchase_qty < $relatedProduct->stock)
-                                                <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" style="right: 5%;">
+                                                <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn w-100" style="right: 5%;">
                                                     <i class="fa fa-cart-plus icli text-white m-0"></i>
                                                 </button>
                                             @else
-                                                <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red; right: 5%;" title="Out of stock">
+                                                <button class="buy-button buy-button-2 btn btn-out-of-stock w-100 out-of-stock-btn" style="background-color: red; right: 5%;" title="Out of stock">
                                                     <i class="fa fa-times icli text-white m-0"></i>
                                                 </button>
                                             @endif
