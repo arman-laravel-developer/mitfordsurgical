@@ -25,7 +25,9 @@
                     </div>
                     @if(count($menuCategory->subCategories) > 0)
                         <div id="category{{$menuCategory->id}}"
-                             class="collapse {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) || collect($menuCategory->subCategories)->pluck('id')->contains(request()->route('id')) ? 'show' : '' }}">
+                             class="collapse {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) || $menuCategory->subCategories->contains(function($subCategory) {
+                                return request()->route('id') == $subCategory->id && request()->route('slug') == $subCategory->slug;
+                                }) ? 'show' : '' }}">
                             <ul class="list-unstyled ps-3" style="gap: 4px; margin-top: 2%;">
                                 @foreach($menuCategory->subCategories as $subCategory)
                                     <li>
