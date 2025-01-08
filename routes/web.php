@@ -42,6 +42,7 @@ Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
 
 Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
+Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.variant');
 
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 

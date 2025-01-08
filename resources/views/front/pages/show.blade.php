@@ -73,71 +73,83 @@
                                 <div class="right-box-contain">
                                     <h2 class="name">{{$product->getTranslation('name')}}</h2>
                                     <p>
-                                        <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a></p>
+                                        Category: <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a></p>
                                     <div class="price-rating">
-                                        <h5 class="price theme-color">&#2547;{{discounted_price($product)}}@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
+                                        <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
                                     </div>
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="product-package">
+                                            @if($product->is_variant == 1)
+                                                @if($product->variants->where('color_id', '!=', null)->unique('color_id')->count() > 0)
+                                                    <div class="product-title">
+                                                        <h4>{{translate('Color')}} </h4>
+                                                    </div>
 
-                                    <div class="product-package">
-                                        @if($product->is_variant == 1)
-                                            @if($product->variants->where('color_id', '!=', null)->unique('color_id')->count() > 0)
-                                        <div class="product-title">
-                                            <h4>{{translate('Color')}} </h4>
-                                        </div>
+                                                    <ul class="color circle select-package">
+                                                        @foreach($product->variants->where('color_id', '!=', null)->unique('color_id') as $variant)
+                                                            <li class="form-check">
+                                                                <input class="form-check-input color-selector"
+                                                                       type="radio" value="{{$variant->color_id}}" name="color_id"
+                                                                       id="color-{{$variant->color_id}}" required>
+                                                                <label class="form-check-label" for="color-{{$variant->color_id}}">
+                                                                    <span style="background-color: {{$variant->color->color_code}};"></span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
 
-                                        <ul class="color circle select-package">
-                                            @foreach($product->variants->where('color_id', '!=', null)->unique('color_id') as $variant)
-                                            <li class="form-check">
-                                                <input class="form-check-input" {{ $loop->first ? 'checked' : '' }} type="radio" value="{{$variant->color_id}}" name="color_id"
-                                                       id="color-{{$variant->color_id}}">
-                                                <label class="form-check-label" for="color-{{$variant->color_id}}">
-                                                    <span style="background-color: {{$variant->color->color_code}};"></span>
-                                                </label>
-                                            </li>
-                                            @endforeach
-                                        </ul>
+                                                @if($product->variants->where('size_id', '!=', null)->unique('size_id')->count() > 0)
+                                                    <div class="product-title">
+                                                        <h4>{{translate('Size')}} </h4>
+                                                    </div>
+
+                                                    <ul class="circle select-package">
+                                                        @foreach($product->variants->where('size_id', '!=', null)->unique('size_id') as $variant)
+                                                            <li class="form-check">
+                                                                <input class="form-check-input size-selector" required type="radio" value="{{$variant->size_id}}" name="size_id" id="size-{{$variant->size_id}}">
+                                                                <label class="form-check-label" for="size-{{$variant->size_id}}">
+                                                                    <span>{{$variant->size->name}}</span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
                                             @endif
-                                        @endif
-
-                                        @if($product->variants->where('size_id', '!=', null)->unique('size_id')->count() > 0)
-                                        <div class="product-title">
-                                            <h4>{{translate('Size')}} </h4>
-                                            <ul class="circle select-package">
-                                                @foreach($product->variants->where('size_id', '!=', null)->unique('size_id') as $variant)
-                                                <li class="form-check">
-                                                    <input class="form-check-input" {{ $loop->first ? 'checked' : '' }} type="radio" value="{{$variant->size_id}}" name="size_id" id="size-{{$variant->size_id}}">
-                                                    <label class="form-check-label" for="size-{{$variant->size_id}}">
-                                                        <span>{{$variant->size->name}}</span>
-                                                    </label>
-                                                </li>
-                                                @endforeach
-                                            </ul>
                                         </div>
-                                            @endif
-                                    </div>
-
-
-
-                                    <div class="note-box product-package">
-                                        <div class="counter-number">
-                                            <div class="counter">
-                                                <div class="qty-left-minus" data-type="minus" data-field="">
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </div>
-                                                <input class="form-control input-number qty-input" style="width: 38%!important;" @if($product->minimum_purchase_qty > $product->stock) disabled @endif oninput="this.value = this.value.replace(/[^0-9]/g, '');" type="text"
-                                                       name="quantity" max="{{$product->stock}}" min="{{$product->minimum_purchase_qty}}" value="{{$product->minimum_purchase_qty}}">
-                                                <div class="qty-right-plus" data-type="plus" data-field="">
-                                                    <i class="fa-solid fa-plus"></i>
+                                        <input type="text" name="price" id="priceAdd" value="{{number_format(discounted_price($product),2)}}">
+                                        <input type="text" name="product_id" value="{{$product->id}}">
+                                        <input type="text" name="product_id" id="variantID" value="">
+                                        <div class="note-box product-package">
+                                            <div class="counter-number">
+                                                <div class="counter">
+                                                    <div class="qty-left-minus" data-type="minus" data-field="">
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </div>
+                                                    <input class="form-control input-number qty-input" style="width: 38%!important;"
+                                                           @if($product->minimum_purchase_qty > $product->stock) disabled @endif
+                                                           oninput="validateQuantity(this)" type="text" name="quantity" id="qtyInput"
+                                                           max="{{$product->stock}}" min="{{$product->minimum_purchase_qty}}"
+                                                           value="{{$product->minimum_purchase_qty}}" data-available-qty="{{$product->stock}}" required>
+                                                    <div class="qty-right-plus" data-type="plus" data-field="">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        @if($product->minimum_purchase_qty < $product->stock)
-                                        <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" onclick="openCart()">{{translate('Add To Cart')}}</button>
-                                        @else
-                                            <button class="btn btn-md bg-danger cart-button text-white w-100" disabled>{{translate('Out Of Stock')}}</button>
-                                        @endif
-                                    </div>
+                                            @if($product->is_variant == 1)
+                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" onclick="openCart()">{{translate('Add To Cart')}}</button>
+                                                <button class="btn btn-md bg-danger cart-button text-white w-100" style="display: none" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
+                                            @else
+                                                @if($product->minimum_purchase_qty <= $product->stock)
+                                                    <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" onclick="openCart()">{{translate('Add To Cart')}}</button>
+                                                @else
+                                                    <button class="btn btn-md bg-danger cart-button text-white w-100" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </form>
                                     <div class="pickup-box">
                                         <div class="product-title">
                                             <h4>Product Information</h4>
@@ -672,4 +684,103 @@
         </section>
         <!-- Related Product Section End -->
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to fetch the price, stock, and qty for a selected color and size
+            function fetchVariantData(colorId, sizeId) {
+                var productId = {{ $product->id }}; // Get the product ID
+
+                $.ajax({
+                    url: '{{ route('get.variant') }}', // Ensure this route is set up
+                    type: 'GET',
+                    data: {
+                        product_id: productId,
+                        color_id: colorId,
+                        size_id: sizeId
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.variant) {
+                            // Update price
+                            const basePrice = parseFloat(response.variant.price);
+                            const discount = parseFloat({{$product->discount}});
+                            const discountType = {{$product->discount_type}};
+                            const startDate = new Date('{{$product->start_date}}'); // Parse the start date
+                            const endDate = new Date('{{$product->end_date}}'); // Parse the end date
+                            const currentDate = new Date(); // Get the current date
+
+                            let finalPrice = basePrice;
+
+                            // Check if the current date is within the discount period
+                            if (discount > 0 && currentDate >= startDate && currentDate <= endDate) {
+                                if (discountType == 2) {
+                                    finalPrice = basePrice - (basePrice * (discount / 100));
+                                } else {
+                                    finalPrice = basePrice - discount;
+                                }
+                            }
+
+                            $('#price').text(finalPrice.toFixed(2)); // Update price with 2 decimal places
+                            $('#priceAdd').val(finalPrice.toFixed(2)); // Update hidden input with 2 decimal places
+                            $('#variantID').val(response.variant.id);
+                            var availableQty = response.variant.qty;
+
+                            // Update the max attribute of the quantity input
+                            $('#qtyInput').attr('max', availableQty).attr('data-available-qty', availableQty);
+
+                            // Enable or disable the "Add to Cart" button based on stock
+                            if (availableQty > 0) {
+                                $('#addToCartButton').prop('disabled', false).css('display', 'block');
+                                $('#outOfStockButton').css('display', 'none');
+                            } else {
+                                $('#addToCartButton').prop('disabled', true).css('display', 'none');
+                                $('#outOfStockButton').css('display', 'block');
+                            }
+
+                            // Validate the current quantity input value
+                            validateQuantity(document.getElementById('qtyInput'));
+                        }
+                    },
+                    error: function() {
+                        alert('Error fetching variant data');
+                    }
+                });
+            }
+
+            // Listen for changes in the color or size selectors
+            $(document).on('change', '.color-selector, .size-selector', function() {
+                var colorId = $('input[name="color_id"]:checked').val();
+                var sizeId = $('input[name="size_id"]:checked').val();
+
+                // Call fetchVariantData based on selected color or size
+                if (colorId && sizeId) {
+                    fetchVariantData(colorId, sizeId);
+                } else if (colorId) {
+                    fetchVariantData(colorId, null);
+                } else if (sizeId) {
+                    fetchVariantData(null, sizeId);
+                }
+            });
+
+            // Function to validate and adjust the quantity input value
+            function validateQuantity(input) {
+                var availableQty = parseInt(input.getAttribute('data-available-qty')); // Get the updated available quantity
+                var inputValue = parseInt(input.value); // Get the current input value
+
+                // Adjust the input value if it exceeds the available quantity or falls below the minimum purchase quantity
+                if (inputValue > availableQty) {
+                    input.value = availableQty;
+                } else if (inputValue < {{$product->minimum_purchase_qty}}) {
+                    input.value = {{$product->minimum_purchase_qty}};
+                }
+            }
+
+            // Attach the validateQuantity function to the input event of the qtyInput
+            $('#qtyInput').on('input', function() {
+                validateQuantity(this);
+            });
+        });
+    </script>
+
 @endsection

@@ -13,6 +13,7 @@ use App\Models\ReturnAndRefund;
 use App\Models\Slider;
 use App\Models\Union;
 use App\Models\Upazila;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 use Session;
 use Carbon\Carbon;
@@ -63,5 +64,35 @@ class HomeController extends Controller
         $return = ReturnAndRefund::latest()->first();
         return view('front.privacy.return', compact('return'));
     }
+
+    public function getVariant(Request $request)
+    {
+        // Check if both color_id and size_id are provided
+        if ($request->color_id && $request->size_id) {
+            $variant = Variant::where('product_id', $request->product_id)
+                ->where('color_id', $request->color_id)
+                ->where('size_id', $request->size_id)
+                ->first();
+        }
+        // If only color_id is provided
+        elseif ($request->color_id) {
+            $variant = Variant::where('product_id', $request->product_id)
+                ->where('color_id', $request->color_id)
+                ->first();
+        }
+        // If only size_id is provided
+        elseif ($request->size_id) {
+            $variant = Variant::where('product_id', $request->product_id)
+                ->where('size_id', $request->size_id)
+                ->first();
+        }
+
+        if ($variant) {
+            return response()->json(['variant' => $variant]);
+        } else {
+            return response()->json(['price' => 'N/A'], 404);
+        }
+    }
+
 
 }

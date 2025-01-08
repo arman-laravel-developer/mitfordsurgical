@@ -36,16 +36,6 @@ $('.qty-right-plus').click(function () {
     }
 });
 
-$('.qty-input').on('blur', function () {
-    var $qty = $(this);  // Use 'this' to refer to the current .qty-input element
-    var currentVal = parseInt($qty.val());
-    var maxVal = parseInt($qty.attr("max"));
-
-    // If the value exceeds the max, set it to max
-    if (currentVal > maxVal) {
-        $qty.val(maxVal);  // Replace with max value
-    }
-});
 
 
 
