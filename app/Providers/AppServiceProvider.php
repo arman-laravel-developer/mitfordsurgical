@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('googleAnalytic', GoogleAnalytic::latest()->first());
             $view->with('generalSettingView', GeneralSetting::latest()->first());
             $view->with('districts', District::orderBy('name', 'asc')->get());
+            $view->with('cartContents', Cart::getContent());
         });
     }
 }

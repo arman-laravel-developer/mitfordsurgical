@@ -12,6 +12,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Models\RoleRoute;
+use App\Http\Controllers\CartController;
 
 function getRoleName($routeName)
 {
@@ -43,6 +44,10 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.u
 
 Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
 Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.variant');
+
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart-dropdown', [CartController::class, 'dropdown'])->name('cart.dropdown');
+Route::delete('/cart-remove', [CartController::class, 'cartRemove'])->name('cart.remove');
 
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 

@@ -36,9 +36,9 @@
                 <i data-feather="shopping-cart" style="color: white;"></i>
                 <span>{{translate('Cart')}}</span>
                 <!-- Badge -->
-                <span class="badge rounded-pill bg-danger position-absolute top-0 translate-middle" style="left: 90%!important;">
-            5
-        </span>
+                <span class="badge rounded-pill bg-danger position-absolute top-0 translate-middle cart-mobile" style="left: 90%!important;">
+                    {{count(\Cart::getContent())}}
+                </span>
             </a>
         </li>
     </ul>

@@ -47,6 +47,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+    public function variant()
+    {
+        return $this->belongsTo(Variant::class, 'product_id');
+    }
 
 
     public function firstGalleryImage()

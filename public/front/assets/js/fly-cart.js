@@ -3,9 +3,9 @@
 ==========================**/
  $('.btn-cart').on('click', function () {
      if ($(window).width() > 768) {
-         var cart = $('.cart-container');
+         var cart = $('.shopping-summary');
      } else {
-         var cart = $('.cart-container');
+         var cart = $('.cart-mobile');
      }
      var imgtodrag = $(this).parents('.product-box-4, .deal-box').find(".product-image img, .category-image img").eq(0);
      if (imgtodrag) {
@@ -28,7 +28,7 @@
                  'width': 75,
                  'height': 75
              }, 1000, 'easeInOutExpo');
-         openCart()
+         // openCart()
 
          imgclone.animate({
              'width': 0,

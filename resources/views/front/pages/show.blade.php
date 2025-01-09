@@ -77,7 +77,7 @@
                                     <div class="price-rating">
                                         <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
                                     </div>
-                                    <form action="" method="POST" enctype="multipart/form-data">
+                                    <form id="addToCartForm" enctype="multipart/form-data">
                                         @csrf
                                         <div class="product-package">
                                             @if($product->is_variant == 1)
@@ -85,13 +85,10 @@
                                                     <div class="product-title">
                                                         <h4>{{translate('Color')}} </h4>
                                                     </div>
-
                                                     <ul class="color circle select-package">
                                                         @foreach($product->variants->where('color_id', '!=', null)->unique('color_id') as $variant)
                                                             <li class="form-check">
-                                                                <input class="form-check-input color-selector"
-                                                                       type="radio" value="{{$variant->color_id}}" name="color_id"
-                                                                       id="color-{{$variant->color_id}}" required>
+                                                                <input class="form-check-input color-selector" type="radio" value="{{$variant->color_id}}" name="color_id" id="color-{{$variant->color_id}}" required>
                                                                 <label class="form-check-label" for="color-{{$variant->color_id}}">
                                                                     <span style="background-color: {{$variant->color->color_code}};"></span>
                                                                 </label>
@@ -99,12 +96,10 @@
                                                         @endforeach
                                                     </ul>
                                                 @endif
-
                                                 @if($product->variants->where('size_id', '!=', null)->unique('size_id')->count() > 0)
                                                     <div class="product-title">
                                                         <h4>{{translate('Size')}} </h4>
                                                     </div>
-
                                                     <ul class="circle select-package">
                                                         @foreach($product->variants->where('size_id', '!=', null)->unique('size_id') as $variant)
                                                             <li class="form-check">
@@ -118,38 +113,142 @@
                                                 @endif
                                             @endif
                                         </div>
-                                        <input type="text" name="price" id="priceAdd" value="{{number_format(discounted_price($product),2)}}">
-                                        <input type="text" name="product_id" value="{{$product->id}}">
-                                        <input type="text" name="product_id" id="variantID" value="">
+                                        <input type="hidden" name="price" id="priceAdd" value="{{number_format(discounted_price($product),2)}}">
+                                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                                        <input type="hidden" name="variant_id" id="variantID" value="">
                                         <div class="note-box product-package">
                                             <div class="counter-number">
                                                 <div class="counter">
                                                     <div class="qty-left-minus" data-type="minus" data-field="">
                                                         <i class="fa-solid fa-minus"></i>
                                                     </div>
-                                                    <input class="form-control input-number qty-input" style="width: 38%!important;"
-                                                           @if($product->minimum_purchase_qty > $product->stock) disabled @endif
-                                                           oninput="validateQuantity(this)" type="text" name="quantity" id="qtyInput"
-                                                           max="{{$product->stock}}" min="{{$product->minimum_purchase_qty}}"
-                                                           value="{{$product->minimum_purchase_qty}}" data-available-qty="{{$product->stock}}" required>
+                                                    <input class="form-control input-number qty-input" style="width: 38%!important;" @if($product->minimum_purchase_qty > $product->stock) disabled @endif oninput="validateQuantity(this)" type="text" name="quantity" id="qtyInput" max="{{$product->stock}}" min="{{$product->minimum_purchase_qty}}" value="{{$product->minimum_purchase_qty}}" data-available-qty="{{$product->stock}}" required>
                                                     <div class="qty-right-plus" data-type="plus" data-field="">
                                                         <i class="fa-solid fa-plus"></i>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div id="messageBox" class="mt-2" style="display:none;"></div>
                                             @if($product->is_variant == 1)
-                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" onclick="openCart()">{{translate('Add To Cart')}}</button>
+                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" >{{translate('Add To Cart')}}</button>
                                                 <button class="btn btn-md bg-danger cart-button text-white w-100" style="display: none" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
                                             @else
                                                 @if($product->minimum_purchase_qty <= $product->stock)
-                                                    <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" onclick="openCart()">{{translate('Add To Cart')}}</button>
+                                                    <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit">{{translate('Add To Cart')}}</button>
                                                 @else
                                                     <button class="btn btn-md bg-danger cart-button text-white w-100" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
                                                 @endif
                                             @endif
                                         </div>
                                     </form>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            $('#addToCartForm').on('submit', function(e) {
+                                                e.preventDefault(); // Prevent the default form submission
+
+                                                let formData = new FormData(this);
+                                                let messageBox = $('#messageBox');
+                                                let itemQtyElement = $('#itemQty');
+                                                let itemQtyElementMobile = $('.cart-mobile');
+                                                let itemValueElement = $('#ItemValue');
+                                                let itemQtyInCartElement = $('#itemQtyIncart');
+                                                let itemValueInCartElement = $('#itemValueIncart');
+
+                                                // Ensure initial values are numbers or set to 0
+                                                let currentItemQty = parseInt(itemQtyElement.text()) || 0;
+                                                let currentItemValue = parseFloat(itemValueElement.text()) || 0;
+                                                let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
+                                                let currentItemValueInCart = parseFloat(itemValueInCartElement.text()) || 0;
+
+                                                $.ajax({
+                                                    url: '{{ route('cart.add') }}',
+                                                    method: 'POST',
+                                                    data: formData,
+                                                    contentType: false,
+                                                    processData: false,
+                                                    success: function(response) {
+                                                        if (response.success) {
+                                                            // Animate the UI to show the updated count from the server
+                                                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
+                                                            animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
+                                                            animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
+                                                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
+                                                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
+
+                                                            toastr.success(response.message);
+                                                            resetForm('#addToCartForm');
+                                                            // Optionally open the cart
+                                                            // openCart();
+                                                            updateCartDropdown();
+                                                        } else {
+                                                            toastr.error('Failed to add to cart. Please try again.');
+                                                        }
+                                                    },
+                                                    error: function(xhr) {
+                                                        showMessage('An error occurred. Please try again.', 'error');
+                                                    }
+                                                });
+
+                                                function resetForm(selector) {
+                                                    $(selector).trigger('reset'); // Reset the form fields
+                                                    // Optionally, reset custom elements like color and size selectors if needed
+                                                    $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
+                                                }
+
+                                                function showMessage(message, type) {
+                                                    let messageClass = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
+                                                    messageBox.removeClass().addClass(messageClass).text(message).fadeIn();
+                                                    setTimeout(function() {
+                                                        messageBox.fadeOut();
+                                                    }, 3000); // Hide message after 3 seconds
+                                                }
+
+                                                function updateCartDropdown() {
+                                                    $.ajax({
+                                                        url: '{{ route('cart.dropdown') }}',
+                                                        method: 'GET',
+                                                        success: function(response) {
+                                                            $('.cart-body').html(response); // Update the cart dropdown HTML
+                                                        },
+                                                        error: function(error) {
+                                                            console.error('Error:', error);
+                                                        }
+                                                    });
+                                                }
+
+                                                // Animation function (count up from current to total)
+                                                function animateCount(element, startValue, endValue, duration) {
+                                                    // Ensure both values are valid numbers
+                                                    let validStartValue = isNaN(startValue) ? 0 : startValue;
+                                                    let validEndValue = isNaN(endValue) ? 0 : endValue;
+
+                                                    // Calculate the difference between start and end value
+                                                    let diff = validEndValue - validStartValue;
+                                                    let steps = diff > 1000 ? 100 : 50; // Adjust number of steps for large values
+                                                    let increment = diff / steps; // Calculate the increment value per step
+
+                                                    $({ countNum: validStartValue }).animate(
+                                                        { countNum: validEndValue },
+                                                        {
+                                                            duration: duration, // Total animation duration
+                                                            easing: 'swing', // Easing function
+                                                            step: function() {
+                                                                // Update the element's text during each step of the animation
+                                                                let newValue = Math.ceil(this.countNum + increment); // Increase the count
+                                                                element.text(newValue);
+                                                                this.countNum = newValue; // Update the current count value
+                                                            },
+                                                            complete: function() {
+                                                                // Ensure the final value is set after animation
+                                                                element.text(validEndValue);
+                                                            }
+                                                        }
+                                                    );
+                                                }
+                                            });
+                                        });
+                                    </script>
+
                                     <div class="pickup-box">
                                         <div class="product-title">
                                             <h4>Product Information</h4>
@@ -684,6 +783,7 @@
         </section>
         <!-- Related Product Section End -->
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

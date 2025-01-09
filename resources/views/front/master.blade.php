@@ -12,6 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{asset($generalSettingView->site_name)}}">
     <meta name="keywords" content="{{asset($generalSettingView->site_name)}}">
@@ -48,139 +49,7 @@
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('/')}}front/assets/css/style.css">
 
-    <style>
-        .shopping-summary {
-            position: fixed;
-            top: 50%; /* Position in the middle vertically */
-            right: 0; /* Align to the right edge */
-            transform: translateY(-50%); /* Center alignment */
-            width: 6%; /* Set width */
-            background-color: #f9f9f9; /* Light background */
-            border: 1px solid #ccc; /* Optional border */
-            border-radius: 8px; /* Rounded corners */
-            z-index: 1000; /* Ensure it's on top */
-            overflow: hidden; /* Prevent content overflow */
-        }
 
-        .shopping-icon {
-            background-color: #6c757d; /* Background for the top section */
-            width: 100%;
-        }
-
-        .shopping-items {
-            width: 100%;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Cart Icon Summary */
-        .cart-summary {
-            position: fixed;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            background: #f9f9f9;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px 0 0 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        /* Slide-in Cart Container */
-        .cart-container {
-            position: fixed;
-            top: 0;
-            right: -400px; /* Hidden initially */
-            height: 100%;
-            width: 400px;
-            background-color: #fff;
-            transition: right 0.3s ease-in-out;
-            z-index: 1050;
-            overflow: hidden; /* Hide overflow initially */
-            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column; /* Stack header, body, and footer vertically */
-        }
-        @media(max-width: 991px) {
-            /* Slide-in Cart Container */
-            .cart-container {
-                width: 90%;
-            }
-        }
-
-        .cart-container.open {
-            right: 0; /* Slide-in */
-        }
-
-        /* Cart Header */
-        .cart-header {
-            position: sticky;
-            top: 0; /* Stick to the top */
-            z-index: 1020; /* Ensure it's above the body */
-            background: #f9f9f9;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Cart Body */
-        .cart-body {
-            flex: 1; /* Allow body to take available space */
-            max-height: calc(100vh - 150px); /* Subtract header and footer height to make the body scrollable */
-            overflow-y: auto; /* Enable vertical scrolling */
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        /* Cart Footer */
-        .cart-footer {
-            background: #fff;
-            padding: 10px 15px;
-            border-top: 1px solid #ddd;
-            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Cart Footer */
-        .cart-footer button{
-            background: red;
-            color: white;
-        }
-
-        /* Cart Item */
-        .cart-item {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Quantity Controls */
-        .qty-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        .qty-btn {
-            background: #f1f1f1;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            margin: 0 5px;
-        }
-
-        /* Remove Item Button */
-        .remove-item {
-            background: transparent;
-            border: none;
-            color: red;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-
-    </style>
 </head>
 
 <body class="theme-color-4 bg-gradient-color">
@@ -934,61 +803,7 @@
 {{--</div>--}}
 <!-- Tap to top and theme setting button end -->
 
-<!-- Shopping Bag Section Start -->
-<div class="shopping-summary d-none d-md-flex flex-column align-items-center shadow-sm" onclick="openCart()">
-    <div class="shopping-icon bg-secondary p-3 rounded-top d-flex justify-content-center">
-        <i data-feather="shopping-bag" class="text-warning" style="width: 37%; height: 16%;"></i>
-    </div>
-    <div class="shopping-items bg-light text-center px-3 py-2">
-        <span class="d-block fw-bold text-warning" style="font-size: 85%;">8 {{translate('ITEMS')}}</span>
-        <span class="d-block fw-bold text-secondary" style="font-size: 83%;">৳ 5,577</span>
-    </div>
-</div>
-<!-- Shopping Bag Section End -->
-
-
-
-<!-- Hidden Slide-in Cart -->
-<div id="cart-container" class="cart-container shadow">
-    <div class="cart-header d-flex justify-content-between align-items-center p-3 bg-light">
-        <h5 class="fw-bold mb-0">8 {{translate('ITEMS')}}</h5>
-        <button class="btn btn-close" onclick="closeCart()">{{translate('Close')}}</button>
-    </div>
-
-    <div class="cart-body p-3">
-        <!-- Cart Item -->
-        <div class="cart-item" id="item-1">
-            <div>
-                <p class="mb-0 fw-bold">Shape Up Non Fat Milk Powder</p>
-                <span class="text-muted">৳ 469 <del>৳ 490</del></span>
-            </div>
-            <div class="qty-controls">
-                <button class="qty-btn" onclick="changeQty('item-1', -1)">-</button>
-                <span id="qty-item-1" class="fw-bold">1</span>
-                <button class="qty-btn" onclick="changeQty('item-1', 1)">+</button>
-            </div>
-            <button class="remove-item" onclick="removeItem('item-1')">&times;</button>
-        </div>
-        <div class="cart-item" id="item-2">
-            <div>
-                <p class="mb-0 fw-bold">Harpic Liquid Toilet Cleaner</p>
-                <span class="text-muted">৳ 263 </span>
-            </div>
-            <div class="qty-controls">
-                <button class="qty-btn" onclick="changeQty('item-2', -1)">-</button>
-                <span id="qty-item-2" class="fw-bold">1</span>
-                <button class="qty-btn" onclick="changeQty('item-2', 1)">+</button>
-            </div>
-            <button class="remove-item" onclick="removeItem('item-2')">&times;</button>
-        </div>
-
-        <!-- Add more items as needed -->
-    </div>
-
-    <div class="cart-footer p-3 border-top">
-        <a href="{{route('checkout')}}" class="btn bg-danger text-white w-100 fw-bold">{{translate('Place Order')}} <span>৳ 5,577</span></a>
-    </div>
-</div>
+@include('front.inc.side-cart')
 
 
 
@@ -1120,10 +935,96 @@
         qtyElement.textContent = currentQty;
     }
 
-    // Remove Item from Cart
     function removeItem(itemId) {
-        const itemElement = document.getElementById(itemId);
-        itemElement.remove();
+        // Find the form associated with this item
+        const form = document.getElementById(`removeItemForm-${itemId}`);
+        const formData = new FormData(form);
+
+        // Make an AJAX request to the server
+        fetch(form.action, {
+            method: 'POST', // Using POST to send form data, with method override for DELETE
+            body: formData
+        })
+            .then(response => response.json()) // Parse the response JSON
+            .then(data => {
+                if (data.success) {
+                    console.log(data);
+                    // Remove the item from the DOM with an animation (fade out)
+                    const itemElement = document.querySelector(`button[onclick="removeItem('${itemId}')"]`).parentNode;
+
+                    // Animate the item fade out
+                    itemElement.animate(
+                        [
+                            { opacity: 1 },  // Start state (visible)
+                            { opacity: 0 }   // End state (hidden)
+                        ],
+                        {
+                            duration: 500,    // Duration of the animation (500ms)
+                            easing: 'ease',   // Easing for smooth animation
+                            fill: 'forwards'  // Maintain final state after animation
+                        }
+                    );
+
+                    // Wait for the animation to complete before removing the element
+                    setTimeout(() => {
+                        itemElement.remove(); // Remove the item from the DOM after fade-out
+                    }, 500);
+
+                    // Animate the cart count and total (count down animation)
+                    animateCartUpdate(data.cartCount, data.total);
+
+                    toastr.success('Product removed from cart successfully!');
+                } else {
+                    console.error('Failed to remove item.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // Animation for cart count and total
+    function animateCartUpdate(cartCount, totalValue) {
+        const itemQtyElement = document.getElementById('itemQty');
+        const itemValueElement = document.getElementById('ItemValue');
+        const itemQtyInCartElement = document.getElementById('itemQtyIncart');
+        const itemValueInCartElement = document.getElementById('itemValueIncart');
+
+        // Get current values from the DOM
+        let currentCartCount = parseInt(itemQtyElement.textContent) || 0;
+        let currentTotal = parseFloat(itemValueElement.textContent) || 0;
+
+        // Animate the cart values (count down)
+        animateCount(itemQtyElement, currentCartCount, cartCount, 500);
+        animateCount(itemValueElement, currentTotal, totalValue, 500);
+        animateCount(itemQtyInCartElement, currentCartCount, cartCount, 500);
+        animateCount(itemValueInCartElement, currentTotal, totalValue, 500);
+    }
+
+    // Count animation function
+    function animateCount(element, startValue, endValue, duration) {
+        let validStartValue = isNaN(startValue) ? 0 : startValue;
+        let validEndValue = isNaN(endValue) ? 0 : endValue;
+
+        let diff = validEndValue - validStartValue;
+        let steps = diff > 1000 ? 100 : 50; // Adjust steps for larger values
+        let increment = diff / steps;
+
+        $({ countNum: validStartValue }).animate(
+            { countNum: validEndValue },
+            {
+                duration: duration,
+                easing: 'swing',
+                step: function () {
+                    let newValue = Math.ceil(this.countNum + increment);
+                    element.textContent = newValue;
+                    this.countNum = newValue;
+                },
+                complete: function () {
+                    element.textContent = validEndValue;
+                }
+            }
+        );
     }
 </script>
 

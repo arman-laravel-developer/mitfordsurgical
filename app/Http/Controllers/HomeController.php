@@ -23,6 +23,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $cartItems = Cart::getContent();
         $featuredProducts = Product::where('status', 1)->where('is_featured', 1)->latest()->take(10)->get();
         $products = Product::where('status', 1)->latest()->get();
         $sliders = Slider::where('status',1)->latest()->take(5)->get();
