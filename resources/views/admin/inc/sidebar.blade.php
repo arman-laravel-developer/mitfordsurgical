@@ -235,6 +235,11 @@
                     <a href="{{route('setting.smtp')}}">SMTP Settings</a>
                 </li>
                     @endif
+                    @if ($userType == 1 || in_array('shipping-cost.manage', $roleRoutes))
+                        <li>
+                            <a href="{{route('shipping-cost.manage')}}">Shipping Cost</a>
+                        </li>
+                    @endif
             </ul>
         </div>
     </li>

@@ -141,113 +141,6 @@
                                             @endif
                                         </div>
                                     </form>
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function() {
-                                            $('#addToCartForm').on('submit', function(e) {
-                                                e.preventDefault(); // Prevent the default form submission
-
-                                                let formData = new FormData(this);
-                                                let messageBox = $('#messageBox');
-                                                let itemQtyElement = $('#itemQty');
-                                                let itemQtyElementMobile = $('.cart-mobile');
-                                                let itemValueElement = $('#ItemValue');
-                                                let itemQtyInCartElement = $('#itemQtyIncart');
-                                                let itemValueInCartElement = $('#itemValueIncart');
-
-                                                // Ensure initial values are numbers or set to 0
-                                                let currentItemQty = parseInt(itemQtyElement.text()) || 0;
-                                                let currentItemValue = parseFloat(itemValueElement.text()) || 0;
-                                                let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
-                                                let currentItemValueInCart = parseFloat(itemValueInCartElement.text()) || 0;
-
-                                                $.ajax({
-                                                    url: '{{ route('cart.add') }}',
-                                                    method: 'POST',
-                                                    data: formData,
-                                                    contentType: false,
-                                                    processData: false,
-                                                    success: function(response) {
-                                                        if (response.success) {
-                                                            // Animate the UI to show the updated count from the server
-                                                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
-                                                            animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
-                                                            animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
-                                                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
-                                                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
-
-                                                            toastr.success(response.message);
-                                                            resetForm('#addToCartForm');
-                                                            // Optionally open the cart
-                                                            // openCart();
-                                                            updateCartDropdown();
-                                                        } else {
-                                                            toastr.error('Failed to add to cart. Please try again.');
-                                                        }
-                                                    },
-                                                    error: function(xhr) {
-                                                        showMessage('An error occurred. Please try again.', 'error');
-                                                    }
-                                                });
-
-                                                function resetForm(selector) {
-                                                    $(selector).trigger('reset'); // Reset the form fields
-                                                    // Optionally, reset custom elements like color and size selectors if needed
-                                                    $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
-                                                }
-
-                                                function showMessage(message, type) {
-                                                    let messageClass = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
-                                                    messageBox.removeClass().addClass(messageClass).text(message).fadeIn();
-                                                    setTimeout(function() {
-                                                        messageBox.fadeOut();
-                                                    }, 3000); // Hide message after 3 seconds
-                                                }
-
-                                                function updateCartDropdown() {
-                                                    $.ajax({
-                                                        url: '{{ route('cart.dropdown') }}',
-                                                        method: 'GET',
-                                                        success: function(response) {
-                                                            $('.cart-body').html(response); // Update the cart dropdown HTML
-                                                        },
-                                                        error: function(error) {
-                                                            console.error('Error:', error);
-                                                        }
-                                                    });
-                                                }
-
-                                                // Animation function (count up from current to total)
-                                                function animateCount(element, startValue, endValue, duration) {
-                                                    // Ensure both values are valid numbers
-                                                    let validStartValue = isNaN(startValue) ? 0 : startValue;
-                                                    let validEndValue = isNaN(endValue) ? 0 : endValue;
-
-                                                    // Calculate the difference between start and end value
-                                                    let diff = validEndValue - validStartValue;
-                                                    let steps = diff > 1000 ? 100 : 50; // Adjust number of steps for large values
-                                                    let increment = diff / steps; // Calculate the increment value per step
-
-                                                    $({ countNum: validStartValue }).animate(
-                                                        { countNum: validEndValue },
-                                                        {
-                                                            duration: duration, // Total animation duration
-                                                            easing: 'swing', // Easing function
-                                                            step: function() {
-                                                                // Update the element's text during each step of the animation
-                                                                let newValue = Math.ceil(this.countNum + increment); // Increase the count
-                                                                element.text(newValue);
-                                                                this.countNum = newValue; // Update the current count value
-                                                            },
-                                                            complete: function() {
-                                                                // Ensure the final value is set after animation
-                                                                element.text(validEndValue);
-                                                            }
-                                                        }
-                                                    );
-                                                }
-                                            });
-                                        });
-                                    </script>
 
                                     <div class="pickup-box">
                                         <div class="product-title">
@@ -255,7 +148,7 @@
                                         </div>
 
                                         <div class="pickup-detail">
-                                            <h4 class="text-content">{!! $product->getTranslation('short_description') !!}</h4>
+                                            <h4 class="text-content">{{strip_tags($product->getTranslation('short_description'))}}</h4>
                                         </div>
                                     </div>
                                     <div class="payment-option">
@@ -750,29 +643,43 @@
                                             <h5 class="name">{{$relatedProduct->getTranslation('name')}}</h5>
                                         </a>
                                         <h5 class="price theme-color">&#2547;{{$relatedProduct->sell_price}}</h5>
-                                        <div class="price-qty">
-                                            <div class="counter-number">
-                                                <div class="counter">
-                                                    <div class="qty-left-minus" data-type="minus" data-field="">
-                                                        <i class="fa-solid fa-minus"></i>
-                                                    </div>
-                                                    <input class="form-control input-number qty-input" @if($relatedProduct->minimum_purchase_qty > $relatedProduct->stock) disabled @endif oninput="this.value = this.value.replace(/[^0-9]/g, '');" type="text"
-                                                           name="quantity" max="{{$relatedProduct->stock}}" min="{{$relatedProduct->minimum_purchase_qty}}" value="{{$relatedProduct->minimum_purchase_qty}}">
-                                                    <div class="qty-right-plus" data-type="plus" data-field="">
-                                                        <i class="fa-solid fa-plus"></i>
+                                        <form id="cartForm{{$relatedProduct->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <!-- Your existing form fields -->
+                                            <div class="price-qty">
+                                                <div class="counter-number">
+                                                    <div class="counter">
+                                                        <div class="qty-left-minus" data-type="minus" data-field="">
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </div>
+                                                        <input class="form-control input-number qty-input" @if($relatedProduct->minimum_purchase_qty > $relatedProduct->stock) disabled @endif oninput="this.value = this.value.replace(/[^0-9]/g, '');" type="text"
+                                                               name="quantity" max="{{$relatedProduct->stock}}" min="{{$relatedProduct->minimum_purchase_qty}}" value="{{$relatedProduct->minimum_purchase_qty}}">
+                                                        <div class="qty-right-plus" data-type="plus" data-field="">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                @if($relatedProduct->minimum_purchase_qty <= $relatedProduct->stock)
+                                                    <input type="hidden" name="price" value="{{discounted_price($relatedProduct)}}">
+                                                    <input type="hidden" name="product_id" value="{{$relatedProduct->id}}">
+                                                    @if($relatedProduct->is_variant == 1)
+                                                        @php
+                                                            $variant = \App\Models\Variant::where('product_id', $relatedProduct->id)->first();
+                                                        @endphp
+                                                        <input type="hidden" name="size_id" value="{{$variant->size_id}}">
+                                                        <input type="hidden" name="color_id" value="{{$variant->color_id}}">
+                                                        <input type="hidden" name="variant_id" value="{{$variant->id}}">
+                                                    @endif
+                                                    <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" id="addToCartButtonHome{{$relatedProduct->id}}" type="submit">
+                                                        <i class="fa fa-cart-plus icli text-white m-0"></i>
+                                                    </button>
+                                                @else
+                                                    <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red" title="Out of stock">
+                                                        <i class="fa fa-times icli text-white m-0"></i>
+                                                    </button>
+                                                @endif
                                             </div>
-                                            @if($relatedProduct->minimum_purchase_qty < $relatedProduct->stock)
-                                                <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" style="right: 5%;">
-                                                    <i class="fa fa-cart-plus icli text-white m-0"></i>
-                                                </button>
-                                            @else
-                                                <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red; right: 5%;" title="Out of stock">
-                                                    <i class="fa fa-times icli text-white m-0"></i>
-                                                </button>
-                                            @endif
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             @endforeach
@@ -783,6 +690,114 @@
         </section>
         <!-- Related Product Section End -->
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#addToCartForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                let formData = new FormData(this);
+                let messageBox = $('#messageBox');
+                let itemQtyElement = $('#itemQty');
+                let itemQtyElementMobile = $('.cart-mobile');
+                let itemValueElement = $('#ItemValue');
+                let itemQtyInCartElement = $('#itemQtyIncart');
+                let itemValueInCartElement = $('#itemValueIncart');
+
+                // Ensure initial values are numbers or set to 0
+                let currentItemQty = parseInt(itemQtyElement.text()) || 0;
+                let currentItemValue = parseFloat(itemValueElement.text()) || 0;
+                let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
+                let currentItemValueInCart = parseFloat(itemValueInCartElement.text()) || 0;
+
+                $.ajax({
+                    url: '{{ route('cart.add') }}',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Animate the UI to show the updated count from the server
+                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
+                            animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
+                            animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
+                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
+                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
+
+                            toastr.success(response.message);
+                            resetForm('#addToCartForm');
+                            // Optionally open the cart
+                            // openCart();
+                            updateCartDropdown();
+                        } else {
+                            toastr.error('Failed to add to cart. Please try again.');
+                        }
+                    },
+                    error: function(xhr) {
+                        showMessage('An error occurred. Please try again.', 'error');
+                    }
+                });
+
+                function resetForm(selector) {
+                    $(selector).trigger('reset'); // Reset the form fields
+                    // Optionally, reset custom elements like color and size selectors if needed
+                    $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
+                }
+
+                function showMessage(message, type) {
+                    let messageClass = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
+                    messageBox.removeClass().addClass(messageClass).text(message).fadeIn();
+                    setTimeout(function() {
+                        messageBox.fadeOut();
+                    }, 3000); // Hide message after 3 seconds
+                }
+
+                function updateCartDropdown() {
+                    $.ajax({
+                        url: '{{ route('cart.dropdown') }}',
+                        method: 'GET',
+                        success: function(response) {
+                            $('.cart-body').html(response); // Update the cart dropdown HTML
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+
+                // Animation function (count up from current to total)
+                function animateCount(element, startValue, endValue, duration) {
+                    // Ensure both values are valid numbers
+                    let validStartValue = isNaN(startValue) ? 0 : startValue;
+                    let validEndValue = isNaN(endValue) ? 0 : endValue;
+
+                    // Calculate the difference between start and end value
+                    let diff = validEndValue - validStartValue;
+                    let steps = diff > 1000 ? 100 : 50; // Adjust number of steps for large values
+                    let increment = diff / steps; // Calculate the increment value per step
+
+                    $({ countNum: validStartValue }).animate(
+                        { countNum: validEndValue },
+                        {
+                            duration: duration, // Total animation duration
+                            easing: 'swing', // Easing function
+                            step: function() {
+                                // Update the element's text during each step of the animation
+                                let newValue = Math.ceil(this.countNum + increment); // Increase the count
+                                element.text(newValue);
+                                this.countNum = newValue; // Update the current count value
+                            },
+                            complete: function() {
+                                // Ensure the final value is set after animation
+                                element.text(validEndValue);
+                            }
+                        }
+                    );
+                }
+            });
+        });
+    </script>
 
 
     <script>

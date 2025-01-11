@@ -17,6 +17,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShippingCostController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -161,6 +162,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/ban', [SellerController::class, 'ban'])->name('seller.ban');
             Route::post('/ban-submit/{id}', [SellerController::class, 'changeStatus'])->name('seller.status-change');
             Route::post('/approval/{id}', [SellerController::class, 'approval'])->name('seller.approval');
+        });
+        Route::prefix('shipping-cost')->group(function () {
+            Route::get('/add', [ShippingCostController::class, 'manage'])->name('shipping-cost.add');
+            Route::post('/new', [ShippingCostController::class, 'create'])->name('shipping-cost.new');
+            Route::get('/manage', [ShippingCostController::class, 'index'])->name('shipping-cost.manage');
+            Route::get('/edit/{id}', [ShippingCostController::class, 'edit'])->name('shipping-cost.edit');
+            Route::post('/update', [ShippingCostController::class, 'update'])->name('shipping-cost.update');
+            Route::post('/delete/{id}', [ShippingCostController::class, 'delete'])->name('shipping-cost.delete');
         });
         Route::prefix('language')->group(function () {
             Route::get('/add', [LanguageController::class, 'index'])->name('language.add');

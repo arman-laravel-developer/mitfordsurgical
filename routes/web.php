@@ -13,6 +13,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Models\RoleRoute;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 function getRoleName($routeName)
 {
@@ -48,6 +49,9 @@ Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.var
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart-dropdown', [CartController::class, 'dropdown'])->name('cart.dropdown');
 Route::delete('/cart-remove', [CartController::class, 'cartRemove'])->name('cart.remove');
+Route::post('/update-cart', [CartController::class, 'updateQuantity'])->name('cart.update');
+
+Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 
 Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
@@ -71,6 +75,7 @@ Route::middleware('customer.login')->group(function () {
 Route::post('/contact-form', [ContactFormController::class, 'submit'])->name('contact-form.submit');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
 
 Route::middleware('customer.logout')->group(function () {
     Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');

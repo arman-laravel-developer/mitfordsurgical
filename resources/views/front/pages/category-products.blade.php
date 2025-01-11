@@ -51,29 +51,43 @@
                             <h5 class="name">{{$category_product->getTranslation('name')}}</h5>
                         </a>
                         <h5 class="price theme-color">&#2547;{{discounted_price($category_product)}}@if(discounted_active($category_product)) <del>&#2547;{{number_format($category_product->sell_price,2)}}</del> @endif</h5>
-                        <div class="price-qty">
-                            <div class="counter-number">
-                                <div class="counter">
-                                    <div class="qty-left-minus" data-type="minus" data-field="">
-                                        <i class="fa-solid fa-minus"></i>
-                                    </div>
-                                    <input class="form-control input-number qty-input" @if($category_product->minimum_purchase_qty > $category_product->stock) disabled @endif oninput="this.value = this.value.replace(/[^0-9]/g, '');" type="text"
-                                           name="quantity" max="{{$category_product->stock}}" min="{{$category_product->minimum_purchase_qty}}" value="{{$category_product->minimum_purchase_qty}}">
-                                    <div class="qty-right-plus" data-type="plus" data-field="">
-                                        <i class="fa-solid fa-plus"></i>
+                        <form id="cartForm{{$category_product->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <!-- Your existing form fields -->
+                            <div class="price-qty">
+                                <div class="counter-number">
+                                    <div class="counter">
+                                        <div class="qty-left-minus" data-type="minus" data-field="">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+                                        <input class="form-control input-number qty-input" @if($category_product->minimum_purchase_qty > $category_product->stock) disabled @endif oninput="this.value = this.value.replace(/[^0-9]/g, '');" type="text"
+                                               name="quantity" max="{{$category_product->stock}}" min="{{$category_product->minimum_purchase_qty}}" value="{{$category_product->minimum_purchase_qty}}">
+                                        <div class="qty-right-plus" data-type="plus" data-field="">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
                                     </div>
                                 </div>
+                                @if($category_product->minimum_purchase_qty <= $category_product->stock)
+                                    <input type="hidden" name="price" value="{{discounted_price($category_product)}}">
+                                    <input type="hidden" name="product_id" value="{{$category_product->id}}">
+                                    @if($category_product->is_variant == 1)
+                                        @php
+                                            $variant = \App\Models\Variant::where('product_id', $category_product->id)->first();
+                                        @endphp
+                                        <input type="hidden" name="size_id" value="{{$variant->size_id}}">
+                                        <input type="hidden" name="color_id" value="{{$variant->color_id}}">
+                                        <input type="hidden" name="variant_id" value="{{$variant->id}}">
+                                    @endif
+                                    <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" id="addToCartButtonHome{{$category_product->id}}" type="submit">
+                                        <i class="fa fa-cart-plus icli text-white m-0"></i>
+                                    </button>
+                                @else
+                                    <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red" title="Out of stock">
+                                        <i class="fa fa-times icli text-white m-0"></i>
+                                    </button>
+                                @endif
                             </div>
-                            @if($category_product->minimum_purchase_qty < $category_product->stock)
-                                <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn">
-                                    <i class="fa fa-cart-plus icli text-white m-0"></i>
-                                </button>
-                            @else
-                                <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red" title="Out of stock">
-                                    <i class="fa fa-times icli text-white m-0"></i>
-                                </button>
-                            @endif
-                        </div>
+                        </form>
                     </div>
                 </div>
                 @endforeach

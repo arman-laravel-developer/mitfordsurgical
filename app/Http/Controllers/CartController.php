@@ -85,6 +85,36 @@ class CartController extends Controller
         return view('front.partials.cart-dropdown', compact('cartContents', 'total', 'cartCount'));
     }
 
+    public function updateQuantity(Request $request)
+    {
+        try {
+            $productId = $request->input('product_id');
+            $newQuantity = $request->input('quantity');
+
+            Cart::update($productId, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $newQuantity
+                ),
+            ));
+
+            $cart = Cart::getContent();
+            $subtotal = Cart::getSubTotal();
+            $total = Cart::getTotal();
+            $rowTotal = $cart[$productId]->price * $newQuantity;
+            $cartCount = count(Cart::getContent());
+
+            return response()->json([
+                'success' => true,
+                'subtotal' => $subtotal,
+                'total' => $total,
+                'cartCount' => $cartCount
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function cartRemove(Request $request)
     {
         $itemId = $request->input('itemId');

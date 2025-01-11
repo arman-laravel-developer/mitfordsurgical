@@ -238,5 +238,21 @@ class CustomerController extends Controller
         }
     }
 
+    public function fetchCustomerData(Request $request)
+    {
+        $customerId = Session::get('customer_id');
+        if($customerId) {
+            $customer = Customer::find($customerId);
+            return response()->json([
+                'success' => true,
+                'data' => $customer
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Customer not found'
+        ]);
+    }
+
 
 }

@@ -911,6 +911,111 @@
 </script>
 @include('flash-toastr::message')
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('form[id^="cartForm"]').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            var form = $(this);
+            var formData = new FormData(form[0]);
+            let messageBox = $('#messageBox');
+            let itemQtyElement = $('#itemQty');
+            let itemQtyElementMobile = $('.cart-mobile');
+            let itemValueElement = $('#ItemValue');
+            let itemQtyInCartElement = $('#itemQtyIncart');
+            let itemValueInCartElement = $('#itemValueIncart');
+
+            // Ensure initial values are numbers or set to 0
+            let currentItemQty = parseInt(itemQtyElement.text()) || 0;
+            let currentItemValue = parseFloat(itemValueElement.text()) || 0;
+            let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
+            let currentItemValueInCart = parseFloat(itemValueInCartElement.text()) || 0;
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
+                    animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
+                    animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
+                    animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
+                    animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
+
+                    toastr.success(response.message);
+                    resetForm('#addToCartForm');
+                    // Optionally open the cart
+                    // openCart();
+                    updateCartDropdown();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error here, e.g., show an error message
+                    alert("An error occurred. Please try again.");
+                }
+            });
+            function resetForm(selector) {
+                $(selector).trigger('reset'); // Reset the form fields
+                // Optionally, reset custom elements like color and size selectors if needed
+                $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
+            }
+
+            function showMessage(message, type) {
+                let messageClass = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
+                messageBox.removeClass().addClass(messageClass).text(message).fadeIn();
+                setTimeout(function() {
+                    messageBox.fadeOut();
+                }, 3000); // Hide message after 3 seconds
+            }
+
+            function updateCartDropdown() {
+                $.ajax({
+                    url: '{{ route('cart.dropdown') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        $('.cart-body').html(response); // Update the cart dropdown HTML
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            // Animation function (count up from current to total)
+            function animateCount(element, startValue, endValue, duration) {
+                // Ensure both values are valid numbers
+                let validStartValue = isNaN(startValue) ? 0 : startValue;
+                let validEndValue = isNaN(endValue) ? 0 : endValue;
+
+                // Calculate the difference between start and end value
+                let diff = validEndValue - validStartValue;
+                let steps = diff > 1000 ? 100 : 50; // Adjust number of steps for large values
+                let increment = diff / steps; // Calculate the increment value per step
+
+                $({ countNum: validStartValue }).animate(
+                    { countNum: validEndValue },
+                    {
+                        duration: duration, // Total animation duration
+                        easing: 'swing', // Easing function
+                        step: function() {
+                            // Update the element's text during each step of the animation
+                            let newValue = Math.ceil(this.countNum + increment); // Increase the count
+                            element.text(newValue);
+                            this.countNum = newValue; // Update the current count value
+                        },
+                        complete: function() {
+                            // Ensure the final value is set after animation
+                            element.text(validEndValue);
+                        }
+                    }
+                );
+            }
+        });
+    });
+</script>
+
 <!-- Feather Icons Script -->
 <script src="https://unpkg.com/feather-icons"></script>
 <script>
@@ -927,13 +1032,63 @@
     }
 
     // Change Item Quantity
-    function changeQty(itemId, delta) {
-        const qtyElement = document.getElementById(`qty-${itemId}`);
+    // function changeQty(itemId, delta) {
+    //     const qtyElement = document.getElementById(`qty-${itemId}`);
+    //     let currentQty = parseInt(qtyElement.textContent);
+    //     currentQty += delta;
+    //     if (currentQty < 1) currentQty = 1; // Prevent negative quantity
+    //     qtyElement.textContent = currentQty;
+    // }
+
+    function changeQty(itemId, change) {
+        // Get the current quantity and control element
+        let qtyElement = document.getElementById('qty-' + itemId);
+        let controlsElement = document.getElementById('controls-' + itemId);
+
+        // Retrieve max and min values
+        let maxStock = parseInt(controlsElement.getAttribute('data-max-stock'));
+        let minQty = parseInt(controlsElement.getAttribute('data-min-qty'));
+
+        // Get the current quantity
         let currentQty = parseInt(qtyElement.textContent);
-        currentQty += delta;
-        if (currentQty < 1) currentQty = 1; // Prevent negative quantity
-        qtyElement.textContent = currentQty;
+
+        // Calculate the new quantity
+        let newQty = currentQty + change;
+
+        // Enforce minimum and maximum constraints
+        if (newQty < minQty) {
+            newQty = minQty;
+        } else if (newQty > maxStock) {
+            newQty = maxStock;
+        }
+
+
+        // Update the quantity on the server
+        fetch('{{route('cart.update')}}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                product_id: itemId.split('-')[1],
+                quantity: newQty
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the quantity displayed
+                    qtyElement.textContent = newQty;
+                    // Optionally update subtotal, total, and row total
+                    animateCartUpdate(data.cartCount, data.total);
+                } else {
+                    console.error('Failed to update cart:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
+
 
     function removeItem(itemId) {
         // Find the form associated with this item
@@ -985,6 +1140,7 @@
 
     // Animation for cart count and total
     function animateCartUpdate(cartCount, totalValue) {
+        const itemMobileQtyElement = document.querySelector('.cart-mobile');
         const itemQtyElement = document.getElementById('itemQty');
         const itemValueElement = document.getElementById('ItemValue');
         const itemQtyInCartElement = document.getElementById('itemQtyIncart');
@@ -995,6 +1151,7 @@
         let currentTotal = parseFloat(itemValueElement.textContent) || 0;
 
         // Animate the cart values (count down)
+        animateCount(itemMobileQtyElement, currentCartCount, cartCount, 500);
         animateCount(itemQtyElement, currentCartCount, cartCount, 500);
         animateCount(itemValueElement, currentTotal, totalValue, 500);
         animateCount(itemQtyInCartElement, currentCartCount, cartCount, 500);
