@@ -134,7 +134,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="container">
+        <div class="container all-products">
             <div class="title d-block">
                 <h2 class="text-theme font-sm text-center">{{translate('All Products')}}</h2>
             </div>
@@ -207,8 +207,51 @@
                 </div>
                 @endforeach
             </div>
+            <div id="scroll-target"></div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var page = 2; // Start from the second page as the first is already loaded
+            var isLoading = false; // Prevent multiple AJAX requests at once
+
+            $(window).on('scroll', function() {
+                // Check if the user has scrolled near the bottom of the page
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+                    if (!isLoading) { // Only load if not already in the middle of loading
+                        loadMoreProducts();
+                    }
+                }
+            });
+
+            function loadMoreProducts() {
+                isLoading = true; // Set loading flag to true
+                $.ajax({
+                    url: '{{ route("home") }}' + '?page=' + page, // Use the updated page variable
+                    type: 'GET',
+                    beforeSend: function() {
+                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">Loading more products...</div>'); // Display loading message
+                    },
+                    success: function(data) {
+                        if (data.html) {
+                            $('.all-products .row').append(data.html); // Append new news items to the row
+                            page++; // Increment page number for the next request
+                            isLoading = false; // Reset loading flag
+                            $('#scroll-target').html(''); // Remove loading message
+                        } else {
+                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">No more products to load.</div>'); // Display end message
+                            isLoading = true; // Prevent further requests since no more data
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to load more products. Please try again.');
+                        isLoading = false; // Reset loading flag on error
+                    }
+                });
+            }
+        });
+    </script>
 
 
     <script>

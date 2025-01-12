@@ -28,7 +28,7 @@
                 </div>
             </div>
         </section>
-        <div class="container">
+        <div class="container all-products">
             @if(count($products) > 0)
                 <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
                     @foreach($products as $index => $product)
@@ -98,11 +98,54 @@
                         </div>
                     @endforeach
                 </div>
+                <div id="scroll-target"></div> <!-- Target for detecting scroll -->
             @else
                 <h4 class="text-center opacity-50 mt-5">No item found</h4>
             @endif
         </div>
         <!-- Breadcrumb Section End -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var page = 2; // Start from the second page as the first is already loaded
+            var isLoading = false; // Prevent multiple AJAX requests at once
+
+            $(window).on('scroll', function() {
+                // Check if the user has scrolled near the bottom of the page
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+                    if (!isLoading) { // Only load if not already in the middle of loading
+                        loadMoreProducts();
+                    }
+                }
+            });
+
+            function loadMoreProducts() {
+                isLoading = true; // Set loading flag to true
+                $.ajax({
+                    url: '{{ route("products.all") }}' + '?page=' + page, // Use the updated page variable
+                    type: 'GET',
+                    beforeSend: function() {
+                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">Loading more products...</div>'); // Display loading message
+                    },
+                    success: function(data) {
+                        if (data.html) {
+                            $('.all-products .row').append(data.html); // Append new news items to the row
+                            page++; // Increment page number for the next request
+                            isLoading = false; // Reset loading flag
+                            $('#scroll-target').html(''); // Remove loading message
+                        } else {
+                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">No more products to load.</div>'); // Display end message
+                            isLoading = true; // Prevent further requests since no more data
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to load more products. Please try again.');
+                        isLoading = false; // Reset loading flag on error
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
 

@@ -12,7 +12,6 @@ class CheckoutController extends Controller
     public function index()
     {
         $cartProducts = Cart::getContent();
-        $cartTotal = Cart::getTotal();
         $shippingCosts = ShippingCost::orderBy('id', 'asc')->get();
 
         if (count($cartProducts) > 0) {
@@ -48,6 +47,7 @@ class CheckoutController extends Controller
                         session()->flash('info', "The quantity for {$product->name} has been adjusted to the available stock.");
                     }
                 }
+                $cartTotal = Cart::getTotal();
             }
             return view('front.pages.checkout', compact('cartProducts', 'cartTotal', 'shippingCosts'));
         }

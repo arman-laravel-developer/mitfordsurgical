@@ -21,11 +21,15 @@ use Cart;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $cartItems = Cart::getContent();
         $featuredProducts = Product::where('status', 1)->where('is_featured', 1)->latest()->take(10)->get();
-        $products = Product::where('status', 1)->latest()->get();
+        $products = Product::where('status', 1)->latest()->paginate(2);
+        if ($request->ajax()) {
+            $view = view('front.inc.all-products', compact('products'))->render();
+            return response()->json(['html' => $view]);
+        }
         $sliders = Slider::where('status',1)->latest()->take(5)->get();
         $homeCategories = Category::where('status',1)->where('display_status',1)->latest()->take(10)->get();
         return view('front.home.home', compact('sliders', 'homeCategories', 'products', 'featuredProducts'));
@@ -105,9 +109,13 @@ class HomeController extends Controller
         }
     }
 
-    public function products()
+    public function products(Request $request)
     {
-        $products = Product::latest()->paginate(20);
+        $products = Product::where('status', 1)->latest()->paginate(20);
+        if ($request->ajax()) {
+            $view = view('front.inc.all-products', compact('products'))->render();
+            return response()->json(['html' => $view]);
+        }
         return view('front.pages.products', compact('products'));
     }
 

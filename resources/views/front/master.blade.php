@@ -251,8 +251,10 @@
                                                     var results = '';
                                                     if (data.length > 0) {
                                                         $.each(data, function(index, product) {
-                                                            // Create a clickable link for each search result
-                                                            results += '<a href="{{ url("/product-detail") }}/' + product.id + '-' + product.slug + '" class="search-item">' + '<div class="search-item">' + product.name + '</div>' + '</a>' ;
+                                                            // Wrap the 'div' with the 'a' tag to make the whole 'div' clickable
+                                                            results += '<a href="{{ url("/product-detail") }}/' + product.id + '-' + product.slug + '">' +
+                                                                '<div class="search-item">' + product.name + '</div>' +
+                                                                '</a>';
                                                         });
                                                     } else {
                                                         results = '<div class="no-results">No results found</div>';
