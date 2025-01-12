@@ -31,6 +31,16 @@ class HomeController extends Controller
         return view('front.home.home', compact('sliders', 'homeCategories', 'products', 'featuredProducts'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+        $products = Product::where('name', 'like', "%{$query}%")
+            ->limit(5) // Limit to 5 results
+            ->get();
+
+        return response()->json($products);
+    }
+
     public function detail($id)
     {
         $product = Product::find($id);
@@ -93,6 +103,12 @@ class HomeController extends Controller
         } else {
             return response()->json(['price' => 'N/A'], 404);
         }
+    }
+
+    public function products()
+    {
+        $products = Product::latest()->paginate(20);
+        return view('front.pages.products', compact('products'));
     }
 
 

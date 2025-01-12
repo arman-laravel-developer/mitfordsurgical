@@ -176,7 +176,7 @@
 {{--            </div>--}}
 {{--        </div>--}}
 {{--    </div>--}}
-    <div class="top-nav top-header">
+    <div class="top-nav top-header"prod>
         <div class="container-fluid-xs">
             <div class="row">
                 <div class="col-12">
@@ -200,14 +200,79 @@
 {{--                                </button>--}}
 {{--                            </div>--}}
 
+                            <style>
+                                #search-results {
+                                    border: 1px solid #ccc;
+                                    background: #fff;
+                                    max-height: 200px;
+                                    overflow-y: auto;
+                                    position: absolute;
+                                    z-index: 999;
+                                    width: 680px;
+                                    display: none; /* By default, hide the results */
+                                }
+
+                                .search-item {
+                                    padding: 10px;
+                                    cursor: pointer;
+                                }
+
+                                .search-item:hover {
+                                    background-color: #f1f1f1;
+                                }
+
+                                .no-results {
+                                    padding: 10px;
+                                    color: #888;
+                                }
+                            </style>
+
                             <div class="search-box">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" style="width: 680px !important;" placeholder="{{translate("I'm searching for")}}...">
+                                    <input type="search" class="form-control" style="width: 680px !important;" id="search-input" placeholder="{{ translate("I'm searching for") }}...">
                                     <button class="btn bg-theme" type="button" id="button-addon2">
                                         <i data-feather="search"></i>
                                     </button>
                                 </div>
+                                <div id="search-results"></div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    $('#search-input').on('input', function() {
+                                        var query = $(this).val();
+
+                                        if (query.length >= 1) {  // Trigger the Ajax search after 1 character
+                                            $.ajax({
+                                                url: "{{ route('product.search') }}",
+                                                method: 'GET',
+                                                data: { query: query },
+                                                success: function(data) {
+                                                    var results = '';
+                                                    if (data.length > 0) {
+                                                        $.each(data, function(index, product) {
+                                                            // Create a clickable link for each search result
+                                                            results += '<a href="{{ url("/product-detail") }}/' + product.id + '-' + product.slug + '" class="search-item">' + '<div class="search-item">' + product.name + '</div>' + '</a>' ;
+                                                        });
+                                                    } else {
+                                                        results = '<div class="no-results">No results found</div>';
+                                                    }
+                                                    $('#search-results').html(results).show(); // Show the results
+                                                }
+                                            });
+                                        } else {
+                                            $('#search-results').empty().hide(); // Hide the results if the input is empty
+                                        }
+                                    });
+
+                                    // Optional: Hide the results if the user clicks outside the search box
+                                    $(document).click(function(event) {
+                                        if (!$(event.target).closest('.search-box').length) {
+                                            $('#search-results').empty().hide();
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <div class="rightside-box">
@@ -466,7 +531,7 @@
                                     <a href="{{route('home')}}" class="text-content">{{translate('Home')}}</a>
                                 </li>
                                 <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">{{translate('Products')}}</a>
+                                    <a href="{{route('products.all')}}" class="text-content">{{translate('Products')}}</a>
                                 </li>
                                 <li>
                                     <a href="{{route('condition.page')}}" class="text-content">{{translate('Terms & Conditions')}}</a>

@@ -1,13 +1,13 @@
 @extends('front.master')
 
 @section('title')
-{{translate('Checkout')}} | {{$generalSettingView->site_name}}
+    {{translate('Checkout')}} | {{$generalSettingView->site_name}}
 @endsection
 
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
-        <section class="breadcrumb-section">
+        <section class="breadcrumb-section" style="padding-top: 0!important;">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -30,173 +30,350 @@
         </section>
         <!-- Breadcrumb Section End -->
 
+        <style>
+            /* CSS for the wizard navigation bar */
+            .checkout-steps {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 20px;
+                background-color: #f8f9fa;
+                padding: 15px 0;
+            }
+
+            .step {
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .step-number {
+                display: block;
+                font-size: 18px;
+                font-weight: bold;
+                color: #999;
+            }
+
+            .step-title {
+                display: block;
+                font-size: 14px;
+                color: #999;
+            }
+
+            .step.active .step-number, .step.active .step-title {
+                color: #0baf9a;
+            }
+
+            .step.completed .step-number, .step.completed .step-title {
+                color: #0baf9a;
+            }
+
+            .step.completed .step-number::before {
+                content: '✔';
+                display: block;
+                font-size: 18px;
+                color: #0baf9a;
+            }
+
+            /* CSS for the wizard content sections */
+            .checkout-step {
+                display: none;
+            }
+
+            .checkout-step.active-step {
+                display: block;
+            }
+
+            .checkout-detail {
+                display: block;
+                border: 2px solid #0baf9a;
+                background-color: #0baf9a;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                transition: background-color 0.3s, border-color 0.3s;
+                margin-bottom: 10px;
+            }
+            .checkout-detail .form-check-input {
+                display: none;
+            }
+            .delivery-option {
+                display: block;
+                border: 2px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                transition: background-color 0.3s, border-color 0.3s;
+                margin-bottom: 10px;
+            }
+
+            .delivery-option:hover {
+                background-color: #f0f0f0;
+            }
+
+            .delivery-option .form-check-input {
+                display: none;
+            }
+
+            .delivery-option .form-check-label {
+                display: block;
+                color: #333;
+                font-weight: bold;
+            }
+
+            /* Change the background color of the parent .delivery-option when the input is checked */
+            .delivery-option input:checked + .form-check-label {
+                background-color: #0baf9a; /* Change the background color of the entire box */
+                color: white; /* Change the text color to white */
+                border-color: #0baf9a; /* Change the border color to match the background */
+            }
+        </style>
+
         <!-- Checkout section Start -->
         <section class="checkout-section-2 section-b-space">
             <div class="container">
                 <div class="row g-sm-4 g-3">
+                    <!-- Wizard Content Sections -->
                     <div class="col-lg-7">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                    @endif
+                        @php
+                        $customer = \App\Models\Customer::find(Session::get('customer_id'));
+                        @endphp
+                    <!-- Wizard Navigation -->
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="left-sidebar-checkout">
-                                <div class="checkout-detail-box">
-                                    <ul>
-                                        <!-- Delivery Address Section -->
-                                        <li>
-                                            <div class="checkout-icon">
-                                                <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                            </div>
-                                            <div class="checkout-box">
-                                                <div class="checkout-title">
-                                                    <h4>{{translate('Delivery Address')}}</h4>
-                                                    @if(Session::get('customer_id'))
-                                                        <button type="button" class="btn btn-sm bg-primary text-white btn-toggle">Autofill</button>
-                                                    @endif
-                                                </div>
-                                                <div class="checkout-detail">
-                                                    <div class="row g-4">
-                                                        <div class="col-xxl-12 col-lg-12 col-md-12">
-                                                            <div class="delivery-address-box">
-                                                                <div class="row">
-                                                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                                                        <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput" class="form-label">{{translate('Full Name')}}<sup class="text-danger">*</sup></label>
-                                                                            <div class="custom-input">
-                                                                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleFormControlInput" name="name" placeholder="{{translate('Enter Full Name')}}" required>
-                                                                                @error('name')
-                                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                                @enderror
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                                                        <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput3" class="form-label">{{translate('Phone Number')}}<sup class="text-danger">*</sup></label>
-                                                                            <div class="custom-input">
-                                                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Phone Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
-                                                                                @error('mobile')
-                                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                                @enderror
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                                                        <div class="mb-md-4 mb-3 custom-form">
-                                                                            <label for="exampleFormControlInput1" class="form-label">{{translate('Details Address')}}<sup class="text-danger">*</sup></label>
-                                                                            <div class="custom-input">
-                                                                                <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="exampleFormControlInput1" placeholder="{{translate('Enter Details Address')}}" required>
-                                                                                @error('address')
-                                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                                @enderror
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <!-- Delivery Option Section -->
-                                        <li>
-                                            <div class="checkout-icon">
-                                                <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                            </div>
-                                            <div class="checkout-box">
-                                                <div class="checkout-title">
-                                                    <h4>{{translate('Delivery Option')}}</h4>
-                                                </div>
-                                                <div class="checkout-detail">
-                                                    <div class="row g-4">
-                                                        @foreach($shippingCosts as $shippingCost)
-                                                            <div class="col-xxl-6">
-                                                                <label class="delivery-option" for="standard{{$shippingCost->id}}" style="display: block; cursor: pointer;">
-                                                                    <div class="delivery-category">
-                                                                        <div class="shipment-detail">
-                                                                            <div class="form-check custom-form-check">
-                                                                                <input class="form-check-input shipping-option @error('shipping_cost') is-invalid @enderror" type="radio" value="{{$shippingCost->shipping_cost}}" name="shipping_cost" id="standard{{$shippingCost->id}}" required>
-                                                                                <span class="form-check-label">{{$shippingCost->address_name}} ({{$shippingCost->shipping_cost}} taka)</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                                @error('shipping_cost')
-                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                @enderror
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <!-- Payment Option Section -->
-                                        <li>
-                                            <div class="checkout-icon">
-                                                <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                            </div>
-                                            <div class="checkout-box">
-                                                <div class="checkout-title">
-                                                    <h4>{{translate('Payment Option')}}</h4>
-                                                </div>
-                                                <div class="checkout-detail">
-                                                    <div class="accordion accordion-flush custom-accordion" id="accordionFlushExample">
-                                                        <div class="accordion-item">
-                                                            <div class="accordion-header" id="flush-headingFour">
-                                                                <div class="accordion-button collapsed">
-                                                                    <div class="custom-form-check form-check mb-0">
-                                                                        <label class="form-check-label" for="cash">
-                                                                            <input class="form-check-input mt-0" type="radio" name="payment_method" value="cod" id="cash" checked required> Cash On Delivery</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <!-- Delivery Note Section -->
-                                        <li>
-                                            <div class="checkout-icon">
-                                                <i class="fas fa-pen-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                            </div>
-                                            <div class="checkout-box">
-                                                <div class="checkout-title">
-                                                    <h4>{{translate('Delivery Note')}}</h4>
-                                                </div>
-                                                <div class="checkout-detail">
-                                                    <div class="row g-4">
-                                                        <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                                            <div class="custom-form">
-                                                                <div class="custom-input">
-                                                                    <input type="text" class="form-control" name="delivery_note" placeholder="{{translate('Enter Delivery Note')}}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="row g-4 mt-4">
-                                    <div class="col-xxl-12 col-lg-12 col-md-12">
-                                        <div class="delivery-address-box d-flex align-items-center">
-                                            <input type="checkbox" id="agree_policy" name="agree_policy" class="form-check-input me-2 @error('agree_policy') is-invalid @enderror" required>
-                                            <label for="agree_policy" class="form-check-label mb-0">{{translate('I have read and agree to the')}} <a href="#" class="text-primary">{{translate('terms and conditions')}}</a>.</label>
+                            <div class="checkout-steps">
+                                <div class="step" id="step1" onclick="showStep(1)">
+                                    <span class="step-number">
+                                        <div class="checkout-icon">
+                                            <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
                                         </div>
-                                        @error('agree_policy')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                    </span>
+                                    <span class="step-title">Delivery Address</span>
+                                </div>
+                                <div class="step" id="step2" onclick="showStep(2)">
+                                    <span class="step-number">
+                                        <div class="checkout-icon">
+                                            <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                                        </div>
+                                    </span>
+                                    <span class="step-title">Delivery Option</span>
+                                </div>
+                                <div class="step" id="step3" onclick="showStep(3)">
+                                    <span class="step-number">
+                                        <div class="checkout-icon">
+                                            <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                                        </div>
+                                    </span>
+                                    <span class="step-title">Payment Option</span>
+                                </div>
+                                <div class="step" id="step4" onclick="showStep(4)">
+                                    <span class="step-number">
+                                        <div class="checkout-icon">
+                                            <i class="fas fa-check-circle fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                                        </div>
+                                    </span>
+                                    <span class="step-title">Confirmation</span>
+                                </div>
+                            </div>
+
+                            <!-- Step 1: Delivery Address -->
+                            <div class="checkout-step active-step" id="step-1">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                        <div class="mb-md-4 mb-3 custom-form">
+                                            <label for="exampleFormControlInput" class="form-label">{{translate('Full Name')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input">
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" @if($customer) value="{{$customer->name}}" @else value="{{old('name')}}" @endif id="exampleFormControlInput" name="name" placeholder="{{translate('Enter Full Name')}}" required>
+                                                @error('name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                        <div class="mb-md-4 mb-3 custom-form">
+                                            <label for="exampleFormControlInput3" class="form-label">{{translate('Phone Number')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input">
+                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer) value="{{$customer->mobile}}" @else value="{{old('mobile')}}" @endif id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Phone Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
+                                                @error('mobile')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                        <div class="mb-md-4 mb-3 custom-form">
+                                            <label for="exampleFormControlInput1" class="form-label">{{translate('Details Address')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input">
+                                                <input type="text" class="form-control @error('address') is-invalid @enderror" @if($customer) value="{{$customer->address}}" @else value="{{old('address')}}" @endif name="address" id="exampleFormControlInput1" placeholder="{{translate('Enter Details Address')}}" required>
+                                                @error('address')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                    </div>
+                                    <div class="col-6">
+                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" type="button" onclick="showStep(2)" disabled>{{translate('Next')}}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Delivery Option -->
+                            <div class="checkout-step" id="step-2">
+                                <div class="row g-4">
+                                    @foreach($shippingCosts as $shippingCost)
+                                        <div class="col-6 h-100">
+                                            <label class="delivery-option">
+                                                <div class="form-check custom-form-check">
+                                                    <input class="form-check-input shipping-option @error('shipping_cost') is-invalid @enderror" type="radio" value="{{$shippingCost->shipping_cost}}" name="shipping_cost" id="standard{{$shippingCost->id}}" required>
+                                                    <span class="form-check-label" style="margin-left: -11%">{{$shippingCost->address_name}} ({{$shippingCost->shipping_cost}} taka)</span>
+                                                </div>
+                                            </label>
+                                            @error('shipping_cost')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a id="previousStep2" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(1)">{{translate('Previous')}}</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a id="nextStep2" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(3)" disabled>{{translate('Next')}}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Payment Option -->
+                            <div class="checkout-step" id="step-3">
+                                <div class="checkout-detail">
+                                    <div class="form-check custom-form-check">
+                                        <label class="form-check-label" for="cash" style="margin-left: -11%">
+                                            <input class="form-check-input mt-0" type="radio" name="payment_method" value="cod" id="cash" checked required> Cash On Delivery
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a id="previousStep3" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(2)">{{translate('Previous')}}</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a id="nextStep3" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(4)" disabled>{{translate('Next')}}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Confirmation -->
+                            <div class="checkout-step" id="step-4">
+                                <div class="custom-form mb-3">
+                                    <div class="custom-input">
+                                        <input type="text" class="form-control" name="delivery_note" placeholder="{{translate('Enter Delivery Note')}}">
+                                    </div>
+                                </div>
+                                <div class="delivery-address-box d-flex align-items-center">
+                                    <input type="checkbox" id="agree_policy" name="agree_policy" class="form-check-input me-2 @error('agree_policy') is-invalid @enderror" required>
+                                    <label for="agree_policy" class="form-check-label mb-0">{{translate('I have read and agree to the')}} <a href="#" class="text-primary">{{translate('terms and conditions')}}</a>.</label>
+                                </div>
+                                @error('agree_policy')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a id="previousStep4" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(3)">{{translate('Previous')}}</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" type="submit">{{translate('Place Order')}}</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-
                     </div>
+
+                    <!-- JavaScript for the wizard functionality -->
+                    <script>
+                        function showStep(stepNumber) {
+                            // Update the active step
+                            document.querySelectorAll('.step').forEach((step, index) => {
+                                step.classList.remove('active');
+                                if (index < stepNumber) {
+                                    step.classList.add('completed');
+                                }
+                                if (index === stepNumber - 1) {
+                                    step.classList.add('active');
+                                }
+                            });
+
+                            // Show the corresponding step content
+                            document.querySelectorAll('.checkout-step').forEach(stepContent => stepContent.classList.remove('active-step'));
+                            document.getElementById(`step-${stepNumber}`).classList.add('active-step');
+
+                            // Validate the current step to enable/disable "Next" button
+                            validateStep(stepNumber);
+                        }
+
+                        function validateStep(stepNumber) {
+                            let allFieldsFilled = true;
+
+                            // Get all required inputs for the specific step
+                            const stepInputs = document.querySelectorAll(`#step-${stepNumber} input[required]`);
+
+                            // Loop through the inputs and check if any of them is empty
+                            stepInputs.forEach(input => {
+                                if (!input.value.trim()) {
+                                    allFieldsFilled = false;
+                                }
+                            });
+
+                            // Enable/Disable the next button based on whether all required fields are filled
+                            const nextButton = document.getElementById(`nextStep${stepNumber}`);
+                            if (nextButton) {
+                                nextButton.disabled = !allFieldsFilled;
+                            }
+                        }
+
+                        // Attach event listeners to inputs for validation
+                        document.querySelectorAll('input[required]').forEach(input => {
+                            input.addEventListener('input', function () {
+                                const currentStep = this.closest('.checkout-step').id.replace('step-', '');
+                                validateStep(currentStep);
+                            });
+                        });
+
+                        // Initial validation check for step 1
+                        validateStep(1);
+                    </script>
+                    <script>
+                        document.querySelectorAll('.form-check-input').forEach(input => {
+                            input.addEventListener('change', function() {
+                                // Remove the background color from all delivery options
+                                document.querySelectorAll('.delivery-option').forEach(option => {
+                                    option.style.backgroundColor = '';  // Reset the background color
+                                    option.style.borderColor = '';      // Reset the border color
+                                });
+
+                                // Apply the background color to the checked option
+                                if (this.checked) {
+                                    this.closest('.delivery-option').style.backgroundColor = '#0baf9a';
+                                    this.closest('.delivery-option').style.borderColor = '#0baf9a';
+                                }
+                            });
+                        });
+                    </script>
 
                     <div class="col-lg-5">
                         <div class="right-side-summery-box">
@@ -235,8 +412,6 @@
                                     </li>
                                 </ul>
                             </div>
-
-                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" onclick="event.preventDefault();document.getElementById('submitOrderForm').submit();">{{translate('Place Order')}}</button>
                         </div>
                     </div>
                 </div>

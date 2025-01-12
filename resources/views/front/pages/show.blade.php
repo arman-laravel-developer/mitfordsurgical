@@ -664,7 +664,20 @@
                                                     <input type="hidden" name="product_id" value="{{$relatedProduct->id}}">
                                                     @if($relatedProduct->is_variant == 1)
                                                         @php
-                                                            $variant = \App\Models\Variant::where('product_id', $relatedProduct->id)->first();
+                                                            $variant = \App\Models\Variant::where('product_id', $relatedProduct->id)
+                                                                                          ->where('qty', '>', 0)
+                                                                                          ->first(); // Start by looking for the first variant with qty > 0
+
+                                                            // If no variant is found, loop through all variants and select the first one with qty > 0
+                                                            if (!$variant) {
+                                                                $variants = \App\Models\Variant::where('product_id', $relatedProduct->id)->get();
+                                                                foreach ($variants as $v) {
+                                                                    if ($v->qty > 0) {
+                                                                        $variant = $v;
+                                                                        break; // Stop the loop once a valid variant is found
+                                                                    }
+                                                                }
+                                                            }
                                                         @endphp
                                                         <input type="hidden" name="size_id" value="{{$variant->size_id}}">
                                                         <input type="hidden" name="color_id" value="{{$variant->color_id}}">

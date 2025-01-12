@@ -46,16 +46,21 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.u
 Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
 Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.variant');
 
+Route::get('/search', [HomeController::class, 'search'])->name('product.search');
+Route::get('/products', [HomeController::class, 'products'])->name('products.all');
+
+Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
+
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart-dropdown', [CartController::class, 'dropdown'])->name('cart.dropdown');
 Route::delete('/cart-remove', [CartController::class, 'cartRemove'])->name('cart.remove');
 Route::post('/update-cart', [CartController::class, 'updateQuantity'])->name('cart.update');
 
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
+
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
-
-Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
-
-Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
+Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
 
 Route::middleware('customer.login')->group(function () {
     Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');
@@ -73,10 +78,7 @@ Route::middleware('customer.login')->group(function () {
 
 });
 Route::post('/contact-form', [ContactFormController::class, 'submit'])->name('contact-form.submit');
-
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
-
+Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('language.change');
 Route::middleware('customer.logout')->group(function () {
     Route::get('/customer-dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
     Route::post('/customer-logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
