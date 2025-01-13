@@ -14,7 +14,7 @@ class SalesReportExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        // Fetch orders and calculate the total
+        // Fetch order and calculate the total
         $orders = Order::select('order_code', 'total_qty', 'grand_total', 'created_at', 'order_status', 'payment_status')
             ->get()
             ->map(function ($order) {

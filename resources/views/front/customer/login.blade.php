@@ -7,7 +7,7 @@
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
-        <section class="breadcrumb-section">
+        <section class="breadcrumb-section" style="padding-top: 0">
             <div class="container">
                 <div class="row">
                     <div class="col-12">

@@ -14,6 +14,7 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Models\RoleRoute;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TrackOrderController;
 
 function getRoleName($routeName)
 {
@@ -46,6 +47,7 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.u
 Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
 Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.variant');
 
+Route::get('/search-result', [HomeController::class, 'result'])->name('search.result');
 Route::get('/search', [HomeController::class, 'search'])->name('product.search');
 Route::get('/products', [HomeController::class, 'products'])->name('products.all');
 
@@ -56,11 +58,15 @@ Route::get('/cart-dropdown', [CartController::class, 'dropdown'])->name('cart.dr
 Route::delete('/cart-remove', [CartController::class, 'cartRemove'])->name('cart.remove');
 Route::post('/update-cart', [CartController::class, 'updateQuantity'])->name('cart.update');
 
+Route::get('/invoice-download/{id}', [CheckoutController::class, 'index'])->name('invoice.download');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
 
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
+
+Route::get('/track-my-order', [TrackOrderController::class, 'index'])->name('track.order');
+Route::get('/track-my-order-result', [TrackOrderController::class, 'result'])->name('show.track-result');
 
 Route::middleware('customer.login')->group(function () {
     Route::get('/customer-register', [CustomerController::class, 'register'])->name('customer.register');

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable();
             $table->string('name')->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('order_code')->nullable();
             $table->string('order_type')->nullable();
             $table->string('payment_method')->nullable();
-            $table->string('payment_status')->nullable();
+            $table->string('payment_status')->default('pending');
             $table->double('grand_total')->nullable();
             $table->double('shipping_cost')->nullable();
             $table->integer('total_qty')->nullable();
@@ -43,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order');
     }
 };

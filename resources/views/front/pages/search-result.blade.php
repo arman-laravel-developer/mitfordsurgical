@@ -1,18 +1,18 @@
 @extends('front.master')
 
 @section('title')
-    {{$generalSettingView->site_name}} - {{translate('All Products')}}
+    {{$generalSettingView->site_name}} - {{translate('Search Result')}}
 @endsection
 
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
-        <section class="breadcrumb-section pt-2" >
+        <section class="breadcrumb-section pt-0" style="padding: 1%;">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <div class="breadcrumb-contain" style="padding: 0!important;">
-                            <h2>{{translate('All Products')}}</h2>
+                        <div class="breadcrumb-contain" style="padding: 1%;">
+                            <h2>Search</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">{{translate('All Products')}}</li>
+                                    <li class="breadcrumb-item active">Search</li>
                                 </ol>
                             </nav>
                         </div>
@@ -28,6 +28,44 @@
                 </div>
             </div>
         </section>
+        <!-- Breadcrumb Section End -->
+
+
+        <style>
+            @media (min-width: 768px) {
+                .mobile-view-search {
+                    display: none;
+                }
+            }
+            @media (max-width: 768px) {
+                .main-title {
+                    display: none;
+                }
+            }
+        </style>
+
+        <!-- Search Bar Section Start -->
+        <section class="search-section" style="padding: 1%;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-6 col-xl-8 mx-auto">
+                        <div class="title d-block text-center main-title">
+                            <h2 class="opacity-50 main-title">Search result for "{{request()->q}}"</h2>
+                        </div>
+
+                        <form action="{{route('search.result')}}" method="GET" enctype="multipart/form-data">
+                            <div class="search-box mobile-view-search">
+                                <div class="input-group">
+                                    <input type="text" name="q" value="{{$query}}" class="form-control" placeholder="{{ translate("I'm searching for") }}...">
+                                    <button class="btn theme-bg-color text-white m-0" type="submit" id="button-addon1">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Search Bar Section End -->
         <div class="container all-products">
             @if(count($products) > 0)
                 <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
@@ -112,49 +150,5 @@
                 <h4 class="text-center opacity-50 mt-5">No item found</h4>
             @endif
         </div>
-        <!-- Breadcrumb Section End -->
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var page = 2; // Start from the second page as the first is already loaded
-            var isLoading = false; // Prevent multiple AJAX requests at once
-
-            $(window).on('scroll', function() {
-                // Check if the user has scrolled near the bottom of the page
-                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-                    if (!isLoading) { // Only load if not already in the middle of loading
-                        loadMoreProducts();
-                    }
-                }
-            });
-
-            function loadMoreProducts() {
-                isLoading = true; // Set loading flag to true
-                $.ajax({
-                    url: '{{ route("products.all") }}' + '?page=' + page, // Use the updated page variable
-                    type: 'GET',
-                    beforeSend: function() {
-                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">Loading more products...</div>'); // Display loading message
-                    },
-                    success: function(data) {
-                        if (data.html) {
-                            $('.all-products .row').append(data.html); // Append new news items to the row
-                            page++; // Increment page number for the next request
-                            isLoading = false; // Reset loading flag
-                            $('#scroll-target').html(''); // Remove loading message
-                        } else {
-                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">No more products to load.</div>'); // Display end message
-                            isLoading = true; // Prevent further requests since no more data
-                        }
-                    },
-                    error: function() {
-                        alert('Failed to load more products. Please try again.');
-                        isLoading = false; // Reset loading flag on error
-                    }
-                });
-            }
-        });
-    </script>
 @endsection
-

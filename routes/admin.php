@@ -18,6 +18,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingCostController;
+use App\Http\Controllers\OrderController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -218,6 +219,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [GoogleAnalyticController::class, 'edit'])->name('google-analytic.edit');
             Route::post('/update', [GoogleAnalyticController::class, 'update'])->name('google-analytic.update');
             Route::post('/delete/{id}', [GoogleAnalyticController::class, 'delete'])->name('google-analytic.delete');
+        });
+
+        Route::prefix('order')->group(function (){
+            Route::get('/all-order', [OrderController::class, 'index'])->name('order.manage');
+            Route::get('/pending-order', [OrderController::class, 'pending'])->name('order.pending');
+            Route::get('/confirmed-order', [OrderController::class, 'confirmed'])->name('order.confirmed');
+            Route::get('/proccessing-order', [OrderController::class, 'proccessing'])->name('order.proccessing');
+            Route::get('/delivered-order', [OrderController::class, 'delivered'])->name('order.delivered');
+            Route::get('/shipped-order', [OrderController::class, 'shipped'])->name('order.shipped');
+            Route::get('/canceled-order', [OrderController::class, 'canceled'])->name('order.canceled');
+            Route::get('/order-show/{id}', [OrderController::class, 'show'])->name('order.show');
+            Route::post('/order-delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
+            Route::post('/order-payment-status-update', [OrderController::class, 'paymentStatusUpdate'])->name('order-payment-status.update');
+            Route::post('/order-status-update', [OrderController::class, 'orderStatusUpdate'])->name('order-status.update');
         });
     });
 });

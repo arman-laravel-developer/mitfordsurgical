@@ -185,7 +185,12 @@
                                     <li class="pb-0">
                                         <h4>Expected Date Of Delivery:</h4>
                                         <h4 class="price theme-color">
-                                            <a href="order-tracking.html" class="text-danger">Track Order</a>
+                                            <form id="orderForm" action="{{route('show.track-result')}}" method="GET">
+                                                <div class="input-group">
+                                                    <input type="hidden" class="form-control" value="{{$order->order_code}}" name="order_code" id="order-id" placeholder="">
+                                                    <button style="border: none" class="text-danger" type="submit">Track Order</button>
+                                                </div>
+                                            </form>
                                         </h4>
                                     </li>
                                 </ul>

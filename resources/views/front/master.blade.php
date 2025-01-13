@@ -228,12 +228,14 @@
                             </style>
 
                             <div class="search-box">
-                                <div class="input-group">
-                                    <input type="search" class="form-control" style="width: 680px !important;" id="search-input" placeholder="{{ translate("I'm searching for") }}...">
-                                    <button class="btn bg-theme" type="button" id="button-addon2">
-                                        <i data-feather="search"></i>
-                                    </button>
-                                </div>
+                                <form action="{{route('search.result')}}" method="GET" enctype="multipart/form-data">
+                                    <div class="input-group">
+                                        <input type="search" class="form-control" value="{{request()->q}}" name="q" style="width: 680px !important;" id="search-input" placeholder="{{ translate("I'm searching for") }}...">
+                                        <button class="btn bg-theme" type="submit" id="button-addon2">
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </form>
                                 <div id="search-results"></div>
                             </div>
 
@@ -563,10 +565,10 @@
                                     @endif
                                 </li>
                                 <li>
-                                    <a href="order-tracking.html" class="text-content">{{translate('Track Order')}}</a>
+                                    <a href="{{route('track.order')}}" class="text-content">{{translate('Track Order')}}</a>
                                 </li>
                                 <li>
-                                    <a href="order-tracking.html" class="text-content">{{translate('Become a vendor')}}</a>
+                                    <a href="{{route('seller.register')}}" class="text-content">{{translate('Become a vendor')}}</a>
                                 </li>
                                 <li>
                                     <a href="{{route('about.us')}}" class="text-content">{{translate('About Us')}}</a>

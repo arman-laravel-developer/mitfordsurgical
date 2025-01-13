@@ -14,6 +14,48 @@ use Session;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::orderBy('id', 'desc')->get();
+        return view('admin.order.index', compact('orders'));
+    }
+    public function pending()
+    {
+        $orders = Order::where('order_status', 'pending')->orderBy('id', 'desc')->get();
+        return view('admin.order.pending', compact('orders'));
+    }
+    public function confirmed()
+    {
+        $orders = Order::where('order_status', 'confirmed')->orderBy('id', 'desc')->get();
+        return view('admin.order.confirmed', compact('orders'));
+    }
+    public function proccessing()
+    {
+        $orders = Order::where('order_status', 'proccessing')->orderBy('id', 'desc')->get();
+        return view('admin.order.proccessing', compact('orders'));
+    }
+    public function delivered()
+    {
+        $orders = Order::where('order_status', 'delivered')->orderBy('id', 'desc')->get();
+        return view('admin.order.delivered', compact('orders'));
+    }
+    public function shipped()
+    {
+        $orders = Order::where('order_status', 'shipped')->orderBy('id', 'desc')->get();
+        return view('admin.order.shipped', compact('orders'));
+    }
+    public function canceled()
+    {
+        $orders = Order::where('order_status', 'cancel')->orderBy('id', 'desc')->get();
+        return view('admin.order.canceled', compact('orders'));
+    }
+
+    public function show($id)
+    {
+        $order = Order::find($id);
+        return view('admin.order.show', compact('order'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -57,8 +99,8 @@ class OrderController extends Controller
         $order->city_id = $request->city_id;
         $order->payment_method = $request->payment_method;
         $order->order_status = 'pending';
+        $order->payment_status = 'pending';
         $order->delivery_status = 'pending';
-        $order->payment_method = $request->payment_method;
         $order->save();
         if ($request->payment_method == 'cod')
         {
@@ -134,5 +176,62 @@ class OrderController extends Controller
             return redirect()->route('home');
         }
 
+    }
+
+    public function delete($id)
+    {
+        $order = Order::find($id);
+        $orderDetails = OrderDetail::where('order_id', $order->id)->get();
+        $paymentHistories = PaymentHistory::where('order_id', $order->id)->get();
+
+        foreach ($orderDetails as $orderDetail)
+        {
+            $orderDetail->delete();
+        }
+        foreach ($paymentHistories as $paymentHistory)
+        {
+            $paymentHistory->delete();
+        }
+        $order->delete();
+
+        flash()->success('Order Delete', 'Order delete successfully');
+        return redirect()->back();
+    }
+
+    public function paymentStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->payment_status = $request->payment_status;
+        $order->save();
+        return redirect()->back()->with('success', 'Payment status update successfull');
+    }
+    public function orderStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->order_status = $request->order_status;
+        $order->save();
+
+        if ($request->order_status == 'cancel')
+        {
+            foreach ($order->orderDetails as $orderDetail)
+            {
+                // Decrease stock in the products table
+                $product = Product::find($orderDetail->product_id);
+                if ($product) {
+                    $product->num_of_sale -= $orderDetail->qty; // Increase the number of sales
+                    $product->stock += $orderDetail->qty; // Decrease total product stock
+                    $product->save();
+                }
+
+                // Decrease stock in the variants table (size-wise)
+                $variant = Variant::find($orderDetail->variant_id);
+                if ($variant) {
+                    $variant->qty += $orderDetail->qty; // Decrease variant stock
+                    $variant->save();
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Order status update successfull');
     }
 }

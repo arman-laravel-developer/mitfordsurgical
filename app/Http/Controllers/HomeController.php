@@ -45,6 +45,17 @@ class HomeController extends Controller
         return response()->json($products);
     }
 
+    public function result(Request $request)
+    {
+        $query = $request->get('q');
+        $products = Product::where('name', 'like', "%{$query}%")
+            ->latest()
+            ->limit(20)
+            ->get();
+
+        return view('front.pages.search-result', compact('products', 'query'));
+    }
+
     public function detail($id)
     {
         $product = Product::find($id);

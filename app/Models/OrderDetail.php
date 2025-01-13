@@ -17,4 +17,12 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Variant::class, 'variant_id');
     }
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'size_id');
+    }
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'color_id');
+    }
 }

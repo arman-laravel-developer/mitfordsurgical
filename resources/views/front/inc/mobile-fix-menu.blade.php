@@ -1,6 +1,6 @@
 <div class="mobile-menu d-md-none d-block mobile-cart">
     <ul>
-        <li class="active">
+        <li class=" @if(Route::is('home')) active @endif">
             <a href="{{route('home')}}">
                 <i data-feather="home" style="color: white"></i>
                 <span>{{translate('Home')}}</span>
@@ -16,20 +16,19 @@
             </span>
             </a>
         </li>
+        <li class=" @if(Route::is('search.result')) active @endif">
+            <a href="{{route('search.result')}}" class="notifi-wishlist">
+                <i data-feather="search" style="color: white"></i>
+                <span>{{translate('Search')}}</span>
+            </a>
+        </li>
 
-        <li>
+        <li class=" @if(Route::is('products.all')) active @endif">
             <a href="{{route('products.all')}}" class="search-box">
                 <i data-feather="shopping-bag" style="color: white"></i>
                 <span>{{translate('Products')}}</span>
             </a>
         </li>
-
-{{--        <li>--}}
-{{--            <a href="wishlist.html" class="notifi-wishlist">--}}
-{{--                <i data-feather="heart" style="color: white"></i>--}}
-{{--                <span>{{translate('My Wish')}}</span>--}}
-{{--            </a>--}}
-{{--        </li>--}}
 
         <li style="position: relative;" class="mobile-cart">
             <a href="javascript:void(0)" onclick="openCart()" style="position: relative;">

@@ -127,6 +127,55 @@
             </div>
         </li>
     @endif
+    @if ($userType == 1 || !empty(array_filter(['order.manage'], fn($route) => in_array($route, $roleRoutes))))
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarOrder" aria-expanded="false" aria-controls="sidebarOrder"
+               class="side-nav-link">
+                <i class="uil-money-bill"></i>
+                <span> All Orders </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarOrder">
+                <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('order.pending', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.pending')}}">Pending Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.confirmed', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.confirmed')}}">Confirmed Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.proccessing', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.proccessing')}}">Proccessing Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.delivered', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.delivered')}}">Delivered Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.shipped', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.shipped')}}">Shipped Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.canceled', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.canceled')}}">Canceled Orders</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('order.manage', $roleRoutes))
+                        <li>
+                            <a href="{{route('order.manage')}}">All Orders</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+    @endif
     @if ($userType == 1 || in_array('dashboard.customer', $roleRoutes))
     <li class="side-nav-item">
         <a href="{{route('dashboard.customer')}}" class="side-nav-link">

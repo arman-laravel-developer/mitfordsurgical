@@ -131,7 +131,7 @@
         </style>
 
         <!-- Checkout section Start -->
-        <section class="checkout-section-2 section-b-space">
+        <section class="checkout-section-2 section-b-space" style="padding-top: 1%;">
             <div class="container">
                 <div class="row g-sm-4 g-3">
                     <!-- Wizard Content Sections -->
@@ -152,7 +152,7 @@
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="checkout-steps">
-                                <div class="step" id="step1" onclick="showStep(1)">
+                                <div class="step" id="step1">
                                     <span class="step-number">
                                         <div class="checkout-icon">
                                             <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
@@ -160,7 +160,7 @@
                                     </span>
                                     <span class="step-title">Delivery Address</span>
                                 </div>
-                                <div class="step" id="step2" onclick="showStep(2)">
+                                <div class="step" id="step2">
                                     <span class="step-number">
                                         <div class="checkout-icon">
                                             <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
@@ -168,7 +168,7 @@
                                     </span>
                                     <span class="step-title">Delivery Option</span>
                                 </div>
-                                <div class="step" id="step3" onclick="showStep(3)">
+                                <div class="step" id="step3">
                                     <span class="step-number">
                                         <div class="checkout-icon">
                                             <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
@@ -176,7 +176,7 @@
                                     </span>
                                     <span class="step-title">Payment Option</span>
                                 </div>
-                                <div class="step" id="step4" onclick="showStep(4)">
+                                <div class="step" id="step4">
                                     <span class="step-number">
                                         <div class="checkout-icon">
                                             <i class="fas fa-check-circle fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
@@ -190,9 +190,9 @@
                             <div class="checkout-step active-step" id="step-1">
                                 <div class="row">
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput" class="form-label">{{translate('Full Name')}}<sup class="text-danger">*</sup></label>
-                                            <div class="custom-input">
+                                        <div class="mb-md-4 mb-3 custom-form row">
+                                            <label for="exampleFormControlInput" class="col-2 form-label">{{translate('Name')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input col-10">
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" @if($customer) value="{{$customer->name}}" @else value="{{old('name')}}" @endif id="exampleFormControlInput" name="name" placeholder="{{translate('Enter Full Name')}}" required>
                                                 @error('name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -201,10 +201,10 @@
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput3" class="form-label">{{translate('Phone Number')}}<sup class="text-danger">*</sup></label>
-                                            <div class="custom-input">
-                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer) value="{{$customer->mobile}}" @else value="{{old('mobile')}}" @endif id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Phone Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
+                                        <div class="mb-md-4 mb-3 custom-form row">
+                                            <label for="exampleFormControlInput3" class="col-2 form-label">{{translate('Mobile')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input col-10">
+                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer) value="{{$customer->mobile}}" @else value="{{old('mobile')}}" @endif id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Mobile Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
                                                 @error('mobile')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -212,9 +212,9 @@
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form">
-                                            <label for="exampleFormControlInput1" class="form-label">{{translate('Details Address')}}<sup class="text-danger">*</sup></label>
-                                            <div class="custom-input">
+                                        <div class="mb-md-4 mb-3 custom-form row">
+                                            <label for="exampleFormControlInput1" class="col-2 form-label">{{translate('Address')}}<sup class="text-danger">*</sup></label>
+                                            <div class="custom-input col-10">
                                                 <input type="text" class="form-control @error('address') is-invalid @enderror" @if($customer) value="{{$customer->address}}" @else value="{{old('address')}}" @endif name="address" id="exampleFormControlInput1" placeholder="{{translate('Enter Details Address')}}" required>
                                                 @error('address')
                                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -660,32 +660,41 @@
                                                     </div>
                                                 </div>
                                                 @if($relatedProduct->minimum_purchase_qty <= $relatedProduct->stock)
-                                                    <input type="hidden" name="price" value="{{discounted_price($relatedProduct)}}">
-                                                    <input type="hidden" name="product_id" value="{{$relatedProduct->id}}">
-                                                    @if($relatedProduct->is_variant == 1)
-                                                        @php
+                                                    @php
+                                                        $variant = null;
+                                                        if ($relatedProduct->is_variant == 1) {
                                                             $variant = \App\Models\Variant::where('product_id', $relatedProduct->id)
-                                                                                          ->where('qty', '>', 0)
-                                                                                          ->first(); // Start by looking for the first variant with qty > 0
+                                                                                          ->where('qty', '>=', $relatedProduct->minimum_purchase_qty)
+                                                                                          ->first();
 
-                                                            // If no variant is found, loop through all variants and select the first one with qty > 0
                                                             if (!$variant) {
                                                                 $variants = \App\Models\Variant::where('product_id', $relatedProduct->id)->get();
                                                                 foreach ($variants as $v) {
-                                                                    if ($v->qty > 0) {
+                                                                    if ($v->qty >= $relatedProduct->minimum_purchase_qty) {
                                                                         $variant = $v;
-                                                                        break; // Stop the loop once a valid variant is found
+                                                                        break;
                                                                     }
                                                                 }
                                                             }
-                                                        @endphp
-                                                        <input type="hidden" name="size_id" value="{{$variant->size_id}}">
-                                                        <input type="hidden" name="color_id" value="{{$variant->color_id}}">
-                                                        <input type="hidden" name="variant_id" value="{{$variant->id}}">
+                                                        }
+                                                    @endphp
+
+                                                    @if($relatedProduct->is_variant != 1 || $variant)
+                                                        <input type="hidden" name="price" value="{{ discounted_price($relatedProduct) }}">
+                                                        <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+                                                        @if($variant)
+                                                            <input type="hidden" name="size_id" value="{{ $variant->size_id }}">
+                                                            <input type="hidden" name="color_id" value="{{ $variant->color_id }}">
+                                                            <input type="hidden" name="variant_id" value="{{ $variant->id }}">
+                                                        @endif
+                                                        <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" id="addToCartButtonHome{{ $relatedProduct->id }}" type="submit">
+                                                            <i class="fa fa-cart-plus icli text-white m-0"></i>
+                                                        </button>
+                                                    @else
+                                                        <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red" title="Out of stock">
+                                                            <i class="fa fa-times icli text-white m-0"></i>
+                                                        </button>
                                                     @endif
-                                                    <button class="buy-button buy-button-2 btn btn-cart add-to-cart-btn" id="addToCartButtonHome{{$relatedProduct->id}}" type="submit">
-                                                        <i class="fa fa-cart-plus icli text-white m-0"></i>
-                                                    </button>
                                                 @else
                                                     <button class="buy-button buy-button-2 btn btn-out-of-stock out-of-stock-btn" style="background-color: red" title="Out of stock">
                                                         <i class="fa fa-times icli text-white m-0"></i>
