@@ -27,12 +27,14 @@ class SellerController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'password' => 'required|confirmed|min:6',
-            'mobile' => 'required|unique:sellers|regex:/^(\+88)?01[3-9]\d{8}$/',
-            'email' => 'required|unique:sellers',
-        ]);
+        if (!Session::get('customer_id')) {
+            $request->validate([
+                'name' => 'required|max:255',
+                'password' => 'required|confirmed|min:6',
+                'mobile' => 'required|unique:sellers|regex:/^(\+88)?01[3-9]\d{8}$/',
+                'email' => 'required|unique:sellers',
+            ]);
+        }
 
         if (!Session::get('customer_id')) {
             // Check if the email or mobile exists in the customers table
@@ -51,7 +53,15 @@ class SellerController extends Controller
         $seller->name = $request->name;
         $seller->email = $request->email; // Fixed to use $request->email
         $seller->mobile = $request->mobile;
-        $seller->password = bcrypt($request->password);
+        if (Session::get('customer_id'))
+        {
+            $customer = Customer::find(Session::get('customer_id'));
+            $seller->password = $customer->password;
+        }
+        else
+        {
+            $seller->password = bcrypt($request->password);
+        }
         $seller->save();
 
         $shop = new Shop();
@@ -65,14 +75,15 @@ class SellerController extends Controller
 
         if (Session::get('customer_id'))
         {
-            Session::forget('customer_id');
-            Session::forget('name');
             $customer = Customer::find(Session::get('customer_id'));
             if (file_exists($customer->profile_img))
             {
                 unlink($customer->profile_img);
             }
             $customer->delete();
+
+            Session::forget('customer_id');
+            Session::forget('name');
         }
 
         flash()->success('Registration complete', 'You have been logged in successfully');

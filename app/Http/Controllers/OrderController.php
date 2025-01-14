@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Cart;
 use Session;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -233,5 +234,18 @@ class OrderController extends Controller
         }
 
         return redirect()->back()->with('success', 'Order status update successfull');
+    }
+
+    public function generatePDF()
+    {
+        // Load the view and pass data to it (if any)
+        $pdf = PDF::loadView('front.pdf.template');
+
+        return view('front.pdf.template');
+        // Stream the generated PDF to the browser
+        return $pdf->stream('sample.pdf');
+
+        // To download the PDF as a file, use:
+        // return $pdf->download('sample.pdf');
     }
 }

@@ -9,12 +9,11 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoryProductsController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\SellerController;
-use App\Http\Controllers\SellerDashboardController;
 use App\Models\RoleRoute;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TrackOrderController;
+
 
 function getRoleName($routeName)
 {
@@ -65,6 +64,8 @@ Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerDat
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
 
+Route::get('/download-pdf', [OrderController::class, 'generatePDF']);
+
 Route::get('/track-my-order', [TrackOrderController::class, 'index'])->name('track.order');
 Route::get('/track-my-order-result', [TrackOrderController::class, 'result'])->name('show.track-result');
 
@@ -96,25 +97,6 @@ Route::middleware('customer.logout')->group(function () {
     Route::post('/password-update', [CustomerDashboardController::class, 'passwordUpdate'])->name('password.update');
 
 });
-
-
-//seller login-registraion
-
-Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.login']], function() {
-    Route::get('/register', [SellerController::class, 'register'])->name('seller.register');
-    Route::get('/login', [SellerController::class, 'login'])->name('seller.login');
-    Route::post('/store', [SellerController::class, 'store'])->name('seller.store');
-    Route::post('/login-check', [SellerController::class, 'loginCheck'])->name('seller.login-check');
-});
-
-
-Route::get('/seller/verify', [SellerController::class, 'verify'])->name('seller.verify')->middleware('seller.logout');
-Route::post('/verify-form-store', [SellerController::class, 'verify_form_store'])->name('verify.form.store');
-
-Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.verified', 'seller.unbanned']], function() {
-    Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
-});
-Route::post('/seller/logout', [SellerDashboardController::class, 'logout'])->name('seller.logout')->middleware('seller.logout');
 
 
 Route::get('/error', function () {

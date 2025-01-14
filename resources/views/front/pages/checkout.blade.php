@@ -227,7 +227,7 @@
                                     <div class="col-6">
                                     </div>
                                     <div class="col-6">
-                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" type="button" onclick="showStep(2)" disabled>{{translate('Next')}}</button>
+                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md mt-4 fw-bold" type="button" onclick="showStep(2)" style="float: inline-end;" disabled>{{translate('Next')}}</button>
                                     </div>
                                 </div>
                             </div>
