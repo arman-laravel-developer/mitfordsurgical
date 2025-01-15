@@ -158,7 +158,7 @@
                                             <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
                                         </div>
                                     </span>
-                                    <span class="step-title">Delivery Address</span>
+                                    <span class="step-title">{{translate('Delivery Address')}}</span>
                                 </div>
                                 <div class="step" id="step2">
                                     <span class="step-number">
@@ -166,7 +166,7 @@
                                             <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
                                         </div>
                                     </span>
-                                    <span class="step-title">Delivery Option</span>
+                                    <span class="step-title">{{translate('Delivery Option')}}</span>
                                 </div>
                                 <div class="step" id="step3">
                                     <span class="step-number">
@@ -174,7 +174,7 @@
                                             <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
                                         </div>
                                     </span>
-                                    <span class="step-title">Payment Option</span>
+                                    <span class="step-title">{{translate('Payment Option')}}</span>
                                 </div>
                                 <div class="step" id="step4">
                                     <span class="step-number">
@@ -182,7 +182,7 @@
                                             <i class="fas fa-check-circle fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
                                         </div>
                                     </span>
-                                    <span class="step-title">Confirmation</span>
+                                    <span class="step-title">{{translate('Confirmation')}}</span>
                                 </div>
                             </div>
 

@@ -73,7 +73,15 @@
                                 <div class="right-box-contain">
                                     <h2 class="name">{{$product->getTranslation('name')}}</h2>
                                     <p>
-                                        Category: <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a></p>
+                                        {{translate('Category')}}: <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a>&nbsp;&nbsp;
+                                        @php
+                                            $shop = \App\Models\Shop::find($product->user_id);
+                                        @endphp
+                                        {{translate('Sold By')}}: @if($product->added_by == 'admin') {{translate('In House Product')}}
+                                        @else
+                                            <a href="">{{$shop->shop_name}}</a>
+                                        @endif
+                                    </p>
                                     <div class="price-rating">
                                         <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
                                     </div>

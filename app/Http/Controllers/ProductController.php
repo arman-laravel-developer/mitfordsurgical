@@ -276,8 +276,13 @@ class ProductController extends Controller
 
     public function manage()
     {
-        $products = Product::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('id', 'desc')->where('added_by', 'admin')->get();
         return view('admin.product.manage', compact('products'));
+    }
+    public function sellerProductManage()
+    {
+        $products = Product::orderBy('id', 'desc')->where('added_by', 'seller')->get();
+        return view('admin.product.seller-product-manage', compact('products'));
     }
 
     public function updateStatus(Request $request)

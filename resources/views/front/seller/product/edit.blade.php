@@ -1,7 +1,7 @@
 @extends('front.seller.master.master')
 
 @section('seller.title')
-    Seller Product Add | {{$generalSettingView->site_name}}
+    Seller Product Edit | {{$generalSettingView->site_name}}
 @endsection
 
 @section('seller.body')
@@ -28,8 +28,9 @@
     </style>
     <div class="row mt-4">
         <div class="col-lg-12">
-            <form action="{{route('seller-product.new')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('seller-product.update', ['id' => $product->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" value="{{request()->lang}}" name="lang">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card">
@@ -38,10 +39,20 @@
                             </div>
                             <hr/>
                             <div class="card-body" style="margin-top: -2%">
+                                <ul class="nav nav-tabs nav-fill border-primary mb-3">
+                                    @foreach (\App\Models\Language::all() as $key => $language)
+                                        <li class="nav-item">
+                                            <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-light border-light border-left-0 @endif py-3" href="{{ route('seller-product.edit', ['id'=>$product->id, 'lang'=> $language->code] ) }}">
+                                                <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" height="11" class="mr-1">
+                                                <span>{{$language->name}}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label" style="font-size: 90%">Product Name<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Product name" required/>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{$product->getTranslation('name', request()->lang)}}" name="name" placeholder="Product name" required/>
                                         @error('name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -64,7 +75,7 @@
                                         <select name="brand_id" id="" class="selectpicker form-control @error('brand_id') is-invalid @enderror" data-live-search="true">
                                             <option value="" selected disabled>Select Brand</option>
                                             @foreach($brands as $brand)
-                                                <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                                <option value="{{$brand->id}}" {{$product->brand_id == $brand->id ? 'selected' : ''}}>{{$brand->name}}</option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -75,7 +86,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label" style="font-size: 90%">Unit<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control @error('unit') is-invalid @enderror" name="unit" placeholder="Unit (eg:KG,Pc)" required/>
+                                        <input type="text" class="form-control @error('unit') is-invalid @enderror" value="{{$product->getTranslation('unit', request()->lang)}}" name="unit" placeholder="Unit (eg:KG,Pc)" required/>
                                         @error('unit')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -90,7 +101,7 @@
                                             type="text"
                                             class="form-control @error('minimum_purchase_qty') is-invalid @enderror"
                                             name="minimum_purchase_qty"
-                                            value="1"
+                                            value="{{$product->minimum_purchase_qty}}"
                                             required
                                             oninput="validateInput(this)"
                                         />
@@ -102,9 +113,9 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label" style="font-size: 90%">Tags<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="text" id="tagsInput" class="form-control @error('tags') is-invalid @enderror"/>
+                                        <input type="text" id="tagsInput" value="{{$product->tags}}" class="form-control @error('tags') is-invalid @enderror"/>
                                         <div id="tagsContainer" class="mt-2"></div>
-                                        <input type="hidden" name="tags" id="tagsHiddenInput">
+                                        <input type="hidden" name="tags" value="{{$product->tags}}" id="tagsHiddenInput">
                                         @error('tags')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -123,8 +134,8 @@
                                         <small>340 x 345</small>
                                     </label>
                                     <div class="col-md-9">
-                                        <input type="file" class="form-control @error('thumbnail_img') is-invalid @enderror" id="imageInput" name="thumbnail_img" required/>
-                                        <img id="imagePreview" class="mt-1" src="#" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;">
+                                        <input type="file" class="form-control @error('thumbnail_img') is-invalid @enderror" id="imageInput" name="thumbnail_img"/>
+                                        <img id="imagePreview" class="mt-1" src="{{asset($product->thumbnail_img)}}" alt="Preview" style="max-width: 200px; max-height: 200px;">
                                         @error('thumbnail_img')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -135,8 +146,13 @@
                                         <small>340 x 345</small>
                                     </label>
                                     <div class="col-md-9">
-                                        <input type="file" class="form-control @error('galleryImage') is-invalid @enderror" id="imageInputGallery" name="galleryImages[]" multiple required/>
-                                        <div id="imagePreviews" class="mt-1"></div>
+                                        <input type="file" class="form-control @error('galleryImage') is-invalid @enderror" id="imageInputGallery" name="galleryImages[]" multiple/>
+                                        <div id="imagePreviews" class="mt-1">
+                                            <!-- Existing Images -->
+                                            @foreach($product->otherImages as $otherImage)
+                                                <img src="{{ asset($otherImage->gellery_image) }}" alt="Existing Image" style="display: inline-block; margin-right: 10px; max-width: 80px; max-height: 100px;" class="mt-1 existing-image">
+                                            @endforeach
+                                        </div>
                                         @error('galleryImage')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -154,7 +170,12 @@
                                     <label class="col-md-3 col-form-label">PDF <br>
                                     </label>
                                     <div class="col-md-9">
-                                        <input type="file" class="form-control @error('pdf') is-invalid @enderror" accept=".pdf" name="pdf"/>
+                                        <input type="file" class="form-control @error('pdf') is-invalid @enderror" name="pdf" accept=".pdf" />
+                                        @if($product->pdf)
+                                            <iframe src="{{ asset($product->pdf) }}" height="300px" width="100%" frameborder="0"></iframe>
+                                        @else
+                                            <p>No PDF available for this product.</p>
+                                        @endif
                                         @error('pdf')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -173,8 +194,8 @@
                                     <div class="col-md-9">
                                         <select name="is_variant" id="is_variation" class="form-control @error('color') is-invalid @enderror">
                                             <option value="">Select option</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                            <option value="yes" {{$product->is_variant == 1 ? 'selected': ''}}>Yes</option>
+                                            <option value="no" {{$product->is_variant == 2 ? 'selected': ''}}>No</option>
                                         </select>
                                         @error('image')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -187,20 +208,25 @@
                                         <div class="col-md-9">
                                             <select name="color_id[]" id="colors" data-selected-text-format="count" class="selectpicker form-control @error('color') is-invalid @enderror select-enabled" multiple>
                                                 @foreach($colors as $color)
-                                                    <option value="{{$color->id}}">{{$color->name}}</option>
+                                                    <option value="{{ $color->id }}" {{ in_array($color->id, $selectedColorIds) ? 'selected' : '' }}>
+                                                        {{ $color->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            @error('image')
+                                            @error('color')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <label class="col-md-3 col-form-label">Size</label>
                                         <div class="col-md-9">
                                             <select name="size_id[]" id="sizes" class="selectpicker form-control @error('size') is-invalid @enderror" data-selected-text-format="count" multiple>
                                                 @foreach($sizes as $size)
-                                                    <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                                    <option value="{{ $size->id }}" {{ in_array($size->id, $selectedSizeIds) ? 'selected' : '' }}>
+                                                        {{ $size->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('size')
@@ -220,7 +246,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Unit price<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="number" name="sell_price" value="0" class="form-control @error('sell_price') is-invalid @enderror" placeholder="Unit price" required/>
+                                        <input type="number" name="sell_price" value="{{$product->sell_price}}" class="form-control @error('sell_price') is-invalid @enderror" placeholder="Unit price" required/>
                                         @error('sell_price')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -229,16 +255,32 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Cost price<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="number" name="cost_price" value="0" class="form-control @error('cost_price') is-invalid @enderror" placeholder="Cost price" required/>
+                                        <input type="number" name="cost_price" value="{{$product->cost_price}}" class="form-control @error('cost_price') is-invalid @enderror" placeholder="Cost price" required/>
                                         @error('cost_price')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                                @php
+                                    use Carbon\Carbon;
+
+                                    $startDate = $product->start_date ? Carbon::parse($product->start_date)->format('m/d/Y') : '';
+                                    $endDate = $product->end_date ? Carbon::parse($product->end_date)->format('m/d/Y') : '';
+                                @endphp
+
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Discount Range Date</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control date" name="discount_date_range" id="daterange" data-toggle="date-picker" data-cancel-class="btn-warning" required>
+                                        <input
+                                            type="text"
+                                            class="form-control date"
+                                            name="discount_date_range"
+                                            id="daterange"
+                                            data-toggle="date-picker"
+                                            data-cancel-class="btn-warning"
+                                            required
+                                            value="{{ $startDate && $endDate ? $startDate . ' - ' . $endDate : '' }}"
+                                        >
                                         @error('discount_date_range')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -247,28 +289,31 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Discount</label>
                                     <div class="col-md-7">
-                                        <input type="number" name="discount" value="0" class="form-control @error('discount') is-invalid @enderror" placeholder="Discount"/>
+                                        <input type="number" name="discount" value="{{$product->discount}}" class="form-control @error('discount') is-invalid @enderror" placeholder="Discount"/>
                                         @error('discount')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-2">
                                         <select name="discount_type" id="" class="form-control">
-                                            <option value="1">Flat</option>
-                                            <option value="2">Percent</option>
+                                            <option value="1" {{$product->discount_type == 1 ? 'selected' : ''}}>Flat</option>
+                                            <option value="2" {{$product->discount_type == 2 ? 'selected' : ''}}>Percent</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Quantity<sup class="text-danger">*</sup></label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control @error('stock') is-invalid @enderror" name="stock" required>
+                                        <input type="text" class="form-control @error('stock') is-invalid @enderror" value="{{$product->stock}}" name="stock" required>
                                         @error('stock')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <div id="variantInputsContainer" class="mb-3"></div>
+                                <div id="variantInputsContainer" style="display: none;" class="mb-3">
+                                    <!-- Variant inputs will be inserted here -->
+                                </div>
+
                             </div>
                         </div>
                         <div class="card">
@@ -280,7 +325,7 @@
                                 <div class="row">
                                     <label class="col-md-3 col-form-label">Description</label>
                                     <div class="col-md-9">
-                                        <textarea type="text" name="description" id="summernote" class="form-control @error('description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Short Description" required></textarea>
+                                        <textarea type="text" name="description" id="summernote" class="form-control @error('description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Short Description" required>{{$product->getTranslation('description', request()->lang)}}</textarea>
                                         @error('description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -297,7 +342,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Active Short Description</label>
                                     <div class="col-md-9">
-                                        <input type="checkbox" name="is_short_description" value="1" style="margin-top: 5%;margin-left: 1%">
+                                        <input type="checkbox" name="is_short_description" value="1" {{$product->is_short_description == 1 ? 'checked' : ''}} style="margin-top: 5%;margin-left: 1%">
                                         @error('short_description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -306,7 +351,7 @@
                                 <div class="row">
                                     <label class="col-md-3 col-form-label">Short Description</label>
                                     <div class="col-md-9">
-                                        <textarea type="text" name="short_description" id="shot_summernote" class="form-control @error('short_description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Short Description"></textarea>
+                                        <textarea type="text" name="short_description" id="shot_summernote" class="form-control @error('short_description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Short Description">{{$product->getTranslation('short_description', request()->lang)}}</textarea>
                                         @error('short_description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -323,7 +368,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Meta title</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Meta title"/>
+                                        <input type="text" name="meta_title" value="{{$product->meta_title}}" class="form-control @error('meta_title') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Meta title"/>
                                         @error('meta_title')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -332,7 +377,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Meta Description</label>
                                     <div class="col-md-9">
-                                        <textarea type="text" style="height: 200px" name="meta_description" class="form-control @error('meta_description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Meta Description"></textarea>
+                                        <textarea type="text" style="height: 200px" name="meta_description" class="form-control @error('meta_description') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter Meta Description">{{$product->meta_description}}</textarea>
                                         @error('meta_description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -342,6 +387,7 @@
                                     <label class="col-md-3 col-form-label">Meta Image</label>
                                     <div class="col-md-9">
                                         <input type="file" name="meta_image" class="form-control @error('meta_image') is-invalid @enderror" aria-describedby="emailHelp"/>
+                                        <img src="{{asset($product->meta_image)}}" alt="" style="height: 80px;" class="mt-2">
                                         @error('meta_image')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -360,7 +406,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-7 col-form-label">Status</label>
                                     <div class="col-md-5">
-                                        <input type="checkbox" id="switch2" value="1" class="form-control" name="is_featured" data-switch="bool"/>
+                                        <input type="checkbox" id="switch2" value="1" {{$product->is_featured == 1 ? 'checked' : ''}} class="form-control" name="is_featured" data-switch="bool"/>
                                         <label for="switch2" data-on-label="On" data-off-label="Off"></label>
                                     </div>
                                 </div>
@@ -375,7 +421,7 @@
                                 <div class="row mb-3">
                                     <label class="col-md-7 col-form-label">Status</label>
                                     <div class="col-md-5">
-                                        <input type="checkbox" id="switch3" value="1" class="form-control" name="cash_on_delivery" data-switch="bool"/>
+                                        <input type="checkbox" id="switch3" value="1" class="form-control" {{$product->cash_on_delivery == 1 ? 'checked' : ''}} name="cash_on_delivery" data-switch="bool"/>
                                         <label for="switch3" data-on-label="On" data-off-label="Off"></label>
                                     </div>
                                 </div>
@@ -483,6 +529,9 @@
             const colorOptions = Array.from(colorsSelect.options);
             const sizeOptions = Array.from(sizesSelect.options);
 
+            // Existing variants loaded from the server
+            const existingVariants = @json($product->variants);
+
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -500,7 +549,11 @@
             function generateVariantInputs() {
                 const selectedColors = Array.from(colorsSelect.selectedOptions).map(option => option.value);
                 const selectedSizes = Array.from(sizesSelect.selectedOptions).map(option => option.value);
+
+                // Clear existing inputs
                 variantInputsContainer.innerHTML = '';
+
+                let hasVariants = false;
 
                 if (selectedColors.length > 0) {
                     selectedColors.forEach(colorId => {
@@ -509,72 +562,99 @@
                         if (selectedSizes.length > 0) {
                             selectedSizes.forEach(sizeId => {
                                 const sizeName = getSizeNameById(sizeId);
+
+                                // Find the existing variant if available
+                                const existingVariant = existingVariants.find(variant => variant.color_id == colorId && variant.size_id == sizeId);
+                                const price = existingVariant ? existingVariant.price : '';
+                                const quantity = existingVariant ? existingVariant.qty : '';
+                                const image = existingVariant ? existingVariant.image : '';
+
                                 const variantHtml = `
-                            <div class="row mb-3 variant-row" data-color="${colorId}" data-size="${sizeId}">
-                                <label class="col-md-3 col-form-label">${colorName} - ${sizeName}</label>
-                                <input type="hidden" name="variant_name_${colorId}_${sizeId}" class="form-control" value="${colorName} - ${sizeName}" readonly />
+                                <div class="row mb-3 variant-row" data-color="${colorId}" data-size="${sizeId}">
+                                    <label class="col-md-3 col-form-label">${colorName} - ${sizeName}</label>
+                                    <input type="hidden" name="variant_name_${colorId}_${sizeId}" class="form-control" value="${colorName} - ${sizeName}" readonly />
+                                    <div class="col-md-3">
+                                        <input type="number" name="variant_price_${colorId}_${sizeId}" class="form-control" placeholder="Price" value="${price}" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" name="variant_qty_${colorId}_${sizeId}" class="form-control" placeholder="Quantity" value="${quantity}" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" name="variant_image_${colorId}_${sizeId}" class="form-control" />
+                                        ${image ? `<img src="{{ asset('${image}') }}" alt="${colorName} - ${sizeName}" width="50">` : ''}
+                                    </div>
+                                </div>
+                            `;
+                                variantInputsContainer.insertAdjacentHTML('beforeend', variantHtml);
+                                hasVariants = true;
+                            });
+                        } else {
+                            const existingVariant = existingVariants.find(variant => variant.color_id == colorId && !variant.size_id);
+                            const price = existingVariant ? existingVariant.price : '';
+                            const quantity = existingVariant ? existingVariant.qty : '';
+                            const image = existingVariant ? existingVariant.image : '';
+
+                            const variantHtml = `
+                            <div class="row mb-3 variant-row" data-color="${colorId}">
+                                <label class="col-md-3 col-form-label">${colorName}</label>
+                                <input type="hidden" name="variant_name_${colorId}" class="form-control" value="${colorName}" readonly />
                                 <div class="col-md-3">
-                                    <input type="number" name="variant_price_${colorId}_${sizeId}" class="form-control" placeholder="Price" required />
+                                    <input type="number" name="variant_price_${colorId}" class="form-control" placeholder="Price" value="${price}" required />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="number" name="variant_qty_${colorId}_${sizeId}" class="form-control" placeholder="Quantity" required />
+                                    <input type="number" name="variant_qty_${colorId}" class="form-control" placeholder="Quantity" value="${quantity}" required />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="file" name="variant_image_${colorId}_${sizeId}" class="form-control" />
+                                    <input type="file" name="variant_image_${colorId}" class="form-control" />
+                                    ${image ? `<img src="{{ asset('${image}') }}" alt="${colorName}" width="50">` : ''}
                                 </div>
                             </div>
                         `;
-                                variantInputsContainer.insertAdjacentHTML('beforeend', variantHtml);
-                            });
-                        } else {
-                            const variantHtml = `
-                        <div class="row mb-3 variant-row" data-color="${colorId}">
-                            <label class="col-md-3 col-form-label">${colorName}</label>
-                            <input type="hidden" name="variant_name_${colorId}" class="form-control" value="${colorName}" readonly />
+                            variantInputsContainer.insertAdjacentHTML('beforeend', variantHtml);
+                            hasVariants = true;
+                        }
+                    });
+                } else if (selectedSizes.length > 0) {
+                    // Handle the case where only sizes are selected
+                    selectedSizes.forEach(sizeId => {
+                        const sizeName = capitalizeFirstLetter(getSizeNameById(sizeId));
+
+                        const existingVariant = existingVariants.find(variant => !variant.color_id && variant.size_id == sizeId);
+                        const price = existingVariant ? existingVariant.price : '';
+                        const quantity = existingVariant ? existingVariant.qty : '';
+                        const image = existingVariant ? existingVariant.image : '';
+
+                        const variantHtml = `
+                        <div class="row mb-3 variant-row" data-size="${sizeId}">
+                            <label class="col-md-3 col-form-label">${sizeName}</label>
+                            <input type="hidden" name="variant_name_${sizeId}" class="form-control" value="${sizeName}" readonly />
                             <div class="col-md-3">
-                                <input type="number" name="variant_price_${colorId}" class="form-control" placeholder="Price" required />
+                                <input type="number" name="variant_price_${sizeId}" class="form-control" placeholder="Price" value="${price}" required />
                             </div>
                             <div class="col-md-3">
-                                <input type="number" name="variant_qty_${colorId}" class="form-control" placeholder="Quantity" required />
+                                <input type="number" name="variant_qty_${sizeId}" class="form-control" placeholder="Quantity" value="${quantity}" required />
                             </div>
                             <div class="col-md-3">
-                                <input type="file" name="variant_image_${colorId}" class="form-control" />
+                                <input type="file" name="variant_image_${sizeId}" class="form-control" />
+                                ${image ? `<img src="{{ asset('${image}') }}" alt="${sizeName}" width="50">` : ''}
                             </div>
                         </div>
                     `;
-                            variantInputsContainer.insertAdjacentHTML('beforeend', variantHtml);
-                        }
-                    });
-                } else if (selectedSizes.length > 0) { // Handle the case where only sizes are selected
-                    selectedSizes.forEach(sizeId => {
-                        const sizeName = capitalizeFirstLetter(getSizeNameById(sizeId));
-                        const variantHtml = `
-                    <div class="row mb-3 variant-row" data-size="${sizeId}">
-                        <label class="col-md-3 col-form-label">${sizeName}</label>
-                        <input type="hidden" name="variant_name_${sizeId}" class="form-control" value="${sizeName}" readonly />
-                        <div class="col-md-3">
-                            <input type="number" name="variant_price_${sizeId}" class="form-control" placeholder="Price" required />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" name="variant_qty_${sizeId}" class="form-control" placeholder="Quantity" required />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="file" name="variant_image_${sizeId}" class="form-control" />
-                        </div>
-                    </div>
-                `;
                         variantInputsContainer.insertAdjacentHTML('beforeend', variantHtml);
+                        hasVariants = true;
                     });
                 }
+
+                // Show or hide the container based on whether there are any variants
+                variantInputsContainer.style.display = hasVariants ? 'block' : 'none';
             }
 
             colorsSelect.addEventListener('change', generateVariantInputs);
             sizesSelect.addEventListener('change', generateVariantInputs);
 
-            // Initial load
+            // Initial check
             generateVariantInputs();
         });
-
     </script>
 
     <script>

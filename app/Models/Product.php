@@ -57,4 +57,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)->whereNotNull('gellery_image')->orderBy('id');
     }
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'user_id');
+    }
 }

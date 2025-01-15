@@ -184,7 +184,7 @@
         </a>
     </li>
     @endif
-    @if ($userType == 1 || !empty(array_filter(['seller.pending', 'seller.approved', 'seller.ban'], fn($route) => in_array($route, $roleRoutes))))
+    @if ($userType == 1 || !empty(array_filter(['seller.pending','product.manage-seller', 'seller.approved', 'seller.ban'], fn($route) => in_array($route, $roleRoutes))))
         <li class="side-nav-item">
             <a data-bs-toggle="collapse" href="#sidebarSellers" aria-expanded="false" aria-controls="sidebarSellers" class="side-nav-link">
                 <i class="uil-user-square"></i>
@@ -193,6 +193,11 @@
             </a>
             <div class="collapse" id="sidebarSellers">
                 <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('product.manage-seller', $roleRoutes))
+                        <li>
+                            <a href="{{route('product.manage-seller')}}">Seller Products</a>
+                        </li>
+                    @endif
                     @if ($userType == 1 || in_array('seller.pending', $roleRoutes))
                         <li>
                             <a href="{{ route('seller.pending') }}">Seller Pending</a>
