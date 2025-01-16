@@ -130,6 +130,19 @@
     <!-- Bootstrap-Select JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
+    <style>
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .copy-btn:hover {
+            color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
@@ -210,16 +223,20 @@
                         </li>
 
                         <li class="nav-item">
-                            <button class="nav-link d-flex justify-content-between align-items-center collapsed" id="pills-order-tab"
-                                    data-bs-toggle="collapse" data-bs-target="#order-submenu" aria-expanded="false"
+                            <button class="nav-link @if(Route::is(['seller.order.pending', 'seller.order.manage'])) active @endif d-flex justify-content-between align-items-center @if(Route::is(['seller.order.pending', 'seller.order.manage'])) @else collapsed @endif"
+                                    data-bs-toggle="collapse" data-bs-target="#order-submenu" aria-expanded="@if(Route::is(['seller.order.pending', 'seller.order.manage'])) true @else false @endif"
                                     aria-controls="order-submenu" type="button" role="tab">
                                 <span><i data-feather="shopping-bag"></i>Sales</span>
                                 <i class="fa fa-chevron-right rotate-icon"></i>
                             </button>
-                            <div class="collapse" id="order-submenu">
+                            <div class="collapse @if(Route::is(['seller.order.pending', 'seller.order.manage'])) show @endif" id="order-submenu">
                                 <ul class="nav flex-column ms-3">
-                                    <li class="libottom"><a href="#order1" class="nav-link libottom">Pending Orders</a></li>
-                                    <li class="libottom"><a href="#order2" class="nav-link libottom">All Orders</a></li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.order.pending')}}" class="nav-link @if(Route::is('seller.order.pending')) active @endif libottom">Pending Orders</a>
+                                    </li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.order.manage')}}" class="nav-link @if(Route::is('seller.order.manage')) active @endif libottom">All Orders</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -252,9 +269,9 @@
                         </li>
 
                         <li class="nav-item">
-                            <button class="nav-link" type="button">
+                            <a href="{{route('seller.manage-shop')}}" class="nav-link @if(Route::is('seller.manage-shop')) active @endif" type="button">
                                 <i data-feather="settings"></i> Manage Shop
-                            </button>
+                            </a>
                         </li>
 
                         <li class="nav-item">
@@ -280,6 +297,16 @@
     </div>
 </section>
 <!-- User Dashboard Section End -->
+
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert('Order code copied to clipboard!');
+        }, function(err) {
+            alert('Failed to copy text: ', err);
+        });
+    }
+</script>
 
 
 <!-- latest jquery-->

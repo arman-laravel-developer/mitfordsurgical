@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentHistory;
@@ -10,6 +11,7 @@ use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Cart;
+use Mpdf\Mpdf;
 use Session;
 use PDF;
 
@@ -236,16 +238,47 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order status update successfull');
     }
 
-    public function generatePDF()
+    public function invoice($id)
     {
-        // Load the view and pass data to it (if any)
-        $pdf = PDF::loadView('front.pdf.template');
 
-        return view('front.pdf.template');
-        // Stream the generated PDF to the browser
-        return $pdf->stream('sample.pdf');
+        $order = Order::find($id);
+        $setting = GeneralSetting::latest()->first();
+        // Convert the image to a base64 string
+        $imagePath = asset($setting->header_logo);
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageSrc = 'data:image/png;base64,' . $imageData;
 
-        // To download the PDF as a file, use:
-        // return $pdf->download('sample.pdf');
+        // Convert the image to a base64 string
+        $paidImagePath = asset('front/assets/images/paid.png');
+        $paidImageData = base64_encode(file_get_contents($paidImagePath));
+        $paidImageSrc = 'data:image/png;base64,' . $paidImageData;
+        // Convert the image to a base64 string
+
+        $unpaidImagePath = asset('front/assets/images/unpaid.png');
+        $unpaidImageData = base64_encode(file_get_contents($unpaidImagePath));
+        $unpaidImageSrc = 'data:image/png;base64,' . $unpaidImageData;
+
+        if (!$order) {
+            abort(404, 'Order not found');
+        }
+        $pdf = Pdf::loadView('front.invoice.invoice', [
+            'order' => $order,
+            'imageSrc' => $imageSrc,
+            'paidImageSrc' => $paidImageSrc,
+            'unpaidImageSrc' => $unpaidImageSrc
+        ]);
+        $code = $order->order_code;
+        return $pdf->download("{$code}_invoice.pdf");
+
+//        return view('front.invoice.invoice', [
+//            'order' => $order,
+//            'imageSrc' => $imageSrc,
+//            'paidImageSrc' => $paidImageSrc,
+//            'unpaidImageSrc' => $unpaidImageSrc
+//        ]);
+
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadHTML('<h1>Test</h1>');
+//        return $pdf->stream();
     }
 }

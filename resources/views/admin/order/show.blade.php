@@ -151,7 +151,13 @@
                                             </td>
                                             <td>
                                                 <b>{{ $orderDetail->product->category->category_name }}</b> <br>
-                                                {{ $orderDetail->product->name }}
+                                                {{ $orderDetail->product->name }} <br>
+                                                @if($orderDetail->product->added_by == 'seller')
+                                                    @php
+                                                    $shop = \App\Models\Shop::where('seller_id',$orderDetail->product->user_id)->first();
+                                                    @endphp
+                                                Shop Name: {{$shop->shop_name}}
+                                                @endif
                                             </td>
                                             <td>{{ $orderDetail->qty }}</td>
                                             <td>

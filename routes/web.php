@@ -66,6 +66,8 @@ Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->nam
 
 Route::get('/download-pdf', [OrderController::class, 'generatePDF']);
 
+Route::post('/invoice-download/{id}', [OrderController::class, 'invoice'])->name('invoice.download');
+
 Route::get('/track-my-order', [TrackOrderController::class, 'index'])->name('track.order');
 Route::get('/track-my-order-result', [TrackOrderController::class, 'result'])->name('show.track-result');
 

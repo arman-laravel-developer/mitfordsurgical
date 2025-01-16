@@ -25,7 +25,7 @@ class Product extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'added_by');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function otherImages()
@@ -62,4 +62,9 @@ class Product extends Model
     {
         return $this->belongsTo(Seller::class, 'user_id');
     }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
 }

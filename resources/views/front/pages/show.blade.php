@@ -75,7 +75,7 @@
                                     <p>
                                         {{translate('Category')}}: <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a>&nbsp;&nbsp;
                                         @php
-                                            $shop = \App\Models\Shop::find($product->user_id);
+                                            $shop = \App\Models\Shop::where('seller_id',$product->user_id)->first();
                                         @endphp
                                         {{translate('Sold By')}}: @if($product->added_by == 'admin') {{translate('In House Product')}}
                                         @else

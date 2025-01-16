@@ -615,7 +615,7 @@
                                     <ul>
                                         @if(Session::get('seller_id'))
                                         <li class="mb-0">
-                                            <a href="" class="btn btn-md bg-primary text-white">{{translate('Dashboard')}}</a>
+                                            <a href="{{route('seller.dashboard')}}" class="btn btn-md bg-primary text-white">{{translate('Dashboard')}}</a>
                                         </li>
                                         @else
                                         <li class="mb-0">

@@ -66,6 +66,7 @@ class SellerController extends Controller
 
         $shop = new Shop();
         $shop->shop_name = $request->shop_name;
+        $shop->slug = Str::slug($request->shop_name);
         $shop->address = $request->shop_address;
         $shop->seller_id = $seller->id;
         $shop->save();

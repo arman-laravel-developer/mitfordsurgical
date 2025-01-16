@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerProductController;
+use App\Http\Controllers\SellerOrderController;
+use App\Http\Controllers\ManageShopController;
 
 //seller login-registraion
 
@@ -27,6 +29,23 @@ Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.ve
     Route::get('/product/edit/{id}', [SellerProductController::class, 'edit'])->name('seller-product.edit');
     Route::post('/product/update/{id}', [SellerProductController::class, 'update'])->name('seller-product.update');
     Route::post('/product/delete/{id}', [SellerProductController::class, 'delete'])->name('seller-product.delete');
+
+    Route::group(['prefix' => 'order', 'as' => 'seller.'], function(){
+        Route::get('/all-order', [SellerOrderController::class, 'index'])->name('order.manage');
+        Route::get('/pending-order', [SellerOrderController::class, 'pending'])->name('order.pending');
+        Route::get('/confirmed-order', [SellerOrderController::class, 'confirmed'])->name('order.confirmed');
+        Route::get('/proccessing-order', [SellerOrderController::class, 'proccessing'])->name('order.proccessing');
+        Route::get('/delivered-order', [SellerOrderController::class, 'delivered'])->name('order.delivered');
+        Route::get('/shipped-order', [SellerOrderController::class, 'shipped'])->name('order.shipped');
+        Route::get('/canceled-order', [SellerOrderController::class, 'canceled'])->name('order.canceled');
+        Route::get('/order-show/{id}', [SellerOrderController::class, 'show'])->name('order.show');
+        Route::post('/order-delete/{id}', [SellerOrderController::class, 'delete'])->name('order.delete');
+        Route::post('/order-payment-status-update', [SellerOrderController::class, 'paymentStatusUpdate'])->name('order-payment-status.update');
+        Route::post('/order-status-update', [SellerOrderController::class, 'orderStatusUpdate'])->name('order-status.update');
+    });
+
+    Route::get('/manage/shop', [ManageShopController::class, 'index'])->name('seller.manage-shop');
+    Route::post('/update/shop', [ManageShopController::class, 'update'])->name('seller.shop-update');
 });
 Route::post('/seller/logout', [SellerDashboardController::class, 'logout'])->name('seller.logout')->middleware('seller.logout');
 
