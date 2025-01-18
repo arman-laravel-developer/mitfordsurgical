@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>{{route('home')}}-{{$order->order_code}}-Invoice</title>
     <style>
         body {
             margin: 0;
