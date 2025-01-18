@@ -166,9 +166,14 @@
             <td>Unit Price</td>
             <td style="text-align: right;">Total</td>
         </tr>
-        @foreach($order->orderDetails as $orderDetail)
+        @php
+            $totalPrice = 0;
+            $totalQty = 0;
+        @endphp
+        @foreach($order->orderDetails as $index => $orderDetail)
+            @if($orderDetail->product->user_id == Session::get('seller_id'))
         <tr class="item">
-            <td>{{$loop->iteration}}</td>
+            <td>{{$index}}</td>
             <td>
                 {{$orderDetail->product->name}}
             </td>
@@ -183,6 +188,12 @@
             <td>&#2547; {{number_format($orderDetail->price,0)}}</td>
             <td>&#2547; {{number_format($orderDetail->price * $orderDetail->qty,2)}}</td>
         </tr>
+                @php
+                    // Calculate the total price and quantity for matched products
+                    $totalPrice += $orderDetail->price * $orderDetail->qty;
+                    $totalQty += $orderDetail->qty;
+                @endphp
+            @endif
         @endforeach
     </table>
     <div style="padding:0;">
@@ -206,21 +217,18 @@
 {{--                        </div>--}}
 {{--                    @endif--}}
                 </td>
-                @php
-                    $totalFinal = $order->grand_total + $order->shipping_cost;
-                @endphp
                 <td>
                     <table class="text-left sm-padding small strong">
                         <tbody>
                         <tr>
                             <td class="gry-color text-left">Sub Total</td>
-                            <td class="text-right">&#2547; {{number_format($order->grand_total,2)}}</td>
+                            <td class="text-right">&#2547; {{number_format($totalPrice,2)}}</td>
                         </tr>
                         <tr>
                             <td class="gry-color text-left">Shipping Cost</td>
 
                             <td class="text-right">
-                                <span>&#2547; {{number_format($order->shipping_cost,2)}}</span>
+                                <span>&#2547; 0.00</span>
                             </td>
 
                         </tr>
@@ -230,7 +238,7 @@
                         </tr>
                         <tr>
                             <th class="text-left strong">Grand Total</th>
-                            <td class="text-right">&#2547; <strong>{{number_format($totalFinal, 2)}}</strong></td>
+                            <td class="text-right">&#2547; <strong>{{number_format($totalPrice, 2)}}</strong></td>
                         </tr>
                         </tbody>
                     </table>
@@ -240,7 +248,7 @@
         </table>
     </div>
 </div>
-<p class="bold">In Words: {{ convert_number($totalFinal) }} Taka Only.</p>
+<p class="bold">In Words: {{ convert_number($totalPrice) }} Taka Only.</p>
 <div class="footer">
     <table class="signature-table" style="width: 100%; margin-right: 10%; text-align: center;">
         <tr>

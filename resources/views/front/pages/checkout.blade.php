@@ -264,7 +264,7 @@
                                 <div class="checkout-detail">
                                     <div class="form-check custom-form-check">
                                         <label class="form-check-label" for="cash" style="margin-left: -11%">
-                                            <input class="form-check-input mt-0" type="radio" name="payment_method" value="cod" id="cash" checked required> Cash On Delivery
+                                            <input class="form-check-input mt-0" type="radio" name="payment_method" value="cod" id="cash" checked required> {{translate('Cash On Delivery')}}
                                         </label>
                                     </div>
                                 </div>

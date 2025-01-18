@@ -152,7 +152,7 @@
 
                                     <div class="pickup-box">
                                         <div class="product-title">
-                                            <h4>Product Information</h4>
+                                            <h4>{{translate('Product Information')}}</h4>
                                         </div>
 
                                         <div class="pickup-detail">
@@ -161,7 +161,7 @@
                                     </div>
                                     <div class="payment-option">
                                         <div class="product-title">
-                                            <h4>Guaranteed Safe Checkout</h4>
+                                            <h4>{{translate('Guaranteed Safe Checkout')}}</h4>
                                         </div>
                                         <ul>
                                             <li>
@@ -210,17 +210,17 @@
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="info-tab" data-bs-toggle="tab"
-                                            data-bs-target="#info" type="button" role="tab">Video</button>
+                                            data-bs-target="#info" type="button" role="tab">{{translate('Video')}}</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="care-tab" data-bs-toggle="tab"
-                                            data-bs-target="#care" type="button" role="tab">PDF</button>
+                                            data-bs-target="#care" type="button" role="tab">{{translate('PDF')}}</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="review-tab" data-bs-toggle="tab"
-                                            data-bs-target="#review" type="button" role="tab">Review</button>
+                                            data-bs-target="#review" type="button" role="tab">{{translate('Review')}}</button>
                                 </li>
                             </ul>
 
@@ -248,7 +248,7 @@
                                 <div class="tab-pane fade" id="care" role="tabpanel">
                                     <div class="information-box" style="text-align: center;">
                                         <a href="{{ asset($product->pdf) }}" download class="btn btn-danger" style="display: inline-block; margin: 20px auto; background-color: red; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
-                                            Download Now
+                                            {{translate('Download Now')}}
                                         </a>
                                     </div>
                                 </div>

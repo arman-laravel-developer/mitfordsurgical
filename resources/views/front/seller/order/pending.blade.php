@@ -21,6 +21,7 @@
                         <th scope="col">Qty</th>
                         <th scope="col">Status</th>
                         <th scope="col">Order Total</th>
+                        <th scope="col">Download</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,6 +69,12 @@
                             </td>
                             <td>
                                 <h6>&#2547; {{ $totalPrice }}</h6>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="text-success" onclick="event.preventDefault();document.getElementById('downloadInvoice').submit();"><i class="fa fa-download"></i></a>
+                                <form action="{{route('seller.invoice-download', ['id' => $order->id])}}" id="downloadInvoice" method="POST">
+                                    @csrf
+                                </form>
                             </td>
                         </tr>
                     @endforeach

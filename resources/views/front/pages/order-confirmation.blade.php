@@ -67,9 +67,9 @@
                             </div>
 
                             <div class="order-contain">
-                                <h3 class="theme-color">Order Success</h3>
-                                <h5 class="text-content">Payment Is Successfully And Your Order Is On The Way</h5>
-                                <h6>Order Code: {{$order->order_code}}</h6>
+                                <h3 class="theme-color">{{translate('Order Success')}}</h3>
+                                <h5 class="text-content">{{translate('Payment Is Successfully And Your Order Is On The Way')}}</h5>
+                                <h6>{{translate('Order Code')}}: {{$order->order_code}}</h6>
                             </div>
                         </div>
                     </div>
@@ -99,12 +99,12 @@
                                             <div class="product-detail">
                                                 <ul>
                                                     <li class="name">
-                                                        <a href="{{route('product.detail', ['id' => $orderDetail->product_id, 'slug' => $orderDetail->product->slug])}}" target="_blank">{{$orderDetail->product->name}}</a>
+                                                        <a href="{{route('product.detail', ['id' => $orderDetail->product_id, 'slug' => $orderDetail->product->slug])}}" target="_blank">{{$orderDetail->product->getTranslation('name')}}</a>
                                                     </li>
                                                     @if($orderDetail->product->added_by == 'admin')
-                                                        <li class="text-content">Sold By: In house</li>
+                                                        <li class="text-content">{{translate('Sold By')}}: In house</li>
                                                     @else
-                                                        <li class="text-content">Sold By: Fresho</li>
+                                                        <li class="text-content">{{translate('Sold By')}}: Fresho</li>
                                                     @endif
                                                     @if($orderDetail->product->is_variant == 1)
                                                     <li class="text-content">Variant - {{$orderDetail->variant->variant}}</li>
@@ -115,17 +115,17 @@
                                     </td>
 
                                     <td class="price">
-                                        <h4 class="table-title text-content">Price</h4>
+                                        <h4 class="table-title text-content">{{translate('Price')}}</h4>
                                         <h6 class="theme-color">&#2547; {{number_format($orderDetail->price)}}</h6>
                                     </td>
 
                                     <td class="quantity">
-                                        <h4 class="table-title text-content">Qty</h4>
+                                        <h4 class="table-title text-content">{{translate('Qty')}}</h4>
                                         <h4 class="text-title">{{$orderDetail->qty}}</h4>
                                     </td>
 
                                     <td class="subtotal">
-                                        <h4 class="table-title text-content">Total</h4>
+                                        <h4 class="table-title text-content">{{translate('Total')}}</h4>
                                         <h5>&#2547; {{number_format($orderDetail->price * $orderDetail->qty)}}</h5>
                                     </td>
                                 </tr>
@@ -141,18 +141,18 @@
                         <div class="col-lg-12 col-sm-6">
                             <div class="summery-box">
                                 <div class="summery-header">
-                                    <h3>Price Details</h3>
-                                    <h5 class="ms-auto theme-color">({{$order->total_qty}} Items)</h5>
+                                    <h3>{{translate('Price Details')}}</h3>
+                                    <h5 class="ms-auto theme-color">({{$order->total_qty}} {{translate('Items')}})</h5>
                                 </div>
 
                                 <ul class="summery-contain">
                                     <li>
-                                        <h4>SubTotal</h4>
+                                        <h4>{{translate('SubTotal')}}</h4>
                                         <h4 class="price">&#2547;{{number_format($order->grand_total)}}</h4>
                                     </li>
 
                                     <li>
-                                        <h4>Shipping Cost</h4>
+                                        <h4>{{translate('Shipping Cost')}}</h4>
                                         <h4 class="price theme-color">&#2547;{{number_format($order->shipping_cost)}}</h4>
                                     </li>
 
@@ -164,7 +164,7 @@
 
                                 <ul class="summery-total">
                                     <li class="list-total">
-                                        <h4>Total (BDT)</h4>
+                                        <h4>{{translate('Total (BDT)')}}</h4>
                                         <h4 class="price">&#2547;{{number_format($order->grand_total+$order->shipping_cost)}}</h4>
                                     </li>
                                 </ul>
@@ -174,7 +174,7 @@
                         <div class="col-lg-12 col-sm-6">
                             <div class="summery-box">
                                 <div class="summery-header d-block">
-                                    <h3>Shipping Address</h3>
+                                    <h3>{{translate('Shipping Address')}}</h3>
                                 </div>
 
                                 <ul class="summery-contain pb-0 border-bottom-0">
@@ -183,12 +183,12 @@
                                     </li>
 
                                     <li class="pb-0">
-                                        <h4>Expected Date Of Delivery:</h4>
+                                        <h4>{{translate('Expected Date Of Delivery')}}:</h4>
                                         <h4 class="price theme-color">
                                             <form id="orderForm" action="{{route('show.track-result')}}" method="GET">
                                                 <div class="input-group">
                                                     <input type="hidden" class="form-control" value="{{$order->order_code}}" name="order_code" id="order-id" placeholder="">
-                                                    <button style="border: none" class="text-danger" type="submit">Track Order</button>
+                                                    <button style="border: none" class="text-danger" type="submit">{{translate('Track Order')}}</button>
                                                 </div>
                                             </form>
                                         </h4>
@@ -218,13 +218,28 @@
                         <div class="col-12">
                             <div class="summery-box">
                                 <div class="summery-header d-block">
-                                    <h3>Payment Method</h3>
+                                    <h3>{{translate('Payment Method')}}</h3>
                                 </div>
 
                                 <ul class="summery-contain pb-0 border-bottom-0">
                                     <li class="d-block pt-0">
-                                        <p class="text-content">@if($order->payment_method == 'cod') Cash On Delivery @endif</p>
+                                        <p class="text-content">@if($order->payment_method == 'cod') {{translate('Cash On Delivery')}} @endif</p>
                                     </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="summery-box">
+                                <div class="summery-header d-block">
+                                    <h3>{{translate('My Download')}}</h3>
+                                </div>
+
+                                <ul class="summery-contain pb-0 border-bottom-0">
+                                    <a href="{{route('products.all')}}" class="text-danger">{{translate('Continue to shopping')}}</a>
+                                    <a href="javascript:void(0)" class="text-success" onclick="event.preventDefault();document.getElementById('downloadInvoice').submit();">{{translate('Download')}}</a>
+                                    <form action="{{route('invoice.download', ['id' => $order->id])}}" id="downloadInvoice" method="POST">
+                                        @csrf
+                                    </form>
                                 </ul>
                             </div>
                         </div>

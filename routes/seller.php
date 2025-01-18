@@ -23,6 +23,8 @@ Route::post('/verify-form-store', [SellerController::class, 'verify_form_store']
 Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.verified', 'seller.unbanned']], function() {
     Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
 
+    Route::post('/seller-invoice-download/{id}', [SellerDashboardController::class, 'invoice'])->name('seller.invoice-download');
+
     Route::get('/product/add', [SellerProductController::class, 'index'])->name('seller.product-add');
     Route::get('/product/manage', [SellerProductController::class, 'manage'])->name('seller.product-manage');
     Route::post('/product/create', [SellerProductController::class, 'create'])->name('seller-product.new');

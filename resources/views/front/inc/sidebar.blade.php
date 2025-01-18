@@ -12,7 +12,7 @@
                     <div class="category-list d-flex justify-content-between align-items-center">
                         <h5>
                             <a href="{{ route('category.product', ['id' => $menuCategory->id, 'slug' => $menuCategory->slug]) }}"
-                               class="category-toggle {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) ? 'active' : '' }}"
+                               class="category-toggle {{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) ? 'text-primary' : '' }}"
                                data-bs-target="#category{{$menuCategory->id}}"
                                aria-expanded="{{ request()->is('category-products/'.$menuCategory->id.'-'.$menuCategory->slug) ? 'true' : 'false' }}"
                                aria-controls="category{{$menuCategory->id}}">
@@ -32,7 +32,7 @@
                                 @foreach($menuCategory->subCategories as $subCategory)
                                     <li>
                                         <a href="{{ route('category.product', ['id' => $subCategory->id, 'slug' => $subCategory->slug]) }}"
-                                           class="{{ request()->is('category-products/'.$subCategory->id.'-'.$subCategory->slug) ? 'active' : '' }}">
+                                           class="{{ request()->is('category-products/'.$subCategory->id.'-'.$subCategory->slug) ? 'text-primary' : '' }}">
                                             {{$subCategory->getTranslation('category_name')}}
                                         </a>
                                     </li>

@@ -1,21 +1,21 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Forget Password
+{{$generalSettingView->site_name}} - {{translate('Forget Password')}}
 @endsection
 
 @section('body')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="page-header text-center" style="background-image: url('{{asset('/')}}front/assets/images/page-header-bg.jpg')">
         <div class="container">
-            <h1 class="page-title">Forget Password</h1>
+            <h1 class="page-title">{{translate('Forget Password')}}</h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Forget Password</li>
+                <li class="breadcrumb-item"><a href="{{route('home')}}">{{translate('Home')}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{translate('Forget Password')}}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -29,7 +29,7 @@
                             @csrf
 
                             <div class="input-group mb-3">
-                                <input type="password" id="password" name="password" class="form-control form-control-rounded @error('password') is-invalid @enderror" placeholder="New Password" required>
+                                <input type="password" id="password" name="password" class="form-control form-control-rounded @error('password') is-invalid @enderror" placeholder="{{translate('New Password')}}" required>
                                 <span class="input-group-text" id="toggle-password" onclick="togglePasswordVisibility()">
             <i class="fa fa-eye" id="eye-icon" style="font-size: 14px;"></i>
         </span>
@@ -39,7 +39,7 @@
                             @enderror
 
                             <div class="input-group mb-3">
-                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control form-control-rounded @error('password_confirmation') is-invalid @enderror" placeholder="Confirm New Password" required>
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control form-control-rounded @error('password_confirmation') is-invalid @enderror" placeholder="{{translate('Confirm New Password')}}" required>
                                 <span class="input-group-text" id="toggle-password-confirm" onclick="togglePasswordConfirmationVisibility()">
             <i class="fa fa-eye" id="eye-icon-confirm" style="font-size: 14px;"></i>
         </span>
@@ -48,7 +48,7 @@
                             <div class="alert alert-danger mb-2">{{ $message }}</div>
                             @enderror
 
-                            <button class="btn btn-primary" type="submit"><span>Save Password</span><i class="icon-long-arrow-right"></i></button>
+                            <button class="btn btn-primary" type="submit"><span>{{translate('Save Password')}}</span><i class="icon-long-arrow-right"></i></button>
                         </form>
 
                         <script>

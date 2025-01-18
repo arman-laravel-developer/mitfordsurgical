@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 1%;">
-                            <h2>Search</h2>
+                            <h2>{{translate('Search')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Search</li>
+                                    <li class="breadcrumb-item active">{{translate('Search')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -50,14 +50,14 @@
                 <div class="row">
                     <div class="col-xxl-6 col-xl-8 mx-auto">
                         <div class="title d-block text-center main-title">
-                            <h2 class="opacity-50 main-title">Search result for "{{request()->q}}"</h2>
+                            <h2 class="opacity-50 main-title">{{translate('Search result for')}} "{{request()->q}}"</h2>
                         </div>
 
                         <form action="{{route('search.result')}}" method="GET" enctype="multipart/form-data">
                             <div class="search-box mobile-view-search">
                                 <div class="input-group">
                                     <input type="text" name="q" value="{{$query}}" class="form-control" placeholder="{{ translate("I'm searching for") }}...">
-                                    <button class="btn theme-bg-color text-white m-0" type="submit" id="button-addon1">Search</button>
+                                    <button class="btn theme-bg-color text-white m-0" type="submit" id="button-addon1">{{translate('Search')}}</button>
                                 </div>
                             </div>
                         </form>
@@ -147,7 +147,7 @@
                 </div>
                 <div id="scroll-target"></div> <!-- Target for detecting scroll -->
             @else
-                <h4 class="text-center opacity-50 mt-5">No item found</h4>
+                <h4 class="text-center opacity-50 mt-5">{{translate('No item found')}}</h4>
             @endif
         </div>
     </div>

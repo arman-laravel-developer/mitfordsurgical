@@ -81,6 +81,8 @@
                                 <p class="font-13" style="margin-bottom: 0.2em"><strong>Order Status: </strong>
                                     @if($order->order_status == 'pending')
                                         <span class="badge bg-danger float-end">Pending</span>
+                                    @elseif($order->order_status == 'confirmed')
+                                        <span class="badge bg-success float-end">Confirmed</span>
                                     @elseif($order->order_status == 'delivered')
                                         <span class="badge bg-success float-end">Delivered</span>
                                     @elseif($order->order_status == 'cancel')
@@ -210,7 +212,7 @@
 
                     <div class="d-print-none mt-4">
                         <div class="text-end">
-                            <a href="javascript:window.print()" class="btn btn-primary"><i class="mdi mdi-printer"></i> Print</a>
+                            <a href="{{route('invoice.show', ['id' => $order->id, 'code' => $order->order_code])}}" target="_blank" class="btn btn-primary"><i class="mdi mdi-printer"></i> Print</a>
                             <a href="#" class="btn btn-info" onclick="event.preventDefault(); document.getElementById('invoiceDownload').submit();"><i class="mdi mdi-download"></i> Download</a>
                             <form action="{{route('invoice.download', ['id' => $order->id])}}" method="POST" id="invoiceDownload">
                                 @csrf

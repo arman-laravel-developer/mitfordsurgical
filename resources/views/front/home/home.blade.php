@@ -250,7 +250,7 @@
                     url: '{{ route("home") }}' + '?page=' + page, // Use the updated page variable
                     type: 'GET',
                     beforeSend: function() {
-                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">Loading more products...</div>'); // Display loading message
+                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate('Loading more products')}}...</div>'); // Display loading message
                     },
                     success: function(data) {
                         if (data.html) {
@@ -259,7 +259,7 @@
                             isLoading = false; // Reset loading flag
                             $('#scroll-target').html(''); // Remove loading message
                         } else {
-                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">No more products to load.</div>'); // Display end message
+                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate('No more products to load')}}.</div>'); // Display end message
                             isLoading = true; // Prevent further requests since no more data
                         }
                     },

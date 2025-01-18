@@ -330,6 +330,7 @@ class OrderController extends Controller
             'autoScriptToLang' => true,
             'autoLangToFont' => true,
             'default_font' => 'nikosh',
+            'default_font_size' => 10
         ]);
         $order = Order::find($id);
         $setting = GeneralSetting::latest()->first();
