@@ -20,7 +20,7 @@
             border-collapse: collapse;
         }
         .invoice-box table td {
-            padding: 5px;
+            padding: 2px;
             vertical-align: top;
         }
         .invoice-box table tr.information table td {
@@ -72,61 +72,57 @@
         .bold {
             font-weight: bold;
         }
-        .signature-section {
-            margin-top: 80px;
-        }
-        .signature {
-            width: 30%;
-            display: inline-block;
-            text-align: center;
-            margin-left: 2%;
-        }
         .signature-line {
-            margin-top: 50px;
             border-top: 1px solid #000;
             width: 80%;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
         }
+
+        .signature-table td {
+            width: 33.33%; /* Each cell takes up one-third of the table's width */
+        }
+
+        .signature p {
+            margin-top: 10px; /* Space between the line and text */
+            margin-bottom: 0;
+        }
+
     </style>
 </head>
 <body>
 <div class="invoice-box">
+    <div>
+        <img src="{{$imageSrc}}" alt="" style="width: 25%;">
+    </div>
+    <div class="text-center">
+        <h2><strong>INVOICE</strong></h2>
+    </div>
     <table>
-        <tr class="top">
-            <td colspan="5">
-                <table>
-                    <tr>
-                        <td class="logo">
-                            <img src="{{$imageSrc}}" alt="" style="width: 25%;">
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <td colspan="5"><h2><strong>INVOICE</strong></h2></td>
-        </tr>
         <tr class="information">
             <td colspan="5">
                 <table>
                     <tr>
                         <td>
-                            <strong>Bill To:</strong><br>
-                            {{formatBanglish($order->name)}}<br>
-                            Address: {{formatBanglish($order->address)}}<br>
-                            Email: {{$order->email ? $order->email : 'N/A'}}<br>
-                            Mobile: {{$order->mobile}}
-                        </td>
-                        <td class="text-right">
                             <strong>From:</strong><br>
                             {{route('home')}}<br>
                             Address: {{$generalSettingView->address}}<br>
                             Email: {{$generalSettingView->email}}<br>
                             Mobile: {{$generalSettingView->mobile}}<br>
+                        </td>
+                        <td class="text-right">
+                            <strong>Bill To:</strong><br>
+                            {{$order->name}}<br>
+                            Address: {{$order->address}}<br>
+                            @if($order->email != null)
+                            Email: {{$order->email}}<br>
+                            @endif
+                            Mobile: {{$order->mobile}}<br>
                             Order ID: #{{$order->order_code}}<br>
                             Order Date: {{$order->created_at->format('d-m-Y')}}<br>
-                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ''}}
+                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ''}}<br>
+                            @if($order->order_note !=null)
+                            Note: {{$order->order_note}}
+                            @endif
                         </td>
                     </tr>
                 </table>
@@ -149,8 +145,8 @@
                 @endif
             </td>
             <td>{{$orderDetail->qty}}</td>
-            <td>Tk. {{$orderDetail->price}}</td>
-            <td>Tk. {{$orderDetail->price * $orderDetail->qty}}</td>
+            <td>&#2547; {{$orderDetail->price}}</td>
+            <td>&#2547; {{$orderDetail->price * $orderDetail->qty}}</td>
         </tr>
         @endforeach
     </table>
@@ -183,23 +179,23 @@
                         <tbody>
                         <tr>
                             <td class="gry-color text-left">Sub Total</td>
-                            <td class="text-right">Tk. {{number_format($order->grand_total,2)}}</td>
+                            <td class="text-right">&#2547; {{number_format($order->grand_total,2)}}</td>
                         </tr>
                         <tr>
                             <td class="gry-color text-left">Shipping Cost</td>
 
                             <td class="text-right">
-                                <span>Tk. {{number_format($order->shipping_cost,2)}}</span>
+                                <span>&#2547; {{number_format($order->shipping_cost,2)}}</span>
                             </td>
 
                         </tr>
                         <tr class="border-bottom">
                             <td class="gry-color text-left">Coupon Discount</td>
-                            <td class="text-right">Tk. 0.00</td>
+                            <td class="text-right">&#2547; 0.00</td>
                         </tr>
                         <tr>
                             <th class="text-left strong">Grand Total</th>
-                            <th class="text-right">Tk. {{number_format($totalFinal, 2)}}</th>
+                            <td class="text-right">&#2547; <strong>{{number_format($totalFinal, 2)}}</strong></td>
                         </tr>
                         </tbody>
                     </table>
@@ -208,28 +204,30 @@
             </tbody>
         </table>
     </div>
-    <p class="bold">In Words: {{ convert_number($totalFinal) }} Taka Only.</p>
-    <footer>
-        <div class="signature-section">
-            <div class="signature">
+</div>
+<p class="bold">In Words: {{ convert_number($totalFinal) }} Taka Only.</p>
+<footer>
+    <table class="signature-table" style="width: 100%; text-align: center;">
+        <tr>
+            <td>
                 <div class="signature-line"></div>
                 <p>Prepared by</p>
-            </div>
-            <div class="signature">
+            </td>
+            <td>
                 <div class="signature-line"></div>
                 <p>Verified by</p>
-            </div>
-            <div class="signature">
+            </td>
+            <td>
                 <div class="signature-line"></div>
                 <p>Authorised Signatory</p>
-            </div>
-        </div>
-        <p class="policy">
-            <strong>Return Policy:</strong> Dispure delivered project will be entertained to return within 72 hours from the date of delivery.<br>
-            <strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and the all particulars are true and currect.<br>
-            <strong>Note:</strong> Above Mentioned products would be entertained to return within 10 days from the date of delivery..
-        </p>
-    </footer>
-</div>
+            </td>
+        </tr>
+    </table>
+    <p class="policy">
+        <strong>Return Policy:</strong> Dispure delivered project will be entertained to return within 72 hours from the date of delivery.<br>
+        <strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and the all particulars are true and currect.<br>
+        <strong>Note:</strong> Above Mentioned products would be entertained to return within 10 days from the date of delivery.
+    </p>
+</footer>
 </body>
 </html>

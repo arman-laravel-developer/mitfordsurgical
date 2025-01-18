@@ -64,7 +64,7 @@ Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerDat
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
 
-Route::get('/download-pdf', [OrderController::class, 'generatePDF']);
+Route::get('/download-pdf/{id}', [OrderController::class, 'generatePDF']);
 
 Route::post('/invoice-download/{id}', [OrderController::class, 'invoice'])->name('invoice.download');
 

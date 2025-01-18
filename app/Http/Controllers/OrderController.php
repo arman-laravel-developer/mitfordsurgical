@@ -11,6 +11,8 @@ use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Cart;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 use Session;
 use PDF;
@@ -240,7 +242,12 @@ class OrderController extends Controller
 
     public function invoice($id)
     {
-
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'UTF-8',
+            'autoScriptToLang' => true,
+            'autoLangToFont' => true,
+            'default_font' => 'nikosh',
+        ]);
         $order = Order::find($id);
         $setting = GeneralSetting::latest()->first();
         // Convert the image to a base64 string
@@ -261,31 +268,98 @@ class OrderController extends Controller
         if (!$order) {
             abort(404, 'Order not found');
         }
-        $pdf = Pdf::loadView('front.invoice.invoice', [
+        $pdf = view('front.invoice.invoice', [
             'order' => $order,
             'imageSrc' => $imageSrc,
             'paidImageSrc' => $paidImageSrc,
             'unpaidImageSrc' => $unpaidImageSrc
-        ]);
+        ])->render();
         $code = $order->order_code;
-        return $pdf->download("{$code}_invoice.pdf");
-
-//        return view('front.invoice.invoice', [
+        $mpdf->WriteHTML($pdf);
+//        $mpdf->Output();
+        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+    }
+//    public function invoice($id)
+//    {
+//
+//        $order = Order::find($id);
+//        $setting = GeneralSetting::latest()->first();
+//        // Convert the image to a base64 string
+//        $imagePath = asset($setting->header_logo);
+//        $imageData = base64_encode(file_get_contents($imagePath));
+//        $imageSrc = 'data:image/png;base64,' . $imageData;
+//
+//        // Convert the image to a base64 string
+//        $paidImagePath = asset('front/assets/images/paid.png');
+//        $paidImageData = base64_encode(file_get_contents($paidImagePath));
+//        $paidImageSrc = 'data:image/png;base64,' . $paidImageData;
+//        // Convert the image to a base64 string
+//
+//        $unpaidImagePath = asset('front/assets/images/unpaid.png');
+//        $unpaidImageData = base64_encode(file_get_contents($unpaidImagePath));
+//        $unpaidImageSrc = 'data:image/png;base64,' . $unpaidImageData;
+//
+//        if (!$order) {
+//            abort(404, 'Order not found');
+//        }
+//        $pdf = Pdf::loadView('front.invoice.invoice', [
 //            'order' => $order,
 //            'imageSrc' => $imageSrc,
 //            'paidImageSrc' => $paidImageSrc,
 //            'unpaidImageSrc' => $unpaidImageSrc
 //        ]);
+//        $code = $order->order_code;
+//        return $pdf->download("{$code}_invoice.pdf");
+//
+////        return view('front.invoice.invoice', [
+////            'order' => $order,
+////            'imageSrc' => $imageSrc,
+////            'paidImageSrc' => $paidImageSrc,
+////            'unpaidImageSrc' => $unpaidImageSrc
+////        ]);
+//
+////        $pdf = App::make('dompdf.wrapper');
+////        $pdf->loadHTML('<h1>Test</h1>');
+////        return $pdf->stream();
+//    }
 
-//        $pdf = App::make('dompdf.wrapper');
-//        $pdf->loadHTML('<h1>Test</h1>');
-//        return $pdf->stream();
-    }
+    public function generatePdf($id) {
 
-    public function generatePdf() {
-        $data = []; // Your data
-        $html = '<html><head><meta charset="UTF-8"></head><body><p style="font-family: solaimanlipi;">বাংলা টেক্সট</p></body></html>';
-        $pdf = Pdf::loadHTML($html);
-        return $pdf->stream('bangla-test.pdf');
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'UTF-8',
+            'autoScriptToLang' => true,
+            'autoLangToFont' => true,
+            'default_font' => 'nikosh',
+        ]);
+        $order = Order::find($id);
+        $setting = GeneralSetting::latest()->first();
+        // Convert the image to a base64 string
+        $imagePath = asset($setting->header_logo);
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageSrc = 'data:image/png;base64,' . $imageData;
+
+        // Convert the image to a base64 string
+        $paidImagePath = asset('front/assets/images/paid.png');
+        $paidImageData = base64_encode(file_get_contents($paidImagePath));
+        $paidImageSrc = 'data:image/png;base64,' . $paidImageData;
+        // Convert the image to a base64 string
+
+        $unpaidImagePath = asset('front/assets/images/unpaid.png');
+        $unpaidImageData = base64_encode(file_get_contents($unpaidImagePath));
+        $unpaidImageSrc = 'data:image/png;base64,' . $unpaidImageData;
+
+        if (!$order) {
+            abort(404, 'Order not found');
+        }
+        $pdf = view('front.invoice.invoice', [
+            'order' => $order,
+            'imageSrc' => $imageSrc,
+            'paidImageSrc' => $paidImageSrc,
+            'unpaidImageSrc' => $unpaidImageSrc
+        ])->render();
+        $code = $order->order_code;
+        $mpdf->WriteHTML($pdf);
+        $mpdf->Output();
+//        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
     }
 }

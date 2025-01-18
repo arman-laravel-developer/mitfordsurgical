@@ -282,7 +282,7 @@
                             <div class="checkout-step" id="step-4">
                                 <div class="custom-form mb-3">
                                     <div class="custom-input">
-                                        <input type="text" class="form-control" name="delivery_note" placeholder="{{translate('Enter Delivery Note')}}">
+                                        <input type="text" class="form-control" name="order_note" placeholder="{{translate('Enter Delivery Note')}}">
                                     </div>
                                 </div>
                                 <div class="delivery-address-box d-flex align-items-center">
