@@ -28,6 +28,7 @@
         .invoice-box table tr.information table td {
             padding-bottom: 30px;
             line-height: 20px;
+            width: 50%;
         }
         .invoice-box table tr.heading td {
             background: #f2f2f2;
