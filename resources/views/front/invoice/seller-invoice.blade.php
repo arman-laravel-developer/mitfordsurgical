@@ -174,7 +174,7 @@
         @foreach($order->orderDetails as $index => $orderDetail)
             @if($orderDetail->product->user_id == Session::get('seller_id'))
         <tr class="item">
-            <td>{{$index}}</td>
+            <td>@if($index == 0){{$index + 1}}@else {{$index}} @endif</td>
             <td>
                 {{$orderDetail->product->name}}
             </td>
