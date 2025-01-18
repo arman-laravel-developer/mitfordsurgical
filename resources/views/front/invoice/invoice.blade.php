@@ -46,9 +46,17 @@
         .logo span {
             color: red;
         }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
         .note, .policy {
             font-size: 13px;
             color: #555;
+            text-align: left;
             margin-top: 20px;
             margin-left: 37px;
         }
@@ -65,7 +73,7 @@
             font-weight: bold;
         }
         .signature-section {
-            margin-top: 50px;
+            margin-top: 80px;
         }
         .signature {
             width: 30%;
@@ -105,21 +113,20 @@
                     <tr>
                         <td>
                             <strong>Bill To:</strong><br>
-                            Md. Habibul Islam<br>
-                            Address: Dhanmondi, Dhaka<br>
-                            Email: sagar@apcombd.com<br>
-                            Mobile: 01709925764
+                            {{formatBanglish($order->name)}}<br>
+                            Address: {{formatBanglish($order->address)}}<br>
+                            Email: {{$order->email ? $order->email : 'N/A'}}<br>
+                            Mobile: {{$order->mobile}}
                         </td>
                         <td class="text-right">
                             <strong>From:</strong><br>
-                            www.mitfordsurgical.com<br>
-                            Address: Dhanmondi, Dhaka<br>
-                            Email: sagar@apcombd.com<br>
-                            Mobile: 01709925764<br>
-                            Order ID: #12546025<br>
-                            Order Date: 16-01-2025<br>
-                            Payment Method: sslcommerz <br>
-                            Delivery Type: Cash On Delivery
+                            {{route('home')}}<br>
+                            Address: {{$generalSettingView->address}}<br>
+                            Email: {{$generalSettingView->email}}<br>
+                            Mobile: {{$generalSettingView->mobile}}<br>
+                            Order ID: #{{$order->order_code}}<br>
+                            Order Date: {{$order->created_at->format('d-m-Y')}}<br>
+                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ''}}
                         </td>
                     </tr>
                 </table>
@@ -132,34 +139,20 @@
             <td>Unit Price</td>
             <td>Total</td>
         </tr>
+        @foreach($order->orderDetails as $orderDetail)
         <tr class="item">
-            <td>01</td>
-            <td>Vasofix</td>
-            <td>10.50</td>
-            <td>&#2547; 55</td>
-            <td>&#2547; 577.50</td>
+            <td>{{$loop->iteration}}</td>
+            <td>
+                {{$orderDetail->product->name}}<br>
+                @if($orderDetail->variant_id != null)
+                    <span style="font-size: 80%">{{$orderDetail->variant->variant}}</span>
+                @endif
+            </td>
+            <td>{{$orderDetail->qty}}</td>
+            <td>Tk. {{$orderDetail->price}}</td>
+            <td>Tk. {{$orderDetail->price * $orderDetail->qty}}</td>
         </tr>
-        <tr class="item">
-            <td>02</td>
-            <td>Vasofix</td>
-            <td>10.50</td>
-            <td>&#2547; 55</td>
-            <td>&#2547; 577.50</td>
-        </tr>
-        <tr class="item">
-            <td>03</td>
-            <td>Vasofix</td>
-            <td>10.50</td>
-            <td>&#2547; 55</td>
-            <td>&#2547; 577.50</td>
-        </tr>
-        <tr class="item">
-            <td>04</td>
-            <td>Vasofix</td>
-            <td>10.50</td>
-            <td>&#2547; 55</td>
-            <td>&#2547; 577.50</td>
-        </tr>
+        @endforeach
     </table>
     <div style="padding:0 1rem;">
         <table class="text-right sm-padding small strong">
@@ -172,38 +165,41 @@
             <tbody>
             <tr>
                 <td class="text-left">
-                    @if($order->payment_status == 'paid')
-                        <div class="total-in-words" style="margin-top: 0 !important;">
-                            <img src="{{$paidImageSrc}}" alt="" style="height: 100px">
-                        </div>
-                    @else
-                        <div class="total-in-words" style="margin-top: 0 !important;">
-                            <img src="{{$unpaidImageSrc}}" alt="" style="height: 100px">
-                        </div>
-                    @endif
+{{--                    @if($order->payment_status == 'paid')--}}
+{{--                        <div class="total-in-words" style="margin-top: 0 !important;">--}}
+{{--                            <img src="{{$paidImageSrc}}" alt="" style="height: 100px">--}}
+{{--                        </div>--}}
+{{--                    @else--}}
+{{--                        <div class="total-in-words" style="margin-top: 0 !important;">--}}
+{{--                            <img src="{{$unpaidImageSrc}}" alt="" style="height: 100px">--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                 </td>
+                @php
+                    $totalFinal = $order->grand_total + $order->shipping_cost;
+                @endphp
                 <td>
                     <table class="text-right sm-padding small strong">
                         <tbody>
                         <tr>
                             <td class="gry-color text-left">Sub Total</td>
-                            <td class="text-right">৳ 577.50</td>
+                            <td class="text-right">Tk. {{number_format($order->grand_total,2)}}</td>
                         </tr>
                         <tr>
                             <td class="gry-color text-left">Shipping Cost</td>
 
                             <td class="text-right">
-                                <span>&#2547;0.00</span>
+                                <span>Tk. {{number_format($order->shipping_cost,2)}}</span>
                             </td>
 
                         </tr>
                         <tr class="border-bottom">
                             <td class="gry-color text-left">Coupon Discount</td>
-                            <td class="text-right">&#2547;0.00</td>
+                            <td class="text-right">Tk. 0.00</td>
                         </tr>
                         <tr>
                             <th class="text-left strong">Grand Total</th>
-                            <th class="text-right">&#2547; 577.50</th>
+                            <th class="text-right">Tk. {{number_format($totalFinal, 2)}}</th>
                         </tr>
                         </tbody>
                     </table>
@@ -212,26 +208,28 @@
             </tbody>
         </table>
     </div>
-    <p class="bold">In Words: Two thousand three hundred ten taka only.</p>
-    <div class="signature-section">
-        <div class="signature">
-            <div class="signature-line"></div>
-            <p>Prepared by</p>
+    <p class="bold">In Words: {{ convert_number($totalFinal) }} Taka Only.</p>
+    <footer>
+        <div class="signature-section">
+            <div class="signature">
+                <div class="signature-line"></div>
+                <p>Prepared by</p>
+            </div>
+            <div class="signature">
+                <div class="signature-line"></div>
+                <p>Verified by</p>
+            </div>
+            <div class="signature">
+                <div class="signature-line"></div>
+                <p>Authorised Signatory</p>
+            </div>
         </div>
-        <div class="signature">
-            <div class="signature-line"></div>
-            <p>Verified by</p>
-        </div>
-        <div class="signature">
-            <div class="signature-line"></div>
-            <p>Authorised Signatory</p>
-        </div>
-    </div>
-    <p class="policy">
-        <strong>Return Policy:</strong> Dispure delivered project will be entertained to return within 72 hours from the date of delivery.<br>
-        <strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and the all particulars are true and currect.<br>
-        <strong>Note:</strong> Above Mentioned products would be entertained to return within 10 days from the date of delivery..
-    </p>
+        <p class="policy">
+            <strong>Return Policy:</strong> Dispure delivered project will be entertained to return within 72 hours from the date of delivery.<br>
+            <strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and the all particulars are true and currect.<br>
+            <strong>Note:</strong> Above Mentioned products would be entertained to return within 10 days from the date of delivery..
+        </p>
+    </footer>
 </div>
 </body>
 </html>

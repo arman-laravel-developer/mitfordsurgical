@@ -281,4 +281,11 @@ class OrderController extends Controller
 //        $pdf->loadHTML('<h1>Test</h1>');
 //        return $pdf->stream();
     }
+
+    public function generatePdf() {
+        $data = []; // Your data
+        $html = '<html><head><meta charset="UTF-8"></head><body><p style="font-family: solaimanlipi;">বাংলা টেক্সট</p></body></html>';
+        $pdf = Pdf::loadHTML($html);
+        return $pdf->stream('bangla-test.pdf');
+    }
 }
