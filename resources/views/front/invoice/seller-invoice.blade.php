@@ -135,25 +135,18 @@
                     <tr>
                         <td>
                             <strong>From:</strong><br>
-                            {{route('home')}}<br>
-                            Address: {{$generalSettingView->address}}<br>
-                            Email: {{$generalSettingView->email}}<br>
-                            Mobile: {{$generalSettingView->mobile}}<br>
+                            Address: {{$shop->address}}<br>
+                            Email: {{$seller->email}}<br>
+                            Mobile: {{$shop->phone}}<br>
                         </td>
                         <td class="text-right">
                             <strong>Bill To:</strong><br>
-                            {{$order->name}}<br>
-                            Address: {{$order->address}}<br>
-                            @if($order->email != null)
-                            Email: {{$order->email}}<br>
-                            @endif
-                            Mobile: {{$order->mobile}}<br>
+                            {{$generalSettingView->site_name}}<br>
+                            Address: {{$generalSettingView->address}}<br>
+                            Email: {{$generalSettingView->email}}<br>
+                            Mobile: {{$generalSettingView->mobile}}<br>
                             Order ID: #{{$order->order_code}}<br>
                             Order Date: {{$order->created_at->format('d-m-Y')}}<br>
-                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ''}}<br>
-                            @if($order->order_note !=null)
-                            Note: {{$order->order_note}}
-                            @endif
                         </td>
                     </tr>
                 </table>

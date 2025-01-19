@@ -44,6 +44,7 @@ class ManageShopController extends Controller
         $shop->slug = $slug;
         $shop->shop_name = $request->shop_name;
         $shop->address = $request->address;
+        $shop->shop_about = $request->shop_about;
         $shop->phone = $request->phone;
         $shop->facebook = $request->facebook;
         $shop->twitter = $request->twitter;
@@ -51,6 +52,32 @@ class ManageShopController extends Controller
         $shop->youtube = $request->youtube;
         $shop->meta_title = $request->meta_title;
         $shop->meta_description = $request->meta_description;
+        if ($request->file('logo'))
+        {
+            if (file_exists($shop->logo))
+            {
+                unlink($shop->logo);
+            }
+            $shopLogoUrl = $this->getLogoUrl($request);
+        }
+        else
+        {
+            $shopLogoUrl = $shop->logo;
+        }
+        if ($request->file('banner'))
+        {
+            if (file_exists($shop->banner))
+            {
+                unlink($shop->banner);
+            }
+            $shopBannerUrl = $this->getBannerUrl($request);
+        }
+        else
+        {
+            $shopBannerUrl = $shop->banner;
+        }
+        $shop->logo = $shopLogoUrl;
+        $shop->banner = $shopBannerUrl;
         $shop->save();
 
         return redirect()->back()->with('success', 'Shop information update successfully');

@@ -13,6 +13,7 @@ use App\Models\RoleRoute;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TrackOrderController;
+use App\Http\Controllers\ShopController;
 
 
 function getRoleName($routeName)
@@ -49,6 +50,8 @@ Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.var
 Route::get('/search-result', [HomeController::class, 'result'])->name('search.result');
 Route::get('/search', [HomeController::class, 'search'])->name('product.search');
 Route::get('/products', [HomeController::class, 'products'])->name('products.all');
+
+Route::get('/shop/{id}/{slug}', [ShopController::class, 'index'])->name('shop.index');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
 

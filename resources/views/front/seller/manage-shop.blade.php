@@ -29,17 +29,21 @@
                         <textarea class="form-control" name="address" placeholder="Enter address">{{$shop->address}}</textarea>
                     </li>
                     <li>
+                        <h5>Shop About:</h5>
+                        <textarea class="form-control" name="shop_about" placeholder="Enter shop about">{{$shop->shop_about}}</textarea>
+                    </li>
+                    <li>
                         <h5>Logo:</h5>
                         <input type="file" class="form-control" name="logo">
                         @if(!empty($shop->logo))
-                            <img src="{{asset($shop->logo)}}" alt="" style="height: 50px; width: 50px">
+                            <img src="{{asset($shop->logo)}}" alt="" style="height: 80px; width: 80px">
                         @endif
                     </li>
                     <li>
                         <h5>Banner:</h5>
                         <input type="file" class="form-control" name="banner">
                         @if(!empty($shop->banner))
-                            <img src="{{asset($shop->banner)}}" alt="" style="height: 50px; width: 50px">
+                            <img src="{{asset($shop->banner)}}" alt="" style="height: 80px; width: 80px">
                         @endif
                     </li>
                     <li>

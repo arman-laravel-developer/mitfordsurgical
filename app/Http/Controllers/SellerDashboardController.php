@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\GeneralSetting;
 use App\Models\Order;
+use App\Models\Seller;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use Session;
 
@@ -27,6 +29,8 @@ class SellerDashboardController extends Controller
             $query->where('user_id', $sellerId);
         })->where('id', $id) // Filter by specific order ID
             ->first();
+        $shop = Shop::where('seller_id', $sellerId)->first();
+        $seller = Seller::find($sellerId);
 
         $setting = GeneralSetting::latest()->first();
         // Convert the image to a base64 string
@@ -51,12 +55,14 @@ class SellerDashboardController extends Controller
             'order' => $order,
             'imageSrc' => $imageSrc,
             'paidImageSrc' => $paidImageSrc,
-            'unpaidImageSrc' => $unpaidImageSrc
+            'unpaidImageSrc' => $unpaidImageSrc,
+            'shop' => $shop,
+            'seller' => $seller
         ])->render();
         $code = $order->order_code;
         $mpdf->WriteHTML($pdf);
-//        $mpdf->Output();
-        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+        $mpdf->Output();
+//        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
     }
 
     public function logout()

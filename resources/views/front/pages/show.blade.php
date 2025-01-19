@@ -79,7 +79,7 @@
                                         @endphp
                                         {{translate('Sold By')}}: @if($product->added_by == 'admin') {{translate('In House Product')}}
                                         @else
-                                            <a href="">{{$shop->shop_name}}</a>
+                                            <a href="{{route('shop.index', ['id' => $shop->id, 'slug' => $shop->slug])}}">{{$shop->shop_name}}</a>
                                         @endif
                                     </p>
                                     <div class="price-rating">

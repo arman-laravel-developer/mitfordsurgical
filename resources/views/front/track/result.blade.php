@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="order-details-name">
-                                            <h5 class="text-content">Tracking Code</h5>
+                                            <h5 class="text-content">{{translate('Tracking Code')}}</h5>
                                             <h2 class="theme-color">{{$order_code}}</h2>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                         $formattedDeliveryDate = $estimatedDeliveryDate->format('M d, Y');
                                         @endphp
                                         <div class="order-details-name">
-                                            <h5 class="text-content">Estimated Time</h5>
+                                            <h5 class="text-content">{{translate('Estimated Delivery Time')}}</h5>
                                             <h4>{{$formattedDeliveryDate}}</h4>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                         </div>
 
                                         <div class="order-details-name">
-                                            <h5 class="text-content">From</h5>
+                                            <h5 class="text-content">{{translate('From')}}</h5>
                                             <h4>{{$generalSettingView->address}}</h4>
                                         </div>
                                     </div>
@@ -131,22 +131,22 @@
                                 <div class="col-12 overflow-hidden">
                                     <ol class="progtrckr">
                                         <li class="@if(in_array($order->order_status, ['pending', 'confirmed', 'proccessing', 'shipped', 'delivered'])) progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Pending</h5>
+                                            <h5>{{translate('Pending')}}</h5>
                                         </li>
                                         <li class="@if(in_array($order->order_status, ['confirmed', 'proccessing', 'shipped', 'delivered'])) progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Confirmed</h5>
+                                            <h5>{{translate('Confirmed')}}</h5>
                                         </li>
                                         <li class="@if(in_array($order->order_status, ['proccessing', 'shipped', 'delivered'])) progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Processing</h5>
+                                            <h5>{{translate('Processing')}}</h5>
                                         </li>
                                         <li class="@if(in_array($order->order_status, ['shipped', 'delivered'])) progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Shipped</h5>
+                                            <h5>{{translate('Shipped')}}</h5>
                                         </li>
                                         <li class="@if($order->order_status == 'delivered') progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Delivered</h5>
+                                            <h5>{{translate('Delivered')}}</h5>
                                         </li>
                                         <li class="@if($order->order_status == 'cancel') progtrckr-done @else progtrckr-todo @endif">
-                                            <h5>Canceled</h5>
+                                            <h5>{{translate('Canceled')}}</h5>
                                         </li>
                                     </ol>
                                 </div>
@@ -154,7 +154,7 @@
                         @else
                             <div class="card mt-3">
                                 <div class="card-body">
-                                    <p class="text-center text-danger" style="font-size: 2em;">Order Not Found!</p>
+                                    <p class="text-center text-danger" style="font-size: 2em;">{{translate('Order Not Found')}}!</p>
                                 </div>
                             </div>
                         @endif
@@ -178,12 +178,15 @@
                                                         <div class="product-detail">
                                                             <ul>
                                                                 <li class="name">
-                                                                    <a href="{{route('product.detail', ['id' => $orderDetail->product_id, 'slug' => $orderDetail->product->slug])}}" target="_blank">{{$orderDetail->product->name}}</a>
+                                                                    <a href="{{route('product.detail', ['id' => $orderDetail->product_id, 'slug' => $orderDetail->product->slug])}}" target="_blank">{{$orderDetail->product->getTranslation('name')}}</a>
                                                                 </li>
                                                                 @if($orderDetail->product->added_by == 'admin')
-                                                                    <li class="text-content">Sold By: In house</li>
+                                                                    <li class="text-content">{{translate('Sold By')}}: In house</li>
                                                                 @else
-                                                                    <li class="text-content">Sold By: Fresho</li>
+                                                                    @php
+                                                                        $shop = \App\Models\Shop::where('seller_id',$orderDetail->product->user_id)->first();
+                                                                    @endphp
+                                                                    <li class="text-content">{{translate('Sold By')}}: {{$shop->shop_name}}</li>
                                                                 @endif
                                                                 @if($orderDetail->product->is_variant == 1)
                                                                     <li class="text-content">Variant - {{$orderDetail->variant->variant}}</li>
@@ -246,6 +249,21 @@
                                                 <h4>Total (BDT)</h4>
                                                 <h4 class="price">&#2547;{{number_format($order->grand_total+$order->shipping_cost)}}</h4>
                                             </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="summery-box">
+                                        <div class="summery-header d-block">
+                                            <h3>{{translate('My Download')}}</h3>
+                                        </div>
+
+                                        <ul class="summery-contain pb-0 border-bottom-0">
+                                            <a href="{{route('products.all')}}" class="text-danger">{{translate('Continue to shopping')}}</a>
+                                            <a href="javascript:void(0)" class="text-success" onclick="event.preventDefault();document.getElementById('downloadInvoice').submit();">{{translate('Download')}}</a>
+                                            <form action="{{route('invoice.download', ['id' => $order->id])}}" id="downloadInvoice" method="POST">
+                                                @csrf
+                                            </form>
                                         </ul>
                                     </div>
                                 </div>

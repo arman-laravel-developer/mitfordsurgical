@@ -149,6 +149,7 @@
 
 @php
     $seller = \App\Models\Seller::find(Session::get('seller_id'));
+    $shop = \App\Models\Shop::where('seller_id', $seller->id)->first();
 @endphp
 
 <!-- User Dashboard Section Start -->
@@ -159,8 +160,8 @@
                 <div class="dashboard-left-sidebar">
                     <div class="profile-box">
                         <div class="cover-image">
-                            @if(!empty($seller->shop->banner))
-                            <img src="{{$seller->shop->banner}}" class="img-fluid blur-up lazyload"
+                            @if(!empty($shop->banner))
+                            <img src="{{asset($shop->banner)}}" class="img-fluid blur-up lazyload"
                                  alt="">
                             @else
                             <img src="https://static.vecteezy.com/system/resources/thumbnails/006/989/259/small/beautiful-sunrise-on-doi-kart-phee-the-remote-highland-mountains-area-in-chiang-rai-province-of-thailand-free-photo.jpg" class="img-fluid blur-up lazyload"
@@ -171,8 +172,8 @@
                         <div class="profile-contain">
                             <div class="profile-image">
                                 <div class="position-relative">
-                                    @if(!empty($seller->shop->logo))
-                                    <img src="{{asset($seller->shop->logo)}}"
+                                    @if(!empty($shop->logo))
+                                    <img src="{{asset($shop->logo)}}"
                                          class="blur-up lazyload update_img" alt="">
                                     @else
                                     <img src="https://oldweb.brur.ac.bd/wp-content/uploads/2019/03/male.jpg"
@@ -182,12 +183,12 @@
                             </div>
 
                             <div class="profile-name">
-                                <h3>{{$seller->name}}</h3>
+                                <h3>{{$shop->shop_name}}</h3>
                                 <h6 class="text-content">{{$seller->email}}</h6>
                             </div>
                             <div class="row">
                                 <div class="col-6 text-start">
-                                    <a href="" class="btn btn-danger">Visit Shop</a>
+                                    <a href="{{route('shop.index', ['id' => $shop->id, 'slug' => 'sad'])}}" target="_blank" class="btn btn-danger">Visit Shop</a>
                                 </div>
                                 <div class="col-6">
                                     <a href="{{route('home')}}" target="_blank" class="btn btn-success">Visit Website</a>
@@ -223,16 +224,22 @@
                         </li>
 
                         <li class="nav-item">
-                            <button class="nav-link @if(Route::is(['seller.order.pending', 'seller.order.manage'])) active @endif d-flex justify-content-between align-items-center @if(Route::is(['seller.order.pending', 'seller.order.manage'])) @else collapsed @endif"
-                                    data-bs-toggle="collapse" data-bs-target="#order-submenu" aria-expanded="@if(Route::is(['seller.order.pending', 'seller.order.manage'])) true @else false @endif"
+                            <button class="nav-link @if(Route::is(['seller.order.pending', 'seller.order.delivered', 'seller.order.canceled', 'seller.order.manage'])) active @endif d-flex justify-content-between align-items-center @if(Route::is(['seller.order.pending', 'seller.order.delivered','seller.order.canceled', 'seller.order.manage'])) @else collapsed @endif"
+                                    data-bs-toggle="collapse" data-bs-target="#order-submenu" aria-expanded="@if(Route::is(['seller.order.pending', 'seller.order.delivered', 'seller.order.canceled', 'seller.order.manage'])) true @else false @endif"
                                     aria-controls="order-submenu" type="button" role="tab">
                                 <span><i data-feather="shopping-bag"></i>Sales</span>
                                 <i class="fa fa-chevron-right rotate-icon"></i>
                             </button>
-                            <div class="collapse @if(Route::is(['seller.order.pending', 'seller.order.manage'])) show @endif" id="order-submenu">
+                            <div class="collapse @if(Route::is(['seller.order.pending', 'seller.order.delivered', 'seller.order.canceled', 'seller.order.manage'])) show @endif" id="order-submenu">
                                 <ul class="nav flex-column ms-3">
                                     <li class="libottom">
                                         <a href="{{route('seller.order.pending')}}" class="nav-link @if(Route::is('seller.order.pending')) active @endif libottom">Pending Orders</a>
+                                    </li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.order.delivered')}}" class="nav-link @if(Route::is('seller.order.delivered')) active @endif libottom">Delivered Orders</a>
+                                    </li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.order.canceled')}}" class="nav-link @if(Route::is('seller.order.canceled')) active @endif libottom">Canceled Orders</a>
                                     </li>
                                     <li class="libottom">
                                         <a href="{{route('seller.order.manage')}}" class="nav-link @if(Route::is('seller.order.manage')) active @endif libottom">All Orders</a>
