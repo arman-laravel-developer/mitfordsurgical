@@ -61,8 +61,8 @@ class SellerDashboardController extends Controller
         ])->render();
         $code = $order->order_code;
         $mpdf->WriteHTML($pdf);
-        $mpdf->Output();
-//        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+//        $mpdf->Output();
+        $mpdf->Output($code . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
     }
 
     public function logout()
