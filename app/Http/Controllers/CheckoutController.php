@@ -62,96 +62,68 @@ class CheckoutController extends Controller
     public function applyCoupon(Request $request)
     {
         $couponCode = $request->input('coupon');
+        $cartTotal = Cart::getTotal(); // Example cart total
+        $carts = Cart::getContent(); // Example cart total
+        $currentDate = Carbon::now()->format('Y-m-d');
+        // Check if the coupon exists, is active, and within the date range
+        $coupon = Coupon::where('code', $couponCode)
+            ->where('is_active', true)
+            ->whereDate('start_date', '<=', $currentDate)
+            ->whereDate('end_date', '>=', $currentDate)
+            ->first();
 
-        // Validate and apply the coupon (Example logic)
-        if ($this->validateCoupon($couponCode)) {
-            session(['coupon' => $couponCode]);
-            $newTotal = $this->calculateNewTotalWithCoupon($couponCode);
-            return response()->json(['success' => true, 'newTotal' => $newTotal]);
+
+        if ($coupon) {
+            $coupon_details = json_decode($coupon->details);
+            if ($coupon->type == 'cart_base') {
+                $subtotal = 0;
+                foreach ($carts as $key => $cartItem) {
+                    $subtotal += $cartItem->price * $cartItem->quantity;
+                }
+                if ($subtotal < $coupon_details->minimum_buy) {
+                    return response()->json(['success' => false, 'message' => 'Minimum purchase requirement not met']);
+                }
+                if ($subtotal >= $coupon_details->minimum_buy) {
+                    if ($coupon->discount_type == 2) {
+                        $coupon_discount = ($subtotal * $coupon->discount) / 100;
+                        if ($coupon_discount > $coupon_details->maximum_discount) {
+                            $coupon_discount = $coupon_details->maximum_discount;
+                        }
+                    } elseif ($coupon->discount_type == 1) {
+                        $coupon_discount = $coupon->discount;
+                    }
+                }
+            } elseif ($coupon->type == 'product_base') {
+                $coupon_discount = 0;
+                foreach ($carts as $key => $cartItem) {
+                    foreach ($coupon_details as $key => $coupon_detail) {
+                        if ($coupon_detail->product_id == $cartItem->attributes->product_id) {
+                            if ($coupon->discount_type == 2) {
+                                $coupon_discount += ($cartItem->price * $coupon->discount / 100) * $cartItem->quantity;
+                            } elseif ($coupon->discount_type == 1) {
+                                $coupon_discount += $coupon->discount * $cartItem->quantity;
+                            }
+                        }
+                    }
+                }
+            }
+            $cartTotal = $cartTotal - $coupon_discount;
+
+            return response()->json([
+                'success' => true,
+                'newTotal' => $cartTotal,
+                'couponDiscount' => $coupon_discount,
+                'couponCode' => $couponCode
+            ]);
         } else {
-            return response()->json(['success' => false, 'message' => 'Invalid Coupon Code']);
+            return response()->json(['success' => false, 'message' => 'Invalid or Expired Coupon Code']);
         }
     }
 
     public function removeCoupon()
     {
         session()->forget('coupon');
-        $newTotal = $this->calculateTotalWithoutCoupon();
+        $newTotal = Cart::getTotal();
         return response()->json(['success' => true, 'newTotal' => $newTotal]);
-    }
-
-    // Example methods for coupon validation and total calculation
-    private function validateCoupon($couponCode)
-    {
-        $currentDate = Carbon::now()->format('Y-m-d');
-
-        // Check if the coupon exists, is active, and within the date range
-        $coupon = Coupon::where('code', $couponCode)
-            ->where('is_active', 1)
-            ->whereDate('start_date', '<=', $currentDate)
-            ->whereDate('end_date', '>=', $currentDate)
-            ->first();
-        // Dummy validation logic
-        if ($coupon)
-        {
-            $couponCodeApply = $coupon->code;
-        }
-        else
-        {
-            $couponCodeApply = 'dummy';
-        }
-        return $couponCode == $couponCodeApply; // Example condition
-    }
-
-    private function calculateNewTotalWithCoupon($couponCode)
-    {
-        $currentDate = Carbon::now()->format('Y-m-d');
-        $coupon = Coupon::where('code', $couponCode)
-            ->where('is_active', 1)
-            ->whereDate('start_date', '<=', $currentDate)
-            ->whereDate('end_date', '>=', $currentDate)
-            ->first();
-        $coupon_details = json_decode($coupon->details);
-        // Calculate new total based on the coupon code
-        $carts = Cart::getContent(); // Example cart total
-        $cartTotal = Cart::getTotal(); // Example cart total
-        if ($coupon->type == 'cart_base') {
-            $subtotal = 0;
-            foreach ($carts as $key => $cartItem) {
-                $subtotal += $cartItem->price * $cartItem->quantity;
-            }
-
-            if ($subtotal >= $coupon_details->minimum_buy) {
-                if ($coupon->discount_type == 2) {
-                    $coupon_discount = ($subtotal * $coupon->discount) / 100;
-                    if ($coupon_discount > $coupon_details->maximum_discount) {
-                        $coupon_discount = $coupon_details->maximum_discount;
-                    }
-                } elseif ($coupon->discount_type == 1) {
-                    $coupon_discount = $coupon->discount;
-                }
-            }
-        } elseif ($coupon->type == 'product_base') {
-            $coupon_discount = 0;
-            foreach ($carts as $key => $cartItem) {
-                foreach ($coupon_details as $key => $coupon_detail) {
-                    if ($coupon_detail->product_id == $cartItem->attributes->product_id) {
-                        if ($coupon->discount_type == 2) {
-                            $coupon_discount += ($cartItem->price * $coupon->discount / 100) * $cartItem->quantity;
-                        } elseif ($coupon->discount_type == 1) {
-                            $coupon_discount += $coupon->discount * $cartItem->quantity;
-                        }
-                    }
-                }
-            }
-        }
-        $cartTotal = $cartTotal - $coupon_discount;
-        return $cartTotal;
-    }
-
-    private function calculateTotalWithoutCoupon()
-    {
-        $total = Cart::getTotal();
-        return $total; // Example cart total without coupon
     }
 }
