@@ -442,6 +442,7 @@
                                                             document.getElementById('couponCode').value = '';
                                                             // Update total prices dynamically if needed
                                                             document.getElementById('newTotal').textContent = data.newTotal;
+                                                            document.getElementById('couponCode').readOnly = false;
                                                         }
                                                     });
                                             }
