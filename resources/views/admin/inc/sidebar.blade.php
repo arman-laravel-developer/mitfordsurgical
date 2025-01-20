@@ -225,6 +225,24 @@
         </a>
     </li>
     @endif
+    @if ($userType == 1 || !empty(array_filter(['coupon.manage'], fn($route) => in_array($route, $roleRoutes))))
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarMarketing" aria-expanded="false" aria-controls="sidebarMarketing" class="side-nav-link">
+                <i class="uil-bullseye"></i>
+                <span> Marketing </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarMarketing">
+                <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('coupon.manage', $roleRoutes))
+                        <li>
+                            <a href="{{ route('coupon.manage') }}">Coupon</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+    @endif
     @if ($userType == 1 || !empty(array_filter(['privacy.add', 'return.manage'], fn($route) => in_array($route, $roleRoutes))))
         @php
             $isPActive = in_array(Route::currentRouteName(), ['privacy.add', 'return.add']);

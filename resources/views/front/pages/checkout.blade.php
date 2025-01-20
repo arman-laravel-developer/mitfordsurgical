@@ -190,7 +190,7 @@
                             <div class="checkout-step active-step" id="step-1">
                                 <div class="row">
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form row">
+                                        <div class="mb-3 custom-form row">
                                             <label for="exampleFormControlInput" class="col-2 form-label">{{translate('Name')}}<sup class="text-danger">*</sup></label>
                                             <div class="custom-input col-10">
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" @if($customer) value="{{$customer->name}}" @else value="{{old('name')}}" @endif id="exampleFormControlInput" name="name" placeholder="{{translate('Enter Full Name')}}" required>
@@ -201,7 +201,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form row">
+                                        <div class="mb-3 custom-form row">
                                             <label for="exampleFormControlInput3" class="col-2 form-label">{{translate('Mobile')}}<sup class="text-danger">*</sup></label>
                                             <div class="custom-input col-10">
                                                 <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer) value="{{$customer->mobile}}" @else value="{{old('mobile')}}" @endif id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Mobile Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
@@ -212,7 +212,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
-                                        <div class="mb-md-4 mb-3 custom-form row">
+                                        <div class="mb-3 custom-form row">
                                             <label for="exampleFormControlInput1" class="col-2 form-label">{{translate('Address')}}<sup class="text-danger">*</sup></label>
                                             <div class="custom-input col-10">
                                                 <input type="text" class="form-control @error('address') is-invalid @enderror" @if($customer) value="{{$customer->address}}" @else value="{{old('address')}}" @endif name="address" id="exampleFormControlInput1" placeholder="{{translate('Enter Details Address')}}" required>
@@ -227,7 +227,7 @@
                                     <div class="col-6">
                                     </div>
                                     <div class="col-6">
-                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md mt-4 fw-bold" type="button" onclick="showStep(2)" style="float: inline-end;" disabled>{{translate('Next')}}</button>
+                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md mt-2 fw-bold" type="button" onclick="showStep(2)" style="float: inline-end;" disabled>{{translate('Next')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -381,19 +381,85 @@
                                 <div class="summery-header">
                                     <h3>{{translate('Order Summery')}}</h3>
                                 </div>
-                                <ul class="summery-contain">
-                                    @foreach($cartProducts as $cartProduct)
-                                        @php($variant = \App\Models\Variant::find($cartProduct->attributes->variant_id))
-                                        <li>
-                                            <img src="{{asset($cartProduct->attributes->thumbnail_image)}}"
-                                                 class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                            <h4>{{$cartProduct->name}} <span style="font-size: 80%;">(&#2547;{{number_format($cartProduct->price)}} X {{$cartProduct->quantity}})</span> <br>
-                                                @if($variant)Variant: {{$variant->variant}} @endif
-                                            </h4>
-                                            <h4 class="price">&#2547;{{number_format($cartProduct->price * $cartProduct->quantity, 2)}}</h4>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                <div class="summery-contain">
+                                    <div class="coupon-cart">
+                                        <h6 class="text-content mb-2">Coupon Apply</h6>
+                                        <div class="mb-3 coupon-box input-group">
+                                            <input type="text" class="form-control" id="couponCode" placeholder="Enter Coupon Code Here...">
+                                            <button class="btn-apply" id="applyCouponBtn">Apply</button>
+                                        </div>
+                                        <div id="couponMessage"></div>
+                                        <div id="newTotal"></div>
+                                    </div>
+
+                                    <meta name="apply-coupon-url" content="{{ route('coupon.apply') }}">
+                                    <meta name="remove-coupon-url" content="{{ route('coupon.remove') }}">
+
+                                    <script>
+                                        document.getElementById('applyCouponBtn').addEventListener('click', function() {
+                                            const couponCode = document.getElementById('couponCode').value;
+                                            const applyBtn = this;
+                                            const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
+                                            const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
+
+                                            if (applyBtn.textContent === 'Apply') {
+                                                // Apply Coupon Code
+                                                fetch(applyCouponUrl, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                    },
+                                                    body: JSON.stringify({ coupon: couponCode })
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
+                                                            applyBtn.textContent = 'Remove';
+                                                            // Update total prices dynamically if needed
+                                                            document.getElementById('newTotal').textContent = data.newTotal;
+                                                        } else {
+                                                            document.getElementById('couponMessage').textContent = data.message;
+                                                        }
+                                                    });
+                                            } else {
+                                                // Remove Coupon Code
+                                                fetch(removeCouponUrl, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                    },
+                                                    body: JSON.stringify({})
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            document.getElementById('couponMessage').textContent = 'Coupon Removed Successfully!';
+                                                            applyBtn.textContent = 'Apply';
+                                                            document.getElementById('couponCode').value = '';
+                                                            // Update total prices dynamically if needed
+                                                            document.getElementById('newTotal').textContent = data.newTotal;
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                    </script>
+                                    <ul>
+                                        @foreach($cartProducts as $cartProduct)
+                                            @php($variant = \App\Models\Variant::find($cartProduct->attributes->variant_id))
+                                            <li>
+                                                <img src="{{asset($cartProduct->attributes->thumbnail_image)}}"
+                                                     class="img-fluid blur-up lazyloaded checkout-image" alt="">
+                                                <h4>{{$cartProduct->name}} <span style="font-size: 80%;">(&#2547;{{number_format($cartProduct->price)}} X {{$cartProduct->quantity}})</span> <br>
+                                                    @if($variant)Variant: {{$variant->variant}} @endif
+                                                </h4>
+                                                <h4 class="price">&#2547;{{number_format($cartProduct->price * $cartProduct->quantity, 2)}}</h4>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
 
                                 <ul class="summery-total">
                                     <li>
@@ -404,6 +470,10 @@
                                     <li>
                                         <h4>{{translate('Shipping')}}</h4>
                                         <h4 class="price" id="shipping">&#2547;0.00</h4>
+                                    </li>
+                                    <li>
+                                        <h4>{{translate('Vat/Tax')}}</h4>
+                                        <h4 class="price" id="vat">&#2547;0.00</h4>
                                     </li>
 
                                     <li class="list-total">

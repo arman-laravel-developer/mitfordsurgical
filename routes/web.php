@@ -64,6 +64,9 @@ Route::get('/invoice-download/{id}', [CheckoutController::class, 'index'])->name
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
 
+Route::post('/apply-coupon', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
+Route::post('/remove-coupon', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
+
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
 

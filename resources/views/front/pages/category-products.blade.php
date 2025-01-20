@@ -114,6 +114,7 @@
                 </div>
                 @endforeach
             </div>
+                {{ $category_products->links('vendor.pagination.seller-pagination') }}
             @else
                 <h4 class="text-center opacity-50 mt-5">No item found</h4>
             @endif

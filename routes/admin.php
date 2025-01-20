@@ -19,6 +19,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingCostController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CouponController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -123,6 +124,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
             Route::post('/update/{id}', [BrandController::class, 'update'])->name('brand.update');
             Route::post('/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+        });
+        Route::prefix('coupon')->group(function () {
+            Route::get('/add', [CouponController::class, 'index'])->name('coupon.add');
+            Route::post('/new', [CouponController::class, 'create'])->name('coupon.new');
+            Route::get('/manage', [CouponController::class, 'manage'])->name('coupon.manage');
+            Route::get('/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
+            Route::post('/update/{id}', [CouponController::class, 'update'])->name('coupon.update');
+            Route::post('/delete/{id}', [CouponController::class, 'delete'])->name('coupon.delete');
         });
         Route::prefix('color')->group(function () {
             Route::get('/add', [ColorController::class, 'index'])->name('color.add');
