@@ -419,6 +419,7 @@
                                                             applyBtn.textContent = 'Remove';
                                                             // Update total prices dynamically if needed
                                                             document.getElementById('newTotal').textContent = data.newTotal;
+                                                            document.getElementById('couponCode').readOnly = true;
                                                         } else {
                                                             document.getElementById('couponMessage').textContent = data.message;
                                                         }
