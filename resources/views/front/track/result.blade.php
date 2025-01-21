@@ -230,16 +230,16 @@
                                         <ul class="summery-contain">
                                             <li>
                                                 <h4>SubTotal</h4>
-                                                <h4 class="price">&#2547;{{number_format($order->grand_total)}}</h4>
+                                                <h4 class="price">&#2547;{{number_format($order->grand_total,2)}}</h4>
                                             </li>
 
                                             <li>
                                                 <h4>Shipping Cost</h4>
-                                                <h4 class="price text-danger">&#2547;{{number_format($order->shipping_cost)}}</h4>
+                                                <h4 class="price text-danger">&#2547;{{number_format($order->shipping_cost,2)}}</h4>
                                             </li>
                                             <li>
                                                 <h4>{{translate('Coupon Discount')}}</h4>
-                                                <h4 class="price text-danger">&#2547;{{number_format($order->coupon_discount)}}</h4>
+                                                <h4 class="price text-danger">&#2547;{{number_format(round($order->coupon_discount),2)}}</h4>
                                             </li>
                                             <li>
                                                 <h4>{{translate('Vat/Tax')}}</h4>
@@ -250,7 +250,7 @@
                                         <ul class="summery-total">
                                             <li class="list-total">
                                                 <h4 class="theme-color">Total (BDT)</h4>
-                                                <h4 class="price theme-color">&#2547;{{number_format($order->grand_total+$order->shipping_cost-$order->coupon_discount)}}</h4>
+                                                <h4 class="price theme-color">&#2547;{{number_format(round($order->grand_total+$order->shipping_cost-$order->coupon_discount),2)}}</h4>
                                             </li>
                                         </ul>
                                     </div>
