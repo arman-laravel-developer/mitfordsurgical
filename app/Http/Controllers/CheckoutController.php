@@ -96,7 +96,7 @@ class CheckoutController extends Controller
             if ($coupon->type == 'cart_base') {
                 $subtotal = $cartTotal;
                 if ($subtotal < $coupon_details->minimum_buy) {
-                    return response()->json(['success' => false, 'message' => 'Minimum purchase requirement not met']);
+                    return response()->json(['success' => false, 'message' => translate('Minimum purchase requirement not met')]);
                 }
                 if ($subtotal >= $coupon_details->minimum_buy) {
                     if ($coupon->discount_type == 2) {
@@ -134,7 +134,7 @@ class CheckoutController extends Controller
             ]);
 
         } else {
-            return response()->json(['success' => false, 'message' => 'Invalid or Expired Coupon Code']);
+            return response()->json(['success' => false, 'message' => translate('Invalid or Expired Coupon Code')]);
         }
     }
 

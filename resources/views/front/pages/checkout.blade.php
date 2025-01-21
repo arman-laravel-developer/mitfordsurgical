@@ -490,9 +490,9 @@
                         if (data.success) {
                             console.log(data);
                             toastr.success("{{translate('Coupon Applied Successfully')}}!");
-                            document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully';
+                            document.getElementById('couponMessage').textContent = '{{translate('Coupon Applied Successfully')}}';
                             // document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
-                            applyBtn.textContent = 'Remove';
+                            applyBtn.textContent = '{{translate('Remove')}}';
                             // Update total prices dynamically if needed
                             document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
                             document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
@@ -523,7 +523,7 @@
                         if (data.success) {
                             toastr.success("{{translate('Coupon Removed Successfully')}}!");
                             // document.getElementById('couponMessage').textContent = 'Coupon Removed Successfully!';
-                            applyBtn.textContent = 'Apply';
+                            applyBtn.textContent = '{{translate('Apply')}}';
                             document.getElementById('couponCode').value = '';
                             // Update total prices dynamically if needed
                             document.getElementById('grand-total').textContent = `৳${data.cartTotalRemove.toFixed(2)}`;
