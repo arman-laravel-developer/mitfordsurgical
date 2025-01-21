@@ -729,22 +729,30 @@
             $('#addToCartForm').on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
 
+                    @if($product->variants->where('color_id', '!=', null)->unique('color_id')->count() > 0)
                 let colorSelected = $('input[name="color_id"]:checked').length > 0;
-                let sizeSelected = $('input[name="size_id"]:checked').length > 0;
-
                 // Hide previous error messages
                 $('#colorError').hide();
-                $('#sizeError').hide();
 
-                if (!colorSelected || !sizeSelected) {
+                if (!colorSelected) {
                     if (!colorSelected) {
                         $('#colorError').show();
                     }
+                    return;
+                }
+                    @endif
+                    @if($product->variants->where('size_id', '!=', null)->unique('color_id')->count() > 0)
+                let sizeSelected = $('input[name="size_id"]:checked').length > 0;
+                $('#sizeError').hide();
+
+                if (!sizeSelected) {
                     if (!sizeSelected) {
                         $('#sizeError').show();
                     }
                     return;
                 }
+                    @endif
+
 
                 let formData = new FormData(this);
                 let itemQtyElement = $('#itemQty');
