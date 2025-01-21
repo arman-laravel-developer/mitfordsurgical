@@ -475,7 +475,7 @@
             const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
             const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
 
-            if (applyBtn.textContent === 'Apply') {
+            if (applyBtn.textContent === '{{translate('Apply')}}') {
                 // Apply Coupon Code
                 fetch(applyCouponUrl, {
                     method: 'POST',
@@ -606,7 +606,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                applyBtn.textContent = 'Apply';
+                                applyBtn.textContent = '{{translate('Apply')}}';
                                 document.getElementById('couponCode').value = '';
                                 document.getElementById('grand-total').textContent = `৳${grandTotal.toFixed(2)}`;
                                 document.getElementById('cartTotalV').value = grandTotal;
