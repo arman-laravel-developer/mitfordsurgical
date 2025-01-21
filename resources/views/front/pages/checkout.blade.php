@@ -322,6 +322,14 @@
                             document.querySelectorAll('.checkout-step').forEach(stepContent => stepContent.classList.remove('active-step'));
                             document.getElementById(`step-${stepNumber}`).classList.add('active-step');
 
+                            // Show the coupon cart only on step 4
+                            const couponCart = document.querySelector('.coupon-cart');
+                            if (stepNumber === 4) {
+                                couponCart.style.display = 'block'; // Show coupon cart
+                            } else {
+                                couponCart.style.display = 'none'; // Hide coupon cart on other steps
+                            }
+
                             // Validate the current step to enable/disable "Next" button
                             validateStep(stepNumber);
                         }
@@ -382,7 +390,7 @@
                                     <h3>{{translate('Order Summery')}}</h3>
                                 </div>
                                 <div class="summery-contain">
-                                    <div class="coupon-cart">
+                                    <div class="coupon-cart" style="display: none">
                                         <h6 class="text-content mb-2">Coupon Apply</h6>
                                         <div class="mb-3 coupon-box input-group">
                                             <input type="text" class="form-control" id="couponCode" placeholder="Enter Coupon Code Here...">
@@ -391,6 +399,8 @@
                                         <div id="couponMessage"></div>
                                         <div id="newTotal"></div>
                                         <input type="text" value="{{$cartTotal}}" id="cartTotalV" name="cartToal">
+                                        <input type="text" value="" id="couponDiscount" name="couponDiscount">
+                                        <input type="text" value="" id="couponCodeShow" name="couponCodeShow">
                                     </div>
                                     <ul>
                                         @foreach($cartProducts as $cartProduct)
@@ -414,7 +424,7 @@
                                     </li>
                                     <li>
                                         <h4>{{translate('Coupon Discount')}}</h4>
-                                        <h4 class="price" id="couponDiscount">&#2547;0.00</h4>
+                                        <h4 class="price" id="couponDiscountView">&#2547;0.00</h4>
                                     </li>
                                     <li>
                                         <h4>{{translate('Shipping')}}</h4>
@@ -473,9 +483,12 @@
                 }
             };
 
-            const updateCartDetails = (newTotal, isCouponApplied) => {
-                document.getElementById('newTotal').textContent = newTotal;
+            const updateCartDetails = (newTotal,couponDiscount,couponCodeShow, isCouponApplied) => {
+                document.getElementById('grand-total').textContent = `৳${newTotal.toFixed(2)}`;
                 document.getElementById('cartTotalV').value = newTotal; // Updated this to 'value' instead of 'val'
+                document.getElementById('couponDiscount').value = couponDiscount;
+                document.getElementById('couponDiscountView').textContent = `৳${couponDiscount.toFixed(2)}`;
+                document.getElementById('couponCodeShow').value = couponCodeShow; // Updated this to 'value' instead of 'val'
                 document.getElementById('couponCode').readOnly = isCouponApplied;
                 if (!isCouponApplied) {
                     document.getElementById('couponCode').value = ''; // Clear coupon code if removed
@@ -500,7 +513,7 @@
                         if (data.success) {
                             updateCouponMessage('Coupon Applied Successfully!', false);
                             applyBtn.textContent = 'Remove';
-                            updateCartDetails(data.newTotal, true);
+                            updateCartDetails(data.newTotal,data.couponDiscount,data.couponCodeShow, true);
                         } else {
                             updateCouponMessage(data.message, true);
                         }
@@ -512,7 +525,7 @@
                         if (data.success) {
                             updateCouponMessage('Coupon Removed Successfully!', false);
                             applyBtn.textContent = 'Apply';
-                            updateCartDetails(data.newTotal, false);
+                            updateCartDetails(data.newTotal,data.couponDiscount,data.couponCodeShow, false);
                         }
                     });
             }
@@ -556,42 +569,35 @@
             const subtotalElement = document.getElementById('subtotal');
             const shippingElement = document.getElementById('shipping');
             const grandTotalElement = document.getElementById('grand-total');
+            const cartTotalInput = document.getElementById('cartTotalV');
 
-            let cartTotal = 0;
+            // Fetch the initial cart total from the input value
+            let cartTotal = parseFloat(cartTotalInput.value);
 
-            // Fetch cartTotal from session using the named route
-            fetch("{{ route('cart.total') }}")
-                .then(response => response.json())
-                .then(data => {
-                    cartTotal = parseFloat(data.cartTotal);
+            // Add event listeners to shipping options after fetching cartTotal
+            shippingOptions.forEach(option => {
+                option.addEventListener('change', function () {
+                    let selectedShippingCost = parseFloat(this.value);
+                    shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
+                    let grandTotal = cartTotal + selectedShippingCost;
+                    grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
 
-                    // Add event listeners to shipping options after fetching cartTotal
-                    shippingOptions.forEach(option => {
-                        option.addEventListener('change', function () {
-                            console.log(cartTotal);
-                            let selectedShippingCost = parseFloat(this.value);
-                            shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
-                            let grandTotal = cartTotal + selectedShippingCost;
-                            grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
-
-                            // Send the selected shipping cost to the backend to store in session
-                            fetch("{{ route('shipping.cost') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // For Laravel CSRF protection
-                                },
-                                body: JSON.stringify({ shippingCost: selectedShippingCost })
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data.message); // Optional: log success message
-                                })
-                                .catch(error => console.error('Error updating shipping cost:', error));
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching cart total:', error));
+                    // Send the selected shipping cost to the backend to store in session
+                    fetch("{{ route('shipping.cost') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // For Laravel CSRF protection
+                        },
+                        body: JSON.stringify({ shippingCost: selectedShippingCost })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data.message); // Optional: log success message
+                        })
+                        .catch(error => console.error('Error updating shipping cost:', error));
+                });
+            });
         });
     </script>
     <script>

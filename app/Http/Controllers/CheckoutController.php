@@ -132,7 +132,7 @@ class CheckoutController extends Controller
                 'success' => true,
                 'newTotal' => $cartTotal,
                 'couponDiscount' => $coupon_discount,
-                'couponCode' => $couponCode
+                'couponCodeShow' => $couponCode
             ]);
         } else {
             return response()->json(['success' => false, 'message' => 'Invalid or Expired Coupon Code']);
