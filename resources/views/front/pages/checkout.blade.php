@@ -475,7 +475,7 @@
             const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
             const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
 
-            if (applyBtn.textContent === 'Apply') {
+            if (applyBtn.textContent === '{{translate('Apply')}}') {
                 // Apply Coupon Code
                 fetch(applyCouponUrl, {
                     method: 'POST',
