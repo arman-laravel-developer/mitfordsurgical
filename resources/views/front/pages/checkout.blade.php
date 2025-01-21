@@ -569,15 +569,30 @@
             const cartTotalInput = document.getElementById('cartTotalV');
 
             // Fetch the initial cart total from the input value
-            let cartTotal = parseFloat(cartTotalInput.value);
+            let cartTotal = parseFloat("{{ $cartTotal }}");
 
-            // Add event listeners to shipping options after fetching cartTotal
+            // Add event listeners to shipping options
             shippingOptions.forEach(option => {
                 option.addEventListener('change', function () {
                     let selectedShippingCost = parseFloat(this.value);
                     shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
                     let grandTotal = cartTotal + selectedShippingCost;
                     grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
+
+                    // Send the selected shipping cost to the backend to store in session
+                    fetch("{{ route('shipping.cost') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ shippingCost: selectedShippingCost })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data.message); // Optional: log success message
+                        })
+                        .catch(error => console.error('Error updating shipping cost:', error));
 
                     const applyBtn = document.getElementById('applyCouponBtn');
                     const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
@@ -595,31 +610,15 @@
                             if (data.success) {
                                 applyBtn.textContent = 'Apply';
                                 document.getElementById('couponCode').value = '';
-                                // Update total prices dynamically if needed
-                                document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
-                                document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
+                                document.getElementById('grand-total').textContent = `৳${grandTotal.toFixed(2)}`;
+                                document.getElementById('cartTotalV').value = grandTotal;
                                 document.getElementById('couponDiscount').value = '';
                                 document.getElementById('couponDiscountView').textContent = `৳${0.00}`;
                                 document.getElementById('couponCodeShow').value = '';
                                 document.getElementById('couponCode').readOnly = false;
                             }
-                        });
-
-
-                    // Send the selected shipping cost to the backend to store in session
-                    fetch("{{ route('shipping.cost') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // For Laravel CSRF protection
-                        },
-                        body: JSON.stringify({ shippingCost: selectedShippingCost })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data.message); // Optional: log success message
                         })
-                        .catch(error => console.error('Error updating shipping cost:', error));
+                        .catch(error => console.error('Error removing coupon:', error));
                 });
             });
         });

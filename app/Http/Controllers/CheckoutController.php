@@ -149,7 +149,7 @@ class CheckoutController extends Controller
             $shippingCost = 0;
         }
         $cartTotal = $newTotal + $shippingCost;
-        return response()->json(['success' => true, 'newTotal' => $cartTotal]);
+        return response()->json(['success' => true, 'cartTotalRemove' => $cartTotal]);
     }
 
     public function getCartTotal()
