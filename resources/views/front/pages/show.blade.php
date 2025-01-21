@@ -91,33 +91,35 @@
                                             @if($product->is_variant == 1)
                                                 @if($product->variants->where('color_id', '!=', null)->unique('color_id')->count() > 0)
                                                     <div class="product-title">
-                                                        <h4>{{translate('Color')}} </h4>
+                                                        <h4>{{translate('Color')}}</h4>
                                                     </div>
                                                     <ul class="color circle select-package">
                                                         @foreach($product->variants->where('color_id', '!=', null)->unique('color_id') as $variant)
                                                             <li class="form-check">
-                                                                <input class="form-check-input color-selector" type="radio" value="{{$variant->color_id}}" name="color_id" id="color-{{$variant->color_id}}" required>
+                                                                <input class="form-check-input color-selector" type="radio" value="{{$variant->color_id}}" name="color_id" id="color-{{$variant->color_id}}">
                                                                 <label class="form-check-label" for="color-{{$variant->color_id}}">
                                                                     <span style="background-color: {{$variant->color->color_code}};"></span>
                                                                 </label>
                                                             </li>
                                                         @endforeach
                                                     </ul>
+                                                    <div id="colorError" class="error-message" style="color: red; display: none;">Please select a color</div>
                                                 @endif
                                                 @if($product->variants->where('size_id', '!=', null)->unique('size_id')->count() > 0)
                                                     <div class="product-title">
-                                                        <h4>{{translate('Size')}} </h4>
+                                                        <h4>{{translate('Size')}}</h4>
                                                     </div>
                                                     <ul class="circle select-package">
                                                         @foreach($product->variants->where('size_id', '!=', null)->unique('size_id') as $variant)
                                                             <li class="form-check">
-                                                                <input class="form-check-input size-selector" required type="radio" value="{{$variant->size_id}}" name="size_id" id="size-{{$variant->size_id}}">
+                                                                <input class="form-check-input size-selector" type="radio" value="{{$variant->size_id}}" name="size_id" id="size-{{$variant->size_id}}">
                                                                 <label class="form-check-label" for="size-{{$variant->size_id}}">
                                                                     <span>{{$variant->size->name}}</span>
                                                                 </label>
                                                             </li>
                                                         @endforeach
                                                     </ul>
+                                                    <div id="sizeError" class="error-message" style="color: red; display: none;">Please select a size</div>
                                                 @endif
                                             @endif
                                         </div>
@@ -138,7 +140,7 @@
                                             </div>
                                             <div id="messageBox" class="mt-2" style="display:none;"></div>
                                             @if($product->is_variant == 1)
-                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit" >{{translate('Add To Cart')}}</button>
+                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit">{{translate('Add To Cart')}}</button>
                                                 <button class="btn btn-md bg-danger cart-button text-white w-100" style="display: none" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
                                             @else
                                                 @if($product->minimum_purchase_qty <= $product->stock)
@@ -721,20 +723,36 @@
         <!-- Related Product Section End -->
     </div>
 
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             $('#addToCartForm').on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
 
+                let colorSelected = $('input[name="color_id"]:checked').length > 0;
+                let sizeSelected = $('input[name="size_id"]:checked').length > 0;
+
+                // Hide previous error messages
+                $('#colorError').hide();
+                $('#sizeError').hide();
+
+                if (!colorSelected || !sizeSelected) {
+                    if (!colorSelected) {
+                        $('#colorError').show();
+                    }
+                    if (!sizeSelected) {
+                        $('#sizeError').show();
+                    }
+                    return;
+                }
+
                 let formData = new FormData(this);
-                let messageBox = $('#messageBox');
                 let itemQtyElement = $('#itemQty');
                 let itemQtyElementMobile = $('.cart-mobile');
                 let itemValueElement = $('#ItemValue');
                 let itemQtyInCartElement = $('#itemQtyIncart');
                 let itemValueInCartElement = $('#itemValueIncart');
 
-                // Ensure initial values are numbers or set to 0
                 let currentItemQty = parseInt(itemQtyElement.text()) || 0;
                 let currentItemValue = parseFloat(itemValueElement.text()) || 0;
                 let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
@@ -748,17 +766,14 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            // Animate the UI to show the updated count from the server
-                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
-                            animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
-                            animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
-                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
-                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
+                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000);
+                            animateCount(itemQtyElement, currentItemQty, response.item, 1000);
+                            animateCount(itemValueElement, currentItemValue, response.total, 1000);
+                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000);
+                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000);
 
                             toastr.success(response.message);
                             resetForm('#addToCartForm');
-                            // Optionally open the cart
-                            // openCart();
                             updateCartDropdown();
                         } else {
                             toastr.error('Failed to add to cart. Please try again.');
@@ -770,17 +785,16 @@
                 });
 
                 function resetForm(selector) {
-                    $(selector).trigger('reset'); // Reset the form fields
-                    // Optionally, reset custom elements like color and size selectors if needed
-                    $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
+                    $(selector).trigger('reset');
+                    $('.color-selector, .size-selector').prop('checked', false);
                 }
 
                 function showMessage(message, type) {
                     let messageClass = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
-                    messageBox.removeClass().addClass(messageClass).text(message).fadeIn();
+                    $('#messageBox').removeClass().addClass(messageClass).text(message).fadeIn();
                     setTimeout(function() {
-                        messageBox.fadeOut();
-                    }, 3000); // Hide message after 3 seconds
+                        $('#messageBox').fadeOut();
+                    }, 3000);
                 }
 
                 function updateCartDropdown() {
@@ -788,7 +802,7 @@
                         url: '{{ route('cart.dropdown') }}',
                         method: 'GET',
                         success: function(response) {
-                            $('.cart-body').html(response); // Update the cart dropdown HTML
+                            $('.cart-body').html(response);
                         },
                         error: function(error) {
                             console.error('Error:', error);
@@ -796,30 +810,24 @@
                     });
                 }
 
-                // Animation function (count up from current to total)
                 function animateCount(element, startValue, endValue, duration) {
-                    // Ensure both values are valid numbers
                     let validStartValue = isNaN(startValue) ? 0 : startValue;
                     let validEndValue = isNaN(endValue) ? 0 : endValue;
-
-                    // Calculate the difference between start and end value
                     let diff = validEndValue - validStartValue;
-                    let steps = diff > 1000 ? 100 : 50; // Adjust number of steps for large values
-                    let increment = diff / steps; // Calculate the increment value per step
+                    let steps = diff > 1000 ? 100 : 50;
+                    let increment = diff / steps;
 
                     $({ countNum: validStartValue }).animate(
                         { countNum: validEndValue },
                         {
-                            duration: duration, // Total animation duration
-                            easing: 'swing', // Easing function
+                            duration: duration,
+                            easing: 'swing',
                             step: function() {
-                                // Update the element's text during each step of the animation
-                                let newValue = Math.ceil(this.countNum + increment); // Increase the count
+                                let newValue = Math.ceil(this.countNum + increment);
                                 element.text(newValue);
-                                this.countNum = newValue; // Update the current count value
+                                this.countNum = newValue;
                             },
                             complete: function() {
-                                // Ensure the final value is set after animation
                                 element.text(validEndValue);
                             }
                         }
@@ -828,7 +836,6 @@
             });
         });
     </script>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
