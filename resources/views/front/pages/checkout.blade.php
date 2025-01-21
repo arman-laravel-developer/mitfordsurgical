@@ -130,6 +130,21 @@
             }
         </style>
 
+        <style>
+            .is-invalid {
+                border-color: #e74c3c;
+            }
+            .invalid-feedback {
+                color: #e74c3c;
+                font-size: 0.875rem;
+            }
+        </style>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
+
         <!-- Checkout section Start -->
         <section class="checkout-section-2 section-b-space" style="padding-top: 1%;">
             <div class="container">
@@ -151,6 +166,9 @@
                     <!-- Wizard Navigation -->
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <input type="text" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
+                            <input type="text" readonly value="" id="couponDiscount" name="couponDiscount">
+                            <input type="text" readonly value="" id="couponCodeShow" name="couponCodeShow">
                             <div class="checkout-steps">
                                 <div class="step" id="step1">
                                     <span class="step-number">
@@ -304,85 +322,6 @@
                         </form>
                     </div>
 
-                    <!-- JavaScript for the wizard functionality -->
-                    <script>
-                        function showStep(stepNumber) {
-                            // Update the active step
-                            document.querySelectorAll('.step').forEach((step, index) => {
-                                step.classList.remove('active');
-                                if (index < stepNumber) {
-                                    step.classList.add('completed');
-                                }
-                                if (index === stepNumber - 1) {
-                                    step.classList.add('active');
-                                }
-                            });
-
-                            // Show the corresponding step content
-                            document.querySelectorAll('.checkout-step').forEach(stepContent => stepContent.classList.remove('active-step'));
-                            document.getElementById(`step-${stepNumber}`).classList.add('active-step');
-
-                            // Show the coupon cart only on step 4
-                            const couponCart = document.querySelector('.coupon-cart');
-                            if (stepNumber === 4) {
-                                couponCart.style.display = 'block'; // Show coupon cart
-                            } else {
-                                couponCart.style.display = 'none'; // Hide coupon cart on other steps
-                            }
-
-                            // Validate the current step to enable/disable "Next" button
-                            validateStep(stepNumber);
-                        }
-
-                        function validateStep(stepNumber) {
-                            let allFieldsFilled = true;
-
-                            // Get all required inputs for the specific step
-                            const stepInputs = document.querySelectorAll(`#step-${stepNumber} input[required]`);
-
-                            // Loop through the inputs and check if any of them is empty
-                            stepInputs.forEach(input => {
-                                if (!input.value.trim()) {
-                                    allFieldsFilled = false;
-                                }
-                            });
-
-                            // Enable/Disable the next button based on whether all required fields are filled
-                            const nextButton = document.getElementById(`nextStep${stepNumber}`);
-                            if (nextButton) {
-                                nextButton.disabled = !allFieldsFilled;
-                            }
-                        }
-
-                        // Attach event listeners to inputs for validation
-                        document.querySelectorAll('input[required]').forEach(input => {
-                            input.addEventListener('input', function () {
-                                const currentStep = this.closest('.checkout-step').id.replace('step-', '');
-                                validateStep(currentStep);
-                            });
-                        });
-
-                        // Initial validation check for step 1
-                        validateStep(1);
-                    </script>
-                    <script>
-                        document.querySelectorAll('.form-check-input').forEach(input => {
-                            input.addEventListener('change', function() {
-                                // Remove the background color from all delivery options
-                                document.querySelectorAll('.delivery-option').forEach(option => {
-                                    option.style.backgroundColor = '';  // Reset the background color
-                                    option.style.borderColor = '';      // Reset the border color
-                                });
-
-                                // Apply the background color to the checked option
-                                if (this.checked) {
-                                    this.closest('.delivery-option').style.backgroundColor = '#0baf9a';
-                                    this.closest('.delivery-option').style.borderColor = '#0baf9a';
-                                }
-                            });
-                        });
-                    </script>
-
                     <div class="col-lg-5">
                         <div class="right-side-summery-box">
                             <div class="summery-box-2">
@@ -397,10 +336,6 @@
                                             <button class="btn-apply" id="applyCouponBtn">Apply</button>
                                         </div>
                                         <div id="couponMessage"></div>
-                                        <div id="newTotal"></div>
-                                        <input type="text" value="{{$cartTotal}}" id="cartTotalV" name="cartToal">
-                                        <input type="text" value="" id="couponDiscount" name="couponDiscount">
-                                        <input type="text" value="" id="couponCodeShow" name="couponCodeShow">
                                     </div>
                                     <ul>
                                         @foreach($cartProducts as $cartProduct)
@@ -448,84 +383,146 @@
         <!-- Checkout section End -->
     </div>
 
-    <style>
-        .is-invalid {
-            border-color: #e74c3c;
+    <!-- JavaScript for the wizard functionality -->
+    <script>
+        function showStep(stepNumber) {
+            // Update the active step
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active');
+                if (index < stepNumber) {
+                    step.classList.add('completed');
+                }
+                if (index === stepNumber - 1) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Show the corresponding step content
+            document.querySelectorAll('.checkout-step').forEach(stepContent => stepContent.classList.remove('active-step'));
+            document.getElementById(`step-${stepNumber}`).classList.add('active-step');
+
+            // Show the coupon cart only on step 4
+            const couponCart = document.querySelector('.coupon-cart');
+            if (stepNumber === 4) {
+                couponCart.style.display = 'block'; // Show coupon cart
+            } else {
+                couponCart.style.display = 'none'; // Hide coupon cart on other steps
+            }
+
+            // Validate the current step to enable/disable "Next" button
+            validateStep(stepNumber);
         }
-        .invalid-feedback {
-            color: #e74c3c;
-            font-size: 0.875rem;
+
+        function validateStep(stepNumber) {
+            let allFieldsFilled = true;
+
+            // Get all required inputs for the specific step
+            const stepInputs = document.querySelectorAll(`#step-${stepNumber} input[required]`);
+
+            // Loop through the inputs and check if any of them is empty
+            stepInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    allFieldsFilled = false;
+                }
+            });
+
+            // Enable/Disable the next button based on whether all required fields are filled
+            const nextButton = document.getElementById(`nextStep${stepNumber}`);
+            if (nextButton) {
+                nextButton.disabled = !allFieldsFilled;
+            }
         }
-    </style>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+
+        // Attach event listeners to inputs for validation
+        document.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('input', function () {
+                const currentStep = this.closest('.checkout-step').id.replace('step-', '');
+                validateStep(currentStep);
+            });
+        });
+
+        // Initial validation check for step 1
+        validateStep(1);
+    </script>
+    <script>
+        document.querySelectorAll('.form-check-input').forEach(input => {
+            input.addEventListener('change', function() {
+                // Remove the background color from all delivery options
+                document.querySelectorAll('.delivery-option').forEach(option => {
+                    option.style.backgroundColor = '';  // Reset the background color
+                    option.style.borderColor = '';      // Reset the border color
+                });
+
+                // Apply the background color to the checked option
+                if (this.checked) {
+                    this.closest('.delivery-option').style.backgroundColor = '#0baf9a';
+                    this.closest('.delivery-option').style.borderColor = '#0baf9a';
+                }
+            });
+        });
+    </script>
 
     <meta name="apply-coupon-url" content="{{ route('coupon.apply') }}">
     <meta name="remove-coupon-url" content="{{ route('coupon.remove') }}">
 
     <script>
-        document.getElementById('applyCouponBtn').addEventListener('click', function () {
+        document.getElementById('applyCouponBtn').addEventListener('click', function() {
             const couponCode = document.getElementById('couponCode').value;
             const applyBtn = this;
             const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
             const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
 
-            const updateCouponMessage = (message, isError) => {
-                const messageElement = document.getElementById('couponMessage');
-                messageElement.textContent = message;
-                if (isError) {
-                    messageElement.classList.add('error'); // Add error class
-                } else {
-                    messageElement.classList.remove('error'); // Remove error class
-                }
-            };
-
-            const updateCartDetails = (newTotal,couponDiscount,couponCodeShow, isCouponApplied) => {
-                document.getElementById('grand-total').textContent = `৳${newTotal.toFixed(2)}`;
-                document.getElementById('cartTotalV').value = newTotal; // Updated this to 'value' instead of 'val'
-                document.getElementById('couponDiscount').value = couponDiscount;
-                document.getElementById('couponDiscountView').textContent = `৳${couponDiscount.toFixed(2)}`;
-                document.getElementById('couponCodeShow').value = couponCodeShow; // Updated this to 'value' instead of 'val'
-                document.getElementById('couponCode').readOnly = isCouponApplied;
-                if (!isCouponApplied) {
-                    document.getElementById('couponCode').value = ''; // Clear coupon code if removed
-                }
-            };
-
-            const postRequest = (url, body) => {
-                return fetch(url, {
+            if (applyBtn.textContent === 'Apply') {
+                // Apply Coupon Code
+                fetch(applyCouponUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify(body)
-                }).then(response => response.json());
-            };
-
-            if (applyBtn.textContent === 'Apply') {
-                // Apply Coupon Code
-                postRequest(applyCouponUrl, { coupon: couponCode })
+                    body: JSON.stringify({ coupon: couponCode })
+                })
+                    .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            updateCouponMessage('Coupon Applied Successfully!', false);
+                            toastr.success("Coupon Applied Successfully!");
+                            // document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
                             applyBtn.textContent = 'Remove';
-                            updateCartDetails(data.newTotal,data.couponDiscount,data.couponCodeShow, true);
+                            // Update total prices dynamically if needed
+                            document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
+                            document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
+                            document.getElementById('couponDiscount').value = data.couponDiscount;
+                            document.getElementById('couponDiscountView').textContent = `৳${data.couponDiscount.toFixed(2)}`;
+                            document.getElementById('couponCodeShow').value = data.couponCodeShow;
+                            document.getElementById('couponCode').readOnly = true;
                         } else {
-                            updateCouponMessage(data.message, true);
+                            document.getElementById('couponMessage').textContent = data.message;
                         }
                     });
             } else {
                 // Remove Coupon Code
-                postRequest(removeCouponUrl, {})
+                fetch(removeCouponUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({})
+                })
+                    .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            updateCouponMessage('Coupon Removed Successfully!', false);
+                            toastr.success("Coupon Removed Successfully!");
+                            // document.getElementById('couponMessage').textContent = 'Coupon Removed Successfully!';
                             applyBtn.textContent = 'Apply';
-                            updateCartDetails(data.newTotal,data.couponDiscount,data.couponCodeShow, false);
+                            document.getElementById('couponCode').value = '';
+                            // Update total prices dynamically if needed
+                            document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
+                            document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
+                            document.getElementById('couponDiscount').value = '';
+                            document.getElementById('couponDiscountView').textContent = `৳${0.00}`;
+                            document.getElementById('couponCodeShow').value = '';
+                            document.getElementById('couponCode').readOnly = false;
                         }
                     });
             }
@@ -581,6 +578,33 @@
                     shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
                     let grandTotal = cartTotal + selectedShippingCost;
                     grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
+
+                    const applyBtn = document.getElementById('applyCouponBtn');
+                    const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
+
+                    fetch(removeCouponUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                applyBtn.textContent = 'Apply';
+                                document.getElementById('couponCode').value = '';
+                                // Update total prices dynamically if needed
+                                document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
+                                document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
+                                document.getElementById('couponDiscount').value = '';
+                                document.getElementById('couponDiscountView').textContent = `৳${0.00}`;
+                                document.getElementById('couponCodeShow').value = '';
+                                document.getElementById('couponCode').readOnly = false;
+                            }
+                        });
+
 
                     // Send the selected shipping cost to the backend to store in session
                     fetch("{{ route('shipping.cost') }}", {

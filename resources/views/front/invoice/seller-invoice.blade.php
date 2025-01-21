@@ -226,10 +226,6 @@
                             </td>
 
                         </tr>
-                        <tr class="border-bottom">
-                            <td class="gry-color text-left">Coupon Discount</td>
-                            <td class="text-right">&#2547; 0.00</td>
-                        </tr>
                         <tr>
                             <th class="text-left strong">Grand Total</th>
                             <td class="text-right">&#2547; <strong>{{number_format($totalPrice, 2)}}</strong></td>

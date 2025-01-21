@@ -153,19 +153,22 @@
 
                                     <li>
                                         <h4>{{translate('Shipping Cost')}}</h4>
-                                        <h4 class="price theme-color">&#2547;{{number_format($order->shipping_cost)}}</h4>
+                                        <h4 class="price text-danger">&#2547;{{number_format($order->shipping_cost)}}</h4>
                                     </li>
-
-{{--                                    <li>--}}
-{{--                                        <h4>Coupon Discount</h4>--}}
-{{--                                        <h4 class="price text-danger">$6.27</h4>--}}
-{{--                                    </li>--}}
+                                    <li>
+                                        <h4>{{translate('Vat/Tax')}}</h4>
+                                        <h4 class="price" id="vat">&#2547;0</h4>
+                                    </li>
+                                    <li>
+                                        <h4>{{translate('Coupon Discount')}}</h4>
+                                        <h4 class="price text-danger">&#2547;{{number_format($order->coupon_discount)}}</h4>
+                                    </li>
                                 </ul>
 
                                 <ul class="summery-total">
                                     <li class="list-total">
-                                        <h4>{{translate('Total (BDT)')}}</h4>
-                                        <h4 class="price">&#2547;{{number_format($order->grand_total+$order->shipping_cost)}}</h4>
+                                        <h4 class="theme-color">{{translate('Total (BDT)')}}</h4>
+                                        <h4 class="price theme-color">&#2547;{{number_format($order->grand_total+$order->shipping_cost-$order->coupon_discount)}}</h4>
                                     </li>
                                 </ul>
                             </div>

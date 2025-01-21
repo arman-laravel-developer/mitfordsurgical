@@ -81,6 +81,8 @@ class OrderController extends Controller
         $quantity = count($cartProducts);
         $shipping_cost = $request->shipping_cost;
         $order_total = Cart::getTotal();
+        $couponDiscount = $request->couponDiscount;
+        $couponCode = $request->couponCodeShow;
 
         $order = new Order();
         $order->name = $request->name;
@@ -97,6 +99,8 @@ class OrderController extends Controller
             $order->order_type = 'guest';
         }
         $order->grand_total = $order_total;
+        $order->coupon_discount = $couponDiscount;
+        $order->coupon_code = $couponCode;
         $order->total_qty = $quantity;
         $order->address = $request->address;
         $order->shipping_cost = $shipping_cost;

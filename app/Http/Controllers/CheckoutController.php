@@ -143,7 +143,16 @@ class CheckoutController extends Controller
     {
         session()->forget('cartTotalNew');
         $newTotal = Cart::getTotal();
-        return response()->json(['success' => true, 'newTotal' => $newTotal]);
+        if (Session::get('selectedShippingCost'))
+        {
+            $shippingCost = Session::get('selectedShippingCost');
+        }
+        else
+        {
+            $shippingCost = 0;
+        }
+        $cartTotal = $newTotal + $shippingCost;
+        return response()->json(['success' => true, 'newTotal' => $cartTotal]);
     }
 
     public function getCartTotal()

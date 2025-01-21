@@ -208,7 +208,7 @@
 {{--                    @endif--}}
                 </td>
                 @php
-                    $totalFinal = $order->grand_total + $order->shipping_cost;
+                    $totalFinal = $order->grand_total + $order->shipping_cost - $order->coupon_discount;
                 @endphp
                 <td>
                     <table class="text-left sm-padding small strong">
@@ -223,15 +223,18 @@
                             <td class="text-right">
                                 <span>&#2547; {{number_format($order->shipping_cost,2)}}</span>
                             </td>
-
                         </tr>
                         <tr class="border-bottom">
                             <td class="gry-color text-left">Coupon Discount</td>
+                            <td class="text-right">&#2547; {{number_format(round($order->coupon_discount),2)}}</td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <td class="gry-color text-left">Vat/Tax</td>
                             <td class="text-right">&#2547; 0.00</td>
                         </tr>
                         <tr>
                             <th class="text-left strong">Grand Total</th>
-                            <td class="text-right">&#2547; <strong>{{number_format($totalFinal, 2)}}</strong></td>
+                            <td class="text-right">&#2547; <strong>{{ number_format(round($totalFinal), 2) }}</strong></td>
                         </tr>
                         </tbody>
                     </table>
