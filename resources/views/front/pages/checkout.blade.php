@@ -166,9 +166,9 @@
                     <!-- Wizard Navigation -->
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
-                            <input type="hidden" readonly value="" id="couponDiscount" name="couponDiscount">
-                            <input type="hidden" readonly value="" id="couponCodeShow" name="couponCodeShow">
+                            <input type="text" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
+                            <input type="text" readonly value="" id="couponDiscount" name="couponDiscount">
+                            <input type="text" readonly value="" id="couponCodeShow" name="couponCodeShow">
                             <div class="checkout-steps">
                                 <div class="step" id="step1">
                                     <span class="step-number">
@@ -485,14 +485,15 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
+                            console.log(data);
                             toastr.success("{{translate('Coupon Applied Successfully')}}!");
                             // document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
                             applyBtn.textContent = 'Remove';
                             // Update total prices dynamically if needed
                             document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
                             document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
-                            document.getElementById('couponDiscount').value = data.couponDiscount;
-                            document.getElementById('couponDiscountView').textContent = `৳${data.couponDiscount.toFixed(2)}`;
+                            document.getElementById('couponDiscount').value = data.couponDiscountNumber;
+                            document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                             document.getElementById('couponCodeShow').value = data.couponCodeShow;
                             document.getElementById('couponCode').readOnly = true;
                         } else {
@@ -517,10 +518,10 @@
                             applyBtn.textContent = 'Apply';
                             document.getElementById('couponCode').value = '';
                             // Update total prices dynamically if needed
-                            document.getElementById('grand-total').textContent = `৳${data.newTotal.toFixed(2)}`;
-                            document.getElementById('cartTotalV').value = data.newTotal; // Updated this to 'value' instead of 'val'
+                            document.getElementById('grand-total').textContent = `৳${data.cartTotalRemove.toFixed(2)}`;
+                            document.getElementById('cartTotalV').value = data.cartTotalRemove; // Updated this to 'value' instead of 'val'
                             document.getElementById('couponDiscount').value = '';
-                            document.getElementById('couponDiscountView').textContent = `৳${0.00}`;
+                            document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                             document.getElementById('couponCodeShow').value = '';
                             document.getElementById('couponCode').readOnly = false;
                         }
@@ -579,20 +580,6 @@
                     let grandTotal = cartTotal + selectedShippingCost;
                     grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
 
-                    // Send the selected shipping cost to the backend to store in session
-                    fetch("{{ route('shipping.cost') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ shippingCost: selectedShippingCost })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data.message); // Optional: log success message
-                        })
-                        .catch(error => console.error('Error updating shipping cost:', error));
 
                     const applyBtn = document.getElementById('applyCouponBtn');
                     const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
@@ -613,12 +600,27 @@
                                 document.getElementById('grand-total').textContent = `৳${grandTotal.toFixed(2)}`;
                                 document.getElementById('cartTotalV').value = grandTotal;
                                 document.getElementById('couponDiscount').value = '';
-                                document.getElementById('couponDiscountView').textContent = `৳${0.00}`;
+                                document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                                 document.getElementById('couponCodeShow').value = '';
                                 document.getElementById('couponCode').readOnly = false;
                             }
                         })
                         .catch(error => console.error('Error removing coupon:', error));
+
+                    // Send the selected shipping cost to the backend to store in session
+                    fetch("{{ route('shipping.cost') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ shippingCost: selectedShippingCost })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data.message); // Optional: log success message
+                        })
+                        .catch(error => console.error('Error updating shipping cost:', error));
                 });
             });
         });

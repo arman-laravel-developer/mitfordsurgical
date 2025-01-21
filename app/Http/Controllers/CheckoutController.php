@@ -128,9 +128,11 @@ class CheckoutController extends Controller
             return response()->json([
                 'success' => true,
                 'newTotal' => $cartTotal,
-                'couponDiscount' => $coupon_discount,
+                'couponDiscount' => '৳' . number_format($coupon_discount, 2),
+                'couponDiscountNumber' => number_format($coupon_discount, 2),
                 'couponCodeShow' => $couponCode
             ]);
+
         } else {
             return response()->json(['success' => false, 'message' => 'Invalid or Expired Coupon Code']);
         }
@@ -149,7 +151,12 @@ class CheckoutController extends Controller
             $shippingCost = 0;
         }
         $cartTotal = $newTotal + $shippingCost;
-        return response()->json(['success' => true, 'cartTotalRemove' => $cartTotal]);
+        $coupon_discount = 0;
+        return response()->json(['success' => true,
+            'cartTotalRemove' => $cartTotal,
+            'couponDiscount' => '৳' . number_format($coupon_discount, 2),
+            'couponDiscountNumber' => number_format($coupon_discount, 2),
+        ]);
     }
 
     public function getCartTotal()
