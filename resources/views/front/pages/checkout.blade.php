@@ -330,10 +330,10 @@
                                 </div>
                                 <div class="summery-contain">
                                     <div class="coupon-cart" style="display: none">
-                                        <h6 class="text-content mb-2">Coupon Apply</h6>
+                                        <h6 class="text-content mb-2">{{translate('Coupon Apply')}}</h6>
                                         <div class="mb-3 coupon-box input-group">
-                                            <input type="text" class="form-control" id="couponCode" placeholder="Enter Coupon Code Here...">
-                                            <button class="btn-apply" id="applyCouponBtn">Apply</button>
+                                            <input type="text" class="form-control" id="couponCode" placeholder="{{translate('Enter Coupon Code Here')}}...">
+                                            <button class="btn-apply" id="applyCouponBtn">{{translate('Apply')}}</button>
                                         </div>
                                         <div id="couponMessage"></div>
                                     </div>
@@ -358,11 +358,11 @@
                                         <h4 class="price">&#2547;{{number_format($cartTotal, 2)}}</h4>
                                     </li>
                                     <li>
-                                        <h4>{{translate('Coupon Discount')}}</h4>
+                                        <h4>{{translate('Coupon Discount')}}(-)</h4>
                                         <h4 class="price" id="couponDiscountView">&#2547;0.00</h4>
                                     </li>
                                     <li>
-                                        <h4>{{translate('Shipping')}}</h4>
+                                        <h4>{{translate('Shipping')}}(+)</h4>
                                         <h4 class="price" id="shipping">&#2547;0.00</h4>
                                     </li>
                                     <li>
@@ -485,7 +485,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            toastr.success("Coupon Applied Successfully!");
+                            toastr.success("{{translate('Coupon Applied Successfully')}}!");
                             // document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
                             applyBtn.textContent = 'Remove';
                             // Update total prices dynamically if needed
@@ -512,7 +512,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            toastr.success("Coupon Removed Successfully!");
+                            toastr.success("{{translate('Coupon Removed Successfully')}}!");
                             // document.getElementById('couponMessage').textContent = 'Coupon Removed Successfully!';
                             applyBtn.textContent = 'Apply';
                             document.getElementById('couponCode').value = '';

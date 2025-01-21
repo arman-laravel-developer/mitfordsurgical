@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Track My Order
+{{$generalSettingView->site_name}} - {{translate('Track My Order')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 1%;">
-                            <h2>Order Tracking</h2>
+                            <h2>{{translate('Order Tracking')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Order Tracking</li>
+                                    <li class="breadcrumb-item active">{{translate('Order Tracking')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-xxl-6 col-xl-8 mx-auto">
                         <div class="title d-block text-center">
-                            <h2>Order Tracking</h2>
+                            <h2>{{translate('Order Tracking')}}</h2>
                             <span class="title-leaf">
                         </span>
                         </div>
@@ -46,10 +46,10 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="order_code" value="{{$order_code}}" id="order-id" placeholder="">
                                     <button class="btn theme-bg-color text-white m-0" type="submit"
-                                            id="button-addon1">Tracking</button>
+                                            id="button-addon1">{{translate('Tracking')}}</button>
                                 </div>
 
-                                <small id="error-message" style="color: red; display: none;">Order Code must be exactly 17 digits.</small>
+                                <small id="error-message" style="color: red; display: none;">{{translate('Order Code must be exactly 17 digits')}}.</small>
                             </form>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                                         </div>
 
                                         <div class="order-details-name">
-                                            <h5 class="text-content">Destination</h5>
+                                            <h5 class="text-content">{{translate('Destination')}}</h5>
                                             <h4>{{$order->address}}</h4>
                                         </div>
                                     </div>
@@ -181,7 +181,7 @@
                                                                     <a href="{{route('product.detail', ['id' => $orderDetail->product_id, 'slug' => $orderDetail->product->slug])}}" target="_blank">{{$orderDetail->product->getTranslation('name')}}</a>
                                                                 </li>
                                                                 @if($orderDetail->product->added_by == 'admin')
-                                                                    <li class="text-content">{{translate('Sold By')}}: In house</li>
+                                                                    <li class="text-content">{{translate('Sold By')}}: {{translate('In house')}}</li>
                                                                 @else
                                                                     @php
                                                                         $shop = \App\Models\Shop::where('seller_id',$orderDetail->product->user_id)->first();
@@ -197,17 +197,17 @@
                                                 </td>
 
                                                 <td class="price">
-                                                    <h4 class="table-title text-content">Price</h4>
+                                                    <h4 class="table-title text-content">{{translate('Price')}}</h4>
                                                     <h6 class="theme-color">&#2547; {{number_format($orderDetail->price)}}</h6>
                                                 </td>
 
                                                 <td class="quantity">
-                                                    <h4 class="table-title text-content">Qty</h4>
+                                                    <h4 class="table-title text-content">{{translate('Qty')}}</h4>
                                                     <h4 class="text-title">{{$orderDetail->qty}}</h4>
                                                 </td>
 
                                                 <td class="subtotal">
-                                                    <h4 class="table-title text-content">Total</h4>
+                                                    <h4 class="table-title text-content">{{translate('Total')}}</h4>
                                                     <h5>&#2547; {{number_format($orderDetail->price * $orderDetail->qty)}}</h5>
                                                 </td>
                                             </tr>
@@ -223,23 +223,23 @@
                                 <div class="col-lg-12 col-sm-6">
                                     <div class="summery-box">
                                         <div class="summery-header">
-                                            <h3>Price Details</h3>
+                                            <h3>{{translate('Price Details')}}</h3>
                                             <h5 class="ms-auto theme-color">({{$order->total_qty}} Items)</h5>
                                         </div>
 
                                         <ul class="summery-contain">
                                             <li>
-                                                <h4>SubTotal</h4>
+                                                <h4>{{translate('SubTotal')}}</h4>
                                                 <h4 class="price">&#2547;{{number_format($order->grand_total,2)}}</h4>
                                             </li>
 
                                             <li>
-                                                <h4>Shipping Cost</h4>
-                                                <h4 class="price text-primary">+&#2547;{{number_format($order->shipping_cost,2)}}</h4>
+                                                <h4>{{translate('Shipping Cost')}}(+)</h4>
+                                                <h4 class="price text-primary">&#2547;{{number_format($order->shipping_cost,2)}}</h4>
                                             </li>
                                             <li>
-                                                <h4>{{translate('Coupon Discount')}}</h4>
-                                                <h4 class="price text-danger">-&#2547;{{number_format(round($order->coupon_discount),2)}}</h4>
+                                                <h4>{{translate('Coupon Discount')}}(-)</h4>
+                                                <h4 class="price text-danger">&#2547;{{number_format(round($order->coupon_discount),2)}}</h4>
                                             </li>
                                             <li>
                                                 <h4>{{translate('Vat/Tax')}}</h4>

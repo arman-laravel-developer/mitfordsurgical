@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-{{$generalSettingView->site_name}} - Track My Order
+{{$generalSettingView->site_name}} - {{translate('Track My Order')}}
 @endsection
 
 @section('body')
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumb-contain" style="padding: 1%;">
-                            <h2>Order Tracking</h2>
+                            <h2>{{translate('Order Tracking')}}</h2>
                             <nav>
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
@@ -21,7 +21,7 @@
                                             <i class="fa-solid fa-house"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Order Tracking</li>
+                                    <li class="breadcrumb-item active">{{translate('Order Tracking')}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-xxl-6 col-xl-8 mx-auto">
                         <div class="title d-block text-center">
-                            <h2>Order Tracking</h2>
+                            <h2>{{translate('Order Tracking')}}</h2>
                             <span class="title-leaf">
                         </span>
                         </div>
@@ -47,10 +47,10 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" name="order_code" id="order-id" placeholder="xxxxx-xxxxx-xxxxx">
                                 <button class="btn theme-bg-color text-white m-0" type="submit"
-                                        id="button-addon1">Tracking</button>
+                                        id="button-addon1">{{translate('Tracking')}}</button>
                             </div>
 
-                            <small id="error-message" style="color: red; display: none; margin-top: 2%; font-size: 88%;">Order Code must be exactly 17 digits.</small>
+                            <small id="error-message" style="color: red; display: none; margin-top: 2%; font-size: 88%;">{{translate('Order Code must be exactly 17 digits')}}.</small>
                             </form>
                         </div>
                     </div>
