@@ -390,64 +390,8 @@
                                         </div>
                                         <div id="couponMessage"></div>
                                         <div id="newTotal"></div>
+                                        <input type="text" value="{{$cartTotal}}" id="cartTotalV" name="cartToal">
                                     </div>
-
-                                    <meta name="apply-coupon-url" content="{{ route('coupon.apply') }}">
-                                    <meta name="remove-coupon-url" content="{{ route('coupon.remove') }}">
-
-                                    <script>
-                                        document.getElementById('applyCouponBtn').addEventListener('click', function() {
-                                            const couponCode = document.getElementById('couponCode').value;
-                                            const applyBtn = this;
-                                            const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
-                                            const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
-
-                                            if (applyBtn.textContent === 'Apply') {
-                                                // Apply Coupon Code
-                                                fetch(applyCouponUrl, {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                                    },
-                                                    body: JSON.stringify({ coupon: couponCode })
-                                                })
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        if (data.success) {
-                                                            document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
-                                                            applyBtn.textContent = 'Remove';
-                                                            // Update total prices dynamically if needed
-                                                            document.getElementById('newTotal').textContent = data.newTotal;
-                                                            document.getElementById('couponCode').readOnly = true;
-                                                        } else {
-                                                            document.getElementById('couponMessage').textContent = data.message;
-                                                        }
-                                                    });
-                                            } else {
-                                                // Remove Coupon Code
-                                                fetch(removeCouponUrl, {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                                    },
-                                                    body: JSON.stringify({})
-                                                })
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        if (data.success) {
-                                                            document.getElementById('couponMessage').textContent = 'Coupon Removed Successfully!';
-                                                            applyBtn.textContent = 'Apply';
-                                                            document.getElementById('couponCode').value = '';
-                                                            // Update total prices dynamically if needed
-                                                            document.getElementById('newTotal').textContent = data.newTotal;
-                                                            document.getElementById('couponCode').readOnly = false;
-                                                        }
-                                                    });
-                                            }
-                                        });
-                                    </script>
                                     <ul>
                                         @foreach($cartProducts as $cartProduct)
                                             @php($variant = \App\Models\Variant::find($cartProduct->attributes->variant_id))
@@ -468,7 +412,10 @@
                                         <h4>{{translate('Subtotal')}}</h4>
                                         <h4 class="price">&#2547;{{number_format($cartTotal, 2)}}</h4>
                                     </li>
-
+                                    <li>
+                                        <h4>{{translate('Coupon Discount')}}</h4>
+                                        <h4 class="price" id="couponDiscount">&#2547;0.00</h4>
+                                    </li>
                                     <li>
                                         <h4>{{translate('Shipping')}}</h4>
                                         <h4 class="price" id="shipping">&#2547;0.00</h4>
@@ -477,7 +424,6 @@
                                         <h4>{{translate('Vat/Tax')}}</h4>
                                         <h4 class="price" id="vat">&#2547;0.00</h4>
                                     </li>
-
                                     <li class="list-total">
                                         <h4>{{translate('Grand Total (BDT)')}}</h4>
                                         <h4 class="price" id="grand-total">&#2547;{{number_format($cartTotal, 2)}}</h4>
@@ -501,6 +447,77 @@
             font-size: 0.875rem;
         }
     </style>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+    <meta name="apply-coupon-url" content="{{ route('coupon.apply') }}">
+    <meta name="remove-coupon-url" content="{{ route('coupon.remove') }}">
+
+    <script>
+        document.getElementById('applyCouponBtn').addEventListener('click', function () {
+            const couponCode = document.getElementById('couponCode').value;
+            const applyBtn = this;
+            const applyCouponUrl = document.querySelector('meta[name="apply-coupon-url"]').content;
+            const removeCouponUrl = document.querySelector('meta[name="remove-coupon-url"]').content;
+
+            const updateCouponMessage = (message, isError) => {
+                const messageElement = document.getElementById('couponMessage');
+                messageElement.textContent = message;
+                if (isError) {
+                    messageElement.classList.add('error'); // Add error class
+                } else {
+                    messageElement.classList.remove('error'); // Remove error class
+                }
+            };
+
+            const updateCartDetails = (newTotal, isCouponApplied) => {
+                document.getElementById('newTotal').textContent = newTotal;
+                document.getElementById('cartTotalV').value = newTotal; // Updated this to 'value' instead of 'val'
+                document.getElementById('couponCode').readOnly = isCouponApplied;
+                if (!isCouponApplied) {
+                    document.getElementById('couponCode').value = ''; // Clear coupon code if removed
+                }
+            };
+
+            const postRequest = (url, body) => {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(body)
+                }).then(response => response.json());
+            };
+
+            if (applyBtn.textContent === 'Apply') {
+                // Apply Coupon Code
+                postRequest(applyCouponUrl, { coupon: couponCode })
+                    .then(data => {
+                        if (data.success) {
+                            updateCouponMessage('Coupon Applied Successfully!', false);
+                            applyBtn.textContent = 'Remove';
+                            updateCartDetails(data.newTotal, true);
+                        } else {
+                            updateCouponMessage(data.message, true);
+                        }
+                    });
+            } else {
+                // Remove Coupon Code
+                postRequest(removeCouponUrl, {})
+                    .then(data => {
+                        if (data.success) {
+                            updateCouponMessage('Coupon Removed Successfully!', false);
+                            applyBtn.textContent = 'Apply';
+                            updateCartDetails(data.newTotal, false);
+                        }
+                    });
+            }
+        });
+    </script>
     <script>
         document.getElementById('submitOrderForm').addEventListener('submit', function(event) {
             let formValid = true;
@@ -540,16 +557,41 @@
             const shippingElement = document.getElementById('shipping');
             const grandTotalElement = document.getElementById('grand-total');
 
-            let cartTotal = parseFloat("{{ $cartTotal }}");
+            let cartTotal = 0;
 
-            shippingOptions.forEach(option => {
-                option.addEventListener('change', function () {
-                    let selectedShippingCost = parseFloat(this.value);
-                    shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
-                    let grandTotal = cartTotal + selectedShippingCost;
-                    grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
-                });
-            });
+            // Fetch cartTotal from session using the named route
+            fetch("{{ route('cart.total') }}")
+                .then(response => response.json())
+                .then(data => {
+                    cartTotal = parseFloat(data.cartTotal);
+
+                    // Add event listeners to shipping options after fetching cartTotal
+                    shippingOptions.forEach(option => {
+                        option.addEventListener('change', function () {
+                            console.log(cartTotal);
+                            let selectedShippingCost = parseFloat(this.value);
+                            shippingElement.innerText = `৳${selectedShippingCost.toFixed(2)}`;
+                            let grandTotal = cartTotal + selectedShippingCost;
+                            grandTotalElement.innerText = `৳${grandTotal.toFixed(2)}`;
+
+                            // Send the selected shipping cost to the backend to store in session
+                            fetch("{{ route('shipping.cost') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // For Laravel CSRF protection
+                                },
+                                body: JSON.stringify({ shippingCost: selectedShippingCost })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data.message); // Optional: log success message
+                                })
+                                .catch(error => console.error('Error updating shipping cost:', error));
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching cart total:', error));
         });
     </script>
     <script>

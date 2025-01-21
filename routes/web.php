@@ -66,6 +66,12 @@ Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerDat
 
 Route::post('/apply-coupon', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
 Route::post('/remove-coupon', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
+Route::get('/get-cart-total', [CheckoutController::class, 'getCartTotal'])->name('cart.total');
+Route::post('/set-shipping-cost', function (Illuminate\Http\Request $request) {
+    session(['selectedShippingCost' => $request->shippingCost]);
+    return response()->json(['message' => 'Shipping cost updated successfully']);
+})->name('shipping.cost');
+
 
 Route::post('/order-store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');

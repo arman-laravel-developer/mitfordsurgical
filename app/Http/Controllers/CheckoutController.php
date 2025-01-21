@@ -8,14 +8,24 @@ use App\Models\ShippingCost;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cart;
+use Session;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
+//        $c = Session::get('cartTotalNew');
+//        dd($c);
         $cartProducts = Cart::getContent();
         $shippingCosts = ShippingCost::orderBy('id', 'asc')->get();
-
+        if (Session::get('cartTotalNew'))
+        {
+            Session::forget('cartTotalNew');
+        }
+        if (Session::get('selectedShippingCost'))
+        {
+            Session::forget('selectedShippingCost');
+        }
         if (count($cartProducts) > 0) {
             foreach ($cartProducts as $cartProduct) {
                 $product = Product::find($cartProduct->attributes->product_id);
@@ -65,6 +75,14 @@ class CheckoutController extends Controller
         $cartTotal = Cart::getTotal(); // Example cart total
         $carts = Cart::getContent(); // Example cart total
         $currentDate = Carbon::now()->format('Y-m-d');
+        if (Session::get('selectedShippingCost'))
+        {
+            $shippingCost = Session::get('selectedShippingCost');
+        }
+        else
+        {
+            $shippingCost = 0;
+        }
         // Check if the coupon exists, is active, and within the date range
         $coupon = Coupon::where('code', $couponCode)
             ->where('is_active', true)
@@ -107,8 +125,9 @@ class CheckoutController extends Controller
                     }
                 }
             }
-            $cartTotal = $cartTotal - $coupon_discount;
+            $cartTotal = $cartTotal - $coupon_discount + $shippingCost;
 
+            Session::put('cartTotalNew', $cartTotal);
             return response()->json([
                 'success' => true,
                 'newTotal' => $cartTotal,
@@ -122,8 +141,23 @@ class CheckoutController extends Controller
 
     public function removeCoupon()
     {
-        session()->forget('coupon');
+        session()->forget('cartTotalNew');
         $newTotal = Cart::getTotal();
         return response()->json(['success' => true, 'newTotal' => $newTotal]);
+    }
+
+    public function getCartTotal()
+    {
+        if (Session::get('cartTotalNew'))
+        {
+            $cartTotal = Session::get('cartTotalNew');
+        }
+        else
+        {
+            $cartTotal = Cart::getTotal();
+        }
+        return response()->json([
+            'cartTotal' => $cartTotal
+        ]);
     }
 }

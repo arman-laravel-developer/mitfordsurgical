@@ -161,6 +161,7 @@
     }
 </style>
 
+@if(!Route::is('checkout'))
 <!-- Shopping Bag Section Start -->
 <div class="shopping-summary d-none d-md-flex flex-column align-items-center shadow-sm" onclick="openCart()">
     <div class="shopping-icon bg-secondary p-3 rounded-top d-flex justify-content-center">
@@ -171,6 +172,7 @@
         <span class="d-block fw-bold text-secondary" style="font-size: 83%;">৳ <span id="ItemValue">{{number_format(\Cart::getTotal())}}</span></span>
     </div>
 </div>
+@endif
 <!-- Shopping Bag Section End -->
 
 <!-- Hidden Slide-in Cart -->
