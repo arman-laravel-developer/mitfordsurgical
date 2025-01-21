@@ -94,10 +94,7 @@ class CheckoutController extends Controller
         if ($coupon) {
             $coupon_details = json_decode($coupon->details);
             if ($coupon->type == 'cart_base') {
-                $subtotal = 0;
-                foreach ($carts as $key => $cartItem) {
-                    $subtotal += $cartItem->price * $cartItem->quantity;
-                }
+                $subtotal = $cartTotal;
                 if ($subtotal < $coupon_details->minimum_buy) {
                     return response()->json(['success' => false, 'message' => 'Minimum purchase requirement not met']);
                 }
