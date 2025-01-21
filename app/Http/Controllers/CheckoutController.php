@@ -134,7 +134,7 @@ class CheckoutController extends Controller
             ]);
 
         } else {
-            return response()->json(['success' => false, 'message' => translate('Invalid or Expired Coupon Code')]);
+            return response()->json(['success' => false, 'message' => translate('Invalid or Expired Coupon Code').':'.' '.$couponCode]);
         }
     }
 
