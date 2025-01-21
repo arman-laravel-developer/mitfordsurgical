@@ -143,6 +143,9 @@
             .error {
                 color: red;
             }
+            .success {
+                color: #28a745;
+            }
         </style>
 
         <!-- Checkout section Start -->
@@ -487,6 +490,7 @@
                         if (data.success) {
                             console.log(data);
                             toastr.success("{{translate('Coupon Applied Successfully')}}!");
+                            document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully';
                             // document.getElementById('couponMessage').textContent = 'Coupon Applied Successfully!';
                             applyBtn.textContent = 'Remove';
                             // Update total prices dynamically if needed
@@ -496,8 +500,12 @@
                             document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                             document.getElementById('couponCodeShow').value = data.couponCodeShow;
                             document.getElementById('couponCode').readOnly = true;
+                            document.getElementById('couponMessage').classList.add('success');
+                            document.getElementById('couponMessage').classList.remove('error');
                         } else {
                             document.getElementById('couponMessage').textContent = data.message;
+                            document.getElementById('couponMessage').classList.add('error');
+                            document.getElementById('couponMessage').classList.remove('success');
                         }
                     });
             } else {
@@ -524,6 +532,9 @@
                             document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                             document.getElementById('couponCodeShow').value = '';
                             document.getElementById('couponCode').readOnly = false;
+                            document.getElementById('couponMessage').textContent = '';
+                            document.getElementById('couponMessage').classList.remove('error');
+                            document.getElementById('couponMessage').classList.remove('success');
                         }
                     });
             }
@@ -602,6 +613,9 @@
                                 document.getElementById('couponDiscount').value = '';
                                 document.getElementById('couponDiscountView').textContent = data.couponDiscount;
                                 document.getElementById('couponCodeShow').value = '';
+                                document.getElementById('couponMessage').textContent = '';
+                                document.getElementById('couponMessage').classList.remove('error');
+                                document.getElementById('couponMessage').classList.remove('success');
                                 document.getElementById('couponCode').readOnly = false;
                             }
                         })
