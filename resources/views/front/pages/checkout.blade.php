@@ -166,9 +166,9 @@
                     <!-- Wizard Navigation -->
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
-                            <input type="text" readonly value="" id="couponDiscount" name="couponDiscount">
-                            <input type="text" readonly value="" id="couponCodeShow" name="couponCodeShow">
+                            <input type="hidden" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
+                            <input type="hidden" readonly value="" id="couponDiscount" name="couponDiscount">
+                            <input type="hidden" readonly value="" id="couponCodeShow" name="couponCodeShow">
                             <div class="checkout-steps">
                                 <div class="step" id="step1">
                                     <span class="step-number">
