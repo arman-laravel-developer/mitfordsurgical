@@ -235,11 +235,11 @@
 
                                             <li>
                                                 <h4>Shipping Cost</h4>
-                                                <h4 class="price text-danger">&#2547;{{number_format($order->shipping_cost,2)}}</h4>
+                                                <h4 class="price text-primary">+&#2547;{{number_format($order->shipping_cost,2)}}</h4>
                                             </li>
                                             <li>
                                                 <h4>{{translate('Coupon Discount')}}</h4>
-                                                <h4 class="price text-danger">&#2547;{{number_format(round($order->coupon_discount),2)}}</h4>
+                                                <h4 class="price text-danger">-&#2547;{{number_format(round($order->coupon_discount),2)}}</h4>
                                             </li>
                                             <li>
                                                 <h4>{{translate('Vat/Tax')}}</h4>

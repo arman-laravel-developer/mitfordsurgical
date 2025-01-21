@@ -199,10 +199,10 @@
                             <div class="float-end mt-3 mt-sm-0">
                                 <p><b>Sub-total:</b> <span class="float-end">&#2547; {{ number_format($totalWithoutDiscount, 2) }}</span></p>
                                 <p><b>Shipping cost:</b>
-                                    <span class="float-end">&#2547; {{ $order->shipping_cost > 0 ? number_format($order->shipping_cost, 2) : 'Free' }}</span>
+                                    <span class="float-end">+&#2547; {{ $order->shipping_cost > 0 ? number_format($order->shipping_cost, 2) : 'Free' }}</span>
                                 </p>
-                                <p><b>Discount:</b> <span class="float-end">&#2547; {{ number_format($totalDiscount, 2) }}</span></p>
-                                <p><b>Discount:</b> <span class="float-end">&#2547; {{ number_format(round($order->coupon_discount), 2) }}</span></p>
+                                <p><b>Discount:</b> <span class="float-end">-&#2547; {{ number_format($totalDiscount, 2) }}</span></p>
+                                <p><b>Coupon Discount:</b> <span class="float-end">-&#2547; {{ number_format(round($order->coupon_discount), 2) }}</span></p>
                                 <hr>
                                 <p><b>Grand Total:</b> <span class="float-end">&#2547; {{ number_format(round($grandTotal), 2) }}</span></p>
                             </div>

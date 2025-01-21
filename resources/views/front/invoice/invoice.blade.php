@@ -221,12 +221,12 @@
                             <td class="gry-color text-left">Shipping Cost</td>
 
                             <td class="text-right">
-                                <span>&#2547; {{number_format($order->shipping_cost,2)}}</span>
+                                <span>+&#2547; {{number_format($order->shipping_cost,2)}}</span>
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <td class="gry-color text-left">Coupon Discount</td>
-                            <td class="text-right">&#2547; {{number_format(round($order->coupon_discount),2)}}</td>
+                            <td class="text-right">-&#2547; {{number_format(round($order->coupon_discount),2)}}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td class="gry-color text-left">Vat/Tax</td>
