@@ -38,7 +38,7 @@
                                 <td>{{$order->order_code}}</td>
                                 <td>{{count($order->orderDetails)}}</td>
                                 <td>{{$order->name}}</td>
-                                <td>&#2547;{{number_format($order->grand_total + $order->shipping_cost)}}</td>
+                                <td>&#2547;{{number_format($order->grand_total + $order->shipping_cost - $order->coupon_discount)}}</td>
                                 <td>{{$order->order_status}}</td>
                                 <td>{{$order->payment_method}}</td>
                                 <td>{{$order->payment_status}}</td>
