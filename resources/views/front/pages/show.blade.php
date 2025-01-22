@@ -165,38 +165,9 @@
                                         <div class="product-title">
                                             <h4>{{translate('Guaranteed Safe Checkout')}}</h4>
                                         </div>
-                                        <ul>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/1.svg"
-                                                         class="blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/2.svg"
-                                                         class="blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/3.svg"
-                                                         class="blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/4.svg"
-                                                         class="blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">
-                                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/5.svg"
-                                                         class="blur-up lazyload" alt="">
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <div class="payment">
+                                            <img src="{{asset($generalSettingView->payment_method_image)}}" class="blur-up lazyload" alt="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
