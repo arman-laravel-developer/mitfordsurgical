@@ -96,7 +96,7 @@
                                     <label class="col-md-3 col-form-label" style="font-size: 90%">Brand</label>
                                     <div class="col-md-9">
                                         <select name="brand_id" id="" class="selectpicker form-control @error('brand_id') is-invalid @enderror" data-live-search="true">
-                                            <option value="" selected disabled>Select Brand</option>
+                                            <option value="" disabled>Select Brand</option>
                                             @foreach($brands as $brand)
                                                 <option value="{{$brand->id}}" {{$product->brand_id == $brand->id ? 'selected':''}}>{{$brand->name}}</option>
                                             @endforeach
