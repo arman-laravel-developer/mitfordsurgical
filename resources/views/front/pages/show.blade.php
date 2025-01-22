@@ -123,7 +123,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                        <input type="hidden" name="price" id="priceAdd" value="{{number_format(discounted_price($product),2)}}">
+                                        <input type="hidden" name="price" id="priceAdd" value="{{discounted_price($product)}}">
                                         <input type="hidden" name="product_id" value="{{$product->id}}">
                                         <input type="hidden" name="variant_id" id="variantID" value="">
                                         <div class="note-box product-package">
@@ -652,7 +652,7 @@
                                         <a href="{{route('product.detail', ['id' => $relatedProduct->id, 'slug' => $relatedProduct->slug])}}">
                                             <h5 class="name">{{$relatedProduct->getTranslation('name')}}</h5>
                                         </a>
-                                        <h5 class="price theme-color">&#2547;{{$relatedProduct->sell_price}}</h5>
+                                        <h5 class="price theme-color">&#2547;{{discounted_price($relatedProduct)}}@if(discounted_active($relatedProduct)) <del class="text-danger">&#2547;{{number_format($relatedProduct->sell_price,2)}}</del> @endif</h5>
                                         <form id="cartForm{{$relatedProduct->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <!-- Your existing form fields -->
