@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactForm;
 use App\Models\Customer;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Auth;
 use Mail;
@@ -37,8 +38,12 @@ class DashboardController extends Controller
         return view('admin.customer.index', compact('customers'));
     }
 
-    public function customerLogin($id)
+    public function customerLogin(Request $request,$id)
     {
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
         $customer = Customer::find($id);
 
         Session::put('customer_id', $customer->id);
@@ -114,6 +119,21 @@ class DashboardController extends Controller
 
         // Redirect with a success message
         return redirect()->back()->with('success', 'Selected queries deleted successfully!');
+    }
+
+    public function loginAsSeller(Request $request, $id)
+    {
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+        $seller = Seller::find($id);
+        if ($seller)
+        {
+            Session::put('seller_id', $seller->id);
+            Session::put('seller_name', $seller->name);
+        }
+        return redirect()->route('seller.dashboard')->with('success', 'You are login as a seller');
     }
 
 

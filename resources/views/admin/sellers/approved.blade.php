@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('title')
-    Seller Pending | {{env('APP_NAME')}}
+    Seller Approved | {{env('APP_NAME')}}
 @endsection
 
 @section('body')
@@ -12,7 +12,7 @@
 {{--                        Add Category--}}
 {{--                    </a>--}}
 {{--                </div>--}}
-                <h4 class="page-title">Seller Pending</h4>
+                <h4 class="page-title">Seller Approved</h4>
             </div>
         </div>
     </div>
@@ -62,6 +62,9 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <a href="{{route('seller.login-admin', ['id' => $seller->id])}}" class="btn btn-success btn-sm" title="Login as a seller">
+                                        <i class="ri-key-fill"></i>
+                                    </a>
                                     <a href="{{route('seller.detail', ['id' => $seller->id])}}" class="btn btn-primary btn-sm" title="Seller Verification Info">
                                         <i class="ri-eye-fill"></i>
                                     </a>

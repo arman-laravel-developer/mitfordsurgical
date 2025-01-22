@@ -51,4 +51,13 @@ class SellerOrderController extends Controller
         })->where('order_status', 'cancel')->latest()->paginate(10);
         return view('front.seller.order.pending', compact('orders'));
     }
+
+    public function getOrdersBySeller($sellerId)
+    {
+        $orders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'delivered')->get();
+
+        return response()->json($orders);
+    }
 }

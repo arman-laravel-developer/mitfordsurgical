@@ -43,7 +43,7 @@
                                 <a href="{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}">
                                     <h5 class="name">{{$product->getTranslation('name')}}</h5>
                                 </a>
-                                <h5 class="price theme-color">&#2547;{{discounted_price($product)}}@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
+                                <h5 class="price theme-color">&#2547;{{discounted_price($product)}}@if(discounted_active($product)) <del class="text-danger">&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
                                 <form id="cartForm{{$product->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Your existing form fields -->

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\GeneralSetting;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Seller;
 use App\Models\Shop;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 
@@ -13,7 +15,47 @@ class SellerDashboardController extends Controller
 {
     public function index()
     {
-        return view('front.seller.dashboard');
+        $sellerId = Session::get('seller_id');
+        $sellerPendingProducts = Product::where('user_id', $sellerId)->where('status', 2)->get();
+        $sellerPublishedProducts = Product::where('user_id', $sellerId)->where('status', 1)->get();
+        $sellerRejectProducts = Product::where('user_id', $sellerId)->where('status', 3)->get();
+        $pendingOrders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'pending')->get();
+        $deliveredOrders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'delivered')->sum('grand_total');
+        $totalSales = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'delivered')->get();
+        // Assuming you have these values
+        $recentOrdersCount = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('created_at', '>=', Carbon::now()->subDays(3))->count();
+
+        $totalOrders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->count();
+
+        $receivedPaymentsCount = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'received_payment')->count();
+
+        $completeOrdersCount = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->where('order_status', 'delivered')->count();
+        return view('front.seller.dashboard', compact(
+            'sellerPendingProducts',
+            'sellerPublishedProducts',
+            'sellerRejectProducts',
+            'pendingOrders',
+            'deliveredOrders',
+            'totalSales',
+            'recentOrdersCount',
+            'totalOrders',
+            'receivedPaymentsCount',
+            'completeOrdersCount'
+        ));
     }
 
     public function invoice($id)

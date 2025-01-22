@@ -33,6 +33,7 @@ Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.ve
     Route::post('/product/delete/{id}', [SellerProductController::class, 'delete'])->name('seller-product.delete');
 
     Route::group(['prefix' => 'order', 'as' => 'seller.'], function(){
+        Route::get('/seller/orders/{sellerId}', [SellerOrderController::class, 'getOrdersBySeller'])->name('orders.bySeller');
         Route::get('/all-order', [SellerOrderController::class, 'index'])->name('order.manage');
         Route::get('/pending-order', [SellerOrderController::class, 'pending'])->name('order.pending');
         Route::get('/confirmed-order', [SellerOrderController::class, 'confirmed'])->name('order.confirmed');

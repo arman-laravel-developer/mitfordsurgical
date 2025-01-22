@@ -577,7 +577,7 @@
                                     <a href="{{route('contact.us')}}" class="text-content">{{translate('Contact Us')}}</a>
                                 </li>
                                 <li>
-                                    <a href="faq.html" class="text-content">{{translate('FAQ')}}</a>
+                                    <a href="javascript:void(0)" class="text-content">{{translate('FAQ')}}</a>
                                 </li>
                             </ul>
                         </div>

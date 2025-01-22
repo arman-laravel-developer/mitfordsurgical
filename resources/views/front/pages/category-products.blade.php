@@ -50,7 +50,7 @@
                         <a href="{{route('product.detail', ['id' => $category_product->id, 'slug' => $category_product->slug])}}">
                             <h5 class="name">{{$category_product->getTranslation('name')}}</h5>
                         </a>
-                        <h5 class="price theme-color">&#2547;{{discounted_price($category_product)}}@if(discounted_active($category_product)) <del>&#2547;{{number_format($category_product->sell_price,2)}}</del> @endif</h5>
+                        <h5 class="price theme-color">&#2547;{{discounted_price($category_product)}}@if(discounted_active($category_product)) <del class="text-danger">&#2547;{{number_format($category_product->sell_price,2)}}</del> @endif</h5>
                         <form id="cartForm{{$category_product->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Your existing form fields -->
@@ -116,7 +116,7 @@
             </div>
                 {{ $category_products->links('vendor.pagination.seller-pagination') }}
             @else
-                <h4 class="text-center opacity-50 mt-5">No item found</h4>
+                <h4 class="text-center opacity-50 mt-5">{{translate('No item found')}}</h4>
             @endif
         </div>
         <!-- Breadcrumb Section End -->

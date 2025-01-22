@@ -118,6 +118,12 @@ class SellerController extends Controller
                 Session::put('seller_id', $seller->id);
                 Session::put('seller_name', $seller->name);
 
+                if (Session::get('customer_id'))
+                {
+                    Session::forget('customer_id');
+                    Session::forget('customer_name');
+                }
+
                 // Flash success message and redirect to dashboard
                 flash()->success('Login successful', 'You have been logged in.');
                 return redirect()->route('seller.dashboard');

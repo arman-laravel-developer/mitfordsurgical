@@ -83,7 +83,7 @@
                                         @endif
                                     </p>
                                     <div class="price-rating">
-                                        <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del>&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
+                                        <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del class="text-danger">&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
                                     </div>
                                     <form id="addToCartForm" enctype="multipart/form-data">
                                         @csrf
