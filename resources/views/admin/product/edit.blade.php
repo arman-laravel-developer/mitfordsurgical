@@ -756,6 +756,21 @@
             }
         });
 
+        // Handling paste event to split text into tags
+        document.getElementById('tagsInput').addEventListener('paste', function (event) {
+            event.preventDefault(); // Prevent the default paste behavior
+            var paste = event.clipboardData.getData('text');
+            var tagsArray = paste.split(',').map(tag => tag.trim()).filter(tag => tag); // Split by comma and trim whitespace
+
+            tagsArray.forEach(tag => {
+                if (!tags.includes(tag)) {
+                    addTag(tag);
+                }
+            });
+
+            this.value = ''; // Clear the input field after pasting
+        });
+
         function addTag(tagText) {
             var tagsContainer = document.getElementById('tagsContainer');
             tags.push(tagText);
