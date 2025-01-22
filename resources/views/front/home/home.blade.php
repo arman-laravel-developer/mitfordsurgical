@@ -78,7 +78,7 @@
                             <h5 class="name">{{$featuredProduct->getTranslation('name')}}</h5>
                         </a>
 {{--                        <h5 class="price theme-color">$70.21<del>$65.25</del></h5>--}}
-                        <h5 class="price theme-color">&#2547;{{discounted_price($featuredProduct)}}@if(discounted_active($featuredProduct)) <del class="text-danger">&#2547;{{number_format($featuredProduct->sell_price,2)}}</del> @endif</h5>
+                        <h5 class="price theme-color">&#2547;{{number_format(discounted_price($featuredProduct))}}@if(discounted_active($featuredProduct)) <del class="text-danger">&#2547;{{number_format($featuredProduct->sell_price,2)}}</del> @endif</h5>
                         <form id="cartForm{{$featuredProduct->id}}" action="{{route('cart.add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Your existing form fields -->
