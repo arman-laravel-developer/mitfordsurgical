@@ -59,7 +59,14 @@ class HomeController extends Controller
     public function detail($id)
     {
         $product = Product::find($id);
-        $relatedProducts = Product::where('status', 1)->where('category_id', $product->category_id)->take(24)->latest()->get();
+        // Fetch related products, excluding the current product
+        $relatedProducts = Product::where('status', 1)
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $id) // Exclude the current product
+            ->take(24)
+            ->latest()
+            ->get();
+
         return view('front.pages.show', compact('product', 'relatedProducts'));
     }
 
