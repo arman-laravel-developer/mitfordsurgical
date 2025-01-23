@@ -33,7 +33,7 @@ class ReportAnalysisController extends Controller
         $order_status = $request->input('order_status');
         $payment_status = $request->input('payment_status');
         $created_at = $request->input('date_range');
-        $dates = explode(' to ', $created_at);
+        $dates = explode(' - ', $created_at);
         $start_date = $dates[0] ?? null;
         $end_date = $dates[1] ?? null;
 
@@ -58,9 +58,9 @@ class ReportAnalysisController extends Controller
         }
 
         if ($created_at) {
-            $dates = explode(' to ', $created_at);
-            $start_date = Carbon::parse($dates[0])->startOfDay();
-            $end_date = Carbon::parse($dates[1])->endOfDay();
+            $dates = explode(' - ', $created_at);
+            $start_date = Carbon::parse($dates[0]);
+            $end_date = Carbon::parse($dates[1]);
 
             $query->whereBetween('created_at', [$start_date, $end_date]);
         }

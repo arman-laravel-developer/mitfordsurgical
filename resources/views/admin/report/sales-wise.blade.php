@@ -59,9 +59,9 @@
                                     @php
                                         use Carbon\Carbon;
 
-                                        $dates = explode(' to ', $selectedDate);
-                                        $startDate = Carbon::parse($dates[0])->startOfDay();
-                                        $endDate = Carbon::parse($dates[1])->endOfDay();
+                                        $dates = explode(' - ', $selectedDate);
+                                        $startDate = Carbon::parse($dates[0]);
+                                        $endDate = Carbon::parse($dates[1]);
                                     @endphp
                                     <div class="col-md-4">
                                         <input type="text" class="form-control"
@@ -173,7 +173,7 @@
 
             // Update the form input with the selected date range
             $('#date_range').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
                 // Submit form if needed
                 $('#filterForm').submit();
             });
