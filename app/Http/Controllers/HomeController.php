@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $cartItems = Cart::getContent();
         $featuredProducts = Product::where('status', 1)->where('is_featured', 1)->latest()->take(10)->get();
-        $products = Product::where('status', 1)->latest()->paginate(20);
+        $products = Product::where('status', 1)->latest()->paginate(10);
         if ($request->ajax()) {
             $view = view('front.inc.all-products', compact('products'))->render();
             return response()->json(['html' => $view]);
