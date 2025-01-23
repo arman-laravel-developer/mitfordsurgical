@@ -56,7 +56,7 @@
                         <form action="{{route('search.result')}}" method="GET" enctype="multipart/form-data">
                             <div class="search-box mobile-view-search">
                                 <div class="input-group">
-                                    <input type="text" name="q" value="{{$query}}" class="form-control" placeholder="{{ translate("I'm searching for") }}...">
+                                    <input type="text" name="q" autocomplete="off" value="{{$query}}" class="form-control" placeholder="{{ translate("I'm searching for") }}...">
                                     <button class="btn theme-bg-color text-white m-0" type="submit" id="button-addon1">{{translate('Search')}}</button>
                                 </div>
                             </div>

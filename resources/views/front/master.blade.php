@@ -230,7 +230,7 @@
                             <div class="search-box">
                                 <form action="{{route('search.result')}}" method="GET" enctype="multipart/form-data">
                                     <div class="input-group">
-                                        <input type="search" class="form-control" value="{{request()->q}}" name="q" style="width: 680px !important;" id="search-input" placeholder="{{ translate("I'm searching for") }}...">
+                                        <input type="search" class="form-control" value="{{request()->q}}" name="q" autocomplete="off" style="width: 680px !important;" id="search-input" placeholder="{{ translate("I'm searching for") }}...">
                                         <button class="btn bg-theme" type="submit" id="button-addon2">
                                             <i data-feather="search"></i>
                                         </button>
