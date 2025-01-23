@@ -243,6 +243,30 @@
             </div>
         </li>
     @endif
+    @if ($userType == 1 || !empty(array_filter(['report.sales','report.products-stock'], fn($route) => in_array($route, $roleRoutes))))
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarReport" aria-expanded="false" aria-controls="sidebarReport"
+               class="side-nav-link">
+                <i class="uil-bill"></i>
+                <span>Report Analysis </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarReport">
+                <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('report.sales', $roleRoutes))
+                        <li>
+                            <a href="{{route('report.sales')}}">Sales Analysis</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('report.products-stock', $roleRoutes))
+                        <li>
+                            <a href="{{route('report.products-stock')}}">Products Stock Analysis</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+    @endif
     @if ($userType == 1 || !empty(array_filter(['privacy.add', 'return.manage'], fn($route) => in_array($route, $roleRoutes))))
         @php
             $isPActive = in_array(Route::currentRouteName(), ['privacy.add', 'return.add']);

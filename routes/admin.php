@@ -20,6 +20,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingCostController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ReportAnalysisController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -221,6 +222,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [AboutUsController::class, 'edit'])->name('about-us.edit');
             Route::post('/update/{id}', [AboutUsController::class, 'update'])->name('about-us.update');
             Route::post('/delete/{id}', [AboutUsController::class, 'delete'])->name('about-us.delete');
+        });
+
+        Route::prefix('report')->group(function () {
+            Route::get('/sales-report', [ReportAnalysisController::class, 'index'])->name('report.sales');
+            Route::get('/sales-report-wise', [ReportAnalysisController::class, 'salesWiseReport'])->name('report.sales-wise');
+
+            Route::get('/sales-report-export', [ReportAnalysisController::class, 'salesReportExport'])->name('report.sales-export');
+            Route::get('/filtered-sales-report-export', [ReportAnalysisController::class, 'FilteredSalesReportExport'])->name('report.filtered-sales-export');
+
+            Route::get('/products-stock-analysis', [ReportAnalysisController::class, 'stock'])->name('report.products-stock');
+            Route::get('/export-products-stock', [ReportAnalysisController::class, 'exportProducts'])->name('export.products');
+            Route::get('/export-products-stock-category-wise', [ReportAnalysisController::class, 'exportProductsCategoryWise'])->name('export.products-category-wise');
+            Route::post('/category-wise-stock', [ReportAnalysisController::class, 'categoryWiseStock'])->name('report.category-wise-stock');
         });
 
         Route::prefix('google-analytics')->group(function () {
