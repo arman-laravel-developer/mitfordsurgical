@@ -56,8 +56,18 @@
                                             <option value="un_paid" {{ request('payment_status') == 'un_paid' ? 'selected' : '' }}>Un-paid</option>
                                         </select>
                                     </div>
+                                    @php
+                                        use Carbon\Carbon;
+
+                                        $dates = explode(' to ', $selectedDate);
+                                        $startDate = Carbon::parse($dates[0])->startOfDay();
+                                        $endDate = Carbon::parse($dates[1])->endOfDay();
+                                    @endphp
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="date_range" name="date_range" placeholder="Select date range" autocomplete="off" />
+                                        <input type="text" class="form-control"
+                                               id="date_range" name="date_range"
+                                               value="{{ $startDate && $endDate ? $startDate . ' - ' . $endDate : '' }}"
+                                               placeholder="Select date range" autocomplete="off" />
                                     </div>
                                 </div>
                             </form>
@@ -159,7 +169,6 @@
                     format: 'YYYY-MM-DD'
                 },
                 autoUpdateInput: false,
-                defaultDate: "{{ $selectedDate ?? '' }}" // Pre-select the date if available
             });
 
             // Update the form input with the selected date range
@@ -173,9 +182,6 @@
             $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
             });
-
-            // Set the value in the input to the selected date (if available)
-            $('#date_range').val("{{ $selectedDate ?? '' }}");
         });
     </script>
 

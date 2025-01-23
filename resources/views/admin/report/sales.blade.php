@@ -57,7 +57,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="date_range" name="date_range" placeholder="Select date range" autocomplete="off" />
+                                        <input type="text" class="form-control"
+                                               id="date_range" name="date_range"
+                                               placeholder="Select date range"
+                                               autocomplete="off" />
                                     </div>
                                 </div>
                             </form>
