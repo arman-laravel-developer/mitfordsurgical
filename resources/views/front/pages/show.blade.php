@@ -181,16 +181,18 @@
                                             data-bs-target="#description" type="button" role="tab">{{translate('Description')}}</button>
                                 </li>
 
+                                @if($product->video)
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="info-tab" data-bs-toggle="tab"
                                             data-bs-target="#info" type="button" role="tab">{{translate('Video')}}</button>
                                 </li>
-
+                                @endif
+                                @if($product->pdf)
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="care-tab" data-bs-toggle="tab"
                                             data-bs-target="#care" type="button" role="tab">{{translate('PDF')}}</button>
                                 </li>
-
+                                @endif
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="review-tab" data-bs-toggle="tab"
                                             data-bs-target="#review" type="button" role="tab">{{translate('Review')}}</button>
