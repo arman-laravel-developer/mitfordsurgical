@@ -5,6 +5,47 @@
 @endsection
 
 @section('body')
+    <style>
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .size-selector {
+            display: none; /* Hide the default radio input */
+        }
+
+        .form-check-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Same as width for a perfect circle */
+            border-radius: 50%;
+            background-color: #f5f5f5; /* Neutral background */
+            border: 2px solid #ccc;
+            font-size: 12px; /* Adjust font size as needed */
+            text-align: center;
+            line-height: 1.2; /* Ensures proper spacing for text */
+            overflow: hidden; /* Crop overflowing text */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .size-selector:checked + .form-check-label {
+            background-color: #007bff; /* Change to your preferred active color */
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .size-selector:focus + .form-check-label {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
+        }
+    </style>
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
         <section class="breadcrumb-section" style="padding-top: 1%!important;">
