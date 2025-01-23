@@ -81,7 +81,14 @@ class OrderController extends Controller
         $quantity = count($cartProducts);
         $shipping_cost = $request->shipping_cost;
         $order_total = Cart::getTotal();
-        $couponDiscount = $request->couponDiscount;
+        if ($request->couponDiscount)
+        {
+            $couponDiscount = $request->couponDiscount;
+        }
+        else
+        {
+            $couponDiscount = 0;
+        }
         $couponCode = $request->couponCodeShow;
 
         $order = new Order();
