@@ -29,10 +29,90 @@ Dashboard | {{env('APP_NAME')}}
     </div>
 
     <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <h1>Dashboard</h1>
-        </div> <!-- end col -->
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-btc widget-icon text-bg-danger rounded-circle"></i>
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Revenue">New Order</h5>
+                        <h3 class="mt-3 mb-3">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
+
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-pulse widget-icon"></i>
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Growth">Pending Order</h5>
+                        <h3 class="mt-3 mb-3">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
+
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat text-bg-success">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-account-multiple widget-icon bg-white text-success"></i>
+                        </div>
+                        <h6 class="text-uppercase mt-0" title="Customers">Return Order</h6>
+                        <h3 class="mt-3 mb-3">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
+
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat text-bg-primary">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-usd widget-icon bg-light-lighten rounded-circle text-primary"></i>
+                        </div>
+                        <h5 class="fw-normal mt-0" title="Revenue">Cancel Order</h5>
+                        <h3 class="mt-3 mb-3 text-white">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
+
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat text-bg-primary">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-usd widget-icon bg-light-lighten rounded-circle text-primary"></i>
+                        </div>
+                        <h5 class="fw-normal mt-0" title="Revenue">Ready To Ship</h5>
+                        <h3 class="mt-3 mb-3 text-white">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
+
+        <div class="col-xxl-3 col-sm-4">
+            <a href="">
+                <div class="card widget-flat text-bg-primary">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-usd widget-icon bg-light-lighten rounded-circle text-primary"></i>
+                        </div>
+                        <h5 class="fw-normal mt-0" title="Revenue">Shipment Order</h5>
+                        <h3 class="mt-3 mb-3 text-white">10</h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- end col-->
     </div>
-    <!-- end row -->
+    <!-- end row-->
 
 @endsection

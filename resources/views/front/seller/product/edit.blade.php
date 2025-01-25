@@ -742,7 +742,9 @@
     <script>
         $(document).ready(function() {
             $('#daterange').daterangepicker({
-                autoUpdateInput: false,
+                startDate: today, // Set today's date as the default start date
+                endDate: today, // Set today's date as the default end date
+                autoUpdateInput: true,
                 locale: {
                     cancelLabel: 'Clear',
                     applyLabel: 'Apply',

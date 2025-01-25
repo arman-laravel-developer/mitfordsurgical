@@ -661,8 +661,13 @@
 
     <script>
         $(document).ready(function() {
+            // Get today's date
+            const today = moment();
+
             $('#daterange').daterangepicker({
-                autoUpdateInput: false,
+                startDate: today, // Set today's date as the default start date
+                endDate: today, // Set today's date as the default end date
+                autoUpdateInput: true, // Automatically show the selected date in the input
                 locale: {
                     cancelLabel: 'Clear',
                     applyLabel: 'Apply',
@@ -670,10 +675,12 @@
                 }
             });
 
+            // Handle the apply event
             $('#daterange').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
             });
 
+            // Handle the cancel event
             $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
             });

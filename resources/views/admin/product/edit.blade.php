@@ -148,7 +148,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header" style="margin-bottom: -4%;">
-                                <h4>Product Images</h4>
+                                <h4>Prodsingledaterangeuct Images</h4>
                             </div>
                             <hr/>
                             <div class="card-body" style="margin-top: -2%">
