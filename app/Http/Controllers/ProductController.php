@@ -50,7 +50,6 @@ class ProductController extends Controller
 
         // Resize image without changing dimensions and reduce file size
         $img = Image::make($image->getRealPath());
-        $img->resize(1080, 1080);
 
         // Save the resized image
         $img->save($imagePath);
@@ -80,7 +79,6 @@ class ProductController extends Controller
 
         // Resize image without changing dimensions and reduce file size
         $img = Image::make($image->getRealPath());
-        $img->resize(1080, 1080);
 
         // Save the resized image
         $img->save($imagePath);
@@ -101,7 +99,6 @@ class ProductController extends Controller
 
         // Resize image without changing dimensions and reduce file size
         $img = Image::make($otherImage->getRealPath());
-        $img->resize(1080, 1080);
 
         // Save the resized image
         $img->save($imagePath);
@@ -122,7 +119,6 @@ class ProductController extends Controller
 
         // Resize image without changing dimensions and reduce file size
         $img = Image::make($variantImage->getRealPath());
-        $img->resize(1080, 1080);
 
         // Save the resized image
         $img->save($imagePath);

@@ -79,7 +79,7 @@
                             <div class="col-xl-5 wow fadeInUp">
                                 <div class="product-left-box">
                                     <div class="row g-sm-4 g-2 justify-content-center">
-                                        <div class="col-12 position-relative" style="overflow: hidden; width: 100%; height: 310px;">
+                                        <div class="col-12 position-relative" style="overflow: hidden; width: 430px; height: 330px;">
                                             <!-- Main Product Image -->
                                             <img src="{{ asset($product->thumbnail_img) }}" id="main-product-image"
                                                  class="img-fluid blur-up lazyload" alt=""
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="col-12 wow fadeInUp">
-                        <div class="product-section-box" style="margin-top: 1px !important;">
+                        <div class="product-section-box" style="margin-top: 5px !important;">
                             <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
