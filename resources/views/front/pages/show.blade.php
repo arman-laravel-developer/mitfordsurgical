@@ -76,14 +76,14 @@
                 <div class="row">
                     <div class="col-xxl-12 col-xl-12 col-lg-12 wow fadeInUp">
                         <div class="row g-4">
-                            <div class="col-xl-6 wow fadeInUp">
+                            <div class="col-xl-5 wow fadeInUp">
                                 <div class="product-left-box">
-                                    <div class="row g-sm-4 g-2">
-                                        <div class="col-12 position-relative" style="overflow: hidden; width: 100%; height: auto;">
+                                    <div class="row g-sm-4 g-2 justify-content-center">
+                                        <div class="col-12 position-relative" style="overflow: hidden; width: 100%; height: 310px;">
                                             <!-- Main Product Image -->
                                             <img src="{{ asset($product->thumbnail_img) }}" id="main-product-image"
                                                  class="img-fluid blur-up lazyload" alt=""
-                                                 style="width: 100%; cursor: crosshair;">
+                                                 style="width: 100%; cursor: crosshair;height: 100%;">
                                             <!-- Zoom Lens -->
                                             <div id="zoom-lens" style="
             position: absolute;
@@ -96,16 +96,16 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <!-- Thumbnails -->
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <img src="{{ asset($product->thumbnail_img) }}"
                                                          class="img-fluid blur-up lazyload thumbnail-image"
-                                                         alt="" style="cursor: pointer;">
+                                                         alt="" style="cursor: pointer;height: 70%;">
                                                 </div>
                                                 @foreach($product->otherImages as $otherImage)
-                                                    <div class="col-3">
+                                                    <div class="col-2">
                                                         <img src="{{ asset($otherImage->gellery_image) }}"
                                                              class="img-fluid blur-up lazyload thumbnail-image"
-                                                             alt="" style="cursor: pointer;">
+                                                             alt="" style="cursor: pointer;height: 70%;">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -157,7 +157,7 @@
                             </div>
 
 
-                            <div class="col-xl-6 wow fadeInUp">
+                            <div class="col-xl-7 wow fadeInUp">
                                 <div class="right-box-contain">
                                     <h2 class="name">{{$product->getTranslation('name')}}</h2>
                                     <p>
@@ -249,20 +249,12 @@
                                             <h4 class="text-content">{{strip_tags($product->getTranslation('short_description'))}}</h4>
                                         </div>
                                     </div>
-                                    <div class="payment-option">
-                                        <div class="product-title">
-                                            <h4>{{translate('Guaranteed Safe Checkout')}}</h4>
-                                        </div>
-                                        <div class="payment">
-                                            <img src="{{asset($generalSettingView->payment_method_image)}}" class="blur-up lazyload" alt="">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 wow fadeInUp">
-                        <div class="product-section-box">
+                        <div class="product-section-box" style="margin-top: 0 !important;">
                             <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
