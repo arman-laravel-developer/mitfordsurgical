@@ -99,13 +99,13 @@
                                                 <div class="col-2">
                                                     <img src="{{ asset($product->thumbnail_img) }}"
                                                          class="img-fluid blur-up lazyload thumbnail-image"
-                                                         alt="" style="cursor: pointer;height: 70%;">
+                                                         alt="" style="cursor: pointer;height: 100%;">
                                                 </div>
                                                 @foreach($product->otherImages as $otherImage)
                                                     <div class="col-2">
                                                         <img src="{{ asset($otherImage->gellery_image) }}"
                                                              class="img-fluid blur-up lazyload thumbnail-image"
-                                                             alt="" style="cursor: pointer;height: 70%;">
+                                                             alt="" style="cursor: pointer;height: 100%;">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="col-12 wow fadeInUp">
-                        <div class="product-section-box" style="margin-top: 0 !important;">
+                        <div class="product-section-box" style="margin-top: 1px !important;">
                             <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
