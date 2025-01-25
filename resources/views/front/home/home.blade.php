@@ -235,40 +235,128 @@
             var page = 2; // Start from the second page as the first is already loaded
             var isLoading = false; // Prevent multiple AJAX requests at once
 
-            $(window).on('scroll', function() {
-                // Check if the user has scrolled near the bottom of the page
+            // Scroll event to load more products
+            $(window).on('scroll', function () {
                 if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-                    if (!isLoading) { // Only load if not already in the middle of loading
+                    if (!isLoading) {
                         loadMoreProducts();
                     }
                 }
             });
 
             function loadMoreProducts() {
-                isLoading = true; // Set loading flag to true
+                isLoading = true;
                 $.ajax({
-                    url: '{{ route("home") }}' + '?page=' + page, // Use the updated page variable
+                    url: '{{ route("home") }}' + '?page=' + page,
                     type: 'GET',
-                    beforeSend: function() {
-                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate('Loading more products')}}...</div>'); // Display loading message
+                    beforeSend: function () {
+                        $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate("Loading more products")}}...</div>');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.html) {
-                            $('.all-products .row').append(data.html); // Append new news items to the row
-                            page++; // Increment page number for the next request
-                            isLoading = false; // Reset loading flag
-                            $('#scroll-target').html(''); // Remove loading message
+                            $('.all-products .row').append(data.html);
+                            page++;
+                            isLoading = false;
+                            $('#scroll-target').html('');
+
+                            // Reinitialize event listeners for dynamically added products
+                            initializeAddToCartListeners();
                         } else {
-                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate('No more products to load')}}.</div>'); // Display end message
-                            isLoading = true; // Prevent further requests since no more data
+                            $('#scroll-target').html('<div class="text-center opacity-50 mt-3 mb-3">{{translate("No more products to load")}}.</div>');
+                            isLoading = true;
                         }
                     },
-                    error: function() {
+                    error: function () {
                         alert('Failed to load more products. Please try again.');
-                        isLoading = false; // Reset loading flag on error
+                        isLoading = false;
                     }
                 });
             }
+
+            // Function to initialize add-to-cart button listeners
+            function initializeAddToCartListeners() {
+                $('form[id^="cartForm"]').off('submit').on('submit', function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+
+                    var form = $(this);
+                    var formData = new FormData(form[0]);
+                    let messageBox = $('#messageBox');
+                    let itemQtyElement = $('#itemQty');
+                    let itemQtyElementMobile = $('.cart-mobile');
+                    let itemValueElement = $('#ItemValue');
+                    let itemQtyInCartElement = $('#itemQtyIncart');
+                    let itemValueInCartElement = $('#itemValueIncart');
+
+                    // Ensure initial values are numbers or set to 0
+                    let currentItemQty = parseInt(itemQtyElement.text()) || 0;
+                    let currentItemValue = parseFloat(itemValueElement.text()) || 0;
+                    let currentItemQtyInCart = parseInt(itemQtyInCartElement.text()) || 0;
+                    let currentItemValueInCart = parseFloat(itemValueInCartElement.text()) || 0;
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            animateCount(itemQtyElementMobile, currentItemQty, response.item, 1000); // Duration adjusted
+                            animateCount(itemQtyElement, currentItemQty, response.item, 1000); // Duration adjusted
+                            animateCount(itemValueElement, currentItemValue, response.total, 1000); // Duration adjusted
+                            animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
+                            animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
+
+                            toastr.success(response.message);
+                            resetForm(form);
+                            updateCartDropdown();
+                        },
+                        error: function (xhr, status, error) {
+                            alert("An error occurred. Please try again.");
+                        }
+                    });
+
+                    function resetForm(form) {
+                        form.trigger('reset'); // Reset the form fields
+                        $('.color-selector, .size-selector').prop('checked', false); // Uncheck radio buttons
+                    }
+
+                    function updateCartDropdown() {
+                        $.ajax({
+                            url: '{{ route('cart.dropdown') }}',
+                            method: 'GET',
+                            success: function (response) {
+                                $('.cart-body').html(response); // Update the cart dropdown HTML
+                            },
+                            error: function (error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                    }
+
+                    // Animation function (count up from current to total)
+                    function animateCount(element, startValue, endValue, duration) {
+                        let validStartValue = isNaN(startValue) ? 0 : startValue;
+                        let validEndValue = isNaN(endValue) ? 0 : endValue;
+
+                        $({ countNum: validStartValue }).animate(
+                            { countNum: validEndValue },
+                            {
+                                duration: duration,
+                                easing: 'swing',
+                                step: function () {
+                                    element.text(Math.ceil(this.countNum));
+                                },
+                                complete: function () {
+                                    element.text(validEndValue);
+                                }
+                            }
+                        );
+                    }
+                });
+            }
+
+            // Initialize listeners for initially loaded products
+            initializeAddToCartListeners();
         });
     </script>
 
