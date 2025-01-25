@@ -20,13 +20,15 @@ class DashboardController extends Controller
         $cancelOrder =Order::where('order_status', 'cancel')->count();
         $shippedOrder =Order::where('order_status', 'shipped')->count();
         $deliveredOrder =Order::where('order_status', 'delivered')->count();
+        $returnedOrder =Order::where('order_status', 'returned')->count();
         $newOrders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
         return view('admin.home.index', compact(
             'pendingOrder',
             'cancelOrder',
             'shippedOrder',
             'deliveredOrder',
-            'newOrders'
+            'newOrders',
+            'returnedOrder'
 
         ));
     }

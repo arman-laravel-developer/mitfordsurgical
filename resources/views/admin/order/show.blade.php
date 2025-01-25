@@ -47,13 +47,14 @@
                                         @csrf
                                         <input type="hidden" name="order_id" value="{{$order->id}}">
                                         <label for="">Order Status</label>
-                                        <select name="order_status" id="order_status" class="form-control" @if($order->order_status == 'cancel') disabled @elseif($order->order_status == 'delivered') disabled @endif onchange="this.form.submit()">
+                                        <select name="order_status" id="order_status" class="form-control" @if($order->order_status == 'cancel') disabled @elseif($order->order_status == 'delivered') disabled @elseif($order->order_status == 'returned') disabled @endif onchange="this.form.submit()">
                                             <option value="" selected disabled>Select order status</option>
                                             <option value="pending" {{$order->order_status == 'pending' ? 'selected' : ''}}>Pending</option>
                                             <option value="confirmed" {{$order->order_status == 'confirmed' ? 'selected' : ''}}>Confirmed</option>
                                             <option value="proccessing" {{$order->order_status == 'proccessing' ? 'selected' : ''}}>Proccessing</option>
                                             <option value="shipped" {{$order->order_status == 'shipped' ? 'selected' : ''}}>Shipped</option>
                                             <option value="delivered" {{$order->order_status == 'delivered' ? 'selected' : ''}}>Delivered</option>
+                                            <option value="returned" {{$order->order_status == 'returned' ? 'selected' : ''}}>Returned</option>
                                             <option value="cancel" {{$order->order_status == 'cancel' ? 'selected' : ''}}>Canceled</option>
                                         </select>
                                     </form>

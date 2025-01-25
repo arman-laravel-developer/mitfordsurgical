@@ -39,6 +39,11 @@ class OrderController extends Controller
         $orders = Order::where('order_status', 'confirmed')->orderBy('id', 'desc')->get();
         return view('admin.order.confirmed', compact('orders'));
     }
+    public function returned()
+    {
+        $orders = Order::where('order_status', 'returned')->orderBy('id', 'desc')->get();
+        return view('admin.order.returned', compact('orders'));
+    }
     public function proccessing()
     {
         $orders = Order::where('order_status', 'proccessing')->orderBy('id', 'desc')->get();
@@ -233,6 +238,26 @@ class OrderController extends Controller
         $order->save();
 
         if ($request->order_status == 'cancel')
+        {
+            foreach ($order->orderDetails as $orderDetail)
+            {
+                // Decrease stock in the products table
+                $product = Product::find($orderDetail->product_id);
+                if ($product) {
+                    $product->num_of_sale -= $orderDetail->qty; // Increase the number of sales
+                    $product->stock += $orderDetail->qty; // Decrease total product stock
+                    $product->save();
+                }
+
+                // Decrease stock in the variants table (size-wise)
+                $variant = Variant::find($orderDetail->variant_id);
+                if ($variant) {
+                    $variant->qty += $orderDetail->qty; // Decrease variant stock
+                    $variant->save();
+                }
+            }
+        }
+        if ($request->order_status == 'returned')
         {
             foreach ($order->orderDetails as $orderDetail)
             {

@@ -252,6 +252,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/all-order', [OrderController::class, 'index'])->name('order.manage');
             Route::get('/new-order-show', [OrderController::class, 'newOrder'])->name('order.new-show');
             Route::get('/pending-order', [OrderController::class, 'pending'])->name('order.pending');
+            Route::get('/returned-order', [OrderController::class, 'returned'])->name('order.returned');
             Route::get('/confirmed-order', [OrderController::class, 'confirmed'])->name('order.confirmed');
             Route::get('/proccessing-order', [OrderController::class, 'proccessing'])->name('order.proccessing');
             Route::get('/delivered-order', [OrderController::class, 'delivered'])->name('order.delivered');

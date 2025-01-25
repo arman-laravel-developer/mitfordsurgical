@@ -58,14 +58,14 @@ Dashboard | {{env('APP_NAME')}}
         </div> <!-- end col-->
 
         <div class="col-xxl-3 col-sm-4">
-            <a href="">
+            <a href="{{route('order.returned')}}">
                 <div class="card widget-flat text-bg-warning">
                     <div class="card-body">
                         <div class="float-end">
                             <i class="mdi mdi-account-multiple widget-icon bg-white text-success"></i>
                         </div>
                         <h5 class="mt-0" title="Return Order">Return Order</h5>
-                        <h3 class="mt-3 mb-3">0</h3>
+                        <h3 class="mt-3 mb-3">{{number_format($returnedOrder)}}</h3>
                     </div>
                 </div>
             </a>
