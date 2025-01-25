@@ -144,7 +144,7 @@
                             <div class="card-body" style="margin-top: -2%">
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Thumbnail Image <br>
-                                    <small>340 x 345</small>
+                                    <small>430 x 330</small>
                                     </label>
                                     <div class="col-md-9">
                                         <input type="file" class="form-control @error('thumbnail_img') is-invalid @enderror" id="imageInput" name="thumbnail_img" required/>
@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label">Gallery Image <br>
-                                        <small>340 x 345</small>
+                                        <small>430 x 330</small>
                                     </label>
                                     <div class="col-md-9">
                                         <input type="file" class="form-control @error('galleryImage') is-invalid @enderror" id="imageInputGallery" name="galleryImages[]" multiple required/>
