@@ -63,6 +63,10 @@
             <div class="title d-block">
                 <h2 class="text-theme font-sm text-center">{{translate('Featured Products')}}</h2>
             </div>
+{{--            <form action="{{ route('bkash.pay') }}" method="GET">--}}
+{{--                <input type="hidden" name="amount" value="100"> <!-- Replace with dynamic amount -->--}}
+{{--                <button type="submit">Pay with bKash</button>--}}
+{{--            </form>--}}
 
             <div class="row row-cols-xxl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 g-sm-4 g-3 section-b-space">
                 @foreach($featuredProducts as $index => $featuredProduct)

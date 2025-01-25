@@ -14,6 +14,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TrackOrderController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\BkashPaymentController;
 
 
 function getRoleName($routeName)
@@ -52,6 +53,10 @@ Route::get('/search', [HomeController::class, 'search'])->name('product.search')
 Route::get('/products', [HomeController::class, 'products'])->name('products.all');
 
 Route::get('/shop/{id}/{slug}', [ShopController::class, 'index'])->name('shop.index');
+
+Route::get('/bkash/pay', [BkashPaymentController::class, 'initiatePayment'])->name('bkash.pay');
+Route::post('/bkash/execute', [BkashPaymentController::class, 'executePayment'])->name('bkash.execute');
+Route::post('/bkash/callback', [BkashPaymentController::class, 'callback'])->name('bkash.callback');
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
 

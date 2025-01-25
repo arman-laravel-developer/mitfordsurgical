@@ -267,6 +267,11 @@ class GeneralSettingController extends Controller
         return view('admin.setting.smtp');
     }
 
+    public function payment()
+    {
+        return view('admin.setting.payment');
+    }
+
     public function smtpUpdate(Request $request)
     {
         $this->validate($request, [
@@ -294,5 +299,35 @@ class GeneralSettingController extends Controller
         updateEnv($data);
 
         return redirect()->back()->with('success', 'SMTP settings updated successfully!');
+    }
+    public function paymentUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'BKASH_APP_KEY' => 'required|string',
+            'BKASH_APP_SECRET' => 'required|string',
+            'BKASH_USERNAME' => 'required',
+            'BKASH_PASSWORD' => 'required|string',
+        ]);
+
+        $data = [
+            'BKASH_APP_KEY' => $request->input('BKASH_APP_KEY'),
+            'BKASH_APP_SECRET' => $request->input('BKASH_APP_SECRET'),
+            'BKASH_USERNAME' => $request->input('BKASH_USERNAME'),
+            'BKASH_PASSWORD' => $request->input('BKASH_PASSWORD'),
+        ];
+
+        $setting = GeneralSetting::find($request->setting_id);
+        if ($request->sandbox_mode)
+        {
+            $setting->sandbox_mode = $request->sandbox_mode;
+        }
+        else
+        {
+            $setting->sandbox_mode = 2;
+        }
+        $setting->save();
+        updateEnv($data);
+
+        return redirect()->back()->with('success', 'Payment Method settings updated successfully!');
     }
 }

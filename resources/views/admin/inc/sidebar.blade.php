@@ -293,7 +293,7 @@
             </div>
         </li>
     @endif
-    @if ($userType == 1 || !empty(array_filter(['google-analytic.add','about-us.add','setting.add','setting.smtp','shipping-cost.manage'], fn($route) => in_array($route, $roleRoutes))))
+    @if ($userType == 1 || !empty(array_filter(['google-analytic.add','payment.method','about-us.add','setting.add','setting.smtp','shipping-cost.manage'], fn($route) => in_array($route, $roleRoutes))))
         @php
             $isActive = in_array(Route::currentRouteName(), ['language.edit', 'language.show', 'language.key_value_store']);
         @endphp
@@ -329,6 +329,11 @@
                     @if ($userType == 1 || in_array('setting.smtp', $roleRoutes))
                 <li>
                     <a href="{{route('setting.smtp')}}">SMTP Settings</a>
+                </li>
+                    @endif
+                    @if ($userType == 1 || in_array('payment.method', $roleRoutes))
+                <li>
+                    <a href="{{route('payment.method')}}">Payment methods</a>
                 </li>
                     @endif
                     @if ($userType == 1 || in_array('shipping-cost.manage', $roleRoutes))

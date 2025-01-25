@@ -75,7 +75,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::post('/test-mail', [DashboardController::class, 'testMail'])->name('test.mail');
         Route::get('/backup', [GeneralSettingController::class, 'backup'])->name('setting.backup');
         Route::get('/smtp', [GeneralSettingController::class, 'smtp'])->name('setting.smtp');
+        Route::get('/payment-method', [GeneralSettingController::class, 'payment'])->name('payment.method');
         Route::post('/smtp-update', [GeneralSettingController::class, 'smtpUpdate'])->name('setting.smtp-update');
+        Route::post('/payment-method-update', [GeneralSettingController::class, 'paymentUpdate'])->name('setting.payment-update');
 
         Route::post('/update-status', [ProductController::class, 'updateStatus'])->name('product.updateStatus');
         Route::post('/update-featured', [ProductController::class, 'updateFeatured'])->name('product.updateFeatured');
