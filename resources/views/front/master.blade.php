@@ -500,7 +500,7 @@
                         <div class="footer-logo">
                             <div class="theme-logo">
                                 <a href="{{route('home')}}">
-                                    <img src="{{asset('/')}}front/assets/images/logo/5.png" style="width: 100%;" class="blur-up lazyload" alt="">
+                                    <img src="{{asset($generalSettingView->footer_logo)}}" style="width: 100%;" class="blur-up lazyload" alt="{{$generalSettingView->site_name}}">
                                 </a>
                             </div>
 
