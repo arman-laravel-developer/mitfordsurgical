@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactForm;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Auth;
@@ -15,7 +16,19 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.home.index');
+        $pendingOrder =Order::where('order_status', 'pending')->count();
+        $cancelOrder =Order::where('order_status', 'cancel')->count();
+        $shippedOrder =Order::where('order_status', 'shipped')->count();
+        $deliveredOrder =Order::where('order_status', 'delivered')->count();
+        $newOrders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
+        return view('admin.home.index', compact(
+            'pendingOrder',
+            'cancelOrder',
+            'shippedOrder',
+            'deliveredOrder',
+            'newOrders'
+
+        ));
     }
 
     public function testMail(Request $request)

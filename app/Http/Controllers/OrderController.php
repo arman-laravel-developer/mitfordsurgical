@@ -29,6 +29,11 @@ class OrderController extends Controller
         $orders = Order::where('order_status', 'pending')->orderBy('id', 'desc')->get();
         return view('admin.order.pending', compact('orders'));
     }
+    public function newOrder()
+    {
+        $orders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
+        return view('admin.order.new-order', compact('orders'));
+    }
     public function confirmed()
     {
         $orders = Order::where('order_status', 'confirmed')->orderBy('id', 'desc')->get();
