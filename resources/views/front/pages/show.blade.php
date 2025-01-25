@@ -71,7 +71,7 @@
         </section>
         <!-- Breadcrumb Section End -->
         <!-- Product Left Sidebar Start -->
-        <section class="product-section">
+        <section class="product-section" style="padding-top: calc(0px + 20*(100vw - 320px)/1600)">
             <div class="container">
                 <div class="row">
                     <div class="col-xxl-12 col-xl-12 col-lg-12 wow fadeInUp">
@@ -79,33 +79,80 @@
                             <div class="col-xl-6 wow fadeInUp">
                                 <div class="product-left-box">
                                     <div class="row g-sm-4 g-2">
-                                        <div class="col-12">
-                                            <div class="product-main no-arrow">
-                                                @foreach($product->otherImages as $index => $otherImage)
-                                                    <div>
-                                                        <div class="slider-image">
-                                                            <img src="{{ asset($otherImage->gellery_image) }}" id="img-1"
-                                                                 data-zoom-image="{{ asset($otherImage->gellery_image) }}" class="
-                                                        img-fluid image_zoom_cls-{{$index}} blur-up lazyload" alt="">
-                                                        </div>
-                                                    </div>
-                                                @endforeach
+                                        <div class="col-12 position-relative" style="overflow: hidden; width: 100%; height: auto;">
+                                            <!-- Main Product Image -->
+                                            <img src="{{ asset($product->thumbnail_img) }}" id="main-product-image"
+                                                 class="img-fluid blur-up lazyload" alt=""
+                                                 style="width: 100%; cursor: crosshair;">
+                                            <!-- Zoom Lens -->
+                                            <div id="zoom-lens" style="
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: none;
+            pointer-events: none;">
                                             </div>
                                         </div>
-
                                         <div class="col-12">
-                                            <div class="left-slider-image left-slider no-arrow slick-top">
-                                                @foreach($product->otherImages as $index => $otherImage)
-                                                    <div>
-                                                        <div class="sidebar-image">
-                                                            <img src="{{ asset($otherImage->gellery_image) }}"
-                                                                 class="img-fluid blur-up lazyload" alt="">
-                                                        </div>
+                                            <div class="row">
+                                                <!-- Thumbnails -->
+                                                <div class="col-3">
+                                                    <img src="{{ asset($product->thumbnail_img) }}"
+                                                         class="img-fluid blur-up lazyload thumbnail-image"
+                                                         alt="" style="cursor: pointer;">
+                                                </div>
+                                                @foreach($product->otherImages as $otherImage)
+                                                    <div class="col-3">
+                                                        <img src="{{ asset($otherImage->gellery_image) }}"
+                                                             class="img-fluid blur-up lazyload thumbnail-image"
+                                                             alt="" style="cursor: pointer;">
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- JavaScript -->
+                                    <script>
+                                        const mainImage = document.getElementById('main-product-image');
+                                        const zoomLens = document.getElementById('zoom-lens');
+                                        const thumbnailImages = document.querySelectorAll('.thumbnail-image');
+
+                                        // Function to handle thumbnail clicks
+                                        thumbnailImages.forEach(thumbnail => {
+                                            thumbnail.addEventListener('click', () => {
+                                                mainImage.src = thumbnail.src; // Change the main image
+                                            });
+                                        });
+
+                                        // Inner Zoom Functionality
+                                        mainImage.addEventListener('mousemove', (e) => {
+                                            const rect = mainImage.getBoundingClientRect();
+
+                                            // Calculate lens position
+                                            const lensX = e.clientX - rect.left - zoomLens.offsetWidth / 2;
+                                            const lensY = e.clientY - rect.top - zoomLens.offsetHeight / 2;
+
+                                            // Limit lens movement inside the image
+                                            const lensLeft = Math.max(0, Math.min(lensX, rect.width - zoomLens.offsetWidth));
+                                            const lensTop = Math.max(0, Math.min(lensY, rect.height - zoomLens.offsetHeight));
+
+                                            // Set lens position
+                                            zoomLens.style.left = `${lensLeft}px`;
+                                            zoomLens.style.top = `${lensTop}px`;
+                                            zoomLens.style.display = 'block';
+
+                                            // Apply zoom effect
+                                            mainImage.style.transform = `scale(2)`;
+                                            mainImage.style.transformOrigin = `${(lensLeft / rect.width) * 100}% ${(lensTop / rect.height) * 100}%`;
+                                        });
+
+                                        // Hide zoom when the mouse leaves the image
+                                        mainImage.addEventListener('mouseleave', () => {
+                                            zoomLens.style.display = 'none';
+                                            mainImage.style.transform = 'scale(1)';
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
