@@ -2,7 +2,7 @@
     <div class="category-menu">
         <!-- Logo -->
         <a href="{{route('home')}}" class="web-logo nav-logo">
-            <img src="{{asset($generalSettingView->footer_logo)}}" style="width: 100%" class="img-fluid blur-up lazyload" alt="{{$generalSettingView->site_name}}">
+            <img src="{{asset($generalSettingView->header_logo)}}" style="width: 100%" class="img-fluid blur-up lazyload" alt="{{$generalSettingView->site_name}}">
         </a>
 
         <!-- Category List -->
