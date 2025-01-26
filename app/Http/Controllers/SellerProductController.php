@@ -270,9 +270,17 @@ class SellerProductController extends Controller
         return redirect()->back()->with('success', 'Product Add Successfull');
     }
 
-    public function manage()
+    public function manage(Request $request)
     {
-        $products = Product::where('user_id', Session::get('seller_id'))->latest()->paginate(10);
+        $query = Product::where('user_id', Session::get('seller_id'));
+
+        // Apply filters based on request inputs
+        if ($request->has('status')) {
+            $query->where('status', $request->status); // Filter by status
+        }
+
+        $products = $query->latest()->paginate(10); // Paginate results
+
         return view('front.seller.product.manage', compact('products'));
     }
 

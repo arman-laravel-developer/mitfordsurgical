@@ -9,56 +9,68 @@
             <div class="total-box">
                 <div class="row g-sm-4 g-3">
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
-                        <div class="total-contain">
-                            <div class="total-detail">
-                                <h5>Total Published Products</h5>
-                                <h3>{{count($sellerPublishedProducts)}}</h3>
+                        <a href="{{route('seller.product-manage', ['status' => 1])}}">
+                            <div class="total-contain">
+                                <div class="total-detail">
+                                    <h5>Total Published Products</h5>
+                                    <h3>{{count($sellerPublishedProducts)}}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
+                        <a href="{{route('seller.product-manage', ['status' => 2])}}">
                         <div class="total-contain">
                             <div class="total-detail">
                                 <h5>Total Pending Products</h5>
                                 <h3>{{count($sellerPendingProducts)}}</h3>
                             </div>
                         </div>
+                        </a>
                     </div>
 
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
-                        <div class="total-contain">
-                            <div class="total-detail">
-                                <h5>Total Orders</h5>
-                                <h3>{{$totalOrders}}</h3>
+                        <a href="{{route('seller.order.manage')}}">
+                            <div class="total-contain">
+                                <div class="total-detail">
+                                    <h5>Total Orders</h5>
+                                    <h3>{{$totalOrders}}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
+                        <a href="{{route('seller.order.delivered')}}">
                         <div class="total-contain">
                             <div class="total-detail">
                                 <h5>Total Sales</h5>
                                 <h3>{{count($totalSales)}}</h3>
                             </div>
                         </div>
+                        </a>
                     </div>
 
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
-                        <div class="total-contain">
-                            <div class="total-detail">
-                                <h5>Order Pending</h5>
-                                <h3>{{count($pendingOrders)}}</h3>
+                        <a href="{{route('seller.order.pending')}}">
+                            <div class="total-contain">
+                                <div class="total-detail">
+                                    <h5>Order Pending</h5>
+                                    <h3>{{count($pendingOrders)}}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-xxl-4 col-lg-4 col-md-4 col-sm-6">
-                        <div class="total-contain">
-                            <div class="total-detail">
-                                <h5>Order Delivered</h5>
-                                <h3>&#2547; {{number_format($deliveredOrders,2)}}</h3>
+                        <a href="{{route('seller.order.delivered')}}">
+                            <div class="total-contain">
+                                <div class="total-detail">
+                                    <h5>Order Delivered</h5>
+                                    <h3>&#2547; {{number_format($deliveredOrders,2)}}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
