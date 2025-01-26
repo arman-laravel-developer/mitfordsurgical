@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\GeneralSetting;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Session;
 
 class BkashPaymentController extends Controller
 {
@@ -32,17 +34,22 @@ class BkashPaymentController extends Controller
         $this->password = env('BKASH_PASSWORD');
     }
 
-    public function initiatePayment(Request $request)
+    /**
+     * Initiate Payment
+     */
+    public function initiatePayment()
     {
+        $order = Order::find(Session::get('order_id'));
+        $amount = $order->grand_total + $order->shipping_cost - $order->coupon_discount;
+
         $token = $this->getToken();
 
         $response = Http::withToken($token)->post($this->base_url . 'checkout/create', [
-            'amount' => $request->amount,
+            'amount' => $amount,
             'currency' => 'BDT',
             'intent' => 'sale',
-            'merchantInvoiceNumber' => uniqid(),
+            'merchantInvoiceNumber' => "Inv" . Date('YmdH') . rand(1000, 10000),
         ]);
-
         $result = $response->json();
 
         if (isset($result['bkashURL'])) {
@@ -52,6 +59,9 @@ class BkashPaymentController extends Controller
         return back()->with('error', 'Payment initiation failed.');
     }
 
+    /**
+     * Execute Payment
+     */
     public function executePayment(Request $request)
     {
         $paymentID = $request->paymentID;
@@ -63,19 +73,20 @@ class BkashPaymentController extends Controller
 
         $result = $response->json();
 
-        if (isset($result['transactionStatus']) && $result['transactionStatus'] === 'Completed') {
-            return response()->json(['success' => true, 'data' => $result]);
+        if (isset($result['transactionStatus'])) {
+            if ($result['transactionStatus'] === 'Completed') {
+                return (new OrderController())->checkout_done()->with(['error' => 'Bkash Payment Done']);
+            } elseif ($result['transactionStatus'] === 'Failed') {
+                return (new OrderController())->checkout_fail()->with(['error' => 'Bkash Payment Failed']);
+            }
         }
 
-        return response()->json(['success' => false, 'message' => 'Payment execution failed.']);
+        return (new OrderController())->checkout_fail()->with(['error' => 'Bkash Payment Canceled']);
     }
 
-    public function callback(Request $request)
-    {
-        // Handle callback data from bKash if required
-        return response()->json(['message' => 'Callback received', 'data' => $request->all()]);
-    }
-
+    /**
+     * Get Authentication Token
+     */
     private function getToken()
     {
         $response = Http::post($this->base_url . 'checkout/token/grant', [

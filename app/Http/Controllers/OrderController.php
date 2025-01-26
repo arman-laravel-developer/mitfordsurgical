@@ -78,7 +78,7 @@ class OrderController extends Controller
             'mobile' => 'required|regex:/^[0-9]{11}$/', // Validates an 11-digit phone number
             'address' => 'required|string|max:255',
             'shipping_cost' => 'required|numeric', // Ensure a valid shipping cost is selected
-            'payment_method' => 'required|string|in:cod', // Ensure it's "cod" for Cash on Delivery
+            'payment_method' => 'required|string', // Ensure it's "cod" for Cash on Delivery
             'agree_policy' => 'required|accepted', // Ensure the user agrees to the terms
         ]);
         $cartProducts = Cart::getContent();
@@ -134,7 +134,16 @@ class OrderController extends Controller
             $payment_history->order_id = $order->id;
             $payment_history->payment_method = 'cash on delivery';
             $payment_history->payment_status = 'pending';
-            $payment_history->amount = $order_total + $shipping_cost;
+            $payment_history->amount = $order_total + $shipping_cost - $couponDiscount;
+            $payment_history->save();
+        }
+        else
+        {
+            $payment_history = new PaymentHistory();
+            $payment_history->order_id = $order->id;
+            $payment_history->payment_method = $request->payment_method;
+            $payment_history->payment_status = 'pending';
+            $payment_history->amount = $order_total + $shipping_cost - $couponDiscount;
             $payment_history->save();
         }
         $cartProducts = Cart::getContent();
@@ -186,6 +195,41 @@ class OrderController extends Controller
     //            $this->sendOrderInvoiceToAdmin($order);
 
         Session::put('order_id', $order->id);
+        Session::put('payment_history_id', $payment_history->id);
+        if (Session::get('order_id') != null)
+        {
+            $decorator = __NAMESPACE__ . '\\' . str_replace(' ', '', ucwords(str_replace('_', ' ', $request->payment_method))) . "PaymentController";
+            if (class_exists($decorator))
+            {
+                return (new $decorator)->initiatePayment();
+            }
+            return redirect()->route('order.confirmation')->with('success', 'Your order has been placed! thank you');
+        }
+    }
+
+    public function checkout_done()
+    {
+        $order = Order::find(Session::get('order_id'));
+        $payment = PaymentHistory::find(Session::get('payment_history_id'));
+
+        $order->payment_status = 'paid';
+        $order->save();
+        $payment->payment_status = 'paid';
+        $payment->save();
+        Session::forget('payment_history_id');
+        return redirect()->route('order.confirmation')->with('success', 'Your order has been placed! thank you');
+    }
+
+    public function checkout_fail()
+    {
+        $order = Order::find(Session::get('order_id'));
+        $payment = PaymentHistory::find(Session::get('payment_history_id'));
+
+        $order->payment_status = 'un_paid';
+        $order->save();
+        $payment->payment_status = 'un_paid';
+        $payment->save();
+        Session::forget('payment_history_id');
         return redirect()->route('order.confirmation')->with('success', 'Your order has been placed! thank you');
     }
 
@@ -229,6 +273,9 @@ class OrderController extends Controller
         $order = Order::find($request->order_id);
         $order->payment_status = $request->payment_status;
         $order->save();
+        $payment_history = PaymentHistory::where('order_id', $request->order_id)->first();
+        $payment_history->payment_status = 'paid';
+        $payment_history->save();
         return redirect()->back()->with('success', 'Payment status update successfull');
     }
     public function orderStatusUpdate(Request $request)

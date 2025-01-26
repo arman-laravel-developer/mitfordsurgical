@@ -163,46 +163,48 @@
                                 </ul>
                             </div>
                     @endif
-                        @php
+                    @php
                         $customer = \App\Models\Customer::find(Session::get('customer_id'));
-                        @endphp
+                    @endphp
                     <!-- Wizard Navigation -->
                         <form action="{{route('order.store')}}" id="submitOrderForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" readonly value="{{$cartTotal}}" id="cartTotalV" name="cartTotal">
                             <input type="hidden" readonly value="" id="couponDiscount" name="couponDiscount">
                             <input type="hidden" readonly value="" id="couponCodeShow" name="couponCodeShow">
+
+                            <!-- Steps Navigation -->
                             <div class="checkout-steps">
                                 <div class="step" id="step1">
-                                    <span class="step-number">
-                                        <div class="checkout-icon">
-                                            <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                        </div>
-                                    </span>
+            <span class="step-number">
+                <div class="checkout-icon">
+                    <i class="fas fa-map-marker-alt fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                </div>
+            </span>
                                     <span class="step-title">{{translate('Delivery Address')}}</span>
                                 </div>
                                 <div class="step" id="step2">
-                                    <span class="step-number">
-                                        <div class="checkout-icon">
-                                            <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                        </div>
-                                    </span>
+            <span class="step-number">
+                <div class="checkout-icon">
+                    <i class="fas fa-truck fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                </div>
+            </span>
                                     <span class="step-title">{{translate('Delivery Option')}}</span>
                                 </div>
                                 <div class="step" id="step3">
-                                    <span class="step-number">
-                                        <div class="checkout-icon">
-                                            <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                        </div>
-                                    </span>
+            <span class="step-number">
+                <div class="checkout-icon">
+                    <i class="fas fa-money-bill fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                </div>
+            </span>
                                     <span class="step-title">{{translate('Payment Option')}}</span>
                                 </div>
                                 <div class="step" id="step4">
-                                    <span class="step-number">
-                                        <div class="checkout-icon">
-                                            <i class="fas fa-check-circle fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
-                                        </div>
-                                    </span>
+            <span class="step-number">
+                <div class="checkout-icon">
+                    <i class="fas fa-check-circle fa-2x text-center" style="color: #0baf9a; margin-left: 20%;"></i>
+                </div>
+            </span>
                                     <span class="step-title">{{translate('Confirmation')}}</span>
                                 </div>
                             </div>
@@ -245,10 +247,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-6"></div>
                                     <div class="col-6">
-                                    </div>
-                                    <div class="col-6">
-                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md mt-2 fw-bold" type="button" onclick="showStep(2)" style="float: inline-end;" disabled>{{translate('Next')}}</button>
+                                        <button id="nextStep1" class="btn theme-bg-color text-white btn-md mt-2 fw-bold float-end" type="button" onclick="showStep(2)" disabled>{{translate('Next')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -260,41 +261,45 @@
                                         <div class="col-6 h-100">
                                             <label class="delivery-option">
                                                 <div class="form-check custom-form-check">
-                                                    <input class="form-check-input shipping-option @error('shipping_cost') is-invalid @enderror" type="radio" value="{{$shippingCost->shipping_cost}}" name="shipping_cost" id="standard{{$shippingCost->id}}" required>
-                                                    <span class="form-check-label" style="margin-left: -11%">{{$shippingCost->address_name}} ({{$shippingCost->shipping_cost}} taka)</span>
+                                                    <input class="form-check-input shipping-option" type="radio" value="{{$shippingCost->shipping_cost}}" name="shipping_cost" id="shippingOption{{$shippingCost->id}}" required>
+                                                    <span class="form-check-label">{{$shippingCost->address_name}} ({{$shippingCost->shipping_cost}} taka)</span>
                                                 </div>
                                             </label>
-                                            @error('shipping_cost')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <a id="previousStep2" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(1)">{{translate('Previous')}}</a>
+                                        <button id="previousStep2" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" type="button" onclick="showStep(1)">{{translate('Previous')}}</button>
                                     </div>
                                     <div class="col-6">
-                                        <a id="nextStep2" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(3)" disabled>{{translate('Next')}}</a>
+                                        <button id="nextStep2" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" type="button" onclick="showStep(3)" disabled>{{translate('Next')}}</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Step 3: Payment Option -->
                             <div class="checkout-step" id="step-3">
-                                <div class="checkout-detail">
-                                    <div class="form-check custom-form-check">
-                                        <label class="form-check-label" for="cash" style="margin-left: -11%">
-                                            <input class="form-check-input mt-0" type="radio" name="payment_method" value="cod" id="cash" checked required> {{translate('Cash On Delivery')}}
-                                        </label>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <a id="previousStep3" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(2)">{{translate('Previous')}}</a>
+                                        <div class="form-check p-0">
+                                            <input class="btn-check" type="radio" name="payment_method" id="bkash" value="bkash" required>
+                                            <label class="btn btn-outline-success w-100 fw-bold py-2" style="border: 2px solid #ccc;" for="bkash">{{translate('Bkash')}}</label>
+                                        </div>
                                     </div>
                                     <div class="col-6">
-                                        <a id="nextStep3" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(4)" disabled>{{translate('Next')}}</a>
+                                        <div class="form-check p-0">
+                                            <input class="btn-check" type="radio" name="payment_method" id="cod" value="cod" required>
+                                            <label class="btn btn-outline-success w-100 fw-bold py-2" style="border: 2px solid #ccc;" for="cod">{{translate('Cash on Delivery')}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <button id="previousStep3" class="btn bg-primary text-white btn-md w-100 fw-bold" type="button" onclick="showStep(2)">{{translate('Previous')}}</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button id="nextStep3" class="btn theme-bg-color text-white btn-md w-100 fw-bold" type="button" onclick="showStep(4)" disabled>{{translate('Next')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -306,19 +311,16 @@
                                         <input type="text" class="form-control" name="order_note" placeholder="{{translate('Enter Delivery Note')}}">
                                     </div>
                                 </div>
-                                <div class="delivery-address-box d-flex align-items-center">
-                                    <input type="checkbox" id="agree_policy" name="agree_policy" class="form-check-input me-2 @error('agree_policy') is-invalid @enderror" required>
-                                    <label for="agree_policy" class="form-check-label mb-0">{{translate('I have read and agree to the')}} <a href="#" class="text-primary">{{translate('terms and conditions')}}</a>.</label>
+                                <div class="delivery-address-box d-flex align-items-center mb-3">
+                                    <input type="checkbox" id="agree_policy" name="agree_policy" class="form-check-input me-2" required>
+                                    <label for="agree_policy" class="form-check-label">{{translate('I have read and agree to the')}} <a href="#" class="text-primary">{{translate('terms and conditions')}}</a>.</label>
                                 </div>
-                                @error('agree_policy')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                                 <div class="row">
                                     <div class="col-6">
-                                        <a id="previousStep4" class="btn bg-primary text-white btn-md w-100 mt-4 fw-bold" onclick="showStep(3)">{{translate('Previous')}}</a>
+                                        <button id="previousStep4" class="btn bg-primary text-white btn-md w-100 fw-bold" type="button" onclick="showStep(3)">{{translate('Previous')}}</button>
                                     </div>
                                     <div class="col-6">
-                                        <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold" type="submit">{{translate('Place Order')}}</button>
+                                        <button class="btn theme-bg-color text-white btn-md w-100 fw-bold" type="submit">{{translate('Place Order')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -389,63 +391,48 @@
     <!-- JavaScript for the wizard functionality -->
     <script>
         function showStep(stepNumber) {
-            // Update the active step
             document.querySelectorAll('.step').forEach((step, index) => {
                 step.classList.remove('active');
-                if (index < stepNumber) {
-                    step.classList.add('completed');
-                }
-                if (index === stepNumber - 1) {
-                    step.classList.add('active');
-                }
+                if (index < stepNumber) step.classList.add('completed');
+                if (index === stepNumber - 1) step.classList.add('active');
             });
 
-            // Show the corresponding step content
             document.querySelectorAll('.checkout-step').forEach(stepContent => stepContent.classList.remove('active-step'));
             document.getElementById(`step-${stepNumber}`).classList.add('active-step');
 
-            // Show the coupon cart only on step 4
-            const couponCart = document.querySelector('.coupon-cart');
-            if (stepNumber === 4) {
-                couponCart.style.display = 'block'; // Show coupon cart
-            } else {
-                couponCart.style.display = 'none'; // Hide coupon cart on other steps
-            }
-
-            // Validate the current step to enable/disable "Next" button
             validateStep(stepNumber);
         }
 
         function validateStep(stepNumber) {
-            let allFieldsFilled = true;
-
-            // Get all required inputs for the specific step
-            const stepInputs = document.querySelectorAll(`#step-${stepNumber} input[required]`);
-
-            // Loop through the inputs and check if any of them is empty
-            stepInputs.forEach(input => {
-                if (!input.value.trim()) {
-                    allFieldsFilled = false;
+            let isValid = true;
+            const inputs = document.querySelectorAll(`#step-${stepNumber} input[required]`);
+            inputs.forEach(input => {
+                if (input.type === "radio") {
+                    const isChecked = document.querySelector(`input[name="${input.name}"]:checked`);
+                    if (!isChecked) isValid = false;
+                } else if (!input.value.trim()) {
+                    isValid = false;
                 }
             });
-
-            // Enable/Disable the next button based on whether all required fields are filled
             const nextButton = document.getElementById(`nextStep${stepNumber}`);
-            if (nextButton) {
-                nextButton.disabled = !allFieldsFilled;
-            }
+            if (nextButton) nextButton.disabled = !isValid;
         }
 
-        // Attach event listeners to inputs for validation
         document.querySelectorAll('input[required]').forEach(input => {
             input.addEventListener('input', function () {
                 const currentStep = this.closest('.checkout-step').id.replace('step-', '');
                 validateStep(currentStep);
             });
+
+            input.addEventListener('change', function () {
+                const currentStep = this.closest('.checkout-step').id.replace('step-', '');
+                validateStep(currentStep);
+            });
         });
 
-        // Initial validation check for step 1
-        validateStep(1);
+        document.addEventListener('DOMContentLoaded', function () {
+            validateStep(1);
+        });
     </script>
     <script>
         document.querySelectorAll('.form-check-input').forEach(input => {

@@ -56,7 +56,7 @@ Route::get('/shop/{id}/{slug}', [ShopController::class, 'index'])->name('shop.in
 
 Route::get('/bkash/pay', [BkashPaymentController::class, 'initiatePayment'])->name('bkash.pay');
 Route::post('/bkash/execute', [BkashPaymentController::class, 'executePayment'])->name('bkash.execute');
-Route::post('/bkash/callback', [BkashPaymentController::class, 'callback'])->name('bkash.callback');
+
 
 Route::get('/category-products/{id}-{slug}', [CategoryProductsController::class,'index'])->name('category.product');
 

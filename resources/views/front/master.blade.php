@@ -505,8 +505,7 @@
                             </div>
 
                             <div class="footer-logo-contain">
-                                <p>We are a friendly bar serving a variety of cocktails, wines and beers. Our bar is a
-                                    perfect place for a couple.</p>
+                                <p>{{$generalSettingView->about_us_short}}</p>
 
                                 <ul class="address">
                                     <li>
@@ -1014,7 +1013,6 @@
                     animateCount(itemQtyInCartElement, currentItemQtyInCart, response.item, 1000); // Duration adjusted
                     animateCount(itemValueInCartElement, currentItemValueInCart, response.total, 1000); // Duration adjusted
 
-                    toastr.success(response.message);
                     resetForm('#addToCartForm');
                     // Optionally open the cart
                     // openCart();

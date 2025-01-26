@@ -150,7 +150,8 @@
                             Mobile: {{$order->mobile}}<br>
                             Order ID: #{{$order->order_code}}<br>
                             Order Date: {{$order->created_at->format('d-m-Y')}}<br>
-                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ''}}<br>
+                            Payment Method: {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ucfirst($order->payment_method)}}<br>
+{{--                            Payment Status: {{$order->payment_status == 'un_paid' ? 'Un-Paid' : ucfirst($order->payment_status)}}<br>--}}
                             @if($order->order_note !=null)
                             Note: {{$order->order_note}}
                             @endif

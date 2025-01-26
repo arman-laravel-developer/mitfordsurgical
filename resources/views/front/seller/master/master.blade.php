@@ -63,7 +63,8 @@
                 overflow: visible!important;
             }
             .cover-image {
-                width: 1130px!important;
+                margin-left: 1%!important;
+                width: 1330px!important;
                 overflow: visible!important;
             }
             .cover-image img {
@@ -122,13 +123,13 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
-
     <!-- Bootstrap-Select CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/css/bootstrap-select.min.css">
+
 
 
     <!-- Bootstrap-Select JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/js/bootstrap-select.min.js"></script>
 
     <style>
         .copy-btn {
@@ -154,7 +155,7 @@
 
 <!-- User Dashboard Section Start -->
 <section class="user-dashboard-section" style="padding-top: calc(3px + 20*(100vw - 320px)/1600)">
-    <div class="container-fluid-lg">
+    <div class="p-2">
         <div class="row">
             <div class="col-xxl-2 col-lg-3">
                 <div class="dashboard-left-sidebar">

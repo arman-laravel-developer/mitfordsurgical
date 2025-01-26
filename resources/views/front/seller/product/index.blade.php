@@ -468,14 +468,6 @@
     </script>
 
     <script>
-        $(document).ready(function() {
-            $('.selectpicker').selectpicker({
-                noneSelectedText: 'Select Colors'
-            });
-        });
-    </script>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const colorsSelect = document.getElementById('colors');
             const sizesSelect = document.getElementById('sizes');

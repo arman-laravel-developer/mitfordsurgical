@@ -638,6 +638,13 @@ class ProductController extends Controller
                 unlink($product->thumbnail_img);
             }
         }
+        if ($product->pdf)
+        {
+            if (file_exists($product->pdf))
+            {
+                unlink($product->pdf);
+            }
+        }
         if ($product->variants)
         {
             foreach ($product->variants as $variant)

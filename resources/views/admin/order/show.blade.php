@@ -34,7 +34,7 @@
                                         @csrf
                                         <input type="hidden" name="order_id" value="{{$order->id}}">
                                         <label for="">Payment Status</label>
-                                        <select name="payment_status" id="payment_status" class="form-control" @if($order->order_status == 'cancel') disabled @endif onchange="this.form.submit()">
+                                        <select name="payment_status" id="payment_status" class="form-control" @if($order->order_status == 'cancel') disabled @elseif($order->order_status == 'returned') disabled @endif onchange="this.form.submit()">
                                             <option value="" selected disabled>Select payment status</option>
                                             <option value="pending" {{$order->payment_status == 'pending' ? 'selected' : ''}}>Pending</option>
                                             <option value="paid" {{$order->payment_status == 'paid' ? 'selected' : ''}}>Paid</option>
@@ -55,7 +55,9 @@
                                             <option value="shipped" {{$order->order_status == 'shipped' ? 'selected' : ''}}>Shipped</option>
                                             <option value="delivered" {{$order->order_status == 'delivered' ? 'selected' : ''}}>Delivered</option>
                                             <option value="returned" {{$order->order_status == 'returned' ? 'selected' : ''}}>Returned</option>
+                                            @if($order->payment_status != 'paid')
                                             <option value="cancel" {{$order->order_status == 'cancel' ? 'selected' : ''}}>Canceled</option>
+                                            @endif
                                         </select>
                                     </form>
                                 </div>
@@ -104,6 +106,13 @@
                                         <span class="badge bg-success float-end">Paid</span>
                                     @else
                                         <span class="badge bg-warning float-end">Un-paid</span>
+                                    @endif
+                                </p>
+                                <p class="font-13" style="margin-bottom: 0.2em"><strong>Payment Method: </strong>
+                                    @if($order->payment_method == 'cod')
+                                        <span class="float-end">Cash On Delivery</span>
+                                    @else
+                                        <span class="float-end">{{ucfirst($order->payment_method)}}</span>
                                     @endif
                                 </p>
                             </div>
