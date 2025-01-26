@@ -227,13 +227,31 @@
                                         <div class="mb-3 custom-form row">
                                             <label for="exampleFormControlInput3" class="col-2 form-label">{{translate('Mobile')}}<sup class="text-danger">*</sup></label>
                                             <div class="custom-input col-10">
-                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer) value="{{$customer->mobile}}" @else value="{{old('mobile')}}" @endif id="exampleFormControlInput3" name="mobile" placeholder="{{translate('Enter Your Mobile Number')}}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" required>
+                                                <input type="tel" class="form-control @error('mobile') is-invalid @enderror" @if($customer)
+                                                value="{{$customer->mobile}}" @else value="{{old('mobile')}}"
+                                                       @endif id="exampleFormControlInput3" name="mobile"
+                                                       placeholder="{{translate('Enter Your Mobile Number')}}" maxlength="11"
+                                                       oninput="this.value = convertBanglaToEnglish(this.value).replace(/[^0-9]/g, '').slice(0, 11);" required>
                                                 @error('mobile')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+                                        // Function to convert Bangla numbers to Arabic numbers
+                                        function convertBanglaToEnglish(input) {
+                                            var banglaNumbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+                                            var arabicNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+                                            // Replace each Bangla number with the corresponding Arabic number
+                                            return input.split('').map(function(char) {
+                                                var index = banglaNumbers.indexOf(char);
+                                                return index !== -1 ? arabicNumbers[index] : char;
+                                            }).join('');
+                                        }
+                                    </script>
                                     <div class="col-xxl-6 col-lg-12 col-sm-6">
                                         <div class="mb-3 custom-form row">
                                             <label for="exampleFormControlInput1" class="col-2 form-label">{{translate('Address')}}<sup class="text-danger">*</sup></label>
