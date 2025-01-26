@@ -200,11 +200,11 @@
                 <td class="text-left">
 {{--                    @if($order->payment_status == 'paid')--}}
 {{--                        <div class="total-in-words" style="margin-top: 0 !important;">--}}
-{{--                            <img src="{{$paidImageSrc}}" alt="" style="height: 100px">--}}
+{{--                            <img src="{{$paidImageSrc}}" alt="" style="height: 100px; opacity: 0.8;">--}}
 {{--                        </div>--}}
 {{--                    @else--}}
 {{--                        <div class="total-in-words" style="margin-top: 0 !important;">--}}
-{{--                            <img src="{{$unpaidImageSrc}}" alt="" style="height: 100px">--}}
+{{--                            <img src="{{$unpaidImageSrc}}" alt="" style="height: 100px; opacity: 0.5;">--}}
 {{--                        </div>--}}
 {{--                    @endif--}}
                 </td>

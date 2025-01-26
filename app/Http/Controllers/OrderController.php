@@ -344,7 +344,7 @@ class OrderController extends Controller
         $imageSrc = 'data:image/png;base64,' . $imageData;
 
         // Convert the image to a base64 string
-        $paidImagePath = asset('front/assets/images/paid.png');
+        $paidImagePath = asset('front/assets/images/apaid.png');
         $paidImageData = base64_encode(file_get_contents($paidImagePath));
         $paidImageSrc = 'data:image/png;base64,' . $paidImageData;
         // Convert the image to a base64 string
@@ -428,7 +428,7 @@ class OrderController extends Controller
         $imageSrc = 'data:image/png;base64,' . $imageData;
 
         // Convert the image to a base64 string
-        $paidImagePath = asset('front/assets/images/paid.png');
+        $paidImagePath = asset('front/assets/images/apaid.png');
         $paidImageData = base64_encode(file_get_contents($paidImagePath));
         $paidImageSrc = 'data:image/png;base64,' . $paidImageData;
         // Convert the image to a base64 string
