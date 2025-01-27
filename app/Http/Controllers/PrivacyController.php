@@ -54,6 +54,46 @@ class PrivacyController extends Controller
         }
         return redirect()->back()->with('success', 'Privacy update successfully');
     }
+    public function conditionEdit(Request $request)
+    {
+        $lang = $request->lang;
+        $privacy = Privacy::where('status', 1)->first();
+        return view('admin.privacy.condition-edit', compact('privacy', 'lang'));
+    }
+
+    public function conditionUpdate(Request $request)
+    {
+        $privacy = Privacy::latest()->first();
+        if ($request->lang == 'en')
+        {
+            if ($privacy)
+            {
+                $privacy->condition = $request->condition;
+                $privacy->save();
+
+                $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+                $privacy_translation->condition = $request->condition;
+                $privacy_translation->save();
+            }
+            else
+            {
+                $privacy = new Privacy();
+                $privacy->condition = $request->condition;
+                $privacy->save();
+
+                $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+                $privacy_translation->condition = $request->condition;
+                $privacy_translation->save();
+            }
+        }
+        else
+        {
+            $privacy_translation = PrivacyTranslation::firstOrNew(['lang' => $request->lang, 'privacy_id' => $privacy->id]);
+            $privacy_translation->condition = $request->condition;
+            $privacy_translation->save();
+        }
+        return redirect()->back()->with('success', 'Terms And Condition update successfully');
+    }
 
     public function page_view()
     {

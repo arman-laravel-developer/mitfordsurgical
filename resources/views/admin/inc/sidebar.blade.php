@@ -267,26 +267,31 @@
             </div>
         </li>
     @endif
-    @if ($userType == 1 || !empty(array_filter(['privacy.add', 'return.manage'], fn($route) => in_array($route, $roleRoutes))))
+    @if ($userType == 1 || !empty(array_filter(['privacy.add', 'return.add', 'condition.manage'], fn($route) => in_array($route, $roleRoutes))))
         @php
-            $isPActive = in_array(Route::currentRouteName(), ['privacy.add', 'return.add']);
+            $isPActive = in_array(Route::currentRouteName(), ['privacy.add', 'return.add', 'condition.add']);
         @endphp
         <li class="side-nav-item {{ $isPActive ? 'menuitem-active' : '' }}">
             <a data-bs-toggle="collapse" href="#sidebarPrivacy" aria-expanded="false" aria-controls="sidebarPrivacy" class="side-nav-link">
                 <i class="uil-lock"></i>
-                <span> Privacy & Policy </span>
+                <span> Policy Module</span>
                 <span class="menu-arrow"></span>
             </a>
             <div class="collapse {{ $isPActive ? 'show' : '' }}" id="sidebarPrivacy">
                 <ul class="side-nav-second-level">
                     @if ($userType == 1 || in_array('privacy.add', $roleRoutes))
                         <li class="{{Route::is('privacy.add') ? 'active' : ''}}">
-                            <a href="{{ route('privacy.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Manage Privacy</a>
+                            <a href="{{ route('privacy.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Privacy & Policy</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('privacy.add', $roleRoutes))
+                        <li class="{{Route::is('condition.add') ? 'active' : ''}}">
+                            <a href="{{ route('condition.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Terms & Condition</a>
                         </li>
                     @endif
                     @if ($userType == 1 || in_array('return.add', $roleRoutes))
                         <li class="{{Route::is('return.add') ? 'active' : ''}}">
-                            <a href="{{ route('return.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Manage Return</a>
+                            <a href="{{ route('return.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Return & refund</a>
                         </li>
                     @endif
                 </ul>

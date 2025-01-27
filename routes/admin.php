@@ -169,6 +169,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
             Route::post('/update', [PrivacyController::class, 'update'])->name('privacy.update');
             Route::post('/delete/{id}', [PrivacyController::class, 'delete'])->name('privacy.delete');
+            Route::get('/condition-add', [PrivacyController::class, 'conditionEdit'])->name('condition.add');
+            Route::post('/condition-update', [PrivacyController::class, 'conditionUpdate'])->name('condition.update');
         });
         Route::prefix('seller')->group(function () {
             Route::get('/pending', [SellerController::class, 'pending'])->name('seller.pending');

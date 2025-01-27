@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('title')
-    Privacy & Policy | {{env('APP_NAME')}}
+    Terms And Conditions | {{env('APP_NAME')}}
 @endsection
 
 @section('body')
@@ -23,7 +23,7 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">Privacy & Policy</h4>
+                <h4 class="page-title">Terms And Conditions</h4>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
                     <ul class="nav nav-tabs nav-fill border-primary mb-3">
                         @foreach (\App\Models\Language::all() as $key => $language)
                             <li class="nav-item">
-                                <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-light border-light border-left-0 @endif py-3" href="{{ route('privacy.add', ['lang'=> $language->code] ) }}">
+                                <a class="nav-link text-reset @if ($language->code == $lang) active @else bg-light border-light border-left-0 @endif py-3" href="{{ route('condition.add', ['lang'=> $language->code] ) }}">
                                     <img src="{{ asset('admin/assets/images/flags/'.$language->code.'.png') }}" height="11" class="mr-1">
                                     <span>{{$language->name}}</span>
                                 </a>
@@ -43,13 +43,13 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="basic-form-preview">
-                            <form action="{{route('privacy.update')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('condition.update')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" value="{{$lang}}" name="lang">
                                 <div class="row mb-3">
                                     <div class="col-md-12">
-                                        <textarea type="text" id="summernote" name="privacy" class="form-control @error('privacy') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter privacy">{{optional($privacy)->getTranslation('privacy',request()->lang)}}</textarea>
-                                        @error('privacy')
+                                        <textarea type="text" id="summernote2" name="condition" class="form-control @error('condition') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter condition">{{optional($privacy)->getTranslation('condition',request()->lang)}}</textarea>
+                                        @error('condition')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

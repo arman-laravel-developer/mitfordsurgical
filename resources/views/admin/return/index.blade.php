@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('title')
-    Return And Refund Edit | {{env('APP_NAME')}}
+    Return And Refund | {{env('APP_NAME')}}
 @endsection
 
 @section('body')
@@ -23,12 +23,12 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">Return And Refund Edit</h4>
+                <h4 class="page-title">Return And Refund</h4>
             </div>
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-tabs nav-fill border-primary mb-3">
@@ -47,8 +47,7 @@
                                 @csrf
                                 <input type="hidden" value="{{$lang}}" name="lang">
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-2 col-form-label">Return And Refund</label>
-                                    <div class="col-10">
+                                    <div class="col-12">
                                         <textarea type="text" id="summernote" name="return" class="form-control @error('return') is-invalid @enderror" aria-describedby="emailHelp" placeholder="Enter return and refund">{{optional($return)->getTranslation('return', request()->lang)}}</textarea>
                                         @error('return')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -56,9 +55,8 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-2 col-form-label"></label>
-                                    <div class="col-10">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary float-end">Submit</button>
                                     </div>
                                 </div>
                             </form>
