@@ -7,7 +7,7 @@
      } else {
          var cart = $('.cart-mobile');
      }
-     var imgtodrag = $(this).parents('.product-box-4, .deal-box').find(".product-image a img, .category-image img").eq(0);
+     var imgtodrag = $(this).parents('.product-box-4, .deal-box').find(".product-image img, .category-image img").eq(0);
      if (imgtodrag) {
          var imgclone = imgtodrag.clone()
              .offset({

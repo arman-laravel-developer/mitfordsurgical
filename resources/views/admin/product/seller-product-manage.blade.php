@@ -65,24 +65,24 @@
                                     {{$product->added_by}}
                                 </td>
                                 <td>
-                                    <input type="checkbox" id="switch{{$product->id}}_published" data-switch="none"
+                                    <input type="checkbox" id="switch{{$product->id}}_published" data-switch="bool"
                                            {{ $product->status == 1 ? 'checked' : '' }}
                                            onchange="updateProductStatus({{$product->id}}, this.checked ? 1 : 2)">
-                                    <label for="switch{{$product->id}}_published" data-on-label="" data-off-label=""></label>
+                                    <label for="switch{{$product->id}}_published" data-on-label="On" data-off-label="Off"></label>
                                 </td>
                                 <td>
-                                    <input type="checkbox" id="switch{{$product->id}}_featured" data-switch="none"
+                                    <input type="checkbox" id="switch{{$product->id}}_featured" data-switch="success"
                                            {{ $product->is_featured == 1 ? 'checked' : '' }}
                                            onchange="updateProductFeatured({{$product->id}}, this.checked ? 1 : 2)">
-                                    <label for="switch{{$product->id}}_featured" data-on-label="" data-off-label=""></label>
+                                    <label for="switch{{$product->id}}_featured" data-on-label="On" data-off-label="Off"></label>
                                 </td>
                                 <td>
-                                    <a href="{{route('product.edit', ['id' => $product->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" class="btn btn-success btn-sm" title="Edit">
-                                        <i class="ri-edit-box-fill"></i>
+                                    <a href="{{route('product.edit', ['id' => $product->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-primary btn-sm" title="Edit">
+                                        <i class="fa fa-eye" ></i>
                                     </a>
-                                    <button type="button" onclick="confirmDelete({{$product->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                        <i class="ri-chat-delete-fill"></i>
-                                    </button>
+                                    <a href="javascript:void(0)" onclick="confirmDelete({{$product->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
 
                                     <form action="{{route('product.delete', ['id' => $product->id])}}" method="POST" id="productDeleteForm{{$product->id}}">
                                         @csrf

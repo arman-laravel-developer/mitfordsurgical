@@ -21,6 +21,8 @@ class DashboardController extends Controller
         $shippedOrder =Order::where('order_status', 'shipped')->count();
         $deliveredOrder =Order::where('order_status', 'delivered')->count();
         $returnedOrder =Order::where('order_status', 'returned')->count();
+        $proccessingOrder =Order::where('order_status', 'proccessing')->count();
+        $allOrder =Order::count();
         $newOrders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
         return view('admin.home.index', compact(
             'pendingOrder',
@@ -28,7 +30,9 @@ class DashboardController extends Controller
             'shippedOrder',
             'deliveredOrder',
             'newOrders',
-            'returnedOrder'
+            'returnedOrder',
+            'allOrder',
+            'proccessingOrder'
 
         ));
     }

@@ -29,7 +29,7 @@ Dashboard | {{env('APP_NAME')}}
     </div>
 
     <div class="row">
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.new-show')}}">
                 <div class="card widget-flat text-bg-secondary">
                     <div class="card-body">
@@ -43,7 +43,7 @@ Dashboard | {{env('APP_NAME')}}
             </a>
         </div> <!-- end col-->
 
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.pending')}}">
                 <div class="card widget-flat text-bg-info">
                     <div class="card-body">
@@ -57,7 +57,7 @@ Dashboard | {{env('APP_NAME')}}
             </a>
         </div> <!-- end col-->
 
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.returned')}}">
                 <div class="card widget-flat text-bg-warning">
                     <div class="card-body">
@@ -71,7 +71,7 @@ Dashboard | {{env('APP_NAME')}}
             </a>
         </div> <!-- end col-->
 
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.canceled')}}">
                 <div class="card widget-flat text-bg-danger">
                     <div class="card-body">
@@ -85,7 +85,7 @@ Dashboard | {{env('APP_NAME')}}
             </a>
         </div> <!-- end col-->
 
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.shipped')}}">
                 <div class="card widget-flat text-bg-primary">
                     <div class="card-body">
@@ -99,7 +99,7 @@ Dashboard | {{env('APP_NAME')}}
             </a>
         </div> <!-- end col-->
 
-        <div class="col-xxl-3 col-sm-4">
+        <div class="col-xxl-3 col-sm-3">
             <a href="{{route('order.delivered')}}">
                 <div class="card widget-flat text-bg-success">
                     <div class="card-body">
@@ -108,6 +108,32 @@ Dashboard | {{env('APP_NAME')}}
                         </div>
                         <h5 class="fw-normal mt-0" title="Revenue">Shipment Order</h5>
                         <h3 class="mt-3 mb-3 text-white">{{number_format($deliveredOrder)}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xxl-3 col-sm-3">
+            <a href="{{route('order.proccessing')}}">
+                <div class="card widget-flat" style="background-color: #0a6aa1">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-usd widget-icon bg-light-lighten rounded-circle text-primary"></i>
+                        </div>
+                        <h5 class="fw-normal mt-0 text-white" title="Revenue">Proccessing Order</h5>
+                        <h3 class="mt-3 mb-3 text-white">{{number_format($proccessingOrder)}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xxl-3 col-sm-3">
+            <a href="{{route('order.manage')}}">
+                <div class="card widget-flat" style="background-color: #5e30c1">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="mdi mdi-currency-usd widget-icon bg-light-lighten rounded-circle text-primary"></i>
+                        </div>
+                        <h5 class="fw-normal mt-0 text-white" title="Revenue">All Order</h5>
+                        <h3 class="mt-3 mb-3 text-white">{{number_format($allOrder)}}</h3>
                     </div>
                 </div>
             </a>
