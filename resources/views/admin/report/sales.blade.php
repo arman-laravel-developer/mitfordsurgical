@@ -38,7 +38,7 @@
                             <form action="{{ route('report.sales-wise') }}" method="GET" id="filterForm">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <select name="order_status" id="order_status" class="form-control" onchange="this.form.submit()">
                                             <option value="" selected >Select order status</option>
                                             <option value="pending">Pending</option>
@@ -48,7 +48,15 @@
                                             <option value="cancel">Canceled</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <select name="payment_method" id="payment_method" class="form-control" onchange="this.form.submit()">
+                                            <option value="" selected>Select payment Method</option>
+                                            @foreach($paymentMethods as $key => $paymentMethod)
+                                                <option value="{{ $key }}">{{ $key == 'cod' ? 'Cash on delivery' : ucfirst($key) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <select name="payment_status" id="payment_status" class="form-control" onchange="this.form.submit()">
                                             <option value="" selected >Select payment status</option>
                                             <option value="pending">Pending</option>
@@ -56,7 +64,7 @@
                                             <option value="un_paid">Un-paid</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" class="form-control"
                                                id="date_range" name="date_range"
                                                placeholder="Select date range"
@@ -86,10 +94,11 @@
                                     </div>
                                 </th>
                                 <th class="all">Order Code</th>
-                                <th>Num of Qty</th>
+                                <th>Qty</th>
                                 <th>Order Total</th>
                                 <th>Order Date</th>
                                 <th>Order Status</th>
+                                <th>Payment Method</th>
                                 <th>Payment Status</th>
                             </tr>
                             </thead>
@@ -109,7 +118,7 @@
                                     {{$order->total_qty}}
                                 </td>
                                 <td>
-                                    &#2547; {{number_format($order->grand_total)}}
+                                    &#2547; {{number_format($order->grand_total+$order->shipping_cost-$order->coupon_discount)}}
                                 </td>
                                 <td>
                                     {{$order->created_at->format('d/m/Y')}}
@@ -126,6 +135,9 @@
                                     @else
                                         <span class="badge bg-danger">Canceled</span>
                                     @endif
+                                </td>
+                                <td>
+                                    {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ucfirst($order->payment_method)}}
                                 </td>
                                 <td>
                                     @if($order->payment_status == 'pending')

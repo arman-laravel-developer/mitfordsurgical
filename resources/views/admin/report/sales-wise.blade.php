@@ -38,7 +38,7 @@
                             <form action="{{ route('report.sales-wise') }}" method="GET" id="filterForm">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <select name="order_status" id="order_status" class="form-control" onchange="this.form.submit()">
                                             <option value="" >Select order status</option>
                                             <option value="pending" {{ request('order_status') == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -48,7 +48,15 @@
                                             <option value="cancel" {{ request('order_status') == 'cancel' ? 'selected' : '' }}>Canceled</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <select name="payment_method" id="payment_method" class="form-control" onchange="this.form.submit()">
+                                            <option value="" selected>Select payment Method</option>
+                                            @foreach($paymentMethods as $key => $paymentMethod)
+                                                <option value="{{$key}}" {{ request('payment_method') == $key ? 'selected' : '' }}>{{ $key == 'cod' ? 'Cash on delivery' : ucfirst($key) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <select name="payment_status" id="payment_status" class="form-control" onchange="this.form.submit()">
                                             <option value="" >Select payment status</option>
                                             <option value="pending" {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -57,13 +65,16 @@
                                         </select>
                                     </div>
                                     @php
-                                        use Carbon\Carbon;
-
-                                        $dates = explode(' - ', $selectedDate);
-                                        $startDate = Carbon::parse($dates[0]);
-                                        $endDate = Carbon::parse($dates[1]);
+                                        if (!empty($selectedDate) && str_contains($selectedDate, ' - ')) {
+                                            $dates = explode(' - ', $selectedDate);
+                                            $startDate = \Carbon\Carbon::parse($dates[0]);
+                                            $endDate = \Carbon\Carbon::parse($dates[1]);
+                                        } else {
+                                            $startDate = null;
+                                            $endDate = null;
+                                        }
                                     @endphp
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" class="form-control"
                                                id="date_range" name="date_range"
                                                value="{{ $startDate && $endDate ? $startDate . ' - ' . $endDate : '' }}"
@@ -82,6 +93,7 @@
                                 <form action="{{route('report.filtered-sales-export')}}" method="GET" id="exportForm">
                                     @csrf
                                     <input type="hidden" name="order_status" value="{{$order_status}}">
+                                    <input type="hidden" name="payment_method" value="{{request('payment_method')}}">
                                     <input type="hidden" name="payment_status" value="{{$payment_status}}">
                                     <input type="hidden" name="date_range" value="{{$selectedDate}}">
                                 </form>
@@ -104,6 +116,7 @@
                                 <th>Order Total</th>
                                 <th>Order Date</th>
                                 <th>Order Status</th>
+                                <th>Payment Method</th>
                                 <th>Payment Status</th>
                             </tr>
                             </thead>
@@ -123,7 +136,7 @@
                                         {{$order->total_qty}}
                                     </td>
                                     <td>
-                                        &#2547; {{number_format($order->grand_total)}}
+                                        &#2547; {{number_format($order->grand_total+$order->shipping_cost-$order->coupon_discount)}}
                                     </td>
                                     <td>
                                         {{$order->created_at->format('d/m/Y')}}
@@ -140,6 +153,9 @@
                                         @else
                                             <span class="badge bg-danger">Canceled</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{$order->payment_method == 'cod' ? 'Cash On Delivery' : ucfirst($order->payment_method)}}
                                     </td>
                                     <td>
                                         @if($order->payment_status == 'pending')

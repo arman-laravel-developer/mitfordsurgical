@@ -17,9 +17,15 @@ class ReportAnalysisController extends Controller
 {
     public function index()
     {
+        $paymentMethods = Order::select('payment_method')
+            ->get()
+            ->groupBy('payment_method');
         $orders = Order::latest()->get();
-        $grandTotal = Order::latest()->sum('grand_total');
-        return view('admin.report.sales', compact('orders', 'grandTotal'));
+        $subTotal = Order::latest()->sum('grand_total');
+        $shippingTotal = Order::latest()->sum('shipping_cost');
+        $couponTotal = Order::latest()->sum('coupon_discount');
+        $grandTotal = $subTotal+$shippingTotal - $couponTotal;
+        return view('admin.report.sales', compact('orders', 'grandTotal', 'paymentMethods'));
     }
 
     public function salesReportExport()
@@ -27,22 +33,10 @@ class ReportAnalysisController extends Controller
         return Excel::download(new SalesReportExport(), 'sales-report.xlsx');
     }
 
-    public function FilteredSalesReportExport(Request $request)
-    {
-        // Get filters from request
-        $order_status = $request->input('order_status');
-        $payment_status = $request->input('payment_status');
-        $created_at = $request->input('date_range');
-        $dates = explode(' - ', $created_at);
-        $start_date = $dates[0] ?? null;
-        $end_date = $dates[1] ?? null;
-
-        return Excel::download(new FilteredSalesReportExport($order_status, $payment_status, $start_date, $end_date), 'filtered-sales-report.xlsx');
-    }
-
     public function salesWiseReport(Request $request)
     {
         $order_status = $request->input('order_status');
+        $payment_method = $request->input('payment_method');
         $payment_status = $request->input('payment_status');
         $created_at = $request->input('date_range');
         $selectedDate = $request->input('date_range'); // Get the selected date from the form
@@ -53,6 +47,13 @@ class ReportAnalysisController extends Controller
             $query->where('order_status', $order_status);
         }
 
+        if ($payment_method) {
+            $query->where('payment_method', $payment_method);
+        }
+
+        if ($payment_status) {
+            $query->where('payment_status', $payment_status);
+        }
         if ($payment_status) {
             $query->where('payment_status', $payment_status);
         }
@@ -66,10 +67,30 @@ class ReportAnalysisController extends Controller
         }
 
         $orders = $query->get();
-        $grandTotal = $query->sum('grand_total');
+        $subTotal = $query->sum('grand_total');
+        $shippingTotal = $query->sum('shipping_cost');
+        $couponTotal = $query->sum('coupon_discount');
+        $grandTotal = $subTotal+$shippingTotal-$couponTotal;
+        $paymentMethods = Order::select('payment_method')
+            ->get()
+            ->groupBy('payment_method');
 
 
-        return view('admin.report.sales-wise', compact('orders', 'order_status', 'payment_status', 'grandTotal', 'selectedDate'));
+        return view('admin.report.sales-wise', compact('orders', 'paymentMethods','order_status', 'payment_status', 'grandTotal', 'selectedDate'));
+    }
+
+    public function FilteredSalesReportExport(Request $request)
+    {
+        // Get filters from request
+        $order_status = $request->input('order_status');
+        $payment_method = $request->input('payment_method');
+        $payment_status = $request->input('payment_status');
+        $created_at = $request->input('date_range');
+        $dates = explode(' - ', $created_at);
+        $start_date = $dates[0] ?? null;
+        $end_date = $dates[1] ?? null;
+
+        return Excel::download(new FilteredSalesReportExport($order_status,$payment_method, $payment_status, $start_date, $end_date), 'filtered-sales-report.xlsx');
     }
 
 

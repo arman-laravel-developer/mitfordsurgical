@@ -15,15 +15,16 @@ class SalesReportExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Fetch order and calculate the total
-        $orders = Order::select('order_code', 'total_qty', 'grand_total', 'created_at', 'order_status', 'payment_status')
+        $orders = Order::select('order_code', 'total_qty','shipping_cost','coupon_discount','payment_method', 'grand_total', 'created_at', 'order_status', 'payment_status')
             ->get()
             ->map(function ($order) {
                 return [
                     'order_code' => $order->order_code,
                     'num_of_qty' => $order->total_qty,
-                    'order_total' => $order->grand_total,
+                    'order_total' => $order->grand_total+$order->shipping_cost-$order->coupon_discount,
                     'order_date' => $order->created_at->format('d/m/Y'),
                     'order_status' => Str::ucfirst($order->order_status),
+                    'payment_method' => $order->payment_method == 'cod' ? 'Cash on delivery' : Str::ucfirst($order->payment_method),
                     'payment_status' => Str::ucfirst($order->payment_status)
                 ];
             });
@@ -38,6 +39,7 @@ class SalesReportExport implements FromCollection, WithHeadings
             'order_total' => $totalOrderAmount,
             'order_date' => '',
             'order_status' => '',
+            'payment_method' => '',
             'payment_status' => ''
         ]);
 
@@ -53,6 +55,7 @@ class SalesReportExport implements FromCollection, WithHeadings
             'Order Total',
             'Order Date',
             'Order Status',
+            'Payment Method',
             'Payment Status'
         ];
     }
