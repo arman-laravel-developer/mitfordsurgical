@@ -291,7 +291,7 @@
                     @endif
                     @if ($userType == 1 || in_array('return.add', $roleRoutes))
                         <li class="{{Route::is('return.add') ? 'active' : ''}}">
-                            <a href="{{ route('return.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Return & refund</a>
+                            <a href="{{ route('return.add', ['lang' => env('DEFAULT_LANGUAGE')]) }}">Return & Refund</a>
                         </li>
                     @endif
                 </ul>
