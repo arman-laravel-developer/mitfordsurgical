@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\CategoryTranslation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -22,9 +23,18 @@ class CategoryController extends Controller
         $image = $request->file('image');
         $imageName = $slug.'-'.time().'.'.$image->getClientOriginalExtension();
         $directory = 'category-images/';
-        $image->move($directory,$imageName);
-        $imageUrl = $directory.$imageName;
-        return $imageUrl;
+        if (!file_exists($directory)) {
+            mkdir($directory, 0775, true);
+        }
+        $imagePath = $directory . $imageName;
+
+        // Resize image without changing dimensions and reduce file size
+        $img = Image::make($image->getRealPath());
+        $img->resize(97, 86);
+
+        // Save the resized image
+        $img->save($imagePath);
+        return $imagePath;
     }
 
     public function create(Request $request)
