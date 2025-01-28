@@ -116,9 +116,9 @@ Dashboard | {{env('APP_NAME')}}
         </div> <!-- end col-->
     </div>
     <!-- end row-->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
+    <div class="row d-flex">
+        <div class="col-md-6 d-flex">
+            <div class="card flex-grow-1">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="header-title mb-0">Accounts</h4>
                     <div>
@@ -130,7 +130,6 @@ Dashboard | {{env('APP_NAME')}}
                         </select>
                     </div>
                 </div>
-
                 <div class="card-body pt-0">
                     <div class="table-responsive">
                         <table class="table table-centered table-nowrap mb-0">
@@ -151,6 +150,63 @@ Dashboard | {{env('APP_NAME')}}
                                 </th>
                             </tr>
                             </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="card flex-grow-1">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="header-title mb-0 pt-1">Users</h4>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap mb-0 justify-content-between">
+                            <thead>
+                            <tr>
+                                <th scope="col">User Type</th>
+                                <th scope="col" class="text-end">Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="{{$totalSeller > 0 ? 'text-success' : 'text-danger'}}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            Total Seller
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <span class="{{$totalSeller > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalSeller}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{$totalCustomer > 0 ? 'text-success' : 'text-danger'}}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            Total Customer
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <span class="{{$totalCustomer > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalCustomer}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            Total Subscriber
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <span class="text-danger fw-semibold">0</span>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -178,7 +234,7 @@ Dashboard | {{env('APP_NAME')}}
                         const amountClass = total > 0 ? 'text-success' : 'text-danger';
                         tableBody += `
                         <tr>
-                            <td>${methodName}</td>
+                            <td class="${amountClass}">${methodName}</td>
                             <td class="text-end">
                                 <span class="${amountClass} fw-semibold">
                                     &#2547;${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

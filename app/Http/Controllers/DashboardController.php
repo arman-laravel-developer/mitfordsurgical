@@ -26,6 +26,8 @@ class DashboardController extends Controller
         $proccessingOrder =Order::where('order_status', 'proccessing')->count();
         $allOrder =Order::count();
         $newOrders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
+        $totalSeller = Seller::count();
+        $totalCustomer = Customer::count();
         return view('admin.home.index', compact(
             'pendingOrder',
             'cancelOrder',
@@ -34,7 +36,9 @@ class DashboardController extends Controller
             'newOrders',
             'returnedOrder',
             'allOrder',
-            'proccessingOrder'
+            'proccessingOrder',
+            'totalCustomer',
+            'totalSeller'
         ));
     }
 
