@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\ContactForm;
 use App\Models\Customer;
 use App\Models\Order;
@@ -28,6 +30,12 @@ class DashboardController extends Controller
         $newOrders = Order::where('order_status', 'pending')->latest()->limit(10)->get();
         $totalSeller = Seller::count();
         $totalCustomer = Customer::count();
+        $totalCategory = Category::where('status',1)->count();
+        $totalBrand = Brand::count();
+        $totalSubtotalAmount = Order::where('order_status', 'delivered')->sum('grand_total');
+        $totalShippingCostAmount = Order::where('order_status', 'delivered')->sum('shipping_cost');
+        $totalCouponDiscountAmount = Order::where('order_status', 'delivered')->sum('coupon_discount');
+        $totalSaleAmount = $totalSubtotalAmount+$totalShippingCostAmount-$totalCouponDiscountAmount;
         return view('admin.home.index', compact(
             'pendingOrder',
             'cancelOrder',
@@ -38,7 +46,10 @@ class DashboardController extends Controller
             'allOrder',
             'proccessingOrder',
             'totalCustomer',
-            'totalSeller'
+            'totalSeller',
+            'totalCategory',
+            'totalBrand',
+            'totalSaleAmount'
         ));
     }
 

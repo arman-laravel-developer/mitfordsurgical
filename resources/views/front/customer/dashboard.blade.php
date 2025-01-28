@@ -5,6 +5,56 @@
 @endsection
 
 @section('body')
+    <style>
+        .pending-order-bg {
+            background: #f0!important;ad4e!important; /* Example: Orange */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .confirmed-order-bg {
+            background: #5bc0de!important; /* Example: Light Blue */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .processing-order-bg {
+            background: #0275d8!important; /* Example: Dark Blue */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .shipped-order-bg {
+            background: #5cb85c!important; /* Example: Green */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .success-order-bg {
+            background: #28a745!important; /* Example: Success Green */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .returned-order-bg {
+            background: #ffc107!important; /* Example: Yellow */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+
+        .cancel-order-bg {
+            background: #d9534f!important; /* Example: Red */
+            color: white!important;
+            padding: 5px!important;
+            border-radius: 4px!important;
+        }
+    </style>
     <div class="content-col">
         <!-- Breadcrumb Section Start -->
         <section class="breadcrumb-section pt-0">
@@ -91,19 +141,9 @@
                                             data-feather="shopping-bag"></i>{{translate('Order')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link {{ session('active_tab') == '#pills-wishlist' ? 'active' : '' }}" id="pills-wishlist-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-wishlist" type="button"><i data-feather="heart"></i>
-                                        {{translate('Wishlist')}}</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
                                     <button class="nav-link {{ session('active_tab') == '#pills-profile' ? 'active' : '' }}" id="pills-profile-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-profile" type="button" role="tab"><i data-feather="user"></i>
                                         {{translate('Profile')}}</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link {{ session('active_tab') == '#pills-download' ? 'active' : '' }}" id="pills-download-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-download" type="button" role="tab"><i
-                                            data-feather="download"></i>{{translate('Download')}}</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" onclick="document.getElementById('logoutForm').submit();">
@@ -142,7 +182,7 @@
                                                              alt="">
                                                         <div class="total-detail">
                                                             <h5>{{translate('Total Order')}}</h5>
-                                                            <h3>3658</h3>
+                                                            <h3>{{count($customer->orders)}}</h3>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -155,450 +195,7 @@
                                                              alt="">
                                                         <div class="total-detail">
                                                             <h5>{{translate('Total Pending Order')}}</h5>
-                                                            <h3>254</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
-                                                    <div class="total-contain">
-                                                        <img src="{{ asset('/') }}front/assets/svg/wishlist.svg"
-                                                             class="img-1 blur-up lazyload" alt="">
-                                                        <img src="{{ asset('/') }}front/assets/svg/wishlist.svg"
-                                                             class="blur-up lazyload" alt="">
-                                                        <div class="total-detail">
-                                                            <h5>{{translate('Total Wishlist')}}</h5>
-                                                            <h3>32158</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="pills-wishlist" role="tabpanel">
-                                    <div class="dashboard-wishlist">
-                                        <div class="title">
-                                            <h2>{{translate('My Wishlist History')}}</h2>
-                                            <span class="title-leaf title-leaf-gray">
-                                        </span>
-                                        </div>
-                                        <div class="row g-sm-4 g-3">
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Vegetable</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Cheesy feet
-                                                                cheesy grin brie. Mascarpone cheese and wine hard cheese the
-                                                                big cheese everyone loves smelly cheese macaroni cheese
-                                                                croque monsieur.</p>
-                                                            <h6 class="unit mt-1">250 ml</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$08.02</span>
-                                                                <del>$15.15</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/3.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Vegetable</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Peanut Butter Bite Premium Butter Cookies
-                                                                    600 g</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Feta taleggio
-                                                                croque monsieur swiss manchego cheesecake dolcelatte
-                                                                jarlsberg. Hard cheese danish fontina boursin melted cheese
-                                                                fondue.</p>
-                                                            <h6 class="unit mt-1">350 G</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$04.33</span>
-                                                                <del>$10.36</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/4.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Snacks</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">SnackAmor Combo Pack of Jowar Stick and
-                                                                    Jowar Chips</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Lancashire
-                                                                hard cheese parmesan. Danish fontina mozzarella cream cheese
-                                                                smelly cheese cheese and wine cheesecake dolcelatte stilton.
-                                                                Cream cheese parmesan who moved my cheese when the cheese
-                                                                comes out everybody's happy cream cheese red leicester
-                                                                ricotta edam.</p>
-                                                            <h6 class="unit mt-1">570 G</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$12.52</span>
-                                                                <del>$13.62</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/5.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Snacks</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Yumitos Chilli Sprinkled Potato Chips 100 g
-                                                                </h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Cheddar
-                                                                cheddar pecorino hard cheese hard cheese cheese and biscuits
-                                                                bocconcini babybel. Cow goat paneer cream cheese fromage
-                                                                cottage cheese cauliflower cheese jarlsberg.</p>
-                                                            <h6 class="unit mt-1">100 G</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$10.25</span>
-                                                                <del>$12.36</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/6.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Vegetable</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Fantasy Crunchy Choco Chip Cookies</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Bavarian
-                                                                bergkase smelly cheese swiss cut the cheese lancashire who
-                                                                moved my cheese manchego melted cheese. Red leicester paneer
-                                                                cow when the cheese comes out everybody's happy croque
-                                                                monsieur goat melted cheese port-salut.</p>
-                                                            <h6 class="unit mt-1">550 G</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$14.25</span>
-                                                                <del>$16.57</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/7.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Vegetable</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Melted cheese
-                                                                babybel chalk and cheese. Port-salut port-salut cream cheese
-                                                                when the cheese comes out everybody's happy cream cheese
-                                                                hard cheese cream cheese red leicester.</p>
-                                                            <h6 class="unit mt-1">1 Kg</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$12.68</span>
-                                                                <del>$14.69</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                                                <div class="product-box-3 theme-bg-white h-100">
-                                                    <div class="product-header">
-                                                        <div class="product-image">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <img src="{{asset('/')}}front/assets/images/cake/product/2.png"
-                                                                     class="img-fluid blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="product-header-top">
-                                                                <button class="btn wishlist-button close_button">
-                                                                    <i data-feather="x"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="product-footer">
-                                                        <div class="product-detail">
-                                                            <span class="span-name">Vegetable</span>
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
-                                                            </a>
-                                                            <p class="text-content mt-1 mb-2 product-content">Squirty cheese
-                                                                cottage cheese cheese strings. Red leicester paneer danish
-                                                                fontina queso lancashire when the cheese comes out
-                                                                everybody's happy cottage cheese paneer.</p>
-                                                            <h6 class="unit mt-1">250 ml</h6>
-                                                            <h5 class="price">
-                                                                <span class="theme-color">$08.02</span>
-                                                                <del>$15.15</del>
-                                                            </h5>
-                                                            <div class="add-to-cart-box mt-2">
-                                                                <button class="btn btn-add-cart addcart-button"
-                                                                        tabindex="0">Add
-                                                                    <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                                </button>
-                                                                <div class="cart_qty qty-box">
-                                                                    <div class="input-group">
-                                                                        <button type="button" class="qty-left-minus"
-                                                                                data-type="minus" data-field="">
-                                                                            <i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="form-control input-number qty-input"
-                                                                               type="text" name="quantity" value="0">
-                                                                        <button type="button" class="qty-right-plus"
-                                                                                data-type="plus" data-field="">
-                                                                            <i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <h3>{{count($pendingOrders)}}</h3>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -616,6 +213,7 @@
                                         </div>
 
                                         <div class="order-contain">
+                                            @foreach($customer->orders as $order)
                                             <div class="order-box dashboard-bg-box">
                                                 <div class="order-container">
                                                     <div class="order-icon">
@@ -623,307 +221,92 @@
                                                     </div>
 
                                                     <div class="order-detail">
-                                                        <h4>Delivers <span>Pending</span></h4>
-                                                        <h6 class="text-content">Gouda parmesan caerphilly mozzarella
-                                                            cottage cheese cauliflower cheese taleggio gouda.</h6>
+                                                        <?php
+                                                        $bgClass = '';
+                                                        switch ($order->order_status) {
+                                                            case 'pending':
+                                                                $bgClass = 'pending-order-bg';
+                                                                break;
+                                                            case 'confirmed':
+                                                                $bgClass = 'confirmed-order-bg';
+                                                                break;
+                                                            case 'proccessing':
+                                                                $bgClass = 'processing-order-bg';
+                                                                break;
+                                                            case 'shipped':
+                                                                $bgClass = 'shipped-order-bg';
+                                                                break;
+                                                            case 'delivered':
+                                                                $bgClass = 'success-order-bg';
+                                                                break;
+                                                            case 'returned':
+                                                                $bgClass = 'returned-order-bg';
+                                                                break;
+                                                            case 'cancel':
+                                                                $bgClass = 'cancel-order-bg';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                        <h4>{{ ucfirst($order->order_code) }} <span class="{{ $bgClass }}">{{ ucfirst($order->order_status) }}</span></h4>
                                                     </div>
                                                 </div>
 
                                                 <div class="product-order-detail">
-                                                    <a href="product-left-thumbnail.html" class="order-image">
-                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/1.png"
-                                                             class="blur-up lazyload" alt="">
-                                                    </a>
-
                                                     <div class="order-wrap">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <h3>Fantasy Crunchy Choco Chip Cookies</h3>
-                                                        </a>
-                                                        <p class="text-content">Cheddar dolcelatte gouda. Macaroni cheese
-                                                            cheese strings feta halloumi cottage cheese jarlsberg cheese
-                                                            triangles say cheese.</p>
                                                         <ul class="product-size">
                                                             <li>
                                                                 <div class="size-box">
-                                                                    <h6 class="text-content">Price : </h6>
-                                                                    <h5>$20.68</h5>
+                                                                    <h6 class="text-content">Order Code : </h6>
+                                                                    <h5>{{$order->order_code}}</h5>
                                                                 </div>
                                                             </li>
 
                                                             <li>
                                                                 <div class="size-box">
-                                                                    <h6 class="text-content">Rate : </h6>
-                                                                    <div class="product-rating ms-2">
-                                                                        <ul class="rating">
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star"></i>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Sold By : </h6>
-                                                                    <h5>Fresho</h5>
+                                                                    <h6 class="text-content">Sub Total : </h6>
+                                                                    <h5>&#2547; {{number_format($order->grand_total, 2)}}</h5>
                                                                 </div>
                                                             </li>
 
                                                             <li>
                                                                 <div class="size-box">
                                                                     <h6 class="text-content">Quantity : </h6>
-                                                                    <h5>250 G</h5>
+                                                                    <h5>{{$order->total_qty}}</h5>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Shipping Cost : </h6>
+                                                                    <h5>&#2547; {{number_format($order->shipping_cost,2)}}</h5>
+                                                                </div>
+                                                            </li>
+                                                            @if($order->coupon_code != null)
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Coupon Discount : </h6>
+                                                                    <h5>&#2547; {{number_format($order->coupon_discount)}}</h5>
+                                                                </div>
+                                                            </li>
+                                                            @endif
+                                                            <li>
+                                                                <div class="size-box">
+                                                                    <h6 class="text-content">Order Total : </h6>
+                                                                    <h5>&#2547; {{number_format($order->grand_total+$order->shipping_cost-$order->coupon_discount, 2)}}</h5>
                                                                 </div>
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="order-box dashboard-bg-box">
-                                                <div class="order-container">
-                                                    <div class="order-icon">
-                                                        <i data-feather="box"></i>
-                                                    </div>
-
-                                                    <div class="order-detail">
-                                                        <h4>Delivered <span class="success-bg">Success</span></h4>
-                                                        <h6 class="text-content">Cheese on toast cheesy grin cheesy grin
-                                                            cottage cheese caerphilly everyone loves cottage cheese the big
-                                                            cheese.</h6>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product-order-detail">
-                                                    <a href="product-left-thumbnail.html" class="order-image">
-                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/2.png" alt=""
-                                                             class="blur-up lazyload">
+                                                    <a href="javascript:void(0)" class="order-image" onclick="event.preventDefault(); document.getElementById('invoiceDownload').submit();">
+                                                        <img src="{{asset('/')}}front/assets/images/9205302.png" alt=""
+                                                             class="blur-up lazyload" style="width: 39%; float: inline-end;" title="Invoice Download">
                                                     </a>
-
-                                                    <div class="order-wrap">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <h3>Cold Brew Coffee Instant Coffee 50 g</h3>
-                                                        </a>
-                                                        <p class="text-content">Pecorino paneer port-salut when the cheese
-                                                            comes out everybody's happy red leicester mascarpone blue
-                                                            castello cauliflower cheese.</p>
-                                                        <ul class="product-size">
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Price : </h6>
-                                                                    <h5>$20.68</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Rate : </h6>
-                                                                    <div class="product-rating ms-2">
-                                                                        <ul class="rating">
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star"></i>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Sold By : </h6>
-                                                                    <h5>Fresho</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Quantity : </h6>
-                                                                    <h5>250 G</h5>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <form action="{{route('invoice.download', ['id' => $order->id])}}" method="POST" id="invoiceDownload">
+                                                        @csrf
+                                                    </form>
                                                 </div>
                                             </div>
+                                            @endforeach
 
-                                            <div class="order-box dashboard-bg-box">
-                                                <div class="order-container">
-                                                    <div class="order-icon">
-                                                        <i data-feather="box"></i>
-                                                    </div>
-
-                                                    <div class="order-detail">
-                                                        <h4>Delivere <span>Pending</span></h4>
-                                                        <h6 class="text-content">Cheesy grin boursin cheesy grin cheesecake
-                                                            blue castello cream cheese lancashire melted cheese.</h6>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product-order-detail">
-                                                    <a href="product-left-thumbnail.html" class="order-image">
-                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/3.png" alt=""
-                                                             class="blur-up lazyload">
-                                                    </a>
-
-                                                    <div class="order-wrap">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <h3>Peanut Butter Bite Premium Butter Cookies 600 g</h3>
-                                                        </a>
-                                                        <p class="text-content">Cow bavarian bergkase mascarpone paneer
-                                                            squirty cheese fromage frais cheese slices when the cheese comes
-                                                            out everybody's happy.</p>
-                                                        <ul class="product-size">
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Price : </h6>
-                                                                    <h5>$20.68</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Rate : </h6>
-                                                                    <div class="product-rating ms-2">
-                                                                        <ul class="rating">
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star"></i>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Sold By : </h6>
-                                                                    <h5>Fresho</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Quantity : </h6>
-                                                                    <h5>250 G</h5>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="order-box dashboard-bg-box">
-                                                <div class="order-container">
-                                                    <div class="order-icon">
-                                                        <i data-feather="box"></i>
-                                                    </div>
-
-                                                    <div class="order-detail">
-                                                        <h4>Delivered <span class="success-bg">Success</span></h4>
-                                                        <h6 class="text-content">Caerphilly port-salut parmesan pecorino
-                                                            croque monsieur dolcelatte melted cheese cheese and wine.</h6>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product-order-detail">
-                                                    <a href="product-left-thumbnail.html" class="order-image">
-                                                        <img src="{{asset('/')}}front/assets/images/vegetable/product/4.png"
-                                                             class="blur-up lazyload" alt="">
-                                                    </a>
-
-                                                    <div class="order-wrap">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <h3>SnackAmor Combo Pack of Jowar Stick and Jowar Chips</h3>
-                                                        </a>
-                                                        <p class="text-content">The big cheese cream cheese pepper jack
-                                                            cheese slices danish fontina everyone loves cheese on toast
-                                                            bavarian bergkase.</p>
-                                                        <ul class="product-size">
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Price : </h6>
-                                                                    <h5>$20.68</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Rate : </h6>
-                                                                    <div class="product-rating ms-2">
-                                                                        <ul class="rating">
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star" class="fill"></i>
-                                                                            </li>
-                                                                            <li>
-                                                                                <i data-feather="star"></i>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Sold By : </h6>
-                                                                    <h5>Fresho</h5>
-                                                                </div>
-                                                            </li>
-
-                                                            <li>
-                                                                <div class="size-box">
-                                                                    <h6 class="text-content">Quantity : </h6>
-                                                                    <h5>250 G</h5>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1086,510 +469,6 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="pills-download" role="tabpanel">
-                                    <div class="dashboard-download">
-                                        <div class="title">
-                                            <h2>{{translate('My Download')}}</h2>
-                                            <span class="title-leaf">
-                                        </span>
-                                        </div>
-
-                                        <div class="download-detail dashboard-bg-box">
-
-                                            <div class="tab-content" id="pills-tabContent">
-                                                <div class="tab-pane fade show active" id="pills-data" role="tabpanel">
-                                                    <div class="download-table">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
-                                                                        and
-                                                                        Flexible. OS 2.0</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Boho - React JS Admin Dashboard Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="pills-title">
-                                                    <div class="download-table">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
-                                                                        and
-                                                                        Flexible. OS 2.0</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Boho - React JS Admin Dashboard Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="pills-rating">
-                                                    <div class="download-table">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
-                                                                        and
-                                                                        Flexible. OS 2.0</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Boho - React JS Admin Dashboard Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="pills-recent">
-                                                    <div class="download-table">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/1.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Sheltos - Real Estate Angular 17 Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/2.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Oslo - Multipurpose Shopify Theme. Fast, Clean,
-                                                                        and
-                                                                        Flexible. OS 2.0</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>
-                                                                        <img src="{{asset('/')}}front/assets/images/theme-icon/3.png"
-                                                                             class="img-fluid" alt="">
-                                                                    </td>
-                                                                    <td>Boho - React JS Admin Dashboard Template</td>
-                                                                    <td>
-                                                                        <div class="dropdown download-dropdown">
-                                                                            <button class="btn dropdown-toggle"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="dropdown">Download</button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">All files
-                                                                                        & documentation</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (PDF)</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a class="dropdown-item"
-                                                                                       href="#">License
-                                                                                        certificate & purchase code
-                                                                                        (text)</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

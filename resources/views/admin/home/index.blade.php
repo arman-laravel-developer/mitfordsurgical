@@ -6,6 +6,11 @@ Dashboard | {{env('APP_NAME')}}
 
 
 @section('body')
+    <style>
+        .table>:not(caption)>*>* {
+            padding: 0!important;
+        }
+    </style>
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -116,6 +121,17 @@ Dashboard | {{env('APP_NAME')}}
         </div> <!-- end col-->
     </div>
     <!-- end row-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-white bg-info overflow-hidden">
+                <div class="card-body">
+                    <div class="toll-free-box text-center">
+                        <h4> <i class="mdi mdi-deskphone"></i> Total Sales Amount : &#2547; {{number_format($totalSaleAmount,2)}}</h4>
+                    </div>
+                </div> <!-- end card-body-->
+            </div>
+        </div>
+    </div>
     <div class="row d-flex">
         <div class="col-md-6 d-flex">
             <div class="card flex-grow-1">
@@ -158,14 +174,14 @@ Dashboard | {{env('APP_NAME')}}
         <div class="col-md-6 d-flex">
             <div class="card flex-grow-1">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="header-title mb-0 pt-1">Users</h4>
+                    <h4 class="header-title mb-0 pt-1">Others</h4>
                 </div>
-                <div class="card-body pt-0">
+                <div class="card-body pt-1">
                     <div class="table-responsive">
                         <table class="table table-centered table-nowrap mb-0 justify-content-between">
                             <thead>
                             <tr>
-                                <th scope="col">User Type</th>
+                                <th scope="col">Type</th>
                                 <th scope="col" class="text-end">Count</th>
                             </tr>
                             </thead>
@@ -195,7 +211,7 @@ Dashboard | {{env('APP_NAME')}}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="text-danger">
                                     <div class="d-flex align-items-center">
                                         <div class="flex-grow-1">
                                             Total Subscriber
@@ -204,6 +220,30 @@ Dashboard | {{env('APP_NAME')}}
                                 </td>
                                 <td class="text-end">
                                     <span class="text-danger fw-semibold">0</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{$totalCategory > 0 ? 'text-success' : 'text-danger'}}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            Total Category
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <span class="{{$totalCategory > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalCategory}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{$totalBrand > 0 ? 'text-success' : 'text-danger'}}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            Total Brand
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <span class="{{$totalBrand > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalBrand}}</span>
                                 </td>
                             </tr>
                             </tbody>

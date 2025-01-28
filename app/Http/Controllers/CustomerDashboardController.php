@@ -13,7 +13,8 @@ class CustomerDashboardController extends Controller
     public function index()
     {
         $customer = Customer::find(Session::get('customer_id'));
-        return view('front.customer.dashboard', compact('customer'));
+        $pendingOrders = Order::where('customer_id', $customer->id)->where('order_status', 'pending')->get();
+        return view('front.customer.dashboard', compact('customer', 'pendingOrders'));
     }
 
     public function logout()
