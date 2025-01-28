@@ -140,5 +140,87 @@ Dashboard | {{env('APP_NAME')}}
         </div> <!-- end col-->
     </div>
     <!-- end row-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="header-title mb-0">Accounts</h4>
+                    <div>
+                        <select id="period-select" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option value="today" selected>Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="last_week">Last Week</option>
+                            <option value="last_month">Last Month</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">Payment Gateway</th>
+                                <th scope="col" class="text-end">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody id="totals-table-body">
+                            <!-- Data will be injected here via AJAX -->
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th scope="col" class="text-success"><b>Total</b></th>
+                                <th scope="col" class="text-end text-success" id="totals-grand-total">
+                                    <b>&#2547; 0.00</b>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('period-select').addEventListener('change', function () {
+            const selectedPeriod = this.value;
+
+            // Use the named route to fetch data dynamically
+            const url = "{{ route('credit.data') }}?period=" + selectedPeriod;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = '';
+                    let grandTotal = 0;
+
+                    // Generate table rows dynamically
+                    for (const [method, total] of Object.entries(data)) {
+                        grandTotal += total;
+                        const methodName = method === 'cod' ? 'In Cash' : method.charAt(0).toUpperCase() + method.slice(1);
+                        const amountClass = total > 0 ? 'text-success' : 'text-danger';
+                        tableBody += `
+                        <tr>
+                            <td>${methodName}</td>
+                            <td class="text-end">
+                                <span class="${amountClass} fw-semibold">
+                                    &#2547;${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                    }
+
+                    // Update the table body and total
+                    document.getElementById('totals-table-body').innerHTML = tableBody;
+                    document.getElementById('totals-grand-total').innerHTML = `<b>&#2547; ${grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>`;
+                })
+                .catch(error => console.error('Error fetching credit data:', error));
+        });
+
+        // Trigger change event on page load to fetch "Today" data by default
+        document.getElementById('period-select').dispatchEvent(new Event('change'));
+    </script>
 
 @endsection

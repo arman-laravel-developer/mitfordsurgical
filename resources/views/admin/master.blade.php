@@ -884,7 +884,7 @@
 @include('sweetalert::alert')
 @include('flash-toastr::message')
 @php
-    $excludedRoutes = ['order.show', 'report.category-wise-stock']; // Array of route names
+    $excludedRoutes = ['order.show', 'report.category-wise-stock', 'dashboard']; // Array of route names
 @endphp
 
 @if(!in_array(Route::currentRouteName(), $excludedRoutes))

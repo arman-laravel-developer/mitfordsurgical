@@ -78,9 +78,26 @@
                                 <button type="button" onclick="event.preventDefault(); document.getElementById('filterForm').submit();" class="btn btn-success mb-2 me-1">
                                     <i class="mdi mdi-filter"></i>
                                 </button>
-                                <a href="{{route('report.sales-export')}}" type="button" class="btn btn-light mb-2">Export</a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle mb-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Export
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('report.sales-export', ['type' => 'pdf'])}}">
+                                                Export as PDF
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('report.sales-export', ['type' => 'excel'])}}">
+                                                Export as Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div><!-- end col-->
+                        </div>
+                        <!-- end col -->
                     </div>
 
                     <div class="table-responsive">

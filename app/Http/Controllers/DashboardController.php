@@ -6,10 +6,12 @@ use App\Models\ContactForm;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Seller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use Mail;
 use Session;
+use function Nette\Utils\match;
 use function Ramsey\Collection\offer;
 
 class DashboardController extends Controller
@@ -33,8 +35,43 @@ class DashboardController extends Controller
             'returnedOrder',
             'allOrder',
             'proccessingOrder'
-
         ));
+    }
+
+    public function getCreditData(Request $request)
+    {
+        Carbon::setLocale('en');
+        $timezone = 'Asia/Dhaka';
+
+        $paymentMethods = ['bkash(01709925764)', 'nagad(01709925764)', 'bank', 'cod'];
+
+        $totals = [];
+
+        $startDate = match ($request->period) {
+        'yesterday' => Carbon::yesterday($timezone)->startOfDay(),
+        'last_week' => Carbon::now($timezone)->subDays(7)->startOfDay(),
+        'last_month' => Carbon::now($timezone)->subDays(30)->startOfDay(),
+        default => Carbon::today($timezone)->startOfDay(),
+        };
+
+        $endDate = match ($request->period) {
+        'yesterday' => Carbon::yesterday($timezone)->endOfDay(),
+            default => Carbon::now($timezone)->endOfDay(),
+        };
+
+        foreach ($paymentMethods as $method) {
+            $methodName = preg_replace('/\(.*/', '', $method);
+
+            $totals[$method] = Order::where('order_status', 'delivered')
+                ->where('payment_method', $methodName)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get()
+                ->reduce(function ($carry, $order) {
+                    return $carry + ($order->grand_total + $order->shipping_cost - $order->coupon_discount);
+                }, 0);
+        }
+
+        return response()->json($totals);
     }
 
     public function testMail(Request $request)

@@ -25,6 +25,7 @@ use App\Http\Controllers\ReportAnalysisController;
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/credit-data', [DashboardController::class, 'getCreditData'])->name('credit.data');
         Route::get('/seller-login-admin/{id}', [DashboardController::class, 'loginAsSeller'])->name('seller.login-admin');
         Route::get('migrate', function() {
             $exitCode = Artisan::call('migrate');

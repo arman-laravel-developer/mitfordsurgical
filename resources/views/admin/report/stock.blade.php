@@ -38,7 +38,7 @@
                             @csrf
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
-                                    <select name="category_id" id="" class="form-control @error('category_id') is-invalid @enderror" required>
+                                    <select name="category_id" id="" class="form-control @error('category_id') is-invalid @enderror" onchange="this.form.submit()" required>
                                         @php echo $categories_dropdown @endphp
                                     </select>
                                     @error('category_id')
@@ -47,7 +47,24 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-info">Filter</button>
-                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ route('export.products') }}'">Export</button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Export
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('export.products',['type' => 'pdf']) }}">
+                                                    Export as PDF
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('export.products', ['type' => 'excel']) }}">
+                                                    Export as Excel
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
                             </div>
                         </form>

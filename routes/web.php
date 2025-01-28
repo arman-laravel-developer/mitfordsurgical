@@ -65,7 +65,7 @@ Route::get('/cart-dropdown', [CartController::class, 'dropdown'])->name('cart.dr
 Route::delete('/cart-remove', [CartController::class, 'cartRemove'])->name('cart.remove');
 Route::post('/update-cart', [CartController::class, 'updateQuantity'])->name('cart.update');
 
-Route::get('/invoice-download/{id}', [CheckoutController::class, 'index'])->name('invoice.download');
+//Route::get('/invoice-download/{id}', [CheckoutController::class, 'index'])->name('invoice.download');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/fetch-customer-data', [CustomerController::class, 'fetchCustomerData'])->name('get.customer-data');
 

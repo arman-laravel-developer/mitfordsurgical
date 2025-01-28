@@ -89,14 +89,46 @@
                                     <i class="mdi mdi-filter"></i>
                                 </button>
                                 <a href="{{route('report.sales')}}" class="btn btn-danger mb-2">reset</a>
-                                <a href="#" type="button" class="btn btn-light mb-2" onclick="event.preventDefault(); document.getElementById('exportForm').submit();">Export</a>
-                                <form action="{{route('report.filtered-sales-export')}}" method="GET" id="exportForm">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle mb-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Export
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <!-- Export as PDF -->
+                                        <li>
+                                            <a class="dropdown-item" href="#" onclick="exportReport('pdf')">
+                                                Export as PDF
+                                            </a>
+                                        </li>
+                                        <!-- Export as Excel -->
+                                        <li>
+                                            <a class="dropdown-item" href="#" onclick="exportReport('excel')">
+                                                Export as Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Hidden Form for Exporting -->
+                                <form action="{{ route('report.filtered-sales-export') }}" method="GET" id="exportForm">
                                     @csrf
-                                    <input type="hidden" name="order_status" value="{{$order_status}}">
-                                    <input type="hidden" name="payment_method" value="{{request('payment_method')}}">
-                                    <input type="hidden" name="payment_status" value="{{$payment_status}}">
-                                    <input type="hidden" name="date_range" value="{{$selectedDate}}">
+                                    <input type="hidden" name="type" id="exportType" value=""> <!-- PDF or Excel -->
+                                    <input type="hidden" name="order_status" value="{{ $order_status }}">
+                                    <input type="hidden" name="payment_method" value="{{ request('payment_method') }}">
+                                    <input type="hidden" name="payment_status" value="{{ $payment_status }}">
+                                    <input type="hidden" name="date_range" value="{{ $selectedDate }}">
                                 </form>
+
+                                <script>
+                                    /**
+                                     * Set the export type (PDF or Excel) and submit the form.
+                                     */
+                                    function exportReport(type) {
+                                        event.preventDefault();
+                                        document.getElementById('exportType').value = type;
+                                        document.getElementById('exportForm').submit();
+                                    }
+                                </script>
                             </div>
                         </div><!-- end col-->
                     </div>
@@ -112,7 +144,7 @@
 {{--                                    </div>--}}
 {{--                                </th>--}}
                                 <th class="all">Order Code</th>
-                                <th>Num of Qty</th>
+                                <th>Qty</th>
                                 <th>Order Total</th>
                                 <th>Order Date</th>
                                 <th>Order Status</th>

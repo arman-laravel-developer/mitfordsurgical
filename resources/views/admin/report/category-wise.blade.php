@@ -38,7 +38,7 @@
                             @csrf
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
-                                    <select name="category_id" id="" class="form-control @error('category_id') is-invalid @enderror">
+                                    <select name="category_id" id="" onchange="this.form.submit()" class="form-control @error('category_id') is-invalid @enderror">
                                         @php echo $categories_dropdown @endphp
                                     </select>
                                     @error('category_id')
@@ -48,11 +48,38 @@
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-info">Filter</button>
                                     <a href="{{route('report.products-stock')}}" class="btn btn-danger">Reset</a>
-                                    <button type="button" onclick="event.preventDefault(); document.getElementById('categoryWise').submit();" class="btn btn-primary">Export</button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Export
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="#" onclick="exportReport('pdf')">
+                                                    Export as PDF
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#" onclick="exportReport('excel')">
+                                                    Export as Excel
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <script>
+                                        /**
+                                         * Set the export type (PDF or Excel) and submit the form.
+                                         */
+                                        function exportReport(type) {
+                                            event.preventDefault();
+                                            document.getElementById('exportType').value = type;
+                                            document.getElementById('categoryWise').submit();
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </form>
                         <form action="{{ route('export.products-category-wise') }}" method="GET" id="categoryWise">
+                            <input type="hidden" name="type" id="exportType" value="">
                             <input type="hidden" name="category_id" value="{{ $category->id }}">
                         </form>
                     </div>
