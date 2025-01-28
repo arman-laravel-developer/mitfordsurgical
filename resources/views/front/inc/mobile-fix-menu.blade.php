@@ -30,7 +30,7 @@
             </a>
         </li>
 
-        <li style="position: relative;" class="mobile-cart">
+        <li style="position: relative;" class="mobile-cart cart-fly-mobile">
             <a href="javascript:void(0)" onclick="openCart()" style="position: relative;">
                 <i data-feather="shopping-cart" style="color: white;"></i>
                 <span>{{translate('Cart')}}</span>

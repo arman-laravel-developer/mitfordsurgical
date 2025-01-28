@@ -5,7 +5,7 @@
      if ($(window).width() > 768) {
          var cart = $('.shopping-summary');
      } else {
-         var cart = $('.cart-mobile');
+         var cart = $('.cart-fly-mobile');
      }
      var imgtodrag = $(this).parents('.product-box-4, .deal-box').find(".product-image img, .category-image img").eq(0);
      if (imgtodrag) {
