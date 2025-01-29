@@ -73,7 +73,7 @@
         <!-- Category Section Start -->
         <section class="section-b-space" style="padding-bottom: calc(8px + 20*(100vw - 320px)/1600);">
             <div class="container">
-                <div class="title" style="margin-bottom: 0!important;">
+                <div class="title" style="margin-bottom: 1%!important;">
                     <h2>{{translate('Popular Categories')}}</h2>
                 </div>
                 <div class="row">
