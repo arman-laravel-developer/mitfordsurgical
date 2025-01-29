@@ -78,7 +78,7 @@
                                 </td>
                                 <td>
                                     <a href="{{route('product.edit', ['id' => $product->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-primary btn-sm" title="Edit">
-                                        <i class="fa fa-eye" ></i>
+                                        <i class="fa fa-edit" ></i>
                                     </a>
                                     <a href="javascript:void(0)" onclick="confirmDelete({{$product->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
                                         <i class="fa fa-trash"></i>

@@ -47,12 +47,12 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$size->name}}</td>
                             <td>
-                                <button value="{{$size->id}}" class="btn btn-success editBtn btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <button value="{{$size->id}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-success editBtn btn-sm" title="Edit">
+                                    <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" onclick="confirmDelete({{$size->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                    <i class="ri-chat-delete-fill"></i>
-                                </button>
+                                <a href="javascript:void(0)" onclick="confirmDelete({{$size->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
                                 <form action="{{route('size.delete', ['id' => $size->id])}}" method="POST" id="sizeDeleteForm{{$size->id}}">
                                     @csrf

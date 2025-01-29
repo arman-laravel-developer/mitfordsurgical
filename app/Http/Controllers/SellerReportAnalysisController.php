@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\FilteredSalesReportExport;
-use App\Exports\ProductsByCategoryExport;
-use App\Exports\ProductsExport;
-use App\Exports\SalesReportExport;
+use App\Exports\SellerProductsByCategoryExport;
+use App\Exports\SellerProductsExport;
+use App\Exports\SellerSalesReportExport;
+use App\Exports\FilteredSellerSalesReportExport;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -13,27 +13,32 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Session;
 
-class ReportAnalysisController extends Controller
+class SellerReportAnalysisController extends Controller
 {
     public function index()
     {
-        $paymentMethods = Order::select('payment_method')
-            ->get()
-            ->groupBy('payment_method');
-        $orders = Order::latest()->get();
-        $subTotal = Order::latest()->sum('grand_total');
-        $shippingTotal = Order::latest()->sum('shipping_cost');
-        $couponTotal = Order::latest()->sum('coupon_discount');
+        // Get the seller_id from session
+        $sellerId = Session::get('seller_id');
+
+// Fetch orders where products' user_id matches the seller_id
+        $orders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->get();
+        $subTotal = $orders->sum('grand_total');
+//        dd($subTotal);
+        $shippingTotal = $orders->sum('shipping_cost');
+        $couponTotal = $orders->sum('coupon_discount');
         $grandTotal = $subTotal+$shippingTotal - $couponTotal;
-        return view('admin.report.sales', compact('orders', 'grandTotal', 'paymentMethods'));
+        return view('front.seller.report.sales', compact('orders', 'grandTotal'));
     }
 
     public function salesReportExport(Request $request)
     {
         if ($request->type =='excel')
         {
-            return Excel::download(new SalesReportExport(), 'sales-report.xlsx');
+            return Excel::download(new SellerSalesReportExport(), 'sales-report.xlsx');
         }
         else
         {
@@ -43,8 +48,11 @@ class ReportAnalysisController extends Controller
                 'autoLangToFont' => true,
                 'default_font' => 'nikosh',
             ]);
+            $sellerId = Session::get('seller_id');
             // Fetch order and calculate the total
-            $orders = Order::select('order_code', 'total_qty', 'shipping_cost', 'coupon_discount', 'payment_method', 'grand_total', 'created_at', 'order_status', 'payment_status')
+            $orders = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+                $query->where('user_id', $sellerId);
+            })->select('order_code', 'total_qty', 'shipping_cost', 'coupon_discount', 'payment_method', 'grand_total', 'created_at', 'order_status', 'payment_status')
                 ->get()
                 ->map(function ($order) {
                     return [
@@ -83,23 +91,15 @@ class ReportAnalysisController extends Controller
     public function salesWiseReport(Request $request)
     {
         $order_status = $request->input('order_status');
-        $payment_method = $request->input('payment_method');
-        $payment_status = $request->input('payment_status');
         $created_at = $request->input('date_range');
         $selectedDate = $request->input('date_range'); // Get the selected date from the form
-
-        $query = Order::query();
+        $sellerId = Session::get('seller_id');
+        $query = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        });
 
         if ($order_status) {
             $query->where('order_status', $order_status);
-        }
-
-        if ($payment_method) {
-            $query->where('payment_method', $payment_method);
-        }
-
-        if ($payment_status) {
-            $query->where('payment_status', $payment_status);
         }
 
         if ($created_at) {
@@ -115,20 +115,15 @@ class ReportAnalysisController extends Controller
         $shippingTotal = $query->sum('shipping_cost');
         $couponTotal = $query->sum('coupon_discount');
         $grandTotal = $subTotal+$shippingTotal-$couponTotal;
-        $paymentMethods = Order::select('payment_method')
-            ->get()
-            ->groupBy('payment_method');
 
 
-        return view('admin.report.sales-wise', compact('orders', 'paymentMethods','order_status', 'payment_status', 'grandTotal', 'selectedDate'));
+        return view('front.seller.report.sales-wise', compact('orders','order_status', 'grandTotal', 'selectedDate'));
     }
 
     public function FilteredSalesReportExport(Request $request)
     {
         // Get filters from request
         $order_status = $request->input('order_status');
-        $payment_method = $request->input('payment_method');
-        $payment_status = $request->input('payment_status');
         $created_at = $request->input('date_range');
         $dates = explode(' - ', $created_at);
         $start_date = $dates[0] ?? null;
@@ -136,15 +131,15 @@ class ReportAnalysisController extends Controller
 
         if ($request->type == 'excel')
         {
-            return Excel::download(new FilteredSalesReportExport($order_status,$payment_method, $payment_status, $start_date, $end_date), 'filtered-sales-report.xlsx');
+            return Excel::download(new FilteredSellerSalesReportExport($order_status, $start_date, $end_date), 'filtered-sales-report.xlsx');
         }
         else
         {
-            return $this->downloadSalesReportPDF($order_status, $payment_method, $payment_status, $start_date, $end_date);
+            return $this->downloadSalesReportPDF($order_status, $start_date, $end_date);
         }
     }
 
-    public function downloadSalesReportPDF($order_status, $payment_method, $payment_status, $start_date, $end_date)
+    public function downloadSalesReportPDF($order_status, $start_date, $end_date)
     {
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'UTF-8',
@@ -155,24 +150,18 @@ class ReportAnalysisController extends Controller
 
         // Initialize filters
         $order_status = $order_status !== 'null' ? $order_status : null;
-        $payment_method = $payment_method !== 'null' ? $payment_method : null;
-        $payment_status = $payment_status !== 'null' ? $payment_status : null;
         $start_date = $start_date !== 'null' ? $start_date : null;
         $end_date = $end_date !== 'null' ? $end_date : null;
 
         // Build query
-        $query = Order::query();
+        $sellerId = Session::get('seller_id');
+        // Fetch order and calculate the total
+        $query = Order::whereHas('orderDetails.product', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        });
 
         if ($order_status) {
             $query->where('order_status', $order_status);
-        }
-
-        if ($payment_method) {
-            $query->where('payment_method', strtolower($payment_method));
-        }
-
-        if ($payment_status) {
-            $query->where('payment_status', $payment_status);
         }
 
         if ($start_date && $end_date) {
@@ -209,12 +198,10 @@ class ReportAnalysisController extends Controller
         ]);
 
         // Generate the PDF
-        $pdf = view('admin.report.sales-filtered-pdf', [
+        $pdf = view('front.seller.report.sales-filtered-pdf', [
             'orders' => $orders,
             'filters' => [
                 'order_status' => $order_status,
-                'payment_method' => $payment_method,
-                'payment_status' => $payment_status,
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('d/m/Y') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('d/m/Y') : null,
             ]
@@ -224,7 +211,6 @@ class ReportAnalysisController extends Controller
         $mpdf->Output('sales-report' . '.pdf', \Mpdf\Output\Destination::DOWNLOAD);
         // Pass data to the view
     }
-
 
     public function stock()
     {
@@ -239,16 +225,16 @@ class ReportAnalysisController extends Controller
                 $categories_dropdown .= "<option value='".$sub_cat->id."'>&nbsp;&nbsp;---".$sub_cat->category_name." </option>";
             }
         }
-
-        $products = Product::where('status', 1)->get();
-        return view('admin.report.stock', compact('categories', 'categories_dropdown', 'products'));
+        $sellerId = Session::get('seller_id');
+        $products = Product::where('user_id', $sellerId)->get();
+        return view('front.seller.report.stock', compact('categories', 'categories_dropdown', 'products'));
     }
 
     public function exportProducts(Request $request)
     {
         if ($request->type == 'excel')
         {
-            return Excel::download(new ProductsExport(), 'products-stock.xlsx');
+            return Excel::download(new SellerProductsExport(), 'products-stock.xlsx');
         }
         else
         {
@@ -259,7 +245,8 @@ class ReportAnalysisController extends Controller
                 'default_font' => 'nikosh',
             ]);
             // Fetch product data
-            $products = Product::select('name', 'num_of_sale', 'stock', 'sell_price')
+            $sellerId = Session::get('seller_id');
+            $products = Product::where('user_id', $sellerId)->select('name', 'num_of_sale', 'stock', 'sell_price')
                 ->get()
                 ->map(function($product) {
                     return [
@@ -319,16 +306,16 @@ class ReportAnalysisController extends Controller
         $category = Category::with('descendants')->find($request->category_id);
         $categoryIds = $category->descendants->pluck('id')->toArray();
         $categoryIds[] = $request->category_id;
-        $products = Product::whereIn('category_id', $categoryIds)->where('status', 1)->get();
-        return view('admin.report.category-wise', compact('products', 'categories_dropdown', 'category'));
+        $sellerId = Session::get('seller_id');
+        $products = Product::whereIn('category_id', $categoryIds)->where('status', 1)->where('user_id', $sellerId)->get();
+        return view('front.seller.report.category-wise-stock', compact('products', 'categories_dropdown', 'category'));
     }
-
 
     public function exportProductsCategoryWise(Request $request)
     {
         if ($request->type == 'excel')
         {
-            return Excel::download(new ProductsByCategoryExport($request->category_id), 'category-wise-products.xlsx');
+            return Excel::download(new SellerProductsByCategoryExport($request->category_id), 'category-wise-products.xlsx');
         }
         else
         {
@@ -354,9 +341,10 @@ class ReportAnalysisController extends Controller
         // Get all category IDs (including descendants)
         $categoryIds = $category->descendants->pluck('id')->toArray();
         $categoryIds[] = $category_id;
-
+        $sellerId = Session::get('seller_id');
         // Fetch products for the category and its descendants
         $products = Product::whereIn('category_id', $categoryIds)
+            ->where('user_id',$sellerId)
             ->where('status', 1) // Assuming 'status' is the field for active products
             ->get()
             ->map(function ($product) {

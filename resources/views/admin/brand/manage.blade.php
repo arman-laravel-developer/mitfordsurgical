@@ -49,12 +49,12 @@
                             <td>{{$brand->name}}</td>
                             <td><img src="{{asset($brand->logo)}}" style="height: 50px;" alt=""></td>
                             <td>
-                                <a href="{{route('brand.edit', ['id' => $brand->id,'lang' => env('DEFAULT_LANGUAGE')])}}" class="btn btn-success btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <a href="{{route('brand.edit', ['id' => $brand->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-primary btn-sm" title="Edit">
+                                    <i class="fa fa-edit" ></i>
                                 </a>
-                                <button type="button" onclick="confirmDelete({{$brand->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                    <i class="ri-chat-delete-fill"></i>
-                                </button>
+                                <a href="javascript:void(0)" onclick="confirmDelete({{$brand->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
                                 <form action="{{route('brand.delete', ['id' => $brand->id])}}" method="POST" id="brandDeleteForm{{$brand->id}}">
                                     @csrf

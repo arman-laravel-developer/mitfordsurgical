@@ -248,16 +248,20 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link d-flex justify-content-between align-items-center collapsed"
-                                    data-bs-toggle="collapse" data-bs-target="#report-submenu" aria-expanded="false"
-                                    aria-controls="report-submenu">
+                            <button class="nav-link @if(Route::is(['seller.report.sales', 'seller.report.products-stock'])) active @endif d-flex justify-content-between align-items-center @if(Route::is(['seller.report.sales', 'seller.report.products-stock']))  @else collapsed @endif"
+                                    data-bs-toggle="collapse" data-bs-target="#report-submenu" aria-expanded="@if(Route::is(['seller.report.sales', 'seller.report.products-stock'])) true @else false @endif"
+                                    aria-controls="report-submenu" type="button" role="tab">
                                 <span><i data-feather="calendar"></i>Reports</span>
                                 <i class="fa fa-chevron-right rotate-icon"></i>
                             </button>
-                            <div class="collapse" id="report-submenu">
+                            <div class="collapse @if(Route::is(['seller.report.sales', 'seller.report.products-stock'])) show @endif" id="report-submenu">
                                 <ul class="nav flex-column ms-3">
-                                    <li class="libottom"><a href="#order1" class="nav-link libottom">Order 1</a></li>
-                                    <li class="libottom"><a href="#order2" class="nav-link libottom">Order 2</a></li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.report.sales')}}" class="nav-link @if(Route::is('seller.report.sales')) active @endif libottom">Sales Report Analysis</a>
+                                    </li>
+                                    <li class="libottom">
+                                        <a href="{{route('seller.report.products-stock')}}" class="nav-link @if(Route::is('seller.report.products-stock')) active @endif libottom">Product Stock Analysis</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

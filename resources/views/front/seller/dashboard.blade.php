@@ -151,6 +151,16 @@
             },
             labels: ['Recent Order', 'Complete Order', 'Total Orders'],
             colors: ['#4a5568', '#0da487', '#bade17'],
+            tooltip: {
+                enabled: true,
+                fillSeriesColor: false,
+                theme: "dark",
+                custom: function({ seriesIndex, w }) {
+                    return `<div style="background: ${w.config.colors[seriesIndex]}; color: #fff; padding: 5px 10px; border-radius: 5px;">
+                ${w.globals.labels[seriesIndex]}: ${w.globals.series[seriesIndex]}
+            </div>`;
+                }
+            },
             responsive: [{
                 breakpoint: 1430,
                 options: {

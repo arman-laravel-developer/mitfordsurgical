@@ -62,11 +62,11 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{route('seller.login-admin', ['id' => $seller->id])}}" class="btn btn-success btn-sm" title="Login as a seller">
-                                        <i class="ri-key-fill"></i>
+                                    <a href="{{route('seller.login-admin', ['id' => $seller->id])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-success btn-sm" title="Login as a seller">
+                                        <i class="fa fa-key"></i>
                                     </a>
-                                    <a href="{{route('seller.detail', ['id' => $seller->id])}}" class="btn btn-primary btn-sm" title="Seller Verification Info">
-                                        <i class="ri-eye-fill"></i>
+                                    <a href="{{route('seller.detail', ['id' => $seller->id])}}" style="background-color: #07ffea!important; border-color: #07ffea!important;" class="btn btn-primary btn-sm" title="Seller Verification Info">
+                                        <i class="fa fa-eye"></i>
                                     </a>
 
                                 @if ($seller->status == 1) <!-- Current status is Unbanned -->
@@ -74,6 +74,7 @@
                                         type="button"
                                         onclick="changeSellerStatus({{ $seller->id }}, 2);"
                                         class="btn btn-danger btn-sm"
+                                        style="background-color: #ff0000!important; border-color: #ff0000!important;"
                                         title="Ban Seller">
                                         <i class="fa fa-ban"></i>
                                     </button>
@@ -82,6 +83,7 @@
                                         type="button"
                                         onclick="changeSellerStatus({{ $seller->id }}, 1);"
                                         class="btn btn-success btn-sm"
+                                        style="background-color: #54ff0d!important; border-color: #54ff0d!important;"
                                         title="Unban Seller">
                                         <i class="fa fa-check"></i>
                                     </button>

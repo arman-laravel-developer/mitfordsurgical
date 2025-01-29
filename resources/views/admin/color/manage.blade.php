@@ -52,12 +52,12 @@
                                 <p>{{$color->color_code}}</p>
                             </td>
                             <td>
-                                <button value="{{$color->id}}" class="btn btn-success editBtn btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <button value="{{$color->id}}" class="btn btn-success editBtn btn-sm" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" title="Edit">
+                                    <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" onclick="confirmDelete({{$color->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                    <i class="ri-chat-delete-fill"></i>
-                                </button>
+                                <a href="javascript:void(0)" onclick="confirmDelete({{$color->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
                                 <form action="{{route('color.delete', ['id' => $color->id])}}" method="POST" id="colorDeleteForm{{$color->id}}">
                                     @csrf

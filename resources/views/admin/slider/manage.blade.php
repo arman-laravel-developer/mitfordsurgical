@@ -59,8 +59,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{route('slider.edit', ['id' => $slider->id])}}" class="btn btn-success" title="Edit"><i class="uil-edit-alt"></i></a>
-                                            <a href="{{route('slider.delete', ['id' => $slider->id])}}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger" title="delete"><i class="uil-trash"></i></a>
+                                            <a href="{{route('slider.edit', ['id' => $slider->id])}}" class="btn btn-success" style="background-color: #5e30c1!important;border-color: #5e30c1!important;" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="{{route('slider.delete', ['id' => $slider->id])}}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger" style="background-color: red!important;border-color: red!important;" title="delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

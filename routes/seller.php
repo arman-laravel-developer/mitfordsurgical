@@ -6,6 +6,7 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerProductController;
 use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ManageShopController;
+use App\Http\Controllers\SellerReportAnalysisController;
 
 //seller login-registraion
 
@@ -32,6 +33,18 @@ Route::group(['prefix' => 'seller', 'middleware' =>  ['seller.logout','seller.ve
     Route::post('/product/update/{id}', [SellerProductController::class, 'update'])->name('seller-product.update');
     Route::post('/product/delete/{id}', [SellerProductController::class, 'delete'])->name('seller-product.delete');
 
+    Route::group(['prefix' => 'report', 'as' => 'seller.'], function(){
+        Route::get('/sales-report', [SellerReportAnalysisController::class, 'index'])->name('report.sales');
+        Route::get('/sales-report-wise', [SellerReportAnalysisController::class, 'salesWiseReport'])->name('report.sales-wise');
+
+        Route::get('/sales-report-export', [SellerReportAnalysisController::class, 'salesReportExport'])->name('report.sales-export');
+        Route::get('/filtered-sales-report-export', [SellerReportAnalysisController::class, 'FilteredSalesReportExport'])->name('report.filtered-sales-export');
+
+        Route::get('/products-stock-analysis', [SellerReportAnalysisController::class, 'stock'])->name('report.products-stock');
+        Route::get('/export-products-stock', [SellerReportAnalysisController::class, 'exportProducts'])->name('export.products');
+        Route::get('/export-products-stock-category-wise', [SellerReportAnalysisController::class, 'exportProductsCategoryWise'])->name('export.products-category-wise');
+        Route::post('/category-wise-stock', [SellerReportAnalysisController::class, 'categoryWiseStock'])->name('report.category-wise-stock');
+    });
     Route::group(['prefix' => 'order', 'as' => 'seller.'], function(){
         Route::get('/seller/orders/{sellerId}', [SellerOrderController::class, 'getOrdersBySeller'])->name('orders.bySeller');
         Route::get('/all-order', [SellerOrderController::class, 'index'])->name('order.manage');

@@ -51,12 +51,12 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{route('category.edit', ['id' => $category->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" class="btn btn-success btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <a href="{{route('category.edit', ['id' => $category->id, 'lang' => env('DEFAULT_LANGUAGE')])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-primary btn-sm" title="Edit">
+                                    <i class="fa fa-edit" ></i>
                                 </a>
-                                <button type="button" onclick="confirmDelete({{$category->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                    <i class="ri-chat-delete-fill"></i>
-                                </button>
+                                <a href="javascript:void(0)" onclick="confirmDelete({{$category->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
                                 <form action="{{route('category.delete', ['id' => $category->id])}}" method="POST" id="categoryDeleteForm{{$category->id}}">
                                     @csrf

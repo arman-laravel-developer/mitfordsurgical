@@ -49,11 +49,11 @@
                             <td>{{$shippingCost->address_name}}</td>
                             <td>{{$shippingCost->shipping_cost}}</td>
                             <td>
-                                <button value="{{$shippingCost->id}}" class="btn btn-success editBtn btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <button value="{{$shippingCost->id}}" style="background-color: #5e30c1!important;border-color: #5e30c1!important;" class="btn btn-success editBtn btn-sm" title="Edit">
+                                    <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" onclick="confirmDelete({{$shippingCost->id}});" class="btn btn-danger btn-sm" title="Delete">
-                                    <i class="ri-chat-delete-fill"></i>
+                                <button type="button" onclick="confirmDelete({{$shippingCost->id}});" style="background-color: red!important;border-color: red!important;" class="btn btn-danger btn-sm" title="Delete">
+                                    <i class="fa fa-trash"></i>
                                 </button>
 
                                 <form action="{{route('shipping-cost.delete', ['id' => $shippingCost->id])}}" method="POST" id="shippingCostDeleteForm{{$shippingCost->id}}">

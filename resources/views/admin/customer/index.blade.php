@@ -37,11 +37,11 @@
                                 <td>{{$customer->mobile}}</td>
                                 <td>{{$customer->orders ? count($customer->orders) : 'N/A'}}</td>
                                 <td>
-                                    <a href="{{route('customer.login-admin', ['id' => $customer->id])}}" target="_blank" class="action-icon">
-                                        <i class="mdi mdi-login text-success"></i>
+                                    <a href="{{route('customer.login-admin', ['id' => $customer->id])}}" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" target="_blank" class="btn btn-success btn-sm" title="Login as a customer">
+                                        <i class="fa fa-key"></i>
                                     </a>
-                                    <a href="#" onclick="confirmDelete({{$customer->id}});" class="action-icon">
-                                        <i class="mdi mdi-delete text-danger"></i>
+                                    <a href="javascript:void(0)" onclick="confirmDelete({{$customer->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fa fa-trash"></i>
                                     </a>
                                     <form action="{{route('dashboard.customer-delete', ['id' => $customer->id])}}" method="POST" id="customerDeleteForm{{$customer->id}}">
                                         @csrf

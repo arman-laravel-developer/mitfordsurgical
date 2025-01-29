@@ -45,11 +45,11 @@
                             <td>{{$role->name}}</td>
                             <td>{{$role->description}}</td>
                             <td>
-                                <a href="{{route('role.edit', ['id' => $role->id])}}" class="btn btn-success btn-sm" title="Edit">
-                                    <i class="ri-edit-box-fill"></i>
+                                <a href="{{route('role.edit', ['id' => $role->id])}}" style="background-color: #5e30c1!important;border-color: #5e30c1!important;" class="btn btn-success btn-sm" title="Edit">
+                                    <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="{{route('role.delete', ['id' => $role->id])}}" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Ary you sure to delete this..');">
-                                    <i class="ri-chat-delete-fill"></i>
+                                <a href="{{route('role.delete', ['id' => $role->id])}}" style="background-color: #ff0000!important;border-color: #ff0000!important;" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Ary you sure to delete this..');">
+                                    <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>

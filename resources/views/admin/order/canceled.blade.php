@@ -43,14 +43,14 @@
                                 <td>{{$order->payment_method}}</td>
                                 <td>{{$order->payment_status}}</td>
                                 <td>
-                                    <a href="{{route('order.show', ['id' => $order->id])}}" class="action-icon">
-                                        <i class="mdi mdi-eye text-success"></i>
+                                    <a href="{{route('order.show', ['id' => $order->id])}}" style="background-color: #59fa0b!important; border-color: #59fa0b!important;" class="btn btn-primary btn-sm" title="Show">
+                                        <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="" class="action-icon">
-                                        <i class="mdi mdi-square-edit-outline text-primary"></i>
+                                    <a href="#" style="background-color: #AE1C9A!important; border-color: #AE1C9A!important;" class="btn btn-primary btn-sm" title="Edit">
+                                        <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="#" onclick="confirmDelete({{$order->id}});" class="action-icon">
-                                        <i class="mdi mdi-delete text-danger"></i>
+                                    <a href="javascript:void(0)" onclick="confirmDelete({{$order->id}});" style="background-color: #fb160a!important; border-color: #fb160a!important;" class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fa fa-trash"></i>
                                     </a>
                                     <form action="{{route('order.delete', ['id' => $order->id])}}" method="POST" id="orderDeleteForm{{$order->id}}">
                                         @csrf
