@@ -4,6 +4,31 @@
     {{$generalSettingView->site_name}} - {{translate('Category products')}}
 @endsection
 
+@section('seo')
+    <meta name="description" content="Learn more about {{$generalSettingView->site_name}}. {{$category->getTranslation('category_name')}}">
+    <meta name="keywords" content="{{$generalSettingView->site_name}}, {{$category->getTranslation('category_name')}}, Contact Us, About Us, Privacy Policy">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ route('category.product', ['id' => $category->id, 'slug' => $category->slug]) }}">
+
+    <!-- Open Graph (OG) Meta Tags for Social Media -->
+    <meta property="og:title" content="{{$category->getTranslation('category_name')}} - {{$generalSettingView->site_name}}">
+    <meta property="og:description" content="Learn more about {{$category->getTranslation('category_name')}} at {{$generalSettingView->site_name}}.">
+    <meta property="og:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta property="og:url" content="{{ route('category.product', ['id' => $category->id, 'slug' => $category->slug]) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{$category->getTranslation('category_name')}} - {{$generalSettingView->site_name}}">
+    <meta name="twitter:description" content="Find out more about {{$category->getTranslation('category_name')}} at {{$generalSettingView->site_name}}.">
+    <meta name="twitter:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta name="twitter:site" content="@mitfordsurgical">
+    <meta name="twitter:creator" content="@mitfordsurgical">
+@endsection
+
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->

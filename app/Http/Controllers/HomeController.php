@@ -31,7 +31,7 @@ class HomeController extends Controller
             return response()->json(['html' => $view]);
         }
         $sliders = Slider::where('status',1)->latest()->take(5)->get();
-        $homeCategories = Category::where('status',1)->where('display_status',1)->latest()->take(10)->get();
+        $homeCategories = Category::where('status',1)->where('display_status',1)->orderBy('id', 'ASC')->take(10)->get();
         return view('front.home.home', compact('sliders', 'homeCategories', 'products', 'featuredProducts'));
     }
 

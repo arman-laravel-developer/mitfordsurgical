@@ -4,6 +4,58 @@
     {{$generalSettingView->site_name}} - {{translate('Product Detail')}}
 @endsection
 
+@section('seo')
+
+    <meta name="description" content="{{strip_tags($product->getTranslation('description'))}}">
+    <meta name="keywords" content="{{$product->tags}},{{$generalSettingView->site_name}},{{$product->category->category_name}}">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}">
+
+    <!-- Open Graph (OG) Meta Tags for Social Media -->
+    <meta property="og:title" content="Buy {{$product->getTranslation('name')}} | {{$generalSettingView->site_name}}">
+    <meta property="og:description" content="{{$product->getTranslation('name')}} available at the best price. Order now on {{$generalSettingView->site_name}}!">
+    <meta property="og:image" content="{{asset($product->thumbnail_img)}}">
+    <meta property="og:url" content="{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}">
+    <meta property="og:type" content="product">
+    <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Buy {{$product->getTranslation('name')}} | {{$generalSettingView->site_name}}">
+    <meta name="twitter:description" content="{{$product->getTranslation('name')}} available at the best price. Order now on {{$generalSettingView->site_name}}!">
+    <meta name="twitter:image" content="{{asset($product->thumbnail_img)}}">
+    <meta name="twitter:site" content="@mitfordsurgical">
+    <meta name="twitter:creator" content="@mitfordsurgical">
+
+    <!-- Structured Data (Product Schema Markup) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{$product->getTranslation('name')}}",
+      "image": "{{asset($product->thumbnail_img)}}",
+      "description": "{{strip_tags($product->getTranslation('description'))}}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{$product->brand_id != null ? $product->brand->getTranslation('name') : 'N/A'}}"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}",
+        "priceCurrency": "BDT",
+        "price": "{{discounted_price($product)}}",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "{{$generalSettingView->site_name}}"
+        }
+      }
+    }
+    </script>
+@endsection
+
 @section('body')
     <style>
         .form-check {

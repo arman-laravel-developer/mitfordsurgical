@@ -4,6 +4,31 @@
     {{$generalSettingView->site_name}} - {{translate('All Products')}}
 @endsection
 
+@section('seo')
+    <meta name="description" content="Learn more about {{$generalSettingView->site_name}}. All Products">
+    <meta name="keywords" content="{{$generalSettingView->site_name}}, All Products, Contact Us, About Us, Privacy Policy">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{route('products.all')}}">
+
+    <!-- Open Graph (OG) Meta Tags for Social Media -->
+    <meta property="og:title" content="All Products - {{$generalSettingView->site_name}}">
+    <meta property="og:description" content="Learn more about All Products at {{$generalSettingView->site_name}}.">
+    <meta property="og:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta property="og:url" content="{{route('products.all')}}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="All Products - {{$generalSettingView->site_name}}">
+    <meta name="twitter:description" content="Find out more about All Products at {{$generalSettingView->site_name}}.">
+    <meta name="twitter:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta name="twitter:site" content="@mitfordsurgical">
+    <meta name="twitter:creator" content="@mitfordsurgical">
+@endsection
+
 @section('body')
     <div class="content-col">
         <!-- Breadcrumb Section Start -->

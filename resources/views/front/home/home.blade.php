@@ -4,6 +4,46 @@
     Home | {{$generalSettingView->site_name}}
 @endsection
 
+@section('seo')
+    <meta name="description" content="{{$generalSettingView->site_name}}">
+    <meta name="keywords" content="{{$generalSettingView->site_name}}">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{url('/')}}">
+
+    <!-- Open Graph (OG) Meta Tags for Social Media -->
+    <meta property="og:title" content="{{$generalSettingView->site_name}}">
+    <meta property="og:description" content="{{$generalSettingView->site_name}}">
+    <meta property="og:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta property="og:url" content="{{url('/')}}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{$generalSettingView->site_name}}">
+    <meta name="twitter:description" content="{{$generalSettingView->site_name}}">
+    <meta name="twitter:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta name="twitter:site" content="@mitfordsurgical">
+    <meta name="twitter:creator" content="@mitfordsurgical">
+
+    <!-- Structured Data (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Fashionistaa Haven",
+      "url": "{{url('/')}}",
+      "logo": "{{asset($generalSettingView->header_logo)}}",
+      "sameAs": [
+        "{{$generalSettingView->facebook_url}}",
+        "{{$generalSettingView->instagram_url}}",
+        "{{$generalSettingView->twitter_url}}"
+      ]
+    }
+    </script>
+@endsection
+
 @section('body')
     <div class="content-col">
         <div class="section-b-space" style="padding-bottom: 0px">
@@ -31,9 +71,9 @@
             </div>
         </div>
         <!-- Category Section Start -->
-        <section class="section-b-space">
+        <section class="section-b-space" style="padding-bottom: calc(8px + 20*(100vw - 320px)/1600);">
             <div class="container">
-                <div class="title">
+                <div class="title" style="margin-bottom: 0!important;">
                     <h2>{{translate('Popular Categories')}}</h2>
                 </div>
                 <div class="row">
@@ -59,8 +99,35 @@
         </section>
         <!-- Category Section End -->
 
+        <script>
+            $(document).ready(function(){
+                $('.category-slider').slick({
+                    slidesToShow: 4,  // Number of items per slide
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    arrows: true,  // Enable navigation arrows
+                    dots: false,  // Show pagination dots
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: { slidesToShow: 3 }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: { slidesToShow: 2 }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: { slidesToShow: 1 }
+                        }
+                    ]
+                });
+            });
+        </script>
+
         <div class="container">
-            <div class="title d-block">
+            <div class="title d-block" style="margin-bottom: 0!important;">
                 <h2 class="text-theme font-sm text-center">{{translate('Featured Products')}}</h2>
             </div>
 {{--            <form action="{{ route('bkash.pay') }}" method="GET">--}}
@@ -149,7 +216,7 @@
             </div>
         </div>
         <div class="container all-products">
-            <div class="title d-block">
+            <div class="title d-block" style="margin-bottom: 0!important;">
                 <h2 class="text-theme font-sm text-center">{{translate('All Products')}}</h2>
             </div>
 

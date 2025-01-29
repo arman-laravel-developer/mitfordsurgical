@@ -14,9 +14,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{asset($generalSettingView->site_name)}}">
-    <meta name="keywords" content="{{asset($generalSettingView->site_name)}}">
-    <meta name="author" content="{{asset($generalSettingView->site_name)}}">
+    <meta name="author" content="{{$generalSettingView->site_name}}">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="BD">
+    <meta name="geo.placename" content="Bangladesh">
     <link rel="icon" href="{{asset($generalSettingView->favicon)}}" type="image/x-icon">
     <title>@yield('title')</title>
 
@@ -48,6 +50,8 @@
 
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('/')}}front/assets/css/style.css">
+
+    @yield('seo')
 
 
 </head>
