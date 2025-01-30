@@ -35,7 +35,7 @@
                 <div class="row justify-content-center">
                     @if(\App\Models\Seller::find(Session::get('seller_id'))->is_verified == 3)
                         <div class="col-xxl-12 col-xl-12 col-lg-12 col-sm-12">
-                            <h2 class="text-center text-success">Your shop verification request has been submitted successfully. Please wait for a moment.</h2>
+                            <h2 class="text-center text-success" style="text-transform: none">Your shop verification request has been submitted successfully. Please wait for a moment.</h2>
                         </div>
                         <table class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
                             <tbody>
