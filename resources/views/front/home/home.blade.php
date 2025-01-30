@@ -99,33 +99,6 @@
         </section>
         <!-- Category Section End -->
 
-        <script>
-            $(document).ready(function(){
-                $('.category-slider').slick({
-                    slidesToShow: 4,  // Number of items per slide
-                    slidesToScroll: 1,
-                    autoplay: true,
-                    autoplaySpeed: 3000,
-                    arrows: true,  // Enable navigation arrows
-                    dots: false,  // Show pagination dots
-                    responsive: [
-                        {
-                            breakpoint: 1024,
-                            settings: { slidesToShow: 3 }
-                        },
-                        {
-                            breakpoint: 768,
-                            settings: { slidesToShow: 2 }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: { slidesToShow: 1 }
-                        }
-                    ]
-                });
-            });
-        </script>
-
         <div class="container">
             <div class="title d-block" style="margin-bottom: 0!important;">
                 <h2 class="text-theme font-sm text-center">{{translate('Featured Products')}}</h2>

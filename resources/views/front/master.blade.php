@@ -940,6 +940,9 @@
 <!-- Include Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+@include('sweetalert::alert')
+@include('flash-toastr::message')
+
 <script>
     // Function to check if the device is mobile
     function isMobile() {

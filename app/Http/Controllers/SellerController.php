@@ -7,6 +7,7 @@ use App\Models\Seller;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use DB;
 
@@ -87,7 +88,7 @@ class SellerController extends Controller
             Session::forget('name');
         }
 
-        flash()->success('Registration complete', 'You have been logged in successfully');
+        Alert::success('Registration complete','You have been logged in successfully');
         return redirect()->route('seller.dashboard');
     }
 
