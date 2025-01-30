@@ -18,6 +18,10 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
     <meta property="og:locale" content="en_US">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:secure_url" content="{{asset($generalSettingView->siteSeo->first()->meta_image)}}" />
+    <link rel="image_src" href="{{asset($generalSettingView->siteSeo->first()->meta_image)}}" title="{{$generalSettingView->site_name}}">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">

@@ -109,8 +109,7 @@
                                     </div>
                                     <h2>10</h2>
                                     <h4>Business Years</h4>
-                                    <p>A coffee shop is a small business that sells coffee, pastries, and other morning
-                                        goods. There are many different types of coffee shops around the world.</p>
+                                    <p>Mitford Surgical is dedicated to providing top-quality medical equipment and supplies, ensuring healthcare professionals have the best tools for patient care.</p>
                                 </div>
                             </div>
 
@@ -121,8 +120,7 @@
                                     </div>
                                     <h2>80 K+</h2>
                                     <h4>Products Sales</h4>
-                                    <p>Some coffee shops have a seating area, while some just have a spot to order and then
-                                        go somewhere else to sit down. The coffee shop that I am going to.</p>
+                                    <p>We offer an extensive selection of surgical instruments, hospital equipment, and medical essentials to meet the needs of clinics, hospitals, and healthcare providers.</p>
                                 </div>
                             </div>
 
@@ -133,8 +131,7 @@
                                     </div>
                                     <h2>90%</h2>
                                     <h4>Happy Customers</h4>
-                                    <p>My goal for this coffee shop is to be able to get a coffee and get on with my day.
-                                        It's a Thursday morning and I am rushing between meetings.</p>
+                                    <p>Our commitment to quality, affordability, and timely delivery has earned the trust of healthcare professionals who rely on us for their medical supply needs.</p>
                                 </div>
                             </div>
                         </div>
