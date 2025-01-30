@@ -5,15 +5,15 @@
 @endsection
 
 @section('seo')
-    <meta name="description" content="{{$generalSettingView->site_name}}">
-    <meta name="keywords" content="{{$generalSettingView->site_name}}">
+    <meta name="description" content="{{optional($generalSettingView->siteSeo->first())->meta_description}}">
+    <meta name="keywords" content="{{optional($generalSettingView->siteSeo->first())->keywords}}">
     <!-- Canonical URL -->
     <link rel="canonical" href="{{url('/')}}">
 
     <!-- Open Graph (OG) Meta Tags for Social Media -->
-    <meta property="og:title" content="{{$generalSettingView->site_name}}">
-    <meta property="og:description" content="{{$generalSettingView->site_name}}">
-    <meta property="og:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta property="og:title" content="{{optional($generalSettingView->siteSeo->first())->meta_title}}">
+    <meta property="og:description" content="{{optional($generalSettingView->siteSeo->first())->meta_description}}">
+    <meta property="og:image" content="{{asset($generalSettingView->siteSeo->first()->meta_image)}}">
     <meta property="og:url" content="{{url('/')}}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{$generalSettingView->site_name}}">
@@ -21,9 +21,9 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{$generalSettingView->site_name}}">
-    <meta name="twitter:description" content="{{$generalSettingView->site_name}}">
-    <meta name="twitter:image" content="{{asset($generalSettingView->header_logo)}}">
+    <meta name="twitter:title" content="{{optional($generalSettingView->siteSeo->first())->meta_title}}">
+    <meta name="twitter:description" content="{{optional($generalSettingView->siteSeo->first())->meta_description}}">
+    <meta name="twitter:image" content="{{asset($generalSettingView->siteSeo->first()->meta_image)}}">
     <meta name="twitter:site" content="@mitfordsurgical">
     <meta name="twitter:creator" content="@mitfordsurgical">
 

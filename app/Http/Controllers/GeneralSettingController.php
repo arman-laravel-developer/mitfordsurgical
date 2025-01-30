@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\GeneralSetting;
 use App\Models\HomeCategory;
+use App\Models\SiteSeo;
 use Illuminate\Http\Request;
 use ZipArchive;
 
@@ -12,11 +13,21 @@ class GeneralSettingController extends Controller
 {
     public function index()
     {
-        $generalSetting = GeneralSetting::latest()->first();
+        $generalSetting = GeneralSetting::with('siteSeo')->latest()->first();
         $categories = Category::where(['parent_id' => 0])->where('status', 1)->get();
         return view('admin.setting.index', compact('generalSetting', 'categories'));
     }
 
+    public function getSiteSeoImageUrl($request)
+    {
+        $slug = $request->meta_title;
+        $SiteSeoImage = $request->file('site_seo_image');
+        $SiteSeoImageName = $slug.'-'.time().'.'.$SiteSeoImage->getClientOriginalExtension();
+        $directory = 'site-seo-images/';
+        $SiteSeoImage->move($directory, $SiteSeoImageName);
+        $SiteSeoImageUrl = $directory.$SiteSeoImageName;
+        return $SiteSeoImageUrl;
+    }
     public function getHeaderLogoUrl($request)
     {
         $headerLogo = $request->file('header_logo');
@@ -329,5 +340,47 @@ class GeneralSettingController extends Controller
         updateEnv($data);
 
         return redirect()->back()->with('success', 'Payment Method settings updated successfully!');
+    }
+
+    public function updateSiteSeo(Request $request)
+    {
+        $siteSeo = SiteSeo::first();
+        if (empty($siteSeo))
+        {
+            $siteSeo = new SiteSeo();
+            $siteSeo->general_setting_id = $request->general_setting_id;
+            $siteSeo->meta_title = $request->meta_title;
+            $siteSeo->meta_description = $request->meta_description;
+            $siteSeo->keywords = $request->tags;
+            if ($request->file('site_seo_image')) {
+                $siteSeo->meta_image = $this->getSiteSeoImageUrl($request);
+            }
+            $siteSeo->save();
+
+            return redirect()->back()->with('success', 'Site Seo Save Successfully');
+        }
+        else
+        {
+            $siteSeo->general_setting_id = $request->general_setting_id;
+            $siteSeo->meta_title = $request->meta_title;
+            $siteSeo->meta_description = $request->meta_description;
+            $siteSeo->keywords = $request->tags;
+            if ($request->file('site_seo_image'))
+            {
+                if (file_exists($siteSeo->image))
+                {
+                    unlink($siteSeo->image);
+                }
+                $siteSeoImageUrl = $this->getSiteSeoImageUrl($request);
+            }
+            else
+            {
+                $siteSeoImageUrl = $siteSeo->image;
+            }
+            $siteSeo->meta_image = $siteSeoImageUrl;
+            $siteSeo->save();
+
+            return redirect()->back()->with('success', 'Site Seo Update Successfully');
+        }
     }
 }

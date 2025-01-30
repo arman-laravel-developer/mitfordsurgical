@@ -217,6 +217,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/manage', [GeneralSettingController::class, 'manage'])->name('setting.manage');
             Route::get('/edit/{id}', [GeneralSettingController::class, 'edit'])->name('setting.edit');
             Route::post('/update', [GeneralSettingController::class, 'update'])->name('setting.update');
+            Route::post('/update-site-seo', [GeneralSettingController::class, 'updateSiteSeo'])->name('setting.update-site-seo');
             Route::post('/delete/{id}', [GeneralSettingController::class, 'delete'])->name('setting.delete');
         });
 
