@@ -48,6 +48,8 @@ class AboutUsController extends Controller
         else
         {
             $about = new AboutUs();
+            $about->who_we_are = $request->who_we_are;
+            $about->image = $this->getImageUrl($request);
             $about->save();
         }
 
