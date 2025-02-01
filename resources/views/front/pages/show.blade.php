@@ -280,10 +280,10 @@
                                             </div>
                                             <div id="messageBox" class="mt-2" style="display:none;"></div>
                                             @php
-                                                // Ensure the number is stored correctly
-                                                $whatsappNumber = trim($generalSettingView->pinterest_url); // Replace this with your WhatsApp number source
+                                                $whatsappNumber = trim($generalSettingView->pinterest_url); // Use actual WhatsApp number source
                                                 $whatsappNumber = str_replace(['+', ' '], '', $whatsappNumber); // Remove + and spaces if needed
-                                                $message = 'Hello, I am interested in ' . $product->name . '.'; // Message content
+                                                $currentUrl = request()->url(); // Get current product page URL
+                                                $message = "Hello, I am interested in " . $product->name . ". Here is the product link: " . $currentUrl;
                                             @endphp
 
                                             @if($product->is_variant == 1)
@@ -323,14 +323,11 @@
                                                     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
                                                     if (/android|iphone|ipad|ipod/i.test(userAgent)) {
-                                                        // Mobile devices
+                                                        // Mobile devices → Open WhatsApp mobile app
                                                         window.open("https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message, "_blank");
-                                                    } else if (/Mac|Windows|Linux/.test(navigator.platform)) {
-                                                        // Desktop devices
-                                                        window.open("https://web.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message, "_blank");
                                                     } else {
-                                                        // Fallback
-                                                        alert("WhatsApp may not be supported on this device.");
+                                                        // Desktop devices (Windows, Mac, Linux) → Open WhatsApp Web
+                                                        window.open("https://web.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message, "_blank");
                                                     }
                                                 }
                                             </script>
