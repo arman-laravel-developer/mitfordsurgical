@@ -519,8 +519,20 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <i data-feather="mail"></i>
-                                        <a href="mailto:{{$generalSettingView->email}}">{{$generalSettingView->email}}</a>
+                                        <form action="{{route('subscriber.store')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="input-group">
+                                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="exampleFormControlInput1"
+                                                       placeholder="Enter Your Email" required autocomplete="off">
+                                                <button type="submit" class="sub-btn  btn-animation">
+                                                    <span class="d-sm-block d-none">Subscribe</span>
+                                                    <i class="fa-solid fa-arrow-right icon"></i>
+                                                </button>
+                                            </div>
+                                            @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
