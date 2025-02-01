@@ -215,8 +215,8 @@ Dashboard | {{env('APP_NAME')}}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-danger">
-                                    <a href="" style="color: inherit">
+                                <td class="{{$totalSubscribers > 0 ? 'text-success' : 'text-danger'}}">
+                                    <a href="{{route('subscriber.index')}}" style="color: inherit">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-grow-1">
                                                 Total Subscriber
@@ -225,7 +225,7 @@ Dashboard | {{env('APP_NAME')}}
                                     </a>
                                 </td>
                                 <td class="text-end">
-                                    <span class="text-danger fw-semibold">0</span>
+                                    <span class="{{$totalSubscribers > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalSubscribers}}</span>
                                 </td>
                             </tr>
                             <tr>

@@ -8,6 +8,7 @@ use App\Models\ContactForm;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Seller;
+use App\Models\Subscriber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
@@ -32,6 +33,7 @@ class DashboardController extends Controller
         $totalCustomer = Customer::count();
         $totalCategory = Category::where('status',1)->count();
         $totalBrand = Brand::count();
+        $totalSubscribers = Subscriber::count();
         $totalSubtotalAmount = Order::where('order_status', 'delivered')->sum('grand_total');
         $totalShippingCostAmount = Order::where('order_status', 'delivered')->sum('shipping_cost');
         $totalCouponDiscountAmount = Order::where('order_status', 'delivered')->sum('coupon_discount');
@@ -49,7 +51,8 @@ class DashboardController extends Controller
             'totalSeller',
             'totalCategory',
             'totalBrand',
-            'totalSaleAmount'
+            'totalSaleAmount',
+            'totalSubscribers'
         ));
     }
 
