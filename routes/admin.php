@@ -212,7 +212,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         });
 
         Route::prefix('general-settings')->group(function () {
-            Route::get('/add', [GeneralSettingController::class, 'index'])->name('setting.add');
+            Route::get('/header', [GeneralSettingController::class, 'header'])->name('setting.header');
+            Route::get('/website-setting', [GeneralSettingController::class, 'index'])->name('website.setting');
+            Route::get('/footer', [GeneralSettingController::class, 'footer'])->name('setting.footer');
             Route::post('/new', [GeneralSettingController::class, 'create'])->name('setting.new');
             Route::get('/manage', [GeneralSettingController::class, 'manage'])->name('setting.manage');
             Route::get('/edit/{id}', [GeneralSettingController::class, 'edit'])->name('setting.edit');

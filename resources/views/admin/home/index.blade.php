@@ -160,9 +160,9 @@ Dashboard | {{env('APP_NAME')}}
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th scope="col" class="text-success"><b>Total</b></th>
+                                <th scope="col" class="text-success"><b><a href="{{route('order.manage')}}" class="text-success">Total</a></b></th>
                                 <th scope="col" class="text-end text-success" id="totals-grand-total">
-                                    <b>&#2547; 0.00</b>
+                                    <b><a href="{{route('order.manage')}}" class="text-success">&#2547; 0.00</a></b>
                                 </th>
                             </tr>
                             </tfoot>
@@ -188,11 +188,13 @@ Dashboard | {{env('APP_NAME')}}
                             <tbody>
                             <tr>
                                 <td class="{{$totalSeller > 0 ? 'text-success' : 'text-danger'}}">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            Total Seller
+                                    <a href="{{route('seller.approved')}}" style="color: inherit">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                Total Seller
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span class="{{$totalSeller > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalSeller}}</span>
@@ -200,11 +202,13 @@ Dashboard | {{env('APP_NAME')}}
                             </tr>
                             <tr>
                                 <td class="{{$totalCustomer > 0 ? 'text-success' : 'text-danger'}}">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            Total Customer
+                                    <a href="{{route('dashboard.customer')}}" style="color: inherit">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                Total Customer
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span class="{{$totalCustomer > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalCustomer}}</span>
@@ -212,11 +216,13 @@ Dashboard | {{env('APP_NAME')}}
                             </tr>
                             <tr>
                                 <td class="text-danger">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            Total Subscriber
+                                    <a href="" style="color: inherit">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                Total Subscriber
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span class="text-danger fw-semibold">0</span>
@@ -224,11 +230,13 @@ Dashboard | {{env('APP_NAME')}}
                             </tr>
                             <tr>
                                 <td class="{{$totalCategory > 0 ? 'text-success' : 'text-danger'}}">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            Total Category
+                                    <a href="{{route('category.manage')}}" style="color: inherit">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                Total Category
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span class="{{$totalCategory > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalCategory}}</span>
@@ -236,11 +244,13 @@ Dashboard | {{env('APP_NAME')}}
                             </tr>
                             <tr>
                                 <td class="{{$totalBrand > 0 ? 'text-success' : 'text-danger'}}">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            Total Brand
+                                    <a href="{{route('brand.manage')}}" style="color: inherit">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                Total Brand
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span class="{{$totalBrand > 0 ? 'text-success' : 'text-danger'}} fw-semibold">{{$totalBrand}}</span>

@@ -17,6 +17,18 @@ class GeneralSettingController extends Controller
         $categories = Category::where(['parent_id' => 0])->where('status', 1)->get();
         return view('admin.setting.index', compact('generalSetting', 'categories'));
     }
+    public function header()
+    {
+        $generalSetting = GeneralSetting::with('siteSeo')->latest()->first();
+        $categories = Category::where(['parent_id' => 0])->where('status', 1)->get();
+        return view('admin.setting.header', compact('generalSetting', 'categories'));
+    }
+    public function footer()
+    {
+        $generalSetting = GeneralSetting::with('siteSeo')->latest()->first();
+        $categories = Category::where(['parent_id' => 0])->where('status', 1)->get();
+        return view('admin.setting.footer', compact('generalSetting', 'categories'));
+    }
 
     public function getSiteSeoImageUrl($request)
     {
@@ -68,119 +80,139 @@ class GeneralSettingController extends Controller
     public function update(Request $request)
     {
         $generalSetting = GeneralSetting::latest()->first();
-        if ($generalSetting)
-        {
+
+        if ($generalSetting) {
             $request->validate([
                 'favicon' => 'mimes:ico',
             ], [
                 'favicon.mimes' => 'The favicon must be a file of type: .ico.',
             ]);
 
-            $generalSetting->site_name = $request->site_name;
-            $generalSetting->mobile = $request->mobile;
-            $generalSetting->email = $request->email;
-            $generalSetting->address = $request->address;
-            $generalSetting->about_us_short = $request->about_us_short;
-            $generalSetting->facebook_url = $request->facebook_url;
-            $generalSetting->instagram_url = $request->instagram_url;
-            $generalSetting->youtube_url = $request->youtube_url;
-            $generalSetting->twitter_url = $request->twitter_url;
-            $generalSetting->pinterest_url = $request->pinterest_url;
-            $generalSetting->linkedin_url = $request->linkedin_url;
-            if ($request->file('header_logo'))
-            {
-                if (file_exists($generalSetting->header_logo))
-                {
+            // Update only the fields that are provided
+            if ($request->has('site_name')) {
+                $generalSetting->site_name = $request->site_name;
+            }
+            if ($request->has('mobile')) {
+                $generalSetting->mobile = $request->mobile;
+            }
+            if ($request->has('email')) {
+                $generalSetting->email = $request->email;
+            }
+            if ($request->has('address')) {
+                $generalSetting->address = $request->address;
+            }
+            if ($request->has('about_us_short')) {
+                $generalSetting->about_us_short = $request->about_us_short;
+            }
+            if ($request->has('facebook_url')) {
+                $generalSetting->facebook_url = $request->facebook_url;
+            }
+            if ($request->has('instagram_url')) {
+                $generalSetting->instagram_url = $request->instagram_url;
+            }
+            if ($request->has('youtube_url')) {
+                $generalSetting->youtube_url = $request->youtube_url;
+            }
+            if ($request->has('twitter_url')) {
+                $generalSetting->twitter_url = $request->twitter_url;
+            }
+            if ($request->has('pinterest_url')) {
+                $generalSetting->pinterest_url = $request->pinterest_url;
+            }
+            if ($request->has('linkedin_url')) {
+                $generalSetting->linkedin_url = $request->linkedin_url;
+            }
+
+            // Update logos and files only if they are provided
+            if ($request->file('header_logo')) {
+                if (file_exists($generalSetting->header_logo)) {
                     unlink($generalSetting->header_logo);
                 }
-                $headerLogoUrl = $this->getHeaderLogoUrl($request);
+                $generalSetting->header_logo = $this->getHeaderLogoUrl($request);
             }
-            else
-            {
-                $headerLogoUrl = $generalSetting->header_logo;
-            }
-            if ($request->file('footer_logo'))
-            {
-                if (file_exists($generalSetting->footer_logo))
-                {
+            if ($request->file('footer_logo')) {
+                if (file_exists($generalSetting->footer_logo)) {
                     unlink($generalSetting->footer_logo);
                 }
-                $footerLogoUrl = $this->getFooterLogoUrl($request);
+                $generalSetting->footer_logo = $this->getFooterLogoUrl($request);
             }
-            else
-            {
-                $footerLogoUrl = $generalSetting->footer_logo;
-            }
-            if ($request->file('favicon'))
-            {
-                if (file_exists($generalSetting->favicon))
-                {
+            if ($request->file('favicon')) {
+                if (file_exists($generalSetting->favicon)) {
                     unlink($generalSetting->favicon);
                 }
-                $faviconUrl = $this->getFaviconUrl($request);
+                $generalSetting->favicon = $this->getFaviconUrl($request);
             }
-            else
-            {
-                $faviconUrl = $generalSetting->favicon;
-            }
-            if ($request->file('payment_method_image'))
-            {
-                if (file_exists($generalSetting->payment_method_image))
-                {
+            if ($request->file('payment_method_image')) {
+                if (file_exists($generalSetting->payment_method_image)) {
                     unlink($generalSetting->payment_method_image);
                 }
-                $paymentUrl = $this->getPaymentMethodUrl($request);
-            }
-            else
-            {
-                $paymentUrl = $generalSetting->payment_method_image;
+                $generalSetting->payment_method_image = $this->getPaymentMethodUrl($request);
             }
 
-            $generalSetting->header_logo = $headerLogoUrl;
-            $generalSetting->footer_logo = $footerLogoUrl;
-            $generalSetting->favicon = $faviconUrl;
-            $generalSetting->payment_method_image = $paymentUrl;
+            // Save changes to the generalSetting
             $generalSetting->save();
-        }
-        else
-        {
+        } else {
+            // Create a new GeneralSetting if it doesn't exist
             $request->validate([
                 'favicon' => 'mimes:ico',
             ], [
                 'favicon.mimes' => 'The favicon must be a file of type: .ico.',
             ]);
+
             $generalSetting = new GeneralSetting();
-            $generalSetting->site_name = $request->site_name;
-            $generalSetting->mobile = $request->mobile;
-            $generalSetting->email = $request->email;
-            $generalSetting->address = $request->address;
-            $generalSetting->about_us_short = $request->about_us_short;
-            $generalSetting->facebook_url = $request->facebook_url;
-            $generalSetting->instagram_url = $request->instagram_url;
-            $generalSetting->youtube_url = $request->youtube_url;
-            $generalSetting->twitter_url = $request->twitter_url;
-            $generalSetting->pinterest_url = $request->pinterest_url;
-            $generalSetting->linkedin_url = $request->linkedin_url;
-            if ($request->file('header_logo'))
-            {
+
+            if ($request->has('site_name')) {
+                $generalSetting->site_name = $request->site_name;
+            }
+            if ($request->has('mobile')) {
+                $generalSetting->mobile = $request->mobile;
+            }
+            if ($request->has('email')) {
+                $generalSetting->email = $request->email;
+            }
+            if ($request->has('address')) {
+                $generalSetting->address = $request->address;
+            }
+            if ($request->has('about_us_short')) {
+                $generalSetting->about_us_short = $request->about_us_short;
+            }
+            if ($request->has('facebook_url')) {
+                $generalSetting->facebook_url = $request->facebook_url;
+            }
+            if ($request->has('instagram_url')) {
+                $generalSetting->instagram_url = $request->instagram_url;
+            }
+            if ($request->has('youtube_url')) {
+                $generalSetting->youtube_url = $request->youtube_url;
+            }
+            if ($request->has('twitter_url')) {
+                $generalSetting->twitter_url = $request->twitter_url;
+            }
+            if ($request->has('pinterest_url')) {
+                $generalSetting->pinterest_url = $request->pinterest_url;
+            }
+            if ($request->has('linkedin_url')) {
+                $generalSetting->linkedin_url = $request->linkedin_url;
+            }
+
+            if ($request->file('header_logo')) {
                 $generalSetting->header_logo = $this->getHeaderLogoUrl($request);
             }
-            if ($request->file('footer_logo'))
-            {
+            if ($request->file('footer_logo')) {
                 $generalSetting->footer_logo = $this->getFooterLogoUrl($request);
             }
-            if ($request->file('favicon'))
-            {
+            if ($request->file('favicon')) {
                 $generalSetting->favicon = $this->getFaviconUrl($request);
             }
-            if ($request->file('payment_method_image'))
-            {
+            if ($request->file('payment_method_image')) {
                 $generalSetting->payment_method_image = $this->getPaymentMethodUrl($request);
             }
+
+            // Save the newly created setting
             $generalSetting->save();
         }
 
-        return redirect()->back()->with('success', 'General Setting Update Successfull');
+        return redirect()->back()->with('success', 'General Setting Update Successful');
     }
 
     public function backup()

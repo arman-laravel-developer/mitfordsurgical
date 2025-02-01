@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('title')
-    Website Settings | {{env('APP_NAME')}}
+    Footer | {{env('APP_NAME')}}
 @endsection
 
 @section('body')
@@ -44,7 +44,7 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">Website Settings</h4>
+                <h4 class="page-title">Footer</h4>
             </div>
         </div>
     </div>
@@ -52,80 +52,87 @@
         <div class="col-lg-7">
             <div class="card">
                 <div class="card-header" style="padding-bottom: 0">
-                    <h4>Site Information</h4>
+                    <h4>Footer Information</h4>
                 </div>
                 <div class="card-body" style="padding-top: 0">
                     <form action="{{route('setting.update')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-1">
-                            <label class="col-form-label">Site Name</label>
-                            <input type="text" class="form-control @error('site_name') is-invalid @enderror" value="{{optional($generalSetting)->site_name}}" name="site_name" placeholder="Site name"/>
-                            @error('site_name')
+                            <label class="col-form-label">Footer Mobile</label>
+                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" value="{{optional($generalSetting)->mobile}}" name="mobile" placeholder="Footer mobile"/>
+                            @error('mobile')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="row mb-1">
-                            <label class="col-form-label">WhatsApp url</label>
-                            <input type="tel" class="form-control @error('pinterest_url') is-invalid @enderror" value="{{optional($generalSetting)->pinterest_url}}" name="pinterest_url" placeholder="+8801xxxxxxxxx"/>
-                            @error('pinterest_url')
+                            <label class="col-form-label">Footer email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{optional($generalSetting)->email}}" name="email" placeholder="Footer email"/>
+                            @error('email')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="row mb-1">
-                            <label class="col-form-label">Favicon</label>
-                            <input type="file" class="form-control @error('favicon') is-invalid @enderror" name="favicon" accept="ico" id="favicon"/>
-                            <img id="faviconPreview" class="mt-1" src="{{asset(optional($generalSetting)->favicon)}}" alt="Preview" style="max-width: 200px; max-height: 200px;">
-                            @error('favicon')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="row">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-        </div>
-        <!-- end col -->
-        <div class="col-lg-5">
-            <div class="card">
-                <div class="card-header" style="padding-bottom: 0">
-                    <h4>Site Seo</h4>
-                </div>
-                <div class="card-body" style="padding-top: 0">
-                    <form action="{{route('setting.update-site-seo')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="general_setting_id" value="{{optional($generalSetting)->id}}">
-                        <div class="row mb-1">
-                            <label class="col-form-label">Meta Title</label>
-                            <input type="text" class="form-control @error('meta_title') is-invalid @enderror" value="{{optional($generalSetting->siteSeo->first())->meta_title}}" name="meta_title" placeholder="Meta Title"/>
-                            @error('meta_title')
+                            <label class="col-form-label">Footer address</label>
+                            <textarea type="text" class="form-control @error('address') is-invalid @enderror" name="address" placeholder="Footer address">{{optional($generalSetting)->address}}</textarea>
+                            @error('address')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="row mb-1">
-                            <label class="col-form-label">Meta Description</label>
-                            <textarea type="text" style="height: 150px" class="form-control @error('meta_description') is-invalid @enderror" name="meta_description" placeholder="Meta Description">{{optional($generalSetting->siteSeo->first())->meta_description}}</textarea>
-                            @error('meta_description')
+                            <label class="col-form-label">About Us Footer</label>
+                            <textarea type="text" class="form-control @error('about_us_short') is-invalid @enderror" name="about_us_short" placeholder="About us">{{optional($generalSetting)->about_us_short}}</textarea>
+                            @error('about_us_short')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">Facebook url</label>
+                            <input type="text" class="form-control @error('facebook_url') is-invalid @enderror" value="{{optional($generalSetting)->facebook_url}}" name="facebook_url" placeholder="facebook url"/>
+                            @error('facebook_url')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">Instagram url</label>
+                            <input type="text" class="form-control @error('instagram_url') is-invalid @enderror" value="{{optional($generalSetting)->instagram_url}}" name="instagram_url" placeholder="instagram url"/>
+                            @error('instagram_url')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">Youtube url</label>
+                            <input type="text" class="form-control @error('youtube_url') is-invalid @enderror" value="{{optional($generalSetting)->youtube_url}}" name="youtube_url" placeholder="youtube url"/>
+                            @error('youtube_url')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">Twitter url</label>
+                            <input type="text" class="form-control @error('twitter_url') is-invalid @enderror" value="{{optional($generalSetting)->twitter_url}}" name="twitter_url" placeholder="twitter url"/>
+                            @error('twitter_url')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">LinkedIn url</label>
+                            <input type="text" class="form-control @error('linkedin_url') is-invalid @enderror" value="{{optional($generalSetting)->linkedin_url}}" name="linkedin_url" placeholder="linkedIn url"/>
+                            @error('linkedin_url')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-form-label">Footer Logo</label>
+                            <input type="file" class="form-control @error('footer_logo') is-invalid @enderror" name="footer_logo" id="footerLogo"/>
+                            <img id="footerLogoPreview" class="mt-1" src="{{asset(optional($generalSetting)->footer_logo)}}" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                            @error('footer_logo')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="row mb-3">
-                            <label class="col-form-label" style="font-size: 90%">Tags<sup class="text-danger">*</sup></label>
-                            <div class="">
-                                <input type="text" id="tagsInput" value="{{optional($generalSetting->siteSeo->first())->keywords}}" class="form-control @error('tags') is-invalid @enderror" autocomplete="off"/>
-                                <div id="tagsContainer" class="mt-2"></div>
-                                <input type="hidden" name="tags" value="{{optional($generalSetting->siteSeo->first())->keywords}}" id="tagsHiddenInput">
-                                @error('tags')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-form-label">Site Seo Image</label>
-                            <input type="file" class="form-control @error('site_seo_image') is-invalid @enderror" name="site_seo_image" id="siteSeoImage"/>
-                            <img id="siteSeoImagePreview" class="mt-1" src="{{asset(optional($generalSetting->siteSeo->first())->meta_image)}}" alt="Preview" style="max-width: 200px; max-height: 200px;">
-                            @error('header_logo')
+                            <label class="col-form-label">Payment method footer image</label>
+                            <input type="file" class="form-control @error('payment_method_image') is-invalid @enderror" name="payment_method_image" id="payment_method_image"/>
+                            <img id="paymentPreview" class="mt-1" src="{{asset(optional($generalSetting)->payment_method_image)}}" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                            @error('payment_method_image')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>

@@ -298,9 +298,9 @@
             </div>
         </li>
     @endif
-    @if ($userType == 1 || !empty(array_filter(['google-analytic.add','payment.method','about-us.add','setting.add','setting.smtp','shipping-cost.manage'], fn($route) => in_array($route, $roleRoutes))))
+    @if ($userType == 1 || !empty(array_filter(['google-analytic.add','payment.method','setting.smtp','shipping-cost.manage', 'language.manage'], fn($route) => in_array($route, $roleRoutes))))
         @php
-            $isActive = in_array(Route::currentRouteName(), ['language.edit', 'language.show', 'language.key_value_store']);
+            $isActive = in_array(Route::currentRouteName(), ['language.edit', 'language.show', 'language.key_value_store', 'language.manage']);
         @endphp
     <li class="side-nav-item {{ $isActive ? 'menuitem-active' : '' }}">
         <a data-bs-toggle="collapse" href="#sidebarSetup" aria-expanded="{{ $isActive ? 'true' : 'false' }}" aria-controls="sidebarSetup"
@@ -316,19 +316,9 @@
                     <a href="{{route('google-analytic.add')}}">Google Analytics</a>
                 </li>
                 @endif
-                    @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
-                <li>
-                    <a href="{{route('about-us.add')}}">About us</a>
-                </li>
-                    @endif
-                    @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
+                    @if ($userType == 1 || in_array('language.manage', $roleRoutes))
                 <li class="{{ $isActive ? 'active' : '' }}">
                     <a href="{{route('language.manage')}}">Language</a>
-                </li>
-                    @endif
-                    @if ($userType == 1 || in_array('setting.add', $roleRoutes))
-                <li>
-                    <a href="{{route('setting.add')}}">General Settings</a>
                 </li>
                     @endif
                     @if ($userType == 1 || in_array('setting.smtp', $roleRoutes))
@@ -345,6 +335,40 @@
                         <li>
                             <a href="{{route('shipping-cost.manage')}}">Shipping Cost</a>
                         </li>
+                    @endif
+            </ul>
+        </div>
+    </li>
+    @endif
+    @if ($userType == 1 || !empty(array_filter(['about-us.add','setting.header', 'website.setting'], fn($route) => in_array($route, $roleRoutes))))
+    <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarSetting" aria-expanded="false" aria-controls="sidebarSetup"
+           class="side-nav-link">
+            <i class="uil-wrench"></i>
+            <span> Website Settings </span>
+            <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarSetting">
+        <ul class="side-nav-second-level">
+                    @if ($userType == 1 || in_array('about-us.add', $roleRoutes))
+                <li>
+                    <a href="{{route('about-us.add')}}">About us</a>
+                </li>
+                    @endif
+                    @if ($userType == 1 || in_array('website.setting', $roleRoutes))
+                <li>
+                    <a href="{{route('website.setting')}}">Website Setting</a>
+                </li>
+                    @endif
+                    @if ($userType == 1 || in_array('setting.header', $roleRoutes))
+                <li>
+                    <a href="{{route('setting.header')}}">Header</a>
+                </li>
+                    @endif
+                    @if ($userType == 1 || in_array('setting.footer', $roleRoutes))
+                <li>
+                    <a href="{{route('setting.footer')}}">Footer</a>
+                </li>
                     @endif
             </ul>
         </div>
