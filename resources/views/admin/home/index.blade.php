@@ -244,7 +244,7 @@ Dashboard | {{env('APP_NAME')}}
                             </tr>
                             <tr>
                                 <td class="{{$totalBrand > 0 ? 'text-success' : 'text-danger'}}">
-                                    <a href="{{route('brand.manage')}}" style="color: inherit">
+                                    <a href="{{route('brand.add')}}" style="color: inherit">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-grow-1">
                                                 Total Brand
