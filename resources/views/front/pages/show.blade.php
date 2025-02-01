@@ -212,6 +212,9 @@
                             <div class="col-xl-7 wow fadeInUp">
                                 <div class="right-box-contain">
                                     <h2 class="name">{{$product->getTranslation('name')}}</h2>
+                                    <div class="price-rating mb-3">
+                                        <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del class="text-danger">&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
+                                    </div>
                                     <p>
                                         {{translate('Category')}}: <a href="{{ route('category.product', ['id' => $product->category_id, 'slug' => $product->category->slug]) }}">{{$product->category->getTranslation('category_name')}}</a>&nbsp;&nbsp;
                                         @php
@@ -222,9 +225,6 @@
                                             <a href="{{route('shop.index', ['id' => $shop->id, 'slug' => $shop->slug])}}">{{$shop->shop_name}}</a>
                                         @endif
                                     </p>
-                                    <div class="price-rating">
-                                        <h5 class="price theme-color"><span>Price:</span> &#2547;<span id="price">{{number_format(discounted_price($product),2)}}</span>@if(discounted_active($product)) <del class="text-danger">&#2547;{{number_format($product->sell_price,2)}}</del> @endif</h5>
-                                    </div>
                                     <form id="addToCartForm" enctype="multipart/form-data">
                                         @csrf
                                         <div class="product-package">
