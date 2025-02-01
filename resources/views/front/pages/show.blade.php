@@ -334,7 +334,54 @@
 
                                         </div>
                                     </form>
+                                    <style>
+                                        .social-icons .social-icon {
+                                            font-size: 1.5rem; /* Set icon size */
+                                            margin-right: 10px; /* Adjust spacing between icons */
+                                            text-decoration: none; /* Remove underline effect */
+                                        }
 
+                                        /* Facebook - Blue */
+                                        .social-icons .social-icon[title="Facebook"] {
+                                            color: #1877F2;
+                                        }
+
+                                        /* Twitter - Blue */
+                                        .social-icons .social-icon[title="Twitter"] {
+                                            color: #1DA1F2;
+                                        }
+
+                                        /* LinkedIn - Blue */
+                                        .social-icons .social-icon[title="linkedIn"] {
+                                            color: #0077B5;
+                                        }
+
+                                        /* WhatsApp - Green */
+                                        .social-icons .social-icon[title="WhatsApp"] {
+                                            color: #25D366;
+                                        }
+
+                                        /* Optional: Hover effect */
+                                        .social-icons .social-icon:hover {
+                                            opacity: 0.8;
+                                        }
+                                        .social-icons .social-icon:last-child {
+                                            margin-right: 0; /* Remove margin for the last icon */
+                                        }
+                                        .social-icons {
+                                            gap: 10px; /* Adjust spacing */
+                                        }
+                                    </style>
+
+                                    <div class="pickup-box mt-3" style="padding-bottom: 0!important;">
+                                        <div class="social-icons social-icons-sm">
+                                            <span class="social-label">Share:</span>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}" class="social-icon" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="https://twitter.com/intent/tweet?url={{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}&text={{ urlencode($product->name) }}" class="social-icon" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="https://www.linkedin.com/shareArticle?url={{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}" class="social-icon" title="linkedIn" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#" class="social-icon" title="WhatsApp" onclick="openWhatsAppForShare()" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                                        </div>
+                                    </div>
                                     <div class="pickup-box">
                                         <div class="product-title">
                                             <h4>{{translate('Product Information')}}</h4>
@@ -515,6 +562,33 @@
         </section>
         <!-- Related Product Section End -->
     </div>
+
+    <script>
+        function openWhatsAppForShare() {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                const encodedTitle = encodeURIComponent("{{ $product->name }}");
+                const encodedUrl = encodeURIComponent("{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}");
+                const whatsappUrl = `whatsapp://send?text=${encodedTitle} - ${encodedUrl}`;
+
+                window.location.href = whatsappUrl; // Open in WhatsApp app directly
+            } else {
+                const encodedTitle = encodeURIComponent("{{ $product->name }}");
+                const encodedUrl = encodeURIComponent("{{route('product.detail', ['id' => $product->id, 'slug' => $product->slug])}}");
+                const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedTitle} - ${encodedUrl}`;
+
+                // Adjust the width and height of the popup window as per your requirement
+                const popupWidth = 800;
+                const popupHeight = 400;
+                const left = (screen.width - popupWidth) / 2;
+                const top = (screen.height - popupHeight) / 2;
+                const popupOptions = `width=${popupWidth},height=${popupHeight},left=${left},top=${top},scrollbars=yes`;
+
+                window.open(whatsappUrl, '_blank', popupOptions); // Open in popup window
+            }
+        }
+    </script>
 
 
     <script>
