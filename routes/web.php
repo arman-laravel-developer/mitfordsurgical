@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TrackOrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\BkashPaymentController;
+use App\Http\Controllers\SubscriberController;
 
 
 function getRoleName($routeName)
@@ -44,6 +45,8 @@ Route::get('/return', [HomeController::class, 'returnPage'])->name('return.page'
 Route::get('/conditions', [HomeController::class, 'condition'])->name('condition.page');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about.us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact.us');
+
+Route::post('/subscriber/store', [SubscriberController::class, 'store'])->name('subscriber.store');
 
 Route::get('/product-detail/{id}-{slug}', [HomeController::class, 'detail'])->name('product.detail');
 Route::get('/get-variant', [HomeController::class, 'getVariant'])->name('get.variant');

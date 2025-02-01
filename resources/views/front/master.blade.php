@@ -496,7 +496,7 @@
 <!-- Footer Section Start -->
 <footer class="footer-sm">
     <!-- Footer Section Start -->
-    <footer class="section-t-space">
+    <footer class="section-t-space" style="padding-top: calc(12px + 20*(100vw - 320px)/1600)!important;">
         <div class="container-fluid">
             <div class="main-footer" style="padding-top: 2%;">
                 <div class="row g-md-4 g-3">

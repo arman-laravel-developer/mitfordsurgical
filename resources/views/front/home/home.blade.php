@@ -276,6 +276,36 @@
             </div>
             <div id="scroll-target"></div>
         </div>
+
+        <section class="newsletter-section" style="padding-top: 0!important;">
+            <div class="container">
+                <div class="newsletter-box newsletter-box-2">
+                    <div class="newsletter-contain py-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xxl-4 col-lg-5 col-md-7 col-sm-9 offset-xxl-2 offset-md-1">
+                                    <div class="newsletter-detail">
+                                        <h2>Join our newsletter...</h2>
+                                        <form action="{{route('subscriber.store')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="input-box">
+                                                <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
+                                                       placeholder="Enter Your Email" required autocomplete="off">
+                                                <i class="fa-solid fa-envelope arrow"></i>
+                                                <button type="submit" class="sub-btn  btn-animation">
+                                                    <span class="d-sm-block d-none">Subscribe</span>
+                                                    <i class="fa-solid fa-arrow-right icon"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script>

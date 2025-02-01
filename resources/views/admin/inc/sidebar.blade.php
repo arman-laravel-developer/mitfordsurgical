@@ -225,7 +225,7 @@
         </a>
     </li>
     @endif
-    @if ($userType == 1 || !empty(array_filter(['coupon.manage'], fn($route) => in_array($route, $roleRoutes))))
+    @if ($userType == 1 || !empty(array_filter(['coupon.manage', 'subscriber.index'], fn($route) => in_array($route, $roleRoutes))))
         <li class="side-nav-item">
             <a data-bs-toggle="collapse" href="#sidebarMarketing" aria-expanded="false" aria-controls="sidebarMarketing" class="side-nav-link">
                 <i class="uil-bullseye"></i>
@@ -237,6 +237,11 @@
                     @if ($userType == 1 || in_array('coupon.manage', $roleRoutes))
                         <li>
                             <a href="{{ route('coupon.manage') }}">Coupon</a>
+                        </li>
+                    @endif
+                    @if ($userType == 1 || in_array('subscriber.index', $roleRoutes))
+                        <li>
+                            <a href="{{ route('subscriber.index') }}">Subscribers</a>
                         </li>
                     @endif
                 </ul>

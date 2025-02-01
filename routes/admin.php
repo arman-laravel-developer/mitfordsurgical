@@ -21,12 +21,15 @@ use App\Http\Controllers\ShippingCostController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ReportAnalysisController;
+use App\Http\Controllers\SubscriberController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/credit-data', [DashboardController::class, 'getCreditData'])->name('credit.data');
         Route::get('/seller-login-admin/{id}', [DashboardController::class, 'loginAsSeller'])->name('seller.login-admin');
+        Route::get('/subscriber/manage', [SubscriberController::class, 'index'])->name('subscriber.index');
+        Route::post('/subscriber/delete/{id}', [SubscriberController::class, 'delete'])->name('subscriber.delete');
         Route::get('migrate', function() {
             $exitCode = Artisan::call('migrate');
 
