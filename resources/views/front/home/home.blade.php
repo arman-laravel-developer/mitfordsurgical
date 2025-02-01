@@ -289,7 +289,7 @@
                                         <form action="{{route('subscriber.store')}}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="input-box">
-                                                <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
+                                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="exampleFormControlInput1"
                                                        placeholder="Enter Your Email" required autocomplete="off">
                                                 <i class="fa-solid fa-envelope arrow"></i>
                                                 <button type="submit" class="sub-btn  btn-animation">
@@ -297,6 +297,9 @@
                                                     <i class="fa-solid fa-arrow-right icon"></i>
                                                 </button>
                                             </div>
+                                            @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </form>
                                     </div>
                                 </div>
