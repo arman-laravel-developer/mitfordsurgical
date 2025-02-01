@@ -279,16 +279,62 @@
                                                 </div>
                                             </div>
                                             <div id="messageBox" class="mt-2" style="display:none;"></div>
+                                            @php
+                                                // Ensure the number is stored correctly
+                                                $whatsappNumber = trim($generalSettingView->pinterest_url); // Replace this with your WhatsApp number source
+                                                $whatsappNumber = str_replace(['+', ' '], '', $whatsappNumber); // Remove + and spaces if needed
+                                                $message = 'Hello, I am interested in ' . $product->name . '.'; // Message content
+                                            @endphp
+
                                             @if($product->is_variant == 1)
-                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit">{{translate('Add To Cart')}}</button>
-                                                <button class="btn btn-md bg-danger cart-button text-white w-100" style="display: none" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
+                                                <button class="btn btn-md bg-dark cart-button text-white btn-cart w-50" id="addToCartButton" type="submit">
+                                                    {{ translate('Add To Cart') }}
+                                                </button>
+                                                <a href="javascript:void(0)" onclick="openWhatsApp('{{ $whatsappNumber }}', '{{ urlencode($message) }}')"
+                                                   class="btn btn-md bg-success cart-button text-white btn-cart w-50">
+                                                    {{ translate('Chat on WhatsApp') }}
+                                                </a>
+                                                <button class="btn btn-md bg-danger cart-button text-white w-50" style="display: none" id="outOfStockButton" disabled>
+                                                    {{ translate('Out Of Stock') }}
+                                                </button>
                                             @else
                                                 @if($product->minimum_purchase_qty <= $product->stock)
-                                                    <button class="btn btn-md bg-dark cart-button text-white btn-cart w-100" id="addToCartButton" type="submit">{{translate('Add To Cart')}}</button>
+                                                    <button class="btn btn-md bg-dark cart-button text-white btn-cart w-50" id="addToCartButton" type="submit">
+                                                        {{ translate('Add To Cart') }}
+                                                    </button>
+                                                    <a href="javascript:void(0)" onclick="openWhatsApp('{{ $whatsappNumber }}', '{{ urlencode($message) }}')"
+                                                       class="btn btn-md bg-success cart-button text-white btn-cart w-50">
+                                                        {{ translate('Chat on WhatsApp') }}
+                                                    </a>
                                                 @else
-                                                    <button class="btn btn-md bg-danger cart-button text-white w-100" id="outOfStockButton" disabled>{{translate('Out Of Stock')}}</button>
+                                                    <button class="btn btn-md bg-danger cart-button text-white w-50" id="outOfStockButton" disabled>
+                                                        {{ translate('Out Of Stock') }}
+                                                    </button>
                                                 @endif
                                             @endif
+
+                                            <script>
+                                                function openWhatsApp(phoneNumber, message) {
+                                                    if (!phoneNumber || phoneNumber.length < 10) {
+                                                        alert("Invalid WhatsApp number.");
+                                                        return;
+                                                    }
+
+                                                    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                                                    if (/android|iphone|ipad|ipod/i.test(userAgent)) {
+                                                        // Mobile devices
+                                                        window.open("https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message, "_blank");
+                                                    } else if (/Mac|Windows|Linux/.test(navigator.platform)) {
+                                                        // Desktop devices
+                                                        window.open("https://web.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message, "_blank");
+                                                    } else {
+                                                        // Fallback
+                                                        alert("WhatsApp may not be supported on this device.");
+                                                    }
+                                                }
+                                            </script>
+
                                         </div>
                                     </form>
 
